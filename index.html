@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Techtifai | One Partner for Total Transformation</title>
+    <meta
+      name="description"
+      content="Techtifai delivers integrated software, AI, and connectivity infrastructure as one accountable partner for enterprise transformation."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Outfit:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              void: "#070b12",
+              ink: "#0c1220",
+              navy: { DEFAULT: "#243C65", muted: "#1e3558", deep: "#152238" },
+              brand: {
+                red: "#E33722",
+                "red-hover": "#B92C1B",
+                sky: "#B2DFF5",
+                blue: "#156082",
+              },
+            },
+            fontFamily: {
+              sans: ['"DM Sans"', "system-ui", "sans-serif"],
+              display: ['"Outfit"', "system-ui", "sans-serif"],
+            },
+            animation: {
+              float: "float 9s ease-in-out infinite",
+              "float-slow": "float 14s ease-in-out infinite",
+              "pulse-soft": "pulseSoft 6s ease-in-out infinite",
+              "fade-up": "fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+              "border-spin": "borderSpin 8s linear infinite",
+              shimmer: "shimmer 12s ease-in-out infinite",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translate(0, 0)" },
+                "50%": { transform: "translate(3%, -4%)" },
+              },
+              pulseSoft: {
+                "0%, 100%": { opacity: "0.4" },
+                "50%": { opacity: "0.75" },
+              },
+              fadeUp: {
+                "0%": { opacity: "0", transform: "translateY(40px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              borderSpin: {
+                "100%": { transform: "rotate(360deg)" },
+              },
+              shimmer: {
+                "0%, 100%": { backgroundPosition: "0% 50%" },
+                "50%": { backgroundPosition: "100% 50%" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :root {
+        --glass-bg: rgba(255, 255, 255, 0.06);
+        --glass-border: rgba(255, 255, 255, 0.12);
+        --glass-highlight: rgba(255, 255, 255, 0.18);
+      }
+
+      body {
+        font-feature-settings: "ss01" 1, "cv11" 1;
+      }
+
+      .page-bg {
+        background-color: #070b12;
+        background-image:
+          radial-gradient(ellipse 100% 80% at 50% -30%, rgba(36, 60, 101, 0.55), transparent 50%),
+          radial-gradient(ellipse 60% 50% at 100% 20%, rgba(178, 223, 245, 0.12), transparent 45%),
+          radial-gradient(ellipse 50% 40% at 0% 60%, rgba(227, 55, 34, 0.08), transparent 40%),
+          linear-gradient(180deg, #070b12 0%, #0a1020 35%, #0c1428 100%);
+      }
+
+      .noise-overlay {
+        pointer-events: none;
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        opacity: 0.035;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      .glass-panel {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        box-shadow:
+          0 4px 24px rgba(0, 0, 0, 0.25),
+          inset 0 1px 0 var(--glass-highlight);
+        backdrop-filter: blur(20px) saturate(140%);
+        -webkit-backdrop-filter: blur(20px) saturate(140%);
+      }
+
+      .glass-panel-strong {
+        background: rgba(255, 255, 255, 0.09);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        box-shadow:
+          0 8px 40px rgba(0, 0, 0, 0.35),
+          inset 0 1px 0 rgba(255, 255, 255, 0.22);
+        backdrop-filter: blur(28px) saturate(160%);
+        -webkit-backdrop-filter: blur(28px) saturate(160%);
+      }
+
+      /* Gradient ring (subtle premium border) */
+      .gradient-ring {
+        position: relative;
+        border-radius: 1.25rem;
+        padding: 1px;
+        background: linear-gradient(
+          135deg,
+          rgba(178, 223, 245, 0.45) 0%,
+          rgba(255, 255, 255, 0.08) 40%,
+          rgba(227, 55, 34, 0.35) 100%
+        );
+      }
+      .gradient-ring-inner {
+        border-radius: calc(1.25rem - 1px);
+        background: rgba(12, 18, 32, 0.75);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+      }
+
+      .text-display-gradient {
+        background: linear-gradient(105deg, #ffffff 0%, #e8f7fd 38%, #b2dff5 72%, #ffffff 100%);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: shimmer 14s ease-in-out infinite;
+      }
+
+      .accent-rule {
+        width: 3rem;
+        height: 3px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #e33722, rgba(227, 55, 34, 0.2));
+      }
+
+      .process-line {
+        background: linear-gradient(90deg, rgba(227, 55, 34, 0.6), rgba(178, 223, 245, 0.25), rgba(255, 255, 255, 0.08));
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .text-display-gradient {
+          animation: none;
+          background-position: 0% 50%;
+        }
+      }
+    </style>
+  </head>
+  <body class="page-bg min-h-screen font-sans text-slate-200 antialiased">
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <div class="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+      <div class="absolute -left-40 top-0 h-[520px] w-[520px] rounded-full bg-brand-sky/15 blur-[120px] animate-float"></div>
+      <div
+        class="absolute right-[-20%] top-[20%] h-[440px] w-[440px] rounded-full bg-brand-red/10 blur-[100px] animate-float-slow"
+      ></div>
+      <div class="absolute bottom-[-10%] left-1/4 h-[380px] w-[600px] rounded-full bg-navy/80 blur-[90px] animate-pulse-soft"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="relative z-50 px-4 pt-6 sm:px-6 lg:px-10" id="top">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-4">
+        <div class="glass-panel-strong flex flex-1 items-center justify-between gap-4 rounded-2xl px-4 py-3 sm:px-6 motion-safe:animate-fade-up">
+          <a href="#top" class="font-display text-xl font-bold tracking-tight text-white" aria-label="Techtifai Home">
+            techtifai
+          </a>
+          <button
+            type="button"
+            class="menu-toggle flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 lg:hidden"
+            aria-expanded="false"
+            aria-controls="nav-menu"
+            aria-label="Menu"
+          >
+            <span class="flex flex-col gap-1.5">
+              <span class="block h-0.5 w-5 rounded-full bg-white"></span>
+              <span class="block h-0.5 w-5 rounded-full bg-white"></span>
+              <span class="block h-0.5 w-5 rounded-full bg-white"></span>
+            </span>
+          </button>
+          <nav
+            id="nav-menu"
+            class="nav-menu absolute left-4 right-4 top-[4.5rem] z-50 hidden flex-col gap-0.5 rounded-2xl border border-white/10 bg-ink/95 p-2 shadow-2xl backdrop-blur-xl lg:static lg:flex lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:gap-1 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
+          >
+            <a class="rounded-xl px-3 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white" href="#about">About</a>
+            <a class="rounded-xl px-3 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white" href="#services">Services</a>
+            <a class="rounded-xl px-3 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white" href="#industries">Industries</a>
+            <a class="rounded-xl px-3 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white" href="#process">Process</a>
+            <a class="rounded-xl px-3 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white" href="#why-us">Why Us</a>
+            <a class="rounded-xl px-3 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white" href="#case-studies">Cases</a>
+            <a class="rounded-xl px-3 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white" href="#team">Team</a>
+            <a
+              class="mt-1 rounded-xl bg-brand-red px-4 py-2.5 text-center text-sm font-semibold text-white shadow-lg shadow-brand-red/20 transition hover:bg-brand-red-hover lg:mt-0 lg:ml-3"
+              href="#contact"
+              >Contact</a
+            >
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="relative z-10">
+      <!-- Hero -->
+      <section class="relative px-4 pb-24 pt-12 sm:px-6 lg:px-10 lg:pb-32 lg:pt-16">
+        <svg class="pointer-events-none absolute right-0 top-10 hidden w-[min(55%,520px)] text-brand-sky/30 lg:block" viewBox="0 0 400 320" fill="none" aria-hidden="true">
+          <path d="M40 40h120v80H40zM200 120h160v100H200zM80 200h100v80H80z" stroke="currentColor" stroke-width="1" />
+          <circle cx="100" cy="80" r="4" fill="#B2DFF5" fill-opacity="0.45" />
+          <circle cx="280" cy="170" r="4" fill="#E33722" fill-opacity="0.55" />
+          <path d="M124 80H200M160 120V200M180 200h-40" stroke="currentColor" stroke-width="1" stroke-dasharray="4 6" />
+        </svg>
+
+        <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
+          <div class="reveal space-y-8" data-reveal>
+            <div class="flex items-start gap-4">
+              <div class="accent-rule mt-2 shrink-0"></div>
+              <div>
+                <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-sky/90">Enterprise transformation</p>
+                <p class="mt-2 font-display text-lg font-semibold text-white/95 sm:text-xl">One accountable partner for the full stack.</p>
+              </div>
+            </div>
+
+            <h1 class="font-display text-[2.35rem] font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[3.5rem] lg:leading-[1.02]">
+              Software, AI &amp;
+              <span class="text-display-gradient"> connectivity</span>
+              — engineered as one system.
+            </h1>
+
+            <p class="max-w-xl text-lg leading-relaxed text-slate-400">
+              Eliminate vendor fragmentation. We design, deliver, and integrate digital platforms with physical infrastructure — so your
+              transformation ships as a single outcome, not a pile of handoffs.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <a
+                href="#contact"
+                class="group inline-flex items-center gap-2 rounded-xl bg-brand-red px-7 py-4 text-sm font-semibold text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset,0_12px_40px_-8px_rgba(227,55,34,0.55)] transition hover:bg-brand-red-hover"
+              >
+                Start your transformation
+                <span class="transition group-hover:translate-x-0.5 motion-reduce:transform-none" aria-hidden="true">→</span>
+              </a>
+              <a
+                href="#services"
+                class="inline-flex items-center rounded-xl border border-white/20 bg-white/[0.04] px-7 py-4 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-brand-sky/40 hover:bg-white/[0.08]"
+              >
+                View capabilities
+              </a>
+            </div>
+
+            <div class="flex flex-wrap gap-8 border-t border-white/10 pt-8">
+              <div>
+                <p class="font-display text-2xl font-bold text-white">2025</p>
+                <p class="text-xs font-medium uppercase tracking-wider text-slate-500">Founded</p>
+              </div>
+              <div>
+                <p class="font-display text-2xl font-bold text-white">GCC</p>
+                <p class="text-xs font-medium uppercase tracking-wider text-slate-500">Commercial focus</p>
+              </div>
+              <div>
+                <p class="font-display text-2xl font-bold text-white">7</p>
+                <p class="text-xs font-medium uppercase tracking-wider text-slate-500">Delivery stages</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bento -->
+          <div class="reveal grid grid-cols-2 gap-3 sm:gap-4" data-reveal data-delay="100">
+            <div class="gradient-ring col-span-2 sm:col-span-1">
+              <div class="gradient-ring-inner p-5 sm:p-6">
+                <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-red">Proof</p>
+                <p class="mt-3 font-display text-3xl font-bold text-white sm:text-4xl">&lt;2 min</p>
+                <p class="mt-2 text-sm leading-snug text-slate-400">Median resolution time after AI support deployment (banking).</p>
+              </div>
+            </div>
+            <div class="glass-panel rounded-2xl p-5 sm:p-6">
+              <p class="font-display text-3xl font-bold text-brand-sky">65%</p>
+              <p class="mt-2 text-sm text-slate-400">Routine tickets deflected from human agents.</p>
+            </div>
+            <div class="glass-panel rounded-2xl p-5 sm:p-6">
+              <p class="font-display text-3xl font-bold text-white">15k+</p>
+              <p class="mt-2 text-sm text-slate-400">New data points captured in month one (retail).</p>
+            </div>
+            <div class="glass-panel-strong col-span-2 rounded-2xl p-5 sm:p-6">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <p class="font-display text-lg font-semibold text-white">Full-stack accountability</p>
+                <span class="rounded-full border border-brand-sky/30 bg-brand-sky/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-brand-sky">Software · AI · Connectivity</span>
+              </div>
+              <p class="mt-3 text-sm text-slate-400">From architecture to devices on the ground — one roadmap, one owner.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="border-t border-white/[0.06] px-4 py-20 sm:px-6 lg:px-10" id="about">
+        <div class="mx-auto max-w-7xl">
+          <div class="reveal flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between" data-reveal>
+            <div class="max-w-2xl">
+              <div class="accent-rule mb-4"></div>
+              <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-red">About</p>
+              <h2 class="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
+                Built for enterprises that can’t afford another integration gap.
+              </h2>
+            </div>
+            <p class="max-w-md text-sm leading-relaxed text-slate-400 lg:text-right">
+              Techtifai exists to remove the friction between digital ambition and physical infrastructure — with delivery discipline, not deck theater.
+            </p>
+          </div>
+
+          <div class="mt-14 grid gap-4 md:grid-cols-3">
+            <article class="reveal glass-panel rounded-2xl p-8 transition duration-300 hover:border-brand-sky/25" data-reveal>
+              <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Snapshot</p>
+              <p class="mt-4 font-display text-4xl font-bold text-white">2025</p>
+              <p class="mt-3 text-sm leading-relaxed text-slate-400">Early commercial phase with enterprise-grade execution standards.</p>
+            </article>
+            <article class="reveal glass-panel rounded-2xl p-8 transition duration-300 hover:border-brand-sky/25" data-reveal data-delay="80">
+              <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Delivery hub</p>
+              <p class="mt-4 font-display text-4xl font-bold text-white">Egypt</p>
+              <p class="mt-3 text-sm leading-relaxed text-slate-400">Engineering velocity and cost structure that competes globally.</p>
+            </article>
+            <article class="reveal glass-panel rounded-2xl p-8 transition duration-300 hover:border-brand-sky/25" data-reveal data-delay="160">
+              <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Markets</p>
+              <p class="mt-4 font-display text-4xl font-bold text-white">KSA · UAE</p>
+              <p class="mt-3 text-sm leading-relaxed text-slate-400">GCC-first go-to-market with regional relationship depth.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services -->
+      <section class="border-t border-white/[0.06] bg-gradient-to-b from-transparent to-navy-deep/40 px-4 py-20 sm:px-6 lg:px-10" id="services">
+        <div class="mx-auto max-w-7xl">
+          <div class="reveal mx-auto max-w-3xl text-center" data-reveal>
+            <div class="accent-rule mx-auto mb-4"></div>
+            <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-red">Services</p>
+            <h2 class="mt-4 font-display text-3xl font-bold text-white sm:text-4xl">Two layers. One integrated operating model.</h2>
+            <p class="mt-4 text-slate-400">Purpose-built to connect application intelligence with the network edge your business actually runs on.</p>
+          </div>
+
+          <div class="mt-14 grid gap-6 lg:grid-cols-2">
+            <article class="reveal gradient-ring lg:min-h-[320px]" data-reveal>
+              <div class="gradient-ring-inner flex h-full flex-col p-8 lg:p-10">
+                <div class="flex items-center gap-3">
+                  <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-red/20 text-sm font-bold text-brand-sky">01</span>
+                  <h3 class="font-display text-xl font-bold text-white">Software &amp; digital</h3>
+                </div>
+                <ul class="mt-8 space-y-4 text-sm text-slate-300">
+                  <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-red"></span> Customer engagement platforms</li>
+                  <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-red"></span> AI-powered communication &amp; automation</li>
+                  <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-red"></span> Custom engineering &amp; integration</li>
+                  <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-red"></span> Operational workflows that survive go-live</li>
+                </ul>
+              </div>
+            </article>
+            <article class="reveal glass-panel-strong flex min-h-[320px] flex-col rounded-[1.25rem] p-8 lg:p-10" data-reveal data-delay="100">
+              <div class="flex items-center gap-3">
+                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-sky/15 text-sm font-bold text-brand-sky">02</span>
+                <h3 class="font-display text-xl font-bold text-white">Connectivity &amp; infrastructure</h3>
+              </div>
+              <ul class="mt-8 space-y-4 text-sm text-slate-200">
+                <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-sky"></span> CPE / VDSL / GPON ONT routers</li>
+                <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-sky"></span> Wi-Fi 6 enterprise access</li>
+                <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-sky"></span> FWA LTE &amp; 5G</li>
+                <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-sky"></span> IoT gateways &amp; enterprise networking</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Industries bento -->
+      <section class="border-t border-white/[0.06] px-4 py-20 sm:px-6 lg:px-10" id="industries">
+        <div class="mx-auto max-w-7xl">
+          <div class="reveal flex flex-col justify-between gap-6 lg:flex-row lg:items-end" data-reveal>
+            <div>
+              <div class="accent-rule mb-4"></div>
+              <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-red">Industries</p>
+              <h2 class="mt-4 font-display text-3xl font-bold text-white sm:text-4xl">Complex sectors. Zero excuses.</h2>
+            </div>
+            <p class="max-w-sm text-sm text-slate-400">We focus where regulation, uptime, and customer experience collide.</p>
+          </div>
+
+          <div class="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 lg:gap-4">
+            <div class="reveal glass-panel rounded-2xl p-5 transition hover:bg-white/[0.08]" data-reveal><p class="font-display text-lg font-semibold text-white">Real estate</p><p class="mt-2 text-xs text-slate-500">Smart assets &amp; engagement</p></div>
+            <div class="reveal glass-panel rounded-2xl p-5 transition hover:bg-white/[0.08]" data-reveal data-delay="40"><p class="font-display text-lg font-semibold text-white">Retail</p><p class="mt-2 text-xs text-slate-500">Stores that capture signal</p></div>
+            <div class="reveal glass-panel rounded-2xl p-5 transition hover:bg-white/[0.08]" data-reveal data-delay="80"><p class="font-display text-lg font-semibold text-white">Banking</p><p class="mt-2 text-xs text-slate-500">AI + secure operations</p></div>
+            <div class="reveal glass-panel rounded-2xl p-5 transition hover:bg-white/[0.08]" data-reveal data-delay="120"><p class="font-display text-lg font-semibold text-white">Telecom</p><p class="mt-2 text-xs text-slate-500">Edge to core</p></div>
+            <div class="reveal glass-panel rounded-2xl p-5 transition hover:bg-white/[0.08]" data-reveal data-delay="160"><p class="font-display text-lg font-semibold text-white">Education</p><p class="mt-2 text-xs text-slate-500">Platforms at scale</p></div>
+            <div class="reveal glass-panel rounded-2xl p-5 transition hover:bg-white/[0.08]" data-reveal data-delay="200"><p class="font-display text-lg font-semibold text-white">Hospitality</p><p class="mt-2 text-xs text-slate-500">Connected guest journeys</p></div>
+            <div class="reveal glass-panel col-span-2 rounded-2xl p-5 sm:col-span-1 lg:col-span-2 transition hover:bg-white/[0.08]" data-reveal data-delay="240">
+              <p class="font-display text-lg font-semibold text-white">Government &amp; regulated enterprise</p>
+              <p class="mt-2 text-xs text-slate-500">Programs that need procurement discipline and integration muscle.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Process -->
+      <section class="border-t border-white/[0.06] px-4 py-20 sm:px-6 lg:px-10" id="process">
+        <div class="mx-auto max-w-7xl">
+          <div class="reveal" data-reveal>
+            <div class="accent-rule mb-4"></div>
+            <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-red">Process</p>
+            <h2 class="mt-4 max-w-3xl font-display text-3xl font-bold text-white sm:text-4xl">Seven stages. One thread from first workshop to production.</h2>
+          </div>
+
+          <div class="reveal relative mt-16 hidden lg:block" data-reveal data-delay="60">
+            <div class="process-line absolute left-0 right-0 top-6 h-px rounded-full opacity-80"></div>
+            <ol class="relative grid grid-cols-7 gap-2 text-center text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+              <li class="flex flex-col items-center gap-3"><span class="z-10 flex h-12 w-12 items-center justify-center rounded-full border border-brand-red/50 bg-brand-red text-sm font-bold text-white shadow-lg shadow-brand-red/20">1</span><span class="max-w-[100px] leading-tight text-slate-400">Assess</span></li>
+              <li class="flex flex-col items-center gap-3"><span class="z-10 flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/10 text-sm font-bold text-white">2</span><span class="max-w-[100px] leading-tight text-slate-400">Design</span></li>
+              <li class="flex flex-col items-center gap-3"><span class="z-10 flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/10 text-sm font-bold text-white">3</span><span class="max-w-[100px] leading-tight text-slate-400">Source</span></li>
+              <li class="flex flex-col items-center gap-3"><span class="z-10 flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/10 text-sm font-bold text-white">4</span><span class="max-w-[100px] leading-tight text-slate-400">Deploy</span></li>
+              <li class="flex flex-col items-center gap-3"><span class="z-10 flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/10 text-sm font-bold text-white">5</span><span class="max-w-[100px] leading-tight text-slate-400">Integrate</span></li>
+              <li class="flex flex-col items-center gap-3"><span class="z-10 flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/10 text-sm font-bold text-white">6</span><span class="max-w-[100px] leading-tight text-slate-400">Go-live</span></li>
+              <li class="flex flex-col items-center gap-3"><span class="z-10 flex h-12 w-12 items-center justify-center rounded-full border border-brand-sky/40 bg-brand-blue/40 text-sm font-bold text-brand-sky">7</span><span class="max-w-[100px] leading-tight text-slate-400">Scale</span></li>
+            </ol>
+          </div>
+
+          <ol class="reveal mt-10 grid gap-3 sm:grid-cols-2 lg:hidden" data-reveal data-delay="60">
+            <li class="glass-panel flex items-center gap-3 rounded-xl p-4 text-sm font-medium text-white"><span class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-red text-xs font-bold">1</span> Assessment &amp; scoping</li>
+            <li class="glass-panel flex items-center gap-3 rounded-xl p-4 text-sm font-medium text-white"><span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/15 text-xs font-bold">2</span> Solution design</li>
+            <li class="glass-panel flex items-center gap-3 rounded-xl p-4 text-sm font-medium text-white"><span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/15 text-xs font-bold">3</span> Procurement</li>
+            <li class="glass-panel flex items-center gap-3 rounded-xl p-4 text-sm font-medium text-white"><span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/15 text-xs font-bold">4</span> Implementation</li>
+            <li class="glass-panel flex items-center gap-3 rounded-xl p-4 text-sm font-medium text-white"><span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/15 text-xs font-bold">5</span> Integration &amp; test</li>
+            <li class="glass-panel flex items-center gap-3 rounded-xl p-4 text-sm font-medium text-white"><span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/15 text-xs font-bold">6</span> Go-live &amp; handover</li>
+            <li class="glass-panel col-span-full flex items-center gap-3 rounded-xl p-4 text-sm font-medium text-white sm:col-span-2"><span class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-blue/50 text-xs font-bold text-brand-sky">7</span> Managed services &amp; scaling</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Why -->
+      <section class="border-t border-white/[0.06] px-4 py-20 sm:px-6 lg:px-10" id="why-us">
+        <div class="mx-auto max-w-7xl">
+          <div class="reveal grid gap-10 lg:grid-cols-2 lg:items-center" data-reveal>
+            <div>
+              <div class="accent-rule mb-4"></div>
+              <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-red">Why Techtifai</p>
+              <h2 class="mt-4 font-display text-3xl font-bold text-white sm:text-4xl">The advantage isn’t a slide — it’s ownership.</h2>
+              <p class="mt-4 text-slate-400">We compete where programs fail: at the seams between software, networks, and who is actually accountable when production breaks.</p>
+            </div>
+            <div class="grid gap-3 sm:grid-cols-2">
+              <div class="glass-panel rounded-2xl p-6"><h3 class="font-display font-semibold text-white">Full-stack</h3><p class="mt-2 text-sm text-slate-400">Digital + physical in one delivery model.</p></div>
+              <div class="glass-panel rounded-2xl p-6"><h3 class="font-display font-semibold text-white">No finger-pointing</h3><p class="mt-2 text-sm text-slate-400">One owner for integration and outcomes.</p></div>
+              <div class="glass-panel rounded-2xl p-6"><h3 class="font-display font-semibold text-white">Execution-first</h3><p class="mt-2 text-sm text-slate-400">Ship, integrate, support — repeatedly.</p></div>
+              <div class="glass-panel rounded-2xl p-6"><h3 class="font-display font-semibold text-white">Regional economics</h3><p class="mt-2 text-sm text-slate-400">Egypt velocity with GCC market alignment.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cases -->
+      <section class="border-t border-white/[0.06] bg-gradient-to-b from-navy-deep/30 to-transparent px-4 py-20 sm:px-6 lg:px-10" id="case-studies">
+        <div class="mx-auto max-w-7xl">
+          <div class="reveal" data-reveal>
+            <div class="accent-rule mb-4"></div>
+            <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-red">Case studies</p>
+            <h2 class="mt-4 font-display text-3xl font-bold text-white sm:text-4xl">Outcomes you can measure.</h2>
+          </div>
+          <div class="mt-12 grid gap-6 lg:grid-cols-2">
+            <article class="reveal glass-panel-strong rounded-[1.25rem] p-8 lg:p-10" data-reveal>
+              <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-sky">Banking</p>
+              <h3 class="mt-3 font-display text-2xl font-bold text-white">Enterprise AI that clears the queue</h3>
+              <p class="mt-4 text-sm leading-relaxed text-slate-400">Tier-1 support workloads collapsed from day-long waits to sub-two-minute resolution, with the majority of repetitive work handled automatically.</p>
+            </article>
+            <article class="reveal glass-panel-strong rounded-[1.25rem] p-8 lg:p-10" data-reveal data-delay="100">
+              <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-sky">Retail</p>
+              <h3 class="mt-3 font-display text-2xl font-bold text-white">Connectivity that becomes customer intelligence</h3>
+              <p class="mt-4 text-sm leading-relaxed text-slate-400">Store-grade Wi-Fi, captive journeys, and CRM-linked profiles — tens of thousands of new signals in the opening month.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Team -->
+      <section class="border-t border-white/[0.06] px-4 py-20 sm:px-6 lg:px-10" id="team">
+        <div class="mx-auto max-w-7xl">
+          <div class="reveal text-center" data-reveal>
+            <div class="accent-rule mx-auto mb-4"></div>
+            <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-red">Leadership</p>
+            <h2 class="mt-4 font-display text-3xl font-bold text-white sm:text-4xl">Operators, founders, and market builders.</h2>
+          </div>
+          <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <article class="reveal glass-panel rounded-2xl p-6 text-center" data-reveal>
+              <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-sky/25 to-brand-blue/30 font-display text-lg font-bold text-white ring-1 ring-white/10">MH</div>
+              <h3 class="font-display text-sm font-semibold text-white">Mohamed Hashem</h3>
+              <p class="mt-1 text-xs text-brand-sky/80">CEO, EXPND &amp; Techtifai</p>
+            </article>
+            <article class="reveal glass-panel rounded-2xl p-6 text-center" data-reveal data-delay="60">
+              <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-sky/25 to-brand-blue/30 font-display text-lg font-bold text-white ring-1 ring-white/10">MG</div>
+              <h3 class="font-display text-sm font-semibold text-white">Dr. Maged Ghoneima</h3>
+              <p class="mt-1 text-xs text-brand-sky/80">Partner, EXPND &amp; Techtifai</p>
+            </article>
+            <article class="reveal glass-panel rounded-2xl p-6 text-center" data-reveal data-delay="120">
+              <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-sky/25 to-brand-blue/30 font-display text-lg font-bold text-white ring-1 ring-white/10">MA</div>
+              <h3 class="font-display text-sm font-semibold text-white">Mohamed Abu-Elnaga</h3>
+              <p class="mt-1 text-xs text-brand-sky/80">Partner, EXPND &amp; Techtifai</p>
+            </article>
+            <article class="reveal glass-panel rounded-2xl p-6 text-center" data-reveal data-delay="180">
+              <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-sky/25 to-brand-blue/30 font-display text-lg font-bold text-white ring-1 ring-white/10">RS</div>
+              <h3 class="font-display text-sm font-semibold text-white">Raiyan Sindi</h3>
+              <p class="mt-1 text-xs text-brand-sky/80">Partner, Techtifai (GCC)</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="border-t border-white/[0.06] px-4 pb-28 pt-12 sm:px-6 lg:px-10" id="contact">
+        <div class="mx-auto max-w-7xl">
+          <div class="reveal gradient-ring" data-reveal>
+            <div class="gradient-ring-inner grid gap-12 p-8 lg:grid-cols-2 lg:gap-16 lg:p-12">
+              <div>
+                <div class="accent-rule mb-4"></div>
+                <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-red">Contact</p>
+                <h2 class="mt-4 font-display text-3xl font-bold text-white sm:text-4xl">Tell us what “done” looks like.</h2>
+                <p class="mt-4 text-slate-400">We’ll reply within one business day with next steps — scoped, practical, and owned end-to-end.</p>
+                <div class="mt-8 space-y-3 text-sm text-slate-500">
+                  <p>Direct details can be wired here once finalized (address, email, phone, LinkedIn).</p>
+                </div>
+              </div>
+              <form class="space-y-5">
+                <label class="block text-[10px] font-bold uppercase tracking-[0.15em] text-brand-sky/90"
+                  >Full name
+                  <input
+                    type="text"
+                    class="mt-2 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-sm text-white outline-none ring-0 transition placeholder:text-slate-600 focus:border-brand-sky/40 focus:bg-white/[0.06]"
+                    placeholder="Your name"
+                  />
+                </label>
+                <label class="block text-[10px] font-bold uppercase tracking-[0.15em] text-brand-sky/90"
+                  >Work email
+                  <input
+                    type="email"
+                    class="mt-2 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-brand-sky/40 focus:bg-white/[0.06]"
+                    placeholder="name@company.com"
+                  />
+                </label>
+                <label class="block text-[10px] font-bold uppercase tracking-[0.15em] text-brand-sky/90"
+                  >Company
+                  <input
+                    type="text"
+                    class="mt-2 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-brand-sky/40 focus:bg-white/[0.06]"
+                    placeholder="Company name"
+                  />
+                </label>
+                <label class="block text-[10px] font-bold uppercase tracking-[0.15em] text-brand-sky/90"
+                  >Message
+                  <textarea
+                    rows="4"
+                    class="mt-2 w-full resize-none rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-brand-sky/40 focus:bg-white/[0.06]"
+                    placeholder="Goals, constraints, timeline"
+                  ></textarea>
+                </label>
+                <button
+                  type="button"
+                  class="w-full rounded-xl bg-brand-red py-4 text-sm font-semibold text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset,0_12px_40px_-8px_rgba(227,55,34,0.5)] transition hover:bg-brand-red-hover sm:w-auto sm:px-12"
+                >
+                  Send message
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="relative z-10 border-t border-white/[0.08] px-4 py-14 sm:px-6 lg:px-10">
+      <div class="mx-auto flex max-w-7xl flex-col gap-10 lg:flex-row lg:justify-between">
+        <div>
+          <p class="font-display text-lg font-bold text-white">techtifai</p>
+          <p class="mt-2 max-w-sm text-sm text-slate-500">One partner for total transformation — software, AI, and connectivity as a single accountable program.</p>
+        </div>
+        <div class="flex flex-wrap gap-10 text-sm">
+          <div>
+            <p class="font-semibold text-white">Explore</p>
+            <ul class="mt-3 space-y-2 text-slate-500">
+              <li><a class="transition hover:text-brand-sky" href="#services">Services</a></li>
+              <li><a class="transition hover:text-brand-sky" href="#process">Process</a></li>
+              <li><a class="transition hover:text-brand-sky" href="#case-studies">Case studies</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="font-semibold text-white">Company</p>
+            <ul class="mt-3 space-y-2 text-slate-500">
+              <li><a class="transition hover:text-brand-sky" href="#about">About</a></li>
+              <li><a class="transition hover:text-brand-sky" href="#team">Team</a></li>
+              <li><a class="transition hover:text-brand-sky" href="#contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="mx-auto mt-12 flex max-w-7xl flex-col items-start justify-between gap-4 border-t border-white/[0.06] pt-8 text-xs text-slate-600 sm:flex-row sm:items-center">
+        <p>© 2026 Techtifai. All rights reserved.</p>
+        <p>Privacy · Cookies · Terms</p>
+      </div>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

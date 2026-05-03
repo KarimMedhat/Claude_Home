@@ -94,14 +94,17 @@ Last updated: May 2026
 **Color (Semantic tokens)** — 26 variables, all aliasing primitives (auto-cascade):
 - `color/bg/navy` → navy/500 = `#2F476D`
 - `color/bg/navy-dark` → navy/700 = `#1A2A43`
-- `color/bg/accent` → red/500 = `#F0340F`
-- `color/bg/accent-hover` → red/600 = `#BC290D`
+- `color/bg/brand-secondary` → red/500 = `#F0340F` (Secondary brand color per PDF)
+- `color/bg/brand-secondary-hover` → red/600 = `#BC290D`
+- `color/bg/brand-secondary-subtle` → red/50
 - `color/bg/blue-light` → blue/100 = `#8FB9CC`
 - `color/text/on-dark` → neutral/0 = `#FFFFFF`
 - `color/text/primary` → navy/500
-- `color/text/accent` → red/500
-- `color/border/accent` → red/500
+- `color/text/brand-secondary` → red/500
+- `color/border/brand-secondary` → red/500
+- `color/icon/brand-secondary` → red/500
 - `color/border/navy` → navy/500
+- `color/text/secondary` → neutral/700 (grey body text — different from brand-secondary)
 
 **Spacing** — 4px base unit, spacing/1–40 (4px–160px), radius/none–full
 

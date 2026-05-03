@@ -85,19 +85,20 @@ Last updated: May 2026
 
 ### Variable Collections
 
-**Primitives** — all 32 variables updated to new brand palette:
-- `navy/500` = `#2F476D` (brand navy)
-- `blue/100` = `#8FB9CC` (brand light blue)
-- `red/500` = `#F0340F` (brand accent)
-- Full scales: navy/50–900, red/50–700, blue/50–700, neutral/0–900
+**Primitives** — all variables updated to new brand palette:
+- `navy/500` = `#2F476D` (brand dark navy — primary)
+- `navy/200` = `#8FB9CC` (brand light blue — primary; lives in navy scale, no separate blue group)
+- `red/500` = `#F0340F` (brand secondary / accent)
+- Full scales: navy/50–900, red/50–700, neutral/0–900
+- ⚠️ No separate `blue/*` group — light blue anchors at `navy/200`
 
-**Color (Semantic tokens)** — 26 variables, all aliasing primitives (auto-cascade):
+**Color (Semantic tokens)** — all variables aliasing primitives (auto-cascade):
 - `color/bg/navy` → navy/500 = `#2F476D`
 - `color/bg/navy-dark` → navy/700 = `#1A2A43`
-- `color/bg/brand-secondary` → red/500 = `#F0340F` (Secondary brand color per PDF)
+- `color/bg/brand-secondary` → red/500 = `#F0340F` (secondary brand color per PDF)
 - `color/bg/brand-secondary-hover` → red/600 = `#BC290D`
 - `color/bg/brand-secondary-subtle` → red/50
-- `color/bg/blue-light` → blue/100 = `#8FB9CC`
+- `color/bg/blue-light` → navy/200 = `#8FB9CC`
 - `color/text/on-dark` → neutral/0 = `#FFFFFF`
 - `color/text/primary` → navy/500
 - `color/text/brand-secondary` → red/500
@@ -109,23 +110,24 @@ Last updated: May 2026
 **Spacing** — 4px base unit, spacing/1–40 (4px–160px), radius/none–full
 
 ### Text Styles (14 total) — all using Montserrat
+Optimized for 1920×1050 target screen. Line heights in parentheses.
 
-| Style | Size | Weight |
-|---|---|---|
-| Display/Hero | 72px | Bold |
-| Heading/H1 | 60px | Bold |
-| Heading/H2 | 44px | Bold |
-| Heading/H3 | 28px | Bold |
-| Heading/H4 | 20px | SemiBold |
-| Label/Eyebrow | 11px | Bold, UPPERCASE, 2.2px tracking |
-| Body/Large | 20px | Regular |
-| Body/Default | 16px | Regular |
-| Body/Small | 14px | Regular |
-| Body/Caption | 12px | Regular |
-| Button/Large | 16px | SemiBold |
-| Button/Default | 14px | SemiBold |
-| Button/Small | 12px | SemiBold |
-| Nav/Link | 14px | Medium |
+| Style | Size | Line Height | Weight |
+|---|---|---|---|
+| Display/Hero | 96px | 104px | Bold |
+| Heading/H1 | 72px | 80px | Bold |
+| Heading/H2 | 52px | 62px | Bold |
+| Heading/H3 | 36px | 44px | Bold |
+| Heading/H4 | 24px | 32px | SemiBold |
+| Label/Eyebrow | 13px | 18px | Bold, UPPERCASE, 2.2px tracking |
+| Body/Large | 20px | 30px | Regular |
+| Body/Default | 18px | 28px | Regular |
+| Body/Small | 15px | 24px | Regular |
+| Body/Caption | 12px | 18px | Regular |
+| Button/Large | 16px | 24px | SemiBold |
+| Button/Default | 14px | 20px | SemiBold |
+| Button/Small | 12px | 18px | SemiBold |
+| Nav/Link | 16px | 24px | Medium |
 
 ---
 
@@ -170,6 +172,9 @@ Tagline: "One Partner for Total Transformation"
 - [x] Semantic color tokens verified cascading correctly
 - [x] Applied variable bindings to all nodes in home page hero frame
 - [x] Applied text styles to all text nodes in home page hero frame
+- [x] Renamed all "accent" semantic variables → "brand-secondary" to match PDF terminology
+- [x] Removed redundant `blue/*` primitive group — light blue now lives at `navy/200`
+- [x] Updated all 14 text styles to 1920×1050 optimized sizes
 - [ ] Replace old logo with new logo in navbar
 - [ ] Apply design system bindings to remaining page frames
 - [ ] Design remaining 9 pages in Figma

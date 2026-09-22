@@ -21,6 +21,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 - Use the Figma MCP tools to make changes directly in Figma, not by writing code files
 - When I share a new reference file (PDF, image, doc), read it fully before doing anything else
 - Always compare new brand files against what's already in the design system before updating
+- **4pt grid system — always:** every spacing value (gaps between sections, paddings, margins from screen edges, item spacing) must be a multiple of 4. Bind to Spacing variables where they exist. Exclude strokes from auto-layout sizing so heights stay on-grid.
 
 ---
 

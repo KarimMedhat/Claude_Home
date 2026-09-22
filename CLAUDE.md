@@ -42,15 +42,15 @@ This file is read automatically by Claude Code on every session. It contains ful
 
 **Figma file:** https://www.figma.com/design/1rJxwwH7qnUPwOjFvQDXjd/Karim-Draft
 - File key: `1rJxwwH7qnUPwOjFvQDXjd` — pages: 🎨 Design System, 🧩 Components, 📱 Screens
-- Screens (on 📱 Screens page): **Home** `1100:123` (390×940 scroll frame, status/tab bar fixed), **Screen2_Chat** `1100:273` (390×844), old v1 `1064:3211` ("claude")
+- Screens (on 📱 Screens page): **Home** `1100:123` (390×844 scroll frame, status/tab bar fixed), **Screen2_Chat** `1100:273` (390×844), old v1 `1064:3211` ("claude")
 - **Fonts: Manrope (EN) + Almarai (AR)** — tried Cairo → Readex Pro → settled on Manrope + Almarai. EN texts use `Typography/*`, Arabic texts use the `Typography AR/*` twins (Almarai; Medium→Regular, SemiBold→Bold). Sizes/LH: Display 32/40, H1 28/36, H2 24/32, H3 20/28, Body Large 17/24, Body 15/24, Body Medium 15/24, Caption 13/20, Micro 11/16, Amount Large 32/40, Amount 24/32, Amount Small 17/24 — all 4pt-grid. Never use Cairo / Readex / Inter / SF Pro as body fonts here.
 - **Type hierarchy (keep consistent across screens):** page/section title = `H2` (never H1 on screens) · hero balance on Home only = `Amount Large` · amounts inside cards = `Amount` · inline amounts = `Amount Small` · names/initials = `H3`.
 - Scroll screens: frame stays 390×844 (clip on, vertical overflow); Status Bar + bottom bar/CTA + Home Indicator are fixed (topmost layers); Content paddingBottom = bar height + 24. Screen3_Review `1104:123`, Screen4_Success `1117:123` (EN flow complete).
 - **Spacing rhythm ("let sections breathe")**: screen margin 24 (`Screen/Horizontal Padding`), 24 between major sections, 16 inside groups, card padding 20 (16 vertical on compact cards), list rows 60.
 - ⚠️ After overriding fonts on styled text, re-link to the style — overrides detach `textStyleId`.
 - Flow plan: 4 screens × EN + AR (Arabic = fully mirrored RTL): Home → AI Chat / Transfer Intent → Review Transfer → Success.
-- Font comparison board: `1096:5` (Readex Pro picked).
-- Colors: bind to the file's `Color/*` variables (Primary green scale, Text, Surface, Border, AI). Spacing → `Spacing/*`, radius → `Radius/*`, screen margin → `Screen/Compact Padding` (20).
+- Font comparison board: `1096:5` (final pick: Manrope + Almarai).
+- Colors: bind to the file's `Color/*` variables (Primary green scale, Text, Surface, Border, AI). Spacing → `Spacing/*`, radius → `Radius/*`, screen margin → `Screen/Horizontal Padding` (24).
 
 ---
 

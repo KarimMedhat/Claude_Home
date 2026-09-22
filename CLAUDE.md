@@ -50,6 +50,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 - ⚠️ After overriding fonts on styled text, re-link to the style — overrides detach `textStyleId`.
 - Flow plan: 4 screens × EN + AR (Arabic = fully mirrored RTL): Home → AI Chat / Transfer Intent → Review Transfer → Success.
 - Font comparison board: `1096:5` (final pick: Manrope + Almarai).
+- Prototype: flows "EN — Send money flow" (start `1100:123`) and "AR — Send money flow" (start `1118:273`). Home AI Input → Chat → Review → Success → Home; Back buttons = Back action; forward = Slide In 350ms ease-out (EN from right, AR from left); Confirm & Back to Home = Dissolve 300ms.
 - Colors: bind to the file's `Color/*` variables (Primary green scale, Text, Surface, Border, AI). Spacing → `Spacing/*`, radius → `Radius/*`, screen margin → `Screen/Horizontal Padding` (24).
 
 ---

@@ -42,8 +42,10 @@ This file is read automatically by Claude Code on every session. It contains ful
 
 **Figma file:** https://www.figma.com/design/1rJxwwH7qnUPwOjFvQDXjd/Karim-Draft
 - File key: `1rJxwwH7qnUPwOjFvQDXjd` — pages: 🎨 Design System, 🧩 Components, 📱 Screens
-- Screens (390×844): Home v1 `1064:3211`, Home v2 (Clean) `1085:5`, AI Chat / Transfer Intent `1092:5`
-- **Font: Readex Pro** (EN + AR, one family) — chosen over Cairo for a more modern/premium feel. Always apply the local `Typography/*` text styles (Display 32/40, H1 28/36, H2 24/32, H3 20/28, Body Large 17/24, Body 15/24, Body Medium 15/24, Caption 13/20, Micro 11/16, Amount Large 32/40, Amount 24/32, Amount Small 17/24). All line heights are 4pt-grid. Never use Cairo / Inter / SF Pro for this project.
+- Screens (on 📱 Screens page): **Home** `1100:123` (390×940 scroll frame, status/tab bar fixed), **Screen2_Chat** `1100:273` (390×844), old v1 `1064:3211` ("claude")
+- **Fonts: Manrope (EN) + Almarai (AR)** — tried Cairo → Readex Pro → settled on Manrope + Almarai. EN texts use `Typography/*`, Arabic texts use the `Typography AR/*` twins (Almarai; Medium→Regular, SemiBold→Bold). Sizes/LH: Display 32/40, H1 28/36, H2 24/32, H3 20/28, Body Large 17/24, Body 15/24, Body Medium 15/24, Caption 13/20, Micro 11/16, Amount Large 32/40, Amount 24/32, Amount Small 17/24 — all 4pt-grid. Never use Cairo / Readex / Inter / SF Pro as body fonts here.
+- **Spacing rhythm ("let sections breathe")**: screen margin 24 (`Screen/Horizontal Padding`), 24 between major sections, 16 inside groups, card padding 20 (16 vertical on compact cards), list rows 60.
+- ⚠️ After overriding fonts on styled text, re-link to the style — overrides detach `textStyleId`.
 - Flow plan: 4 screens × EN + AR (Arabic = fully mirrored RTL): Home → AI Chat / Transfer Intent → Review Transfer → Success.
 - Font comparison board: `1096:5` (Readex Pro picked).
 - Colors: bind to the file's `Color/*` variables (Primary green scale, Text, Surface, Border, AI). Spacing → `Spacing/*`, radius → `Radius/*`, screen margin → `Screen/Compact Padding` (20).

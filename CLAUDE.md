@@ -38,6 +38,15 @@ This file is read automatically by Claude Code on every session. It contains ful
 - Home page hero frame: node `51:120`
 - Design System page: `0:1` (children: Colors–Primitives `16:97`, Colors–Semantic `16:171`, Typography `16:285`, Components `16:502`, Navigation & Footer `16:621`)
 
+### AI Banking App (mobile)
+
+**Figma file:** https://www.figma.com/design/1rJxwwH7qnUPwOjFvQDXjd/Karim-Draft
+- File key: `1rJxwwH7qnUPwOjFvQDXjd` — pages: 🎨 Design System, 🧩 Components, 📱 Screens
+- Screens (390×844): Home v1 `1064:3211`, Home v2 (Clean) `1085:5`, AI Chat / Transfer Intent `1092:5`
+- **Font: Cairo** — always apply the local `Typography/*` text styles (Display, H1–H3, Body Large, Body, Body Medium, Caption, Micro, Amount Large/Amount/Amount Small). Never use Inter / SF Pro for this project.
+- ⚠️ Cairo styles use 22 / 18 line heights (not 4-multiples) — keep containers on the 4pt grid with fixed heights + centered content.
+- Colors: bind to the file's `Color/*` variables (Primary green scale, Text, Surface, Border, AI). Spacing → `Spacing/*`, radius → `Radius/*`, screen margin → `Screen/Compact Padding` (20).
+
 ---
 
 ## Techtifai — Brand System

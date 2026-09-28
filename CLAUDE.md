@@ -54,7 +54,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 - Text styles `Smooth App/*` (Inter, sizes 28/20/16/14/12); effect styles `Smooth App/Shadow/Button|Badge|XS`
 - Components: Button, Icon Button, Chip, Toggle, Segmented Control, Tab Item, Apple Pay Mark, List Row / Reward, Status Bar, Home Indicator
 - Icons: 23 `Icon/*` components (line icons, 24px grid, 1.5px stroke). All icons in the 5 screens are instances of them — stroke 1.5px at 20–24px, 1.25 at 16px, 1 at 12px (success check 2.5 at 32px); outline only (no filled icons)
-- Buttons: all 6 pill buttons in the screens are instances of the `Button` component (Primary/Secondary), text-only. `Chip` is 32px tall with a 14px label and a locked, invisible `Tap Area 44` layer; "Not now" in the Tip card is a Chip instance. Card "go" affordances use `chevron-right` in a small circle (same as list rows).
+- Buttons: all 6 pill buttons in the screens are instances of the `Button` component (Primary/Secondary), text-only. `Chip` is 32px tall with a 14px label and a locked, invisible `Tap Area 44` layer; "Not now" in the Tip card is a Chip instance. `Segmented Control` is 32px (14px labels) with a Tap Area 44 per segment (instance on screen 03). Text links ("View all", "Change") are `Link/*` frames with a Tap Area 44. Card "go" affordances use `chevron-right` in a small circle (same as list rows).
 - Brand green `#049A6B` (`green/600`), all old variables/styles in this file were deleted at Karim's request
 
 ---

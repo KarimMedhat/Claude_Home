@@ -42,6 +42,16 @@ This file is read automatically by Claude Code on every session. It contains ful
 - Home page hero frame: node `51:120`
 - Design System page: `0:1` (children: Colors–Primitives `16:97`, Colors–Semantic `16:171`, Typography `16:285`, Components `16:502`, Navigation & Footer `16:621`)
 
+### Smooth App (cashback payments) — Karim Draft file
+
+**Figma file:** https://www.figma.com/design/1rJxwwH7qnUPwOjFvQDXjd/Karim-Draft — file key `1rJxwwH7qnUPwOjFvQDXjd`
+- Page **UI**: "Customer Journey" frame `1289:2`, source images "Frame 1" `1307:366`, rebuilt 5-screen flow "Smooth — Payment Flow (UI)" `1311:12`
+- Page **Design System** `1331:2`: documentation frame `1331:3` (cover, colors, typography, spacing & layout, radius, elevation, icons, components)
+- Variables: Primitives (22, hidden), Color (28 semantic, Light mode), Spacing (14 incl. `layout/*`), Radius (6), Typography (14, bound to text styles). The 5 screens are bound to these variables.
+- Text styles `Smooth App/*` (Inter, sizes 28/20/16/14/12); effect styles `Smooth App/Shadow/Button|Badge|XS`
+- Components: Button, Icon Button, Chip, Toggle, Segmented Control, Tab Item, Apple Pay Mark, List Row / Reward, Status Bar, Home Indicator
+- Brand green `#049A6B` (`green/600`), all old variables/styles in this file were deleted at Karim's request
+
 ---
 
 ## Techtifai — Brand System

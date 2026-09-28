@@ -26,6 +26,8 @@ This file is read automatically by Claude Code on every session. It contains ful
 - **Lean, light type scale with clear hierarchy** — mobile UI: 28 / 20 / 16 / 14 / 12 (hero amount / screen title / section header & buttons / body / caption). Headings SemiBold (avoid heavy Bold), body Regular/Medium; build hierarchy with weight + 3 text colors (primary / secondary / tertiary) rather than more sizes. Karim finds large fonts and crowded screens unappealing.
 - **Airy, modern layouts** — 20px screen margins, 16px between cards, 24px between sections, 20px card radius, pill buttons, grouped lists instead of many separate boxes, minimal borders/shadows. The final result must look beautiful and modern — that matters more than copying a reference 1:1.
 - **Default UI font: Inter** for mockups/drafts unless a project's brand guideline specifies another font (e.g. Techtifai = Montserrat).
+- **Buttons are text-only** — no leading/trailing icons inside labeled buttons, and every button in a flow uses the same component and style (no mixing icon and non-icon buttons). Icon-only buttons (back, close, favorite) are fine. Text links are text-only too (no chevrons).
+- **Thin, modern line icons** — 1.5px stroke at 20–24px, 1.25px at 16px, 1px at 12px, round caps, outline only. Karim finds 2px/heavy strokes thick and dated.
 
 ---
 
@@ -50,7 +52,8 @@ This file is read automatically by Claude Code on every session. It contains ful
 - Variables: Primitives (22, hidden), Color (28 semantic, Light mode), Spacing (14 incl. `layout/*`), Radius (6), Typography (14, bound to text styles). The 5 screens are bound to these variables.
 - Text styles `Smooth App/*` (Inter, sizes 28/20/16/14/12); effect styles `Smooth App/Shadow/Button|Badge|XS`
 - Components: Button, Icon Button, Chip, Toggle, Segmented Control, Tab Item, Apple Pay Mark, List Row / Reward, Status Bar, Home Indicator
-- Icons: 23 `Icon/*` components (line icons, 24px grid). All icons in the 5 screens are instances of them — stroke 2px at 20–24px, 1.75 at 16px, 1.5 at 12px; outline only (no filled icons)
+- Icons: 23 `Icon/*` components (line icons, 24px grid, 1.5px stroke). All icons in the 5 screens are instances of them — stroke 1.5px at 20–24px, 1.25 at 16px, 1 at 12px (success check 2.5 at 32px); outline only (no filled icons)
+- Buttons: all 6 pill buttons in the screens are instances of the `Button` component (Primary/Secondary), text-only. Card "go" affordances use `chevron-right` in a small circle (same as list rows).
 - Brand green `#049A6B` (`green/600`), all old variables/styles in this file were deleted at Karim's request
 
 ---

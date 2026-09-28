@@ -22,6 +22,8 @@ This file is read automatically by Claude Code on every session. It contains ful
 - When I share a new reference file (PDF, image, doc), read it fully before doing anything else
 - Always compare new brand files against what's already in the design system before updating
 - **Titles & headings in every design must be Title Case — capitalize the first letter of EVERY word** (e.g. "From The First Scan To The Next Visit", "Want To Leave A Tip?"). Applies to page titles, section titles, card titles and in-app screen headings. Does not apply to body/description text or ALL-CAPS eyebrows. Check this before finishing any design.
+- **Spacing on a 4px grid** — all paddings, gaps, and component sizes are multiples of 4 (4/8/12/16/24/32), applied consistently between similar elements. Prefer auto layout.
+- **Lean type scale with clear hierarchy** — use as few font sizes as possible (e.g. 32/24/20/16/14/12) via text styles; create hierarchy with weight and color rather than extra sizes.
 
 ---
 

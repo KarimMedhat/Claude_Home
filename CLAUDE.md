@@ -23,7 +23,9 @@ This file is read automatically by Claude Code on every session. It contains ful
 - Always compare new brand files against what's already in the design system before updating
 - **Titles & headings in every design must be Title Case — capitalize the first letter of EVERY word** (e.g. "From The First Scan To The Next Visit", "Want To Leave A Tip?"). Applies to page titles, section titles, card titles and in-app screen headings. Does not apply to body/description text or ALL-CAPS eyebrows. Check this before finishing any design.
 - **Spacing on a 4px grid** — all paddings, gaps, and component sizes are multiples of 4 (4/8/12/16/24/32), applied consistently between similar elements. Prefer auto layout.
-- **Lean type scale with clear hierarchy** — use as few font sizes as possible (e.g. 32/24/20/16/14/12) via text styles; create hierarchy with weight and color rather than extra sizes.
+- **Lean, light type scale with clear hierarchy** — mobile UI: 28 / 20 / 16 / 14 / 12 (hero amount / screen title / section header & buttons / body / caption). Headings SemiBold (avoid heavy Bold), body Regular/Medium; build hierarchy with weight + 3 text colors (primary / secondary / tertiary) rather than more sizes. Karim finds large fonts and crowded screens unappealing.
+- **Airy, modern layouts** — 20px screen margins, 16px between cards, 24px between sections, 20px card radius, pill buttons, grouped lists instead of many separate boxes, minimal borders/shadows. The final result must look beautiful and modern — that matters more than copying a reference 1:1.
+- **Default UI font: Inter** for mockups/drafts unless a project's brand guideline specifies another font (e.g. Techtifai = Montserrat).
 
 ---
 

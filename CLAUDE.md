@@ -50,6 +50,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 - Variables: Primitives (22, hidden), Color (28 semantic, Light mode), Spacing (14 incl. `layout/*`), Radius (6), Typography (14, bound to text styles). The 5 screens are bound to these variables.
 - Text styles `Smooth App/*` (Inter, sizes 28/20/16/14/12); effect styles `Smooth App/Shadow/Button|Badge|XS`
 - Components: Button, Icon Button, Chip, Toggle, Segmented Control, Tab Item, Apple Pay Mark, List Row / Reward, Status Bar, Home Indicator
+- Icons: 23 `Icon/*` components (line icons, 24px grid). All icons in the 5 screens are instances of them — stroke 2px at 20–24px, 1.75 at 16px, 1.5 at 12px; outline only (no filled icons)
 - Brand green `#049A6B` (`green/600`), all old variables/styles in this file were deleted at Karim's request
 
 ---

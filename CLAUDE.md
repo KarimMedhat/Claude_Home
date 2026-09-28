@@ -48,7 +48,8 @@ This file is read automatically by Claude Code on every session. It contains ful
 ### Smooth App (cashback payments) — Karim Draft file
 
 **Figma file:** https://www.figma.com/design/1rJxwwH7qnUPwOjFvQDXjd/Karim-Draft — file key `1rJxwwH7qnUPwOjFvQDXjd`
-- Page **UI**: "Customer Journey" frame `1289:2`, source images "Frame 1" `1307:366`, rebuilt 5-screen flow "Smooth — Payment Flow (UI)" `1311:12`
+- Page **UI**: "Customer Journey" frame `1289:2`, source images "Frame 1" `1307:366`, rebuilt 5-screen flow in the Section "Smooth — Payment Flow (UI)" `1352:111` (screens `1311:13/30/47/64/81` sit directly in the section so they can be prototyped)
+- Prototype flow "Cashback Loop" starts at 01: Pay → 02 (dissolve) → View My Cashback → 03 → Urban Grind row/card → 04 → Use Cashback → 05 → Pay → back to 02 (the loop); back chevrons = Back. Screen 04 CTA is "Use Cashback"
 - Page **UX Process** `1345:111`: case-study board "Smooth — UX Process" `1345:112` (1440 wide, cover + 10 steps: product → business opportunity → user problem → experience map → screen goals → key interaction → wireframe/IA → visual design → prototype loop → what we'd validate). Board type scale 48/32/24/16/12, English copy. Step 05 uses scaled clones of the 5 screens — refresh them if the screens change.
 - Page **Design System** `1331:2`: documentation frame `1331:3` (cover, colors, typography, spacing & layout, radius, elevation, icons, components)
 - Variables: Primitives (22, hidden), Color (28 semantic, Light mode), Spacing (14 incl. `layout/*`), Radius (6), Typography (14, bound to text styles). The 5 screens are bound to these variables.

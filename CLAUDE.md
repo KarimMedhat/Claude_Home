@@ -28,6 +28,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 - **Default UI font: Inter** for mockups/drafts unless a project's brand guideline specifies another font (e.g. Techtifai = Montserrat).
 - **Buttons are text-only** — no leading/trailing icons inside labeled buttons, and every button in a flow uses the same component and style (no mixing icon and non-icon buttons). Icon-only buttons (back, close, favorite) are fine. Text links are text-only too (no chevrons).
 - **Thin, modern line icons** — 1.5px stroke at 20–24px, 1.25px at 16px, 1px at 12px, round caps, outline only. Karim finds 2px/heavy strokes thick and dated.
+- **Touch targets ≥ 44×44px** — anything tappable must be easy to hit with a finger. Small controls (chips, text links) can look 32px but get an invisible 44px tap area; never 24px tap targets.
 
 ---
 
@@ -53,7 +54,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 - Text styles `Smooth App/*` (Inter, sizes 28/20/16/14/12); effect styles `Smooth App/Shadow/Button|Badge|XS`
 - Components: Button, Icon Button, Chip, Toggle, Segmented Control, Tab Item, Apple Pay Mark, List Row / Reward, Status Bar, Home Indicator
 - Icons: 23 `Icon/*` components (line icons, 24px grid, 1.5px stroke). All icons in the 5 screens are instances of them — stroke 1.5px at 20–24px, 1.25 at 16px, 1 at 12px (success check 2.5 at 32px); outline only (no filled icons)
-- Buttons: all 6 pill buttons in the screens are instances of the `Button` component (Primary/Secondary), text-only. Card "go" affordances use `chevron-right` in a small circle (same as list rows).
+- Buttons: all 6 pill buttons in the screens are instances of the `Button` component (Primary/Secondary), text-only. `Chip` is 32px tall with a 14px label and a locked, invisible `Tap Area 44` layer; "Not now" in the Tip card is a Chip instance. Card "go" affordances use `chevron-right` in a small circle (same as list rows).
 - Brand green `#049A6B` (`green/600`), all old variables/styles in this file were deleted at Karim's request
 
 ---

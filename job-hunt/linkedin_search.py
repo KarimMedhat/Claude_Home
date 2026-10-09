@@ -1,7 +1,7 @@
-"""Daily Job Hunt: LinkedIn public job search, last 48 hours.
+"""Daily Job Hunt: LinkedIn public job search, last 3 days.
 
-Prints a JSON list of product / UI-UX design roles posted in the last 48
-hours: Product Designer and UI/UX Designer, plain or Senior. Remote or hybrid
+Prints a JSON list of design roles posted in the last 3 days: Product
+Designer, UI/UX Designer, UX Designer and UI Designer, plain or Senior. Remote or hybrid
 in Egypt; in the Gulf, only remote roles whose posting opens them to Egypt.
 A plain-titled role is kept unless the posting asks for fewer than MIN_YEARS
 years of experience, so roles a senior designer can apply to stay in. Lead,
@@ -11,7 +11,8 @@ LinkedIn's public search ignores its remote/hybrid filter, so the work mode
 is read from each posting's own text; a posting that names neither is
 skipped.
 
-Usage: python3 -B job-hunt/linkedin_search.py
+Usage: python3 -B job-hunt/linkedin_search.py [--why]
+  --why  also print every design posting checked, and why it was kept or skipped, to stderr
 """
 import datetime
 import html
@@ -24,14 +25,17 @@ import urllib.request
 
 SEARCH = "https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search"
 POSTING = "https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/"
-LAST_48H = "r172800"
-MAX_AGE_DAYS = 2
+LAST_3_DAYS = "r259200"
+MAX_AGE_DAYS = 3
 PAGES = 3  # 10 results per page
 MIN_YEARS = 3
+WHY = "--why" in sys.argv
 
 KEYWORDS = [
     "Product Designer",
     "UI UX Designer",
+    "UX Designer",
+    "UI Designer",
 ]
 # (LinkedIn location, country label)
 LOCATIONS = [
@@ -44,7 +48,9 @@ LOCATIONS = [
     ("Oman", "Oman"),
 ]
 
-DESIGN = re.compile(r"(product designer|\bui\s*[/&-]?\s*ux\b|\bux\s*[/&-]?\s*ui\b)", re.I)
+DESIGN = re.compile(
+    r"(product designer|\bui\s*[/&-]?\s*ux\b|\bux\s*[/&-]?\s*ui\b|\bux designer\b|\bui designer\b|"
+    r"user experience designer|user interface designer)", re.I)
 SENIOR = re.compile(r"\b(senior|sr\.?)\b", re.I)
 EXCLUDE = re.compile(
     r"\b(lead|leader|head|principal|staff|manager|director|chief|vp|founding|"
@@ -141,18 +147,27 @@ def recent(posted_date):
     return (datetime.date.today() - d).days <= MAX_AGE_DAYS
 
 
-def qualifies(job, d, country):
-    if d["closed"] or d["seniorityLevel"] in JUNIOR_LEVELS:
-        return False
+def rejection(job, d, country):
+    """Why this posting is left out, or None when it qualifies."""
+    if d["closed"]:
+        return "closed"
+    if d["seniorityLevel"] in JUNIOR_LEVELS:
+        return "junior level"
     if country == "Egypt":
         if d["mode"] not in ("Remote", "Hybrid"):
-            return False
+            return "posting doesn't say remote or hybrid"
     # A Gulf role only counts if it can be done from Egypt: remote, open to Egypt
     # (or MENA / EMEA / anywhere), and not asking the candidate to live in the Gulf.
-    elif d["mode"] != "Remote" or d["needsGulfBase"] or not d["opensToEgypt"]:
-        return False
+    elif d["mode"] != "Remote":
+        return "posting doesn't say remote"
+    elif d["needsGulfBase"]:
+        return "must live in the Gulf or relocate"
+    elif not d["opensToEgypt"]:
+        return "not open to Egypt"
     years = d["yearsRequired"]
-    return bool(SENIOR.search(job["title"])) or years is None or years >= MIN_YEARS
+    if not SENIOR.search(job["title"]) and years is not None and years < MIN_YEARS:
+        return f"asks for only {years} years"
+    return None
 
 
 def main():
@@ -161,7 +176,7 @@ def main():
         for kw in KEYWORDS:
             for p in range(PAGES):
                 page = get(SEARCH + "?" + urllib.parse.urlencode(
-                    {"keywords": kw, "location": loc, "f_TPR": LAST_48H, "start": p * 10}))
+                    {"keywords": kw, "location": loc, "f_TPR": LAST_3_DAYS, "start": p * 10}))
                 cards = list(parse_cards(page))
                 for job in cards:
                     m = re.search(r"-(\d+)$", job["url"])
@@ -173,7 +188,11 @@ def main():
                         continue
                     details = posting_details(m.group(1), title)
                     time.sleep(1.5)
-                    if not qualifies(job, details, country):
+                    reason = rejection(job, details, country)
+                    if WHY:
+                        print(f"{'KEEP' if not reason else 'skip'} | {country} | {title} | {job['company']} | "
+                              f"{reason or details['mode']} | {job['url']}", file=sys.stderr)
+                    if reason:
                         continue
                     job.update(details, country=country, source="LinkedIn",
                                seniorTitle=bool(SENIOR.search(title)),

@@ -1,7 +1,7 @@
 """Daily Job Hunt: check a job posting found on Google (company careers page or ATS).
 
 Reads the posting's structured data (schema.org JobPosting) and, for
-Greenhouse, Lever and Ashby links, their public job APIs. Prints JSON with
+Greenhouse, Lever, Ashby and SmartRecruiters links, their public job APIs. Prints JSON with
 the posting date, whether it is still open, the work mode and the countries
 it is open to, so the daily routine can apply the same rules as LinkedIn.
 
@@ -84,7 +84,7 @@ def from_json_ld(item):
 
 
 def from_ats_api(url):
-    """Greenhouse, Lever and Ashby publish posting dates in their public job APIs."""
+    """Greenhouse, Lever, Ashby and SmartRecruiters publish posting dates in their public job APIs."""
     m = re.search(r"greenhouse\.io/(?:embed/job_app\?for=)?([\w-]+)/jobs/(\d+)", url)
     if m:
         status, body = get(f"https://boards-api.greenhouse.io/v1/boards/{m.group(1)}/jobs/{m.group(2)}")
@@ -104,6 +104,21 @@ def from_ats_api(url):
                     "location": ", ".join(cats.get("allLocations") or [cats.get("location") or ""]),
                     "remoteTag": d.get("workplaceType") == "remote", "workplaceType": d.get("workplaceType"),
                     "description": d.get("descriptionPlain") or ""}
+        return {"closed": status == 404}
+    m = re.search(r"smartrecruiters\.com/([\w.-]+)/(\d{6,})", url)
+    if m:
+        status, body = get(f"https://api.smartrecruiters.com/v1/companies/{m.group(1)}/postings/{m.group(2)}")
+        if status == 200:
+            d = json.loads(body)
+            loc = d.get("location") or {}
+            mode = "hybrid" if loc.get("hybrid") else "remote" if loc.get("remote") else "onsite"
+            sections = (d.get("jobAd") or {}).get("sections") or {}
+            text = " ".join((sections.get(k) or {}).get("text", "") for k in ("jobDescription", "qualifications"))
+            return {"title": d.get("name"), "postedDate": to_date(d.get("releasedDate")),
+                    "closed": d.get("active") is False,
+                    "location": ", ".join(x for x in [loc.get("city"), (loc.get("country") or "").upper()] if x),
+                    "workplaceType": mode,
+                    "description": re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", text)))}
         return {"closed": status == 404}
     m = re.search(r"jobs\.ashbyhq\.com/([\w.-]+)/([0-9a-f-]{36})", url)
     if m:

@@ -52,6 +52,9 @@ ONSITE = re.compile(r"\b(on-?site|in-office|office-based|work from (the )?office
 REMOTE_OR_HYBRID = re.compile(r"\b(remote|hybrid|work from home|wfh)\b", re.I)
 JUNIOR_LEVELS = {"Entry level", "Internship"}
 GULF = r"(the )?(gcc|gulf|uae|united arab emirates|dubai|abu dhabi|sharjah|saudi( arabia)?|ksa|riyadh|jeddah|qatar|doha|kuwait|bahrain|manama|oman|muscat)"
+OPEN_TO_EGYPT = re.compile(
+    r"\b(egypt|cairo|mena|middle east and north africa|emea|anywhere|worldwide|any country|any location|"
+    r"all countries|globally|fully distributed)\b", re.I)
 GULF_BASE = re.compile(
     r"relocat|\b(based|located|reside|resident|residing|living)\s+(in|within)\s+" + GULF + r"\b", re.I)
 YEARS = re.compile(r"(\d{1,2})\s*(?:\+|plus)?\s*(?:[-–to]+\s*\d{1,2}\s*)?\+?\s*(?:years|yrs)", re.I)
@@ -101,7 +104,8 @@ def posting_details(job_id):
     onsite = bool(ONSITE.search(desc)) and not REMOTE_OR_HYBRID.search(desc)
     return {"description": desc[:1200], "yearsRequired": max(years) if years else None,
             "seniorityLevel": level, "closed": closed, "onsite": onsite,
-            "needsGulfBase": bool(GULF_BASE.search(desc))}
+            "needsGulfBase": bool(GULF_BASE.search(desc)),
+            "opensToEgypt": bool(OPEN_TO_EGYPT.search(desc))}
 
 
 def main():
@@ -125,8 +129,10 @@ def main():
                         time.sleep(1.5)
                         if details["closed"] or details["onsite"] or details["seniorityLevel"] in JUNIOR_LEVELS:
                             continue
-                        # A Gulf role only counts if it can be done from Egypt.
-                        if country != "Egypt" and details["needsGulfBase"]:
+                        # A Gulf role only counts if it can be done from Egypt. LinkedIn's
+                        # "Remote" there usually means remote inside that country, so the
+                        # posting has to say Egypt (or MENA / EMEA / anywhere) is allowed.
+                        if country != "Egypt" and (details["needsGulfBase"] or not details["opensToEgypt"]):
                             continue
                         senior_title = bool(SENIOR.search(title))
                         years = details["yearsRequired"]

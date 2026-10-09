@@ -4,12 +4,14 @@ Prints a JSON list of design roles posted in the last 3 days: Product
 Designer, UI/UX Designer, UX Designer and UI Designer, plain or Senior. Remote or hybrid
 in Egypt; in the Gulf, only remote roles whose posting opens them to Egypt.
 A plain-titled role is kept unless the posting asks for fewer than MIN_YEARS
-years of experience, so roles a senior designer can apply to stay in. Lead,
+years of experience (a range like "2-5 years" counts, since its top end is above it), so roles a senior designer can apply to stay in. Lead,
 head, principal, staff, manager and junior roles are left out.
 
-LinkedIn's public search ignores its remote/hybrid filter, so the work mode
-is read from each posting's own text; a posting that names neither is
-skipped.
+LinkedIn hides its workplace label (and ignores its remote/hybrid filter)
+for signed-out visitors, so the work mode is read from each posting's own
+text. Egypt postings whose text names no work mode are kept with mode
+"Not stated" so they can be checked on LinkedIn; ones that say on-site only
+are dropped.
 
 Usage: python3 -B job-hunt/linkedin_search.py [--why]
   --why  also print every design posting checked, and why it was kept or skipped, to stderr
@@ -60,6 +62,7 @@ EXCLUDE = re.compile(
     re.I)
 JUNIOR_LEVELS = {"Entry level", "Internship"}
 
+ONSITE = re.compile(r"\b(on-?site|in-office|office-based|work(ing)? from (the |our )?office)\b", re.I)
 FULLY_REMOTE = re.compile(r"\b(fully remote|100% remote|remote only|remote-only)\b", re.I)
 HYBRID_TEXT = re.compile(r"\bhybrid\b", re.I)
 REMOTE_TEXT = re.compile(
@@ -75,7 +78,7 @@ OPEN_TO_EGYPT = re.compile(
     r"all countries|globally|fully distributed)\b", re.I)
 GULF_BASE = re.compile(
     r"relocat|\b(based|located|reside|resident|residing|living)\s+(in|within)\s+" + GULF + r"\b", re.I)
-YEARS = re.compile(r"(\d{1,2})\s*(?:\+|plus)?\s*(?:[-–to]+\s*\d{1,2}\s*)?\+?\s*(?:years|yrs)", re.I)
+YEARS = re.compile(r"(\d{1,2})\s*(?:\+|plus)?\s*(?:(?:-|–|to)\s*(\d{1,2})\s*)?\+?\s*(?:years|yrs)", re.I)
 
 
 def get(url):
@@ -110,7 +113,7 @@ def parse_cards(page):
 
 
 def work_mode(title, desc):
-    """'Remote', 'Hybrid', or None when the posting doesn't say."""
+    """'Remote', 'Hybrid', 'On-site', or 'Not stated' when the posting doesn't say."""
     text = title + " . " + desc
     if FULLY_REMOTE.search(text):
         return "Remote"
@@ -118,7 +121,9 @@ def work_mode(title, desc):
         return "Hybrid"
     if REMOTE_TEXT.search(text):
         return "Remote"
-    return None
+    if ONSITE.search(text):
+        return "On-site"
+    return "Not stated"
 
 
 def posting_details(job_id, title):
@@ -127,11 +132,14 @@ def posting_details(job_id, title):
     desc = field(r'show-more-less-html__markup[^>]*>(.*?)</div>', page)
     desc = html.unescape(re.sub(r"<[^>]+>", " ", desc))
     desc = re.sub(r"\s+", " ", desc).strip()
-    years = [int(m.group(1)) for m in YEARS.finditer(desc) if 0 < int(m.group(1)) <= 20]
+    years = [(int(m.group(1)), int(m.group(2) or m.group(1))) for m in YEARS.finditer(desc)
+             if 0 < int(m.group(1)) <= 20]
     return {
         "description": desc[:1200],
         "mode": work_mode(title, desc),
-        "yearsRequired": max(years) if years else None,
+        # The most demanding requirement, e.g. "5+" or "2-5".
+        "yearsRequired": "-".join(map(str, sorted(set(max(years))))) if years else None,
+        "seniorOk": None if not years else any(lo >= MIN_YEARS or hi > MIN_YEARS for lo, hi in years),
         "seniorityLevel": field(r'Seniority level\s*</h3>\s*<span[^>]*>\s*(.*?)\s*<', page),
         "closed": "No longer accepting applications" in page,
         "needsGulfBase": bool(GULF_BASE.search(desc)),
@@ -153,20 +161,20 @@ def rejection(job, d, country):
         return "closed"
     if d["seniorityLevel"] in JUNIOR_LEVELS:
         return "junior level"
-    if country == "Egypt":
-        if d["mode"] not in ("Remote", "Hybrid"):
-            return "posting doesn't say remote or hybrid"
-    # A Gulf role only counts if it can be done from Egypt: remote, open to Egypt
-    # (or MENA / EMEA / anywhere), and not asking the candidate to live in the Gulf.
-    elif d["mode"] != "Remote":
-        return "posting doesn't say remote"
-    elif d["needsGulfBase"]:
-        return "must live in the Gulf or relocate"
-    elif not d["opensToEgypt"]:
-        return "not open to Egypt"
-    years = d["yearsRequired"]
-    if not SENIOR.search(job["title"]) and years is not None and years < MIN_YEARS:
-        return f"asks for only {years} years"
+    if d["mode"] == "On-site":
+        return "on-site"
+    # Egypt: Remote, Hybrid or Not stated all pass ("Not stated" is checked by hand on
+    # LinkedIn). A Gulf role only counts if it can be done from Egypt: not hybrid, open
+    # to Egypt (or MENA / EMEA / anywhere), and not asking the candidate to live there.
+    if country != "Egypt":
+        if d["mode"] == "Hybrid":
+            return "hybrid in the Gulf"
+        if d["needsGulfBase"]:
+            return "must live in the Gulf or relocate"
+        if not d["opensToEgypt"]:
+            return "not open to Egypt"
+    if not SENIOR.search(job["title"]) and d["seniorOk"] is False:
+        return f"asks for only {d['yearsRequired']} years"
     return None
 
 

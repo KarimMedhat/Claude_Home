@@ -26,10 +26,16 @@ PLACES = {
 REMOTE = re.compile(r"\b(remote|work from home|wfh)\b", re.I)
 HYBRID = re.compile(r"\bhybrid\b", re.I)
 ONSITE = re.compile(r"\b(on-?site|onsite|from (the|our) office)\b", re.I)
+# Patterns common in recruitment-funnel and scam posts: no employer named, apply by joining a group or chat.
+RED_FLAGS = {
+    "apply by joining a group": re.compile(r"\b(must be a member|join (our|the) .{0,40}(room|group|community|channel)|join through the following link)", re.I),
+    "apply over Telegram/WhatsApp": re.compile(r"\b(telegram|whatsapp|t\.me/|wa\.me/)", re.I),
+    "asks for a fee": re.compile(r"\b(registration fee|application fee|training fee|pay (a|the) fee)\b", re.I),
+}
 
 
 def posted_at(url):
-    m = re.search(r"activity[-:](\d{18,20})", url)
+    m = re.search(r"(?:activity|share|ugcPost)[-:](\d{18,20})", url)
     if not m:
         return None
     return datetime.datetime.fromtimestamp((int(m.group(1)) >> 22) / 1000, datetime.timezone.utc)
@@ -72,6 +78,7 @@ def check(url):
     info["places"] = [name for name, rx in PLACES.items() if rx.search(text)]
     info["mode"] = ("Hybrid" if HYBRID.search(text) else "Remote" if REMOTE.search(text)
                     else "On-site" if ONSITE.search(text) else "Not stated")
+    info["redFlags"] = [name for name, rx in RED_FLAGS.items() if rx.search(text)]
     return info
 
 

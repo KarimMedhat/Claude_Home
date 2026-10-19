@@ -38,7 +38,8 @@ This file is read automatically by Claude Code on every session. It contains ful
 - **Core flow (prototype):** spot a KPI below target → understand the gap → create a corrective action → assign an owner + deadline → track progress
 - **Supporting flows:** B — update a KPI and submit it for approval · C — follow up on a delayed initiative
 - **Case study rule:** keep assumptions, validated findings, and design decisions clearly separate — personas and the research plan are hypotheses, not real interviews
-- **Open decisions:** KPI status thresholds + polarity, corrective-action states, Latin vs Arabic-Indic numerals, Hijri/Gregorian dates, chart time-axis direction, font (Cairo vs IBM Plex Sans Arabic)
+- **Decided:** KPI status computed automatically from the approved value vs target, with polarity (higher/lower-is-better), on track ≥95% / needs attention 85–95% / off track <85% / no data · corrective action states New → In progress → Pending verification → Closed (+ Cancelled), with "Overdue" as a flag rather than a state · Arabic-Indic numerals (٠–٩) · Gregorian dates · RTL charts (time runs right→left) · font **IBM Plex Sans Arabic** · balanced dashboard (KPIs plus "needs attention" above the fold)
+- **Case study:** 11-section Behance structure + visual references in the brief · screen order: Dashboard → KPI detail → create corrective action
 
 ### Techtifai Website
 

@@ -26,6 +26,20 @@ This file is read automatically by Claude Code on every session. It contains ful
 
 ## Active Projects
 
+### Mi'yar | مِعيار — Performance & Governance Platform (Portfolio)
+
+**Status:** Active — UX phase (Problem → Personas → MVP → IA → User Flows), then Wireframes → Design System → UI
+
+**Full brief:** `Miyar_Product_Brief.md` (read it before any Mi'yar work)
+
+- **Type:** Enterprise Web Platform · concept project for a Behance Product Design case study — fictional, not tied to any real agency or company; all data is fictional and labelled as such
+- **Language:** Arabic, full RTL · **Visual direction:** Light, White & Navy · **Visual reference only:** rouya360.com
+- **Users:** government managers and employees — Ahmed (performance director, primary), Sara (performance analyst, data contributor), Khaled (department head / initiative owner, action owner)
+- **Core flow (prototype):** spot a KPI below target → understand the gap → create a corrective action → assign an owner + deadline → track progress
+- **Supporting flows:** B — update a KPI and submit it for approval · C — follow up on a delayed initiative
+- **Case study rule:** keep assumptions, validated findings, and design decisions clearly separate — personas and the research plan are hypotheses, not real interviews
+- **Open decisions:** KPI status thresholds + polarity, corrective-action states, Latin vs Arabic-Indic numerals, Hijri/Gregorian dates, chart time-axis direction, font (Cairo vs IBM Plex Sans Arabic)
+
 ### Techtifai Website
 
 **Status:** Active — design in progress in Figma

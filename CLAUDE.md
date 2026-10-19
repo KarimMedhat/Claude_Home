@@ -40,6 +40,8 @@ This file is read automatically by Claude Code on every session. It contains ful
 - **Case study rule:** keep assumptions, validated findings, and design decisions clearly separate — personas and the research plan are hypotheses, not real interviews
 - **Decided:** KPI status computed automatically from the approved value vs target, with polarity (higher/lower-is-better), on track ≥95% / needs attention 85–95% / off track <85% / no data · corrective action states New → In progress → Pending verification → Closed (+ Cancelled), with "Overdue" as a flag rather than a state · Arabic-Indic numerals (٠–٩) · Gregorian dates · RTL charts (time runs right→left) · font **IBM Plex Sans Arabic** · balanced dashboard (KPIs plus "needs attention" above the fold)
 - **Case study:** 11-section Behance structure + visual references in the brief · screen order: Dashboard → KPI detail → create corrective action
+- **Figma:** file `1rJxwwH7qnUPwOjFvQDXjd` (Karim Draft, Uniparticle team), page `Mi'yar | مِعيار` `1805:1485` — IA `1808:234` · User Flows `1809:234` · Dashboard Low-Fi `1810:234`
+- **Dashboard = the hero of the case study** — it has to look excellent. IBM Plex Sans Arabic isn't available in Figma, so the wireframes use Noto Sans Arabic as a stand-in
 
 ### Techtifai Website
 

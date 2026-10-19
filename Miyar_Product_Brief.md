@@ -260,6 +260,8 @@
 | 01 · Information Architecture | `1808:234` | ✅ |
 | 02 · User Flows (A · B · C) | `1809:234` | ✅ |
 | 03 · Dashboard — Low-Fi Wireframe (1440) | `1810:234` | ✅ مسودة أولى |
+| 04 · Dashboard — Hi-Fi (1440) | `1819:268` | ✅ نسخة أولى |
+| Mi'yar · Components | `1816:234` | ✅ |
 
 **الـ Dashboard هي محور الـ Case Study** — لازم تبان كشغل Dashboard قوي ومتقن.
 
@@ -291,3 +293,23 @@
 | ٤ (اختياري) | قائمة المؤشرات · لوحة الإشعارات | — |
 
 **الترتيب:** Dashboard Hi-Fi أولًا (تثبيت اللغة البصرية والمكونات) ← شاشات Flow A ← B ← C.
+
+---
+
+## Design System — Mi'yar (في ملف Figma)
+
+**Variables**
+- `Mi'yar · Primitives` — navy/50–900 (البراند `navy/800 #142B49`) · neutral/0–900 · green · amber · red
+- `Mi'yar · Color` (Light) — bg/* · text/* · border/* · status/{success,warning,danger,neutral}/{fg,bg,mark} · chart/{actual,target,area,grid}
+- `Mi'yar · Spacing` space/1–10 (4px base) · `Mi'yar · Radius` sm 6 · md 10 · lg 14 · xl 20 · full
+
+**Text styles** `Mi'yar/…` — Display/KPI 36 · Heading/H1 28 · H2 18 · H3 15 · Body/Default 14 · Body/Medium · Body/Small 13 · Caption 12 · Label 12 · Number/Table 14 (حاليًا Noto Sans Arabic)
+**Effects** `Mi'yar/Shadow/Card` · `Mi'yar/Shadow/Popover`
+
+**Components** — Icon/* (19 أيقونة) · StatusBadge (٥ حالات: أيقونة + نص) · ActionState (٥ حالات) · Avatar · Button (Primary/Secondary) · NavItem (Default/Active + عداد) · AttentionItem · DeptRow (شريط التحقيق = Gradient قابل للتعديل) · ActionItem
+
+**قرارات بصرية في الـ Hi-Fi**
+- Sidebar Navy كهوية قوية + لوجو (أعمدة + خط مستهدف متقطع = "معيار")
+- كارت "الأداء العام" بطل الصف: Navy + Gauge يمتلئ RTL مع علامة المستهدف ٩٠٪
+- ألوان الحالة محجوزة للحالات فقط، ودايمًا معاها أيقونة + نص
+- الرسم البياني: خط Navy ناعم + Gradient + خط المستهدف المتقطع + Tooltip + ملخص Insight مكتوب

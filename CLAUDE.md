@@ -54,7 +54,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 - **Font:** **Cairo** (text styles `TIEC/*`) · Western digits (matches the live site)
 - **Structure:** header/nav → dark hero (period filter: cumulative / 2026 YTD / years, 4 headline numbers) → impact journey (training → ideas → entrepreneurs → startups → companies → jobs) + supporting metrics → sticky section tabs → pillar sections matching the site nav (ابنِ موهبتك · ادعم فكرتك · ابدأ شركتك · طوّر شركتك · مجتمع الإبداع) → past programs (collapsed) → methodology → newsletter → footer
 - **Rules applied:** 2026 is shown as partial (to June), not a decline · time axis RTL · selective value labels · special 2025 incubation cohort (130) shown separately · data anomalies (2025 platform entities/users, 3× "2026" consulting bars, mixed categories in the jobs chart) flagged "قيد المراجعة" for the data team
-- **Logos in the design are text placeholders** — replace with the official TIEC/ITIDA artwork
+- **Header & footer = exact replicas of the live site** (Karim's request): `Header — live site` `1854:370`, `Footer — live site` `1854:414`. Logos (itida|tiec, eubic) are low-res crops from a screenshot — replace with the official SVG/PNG files
 
 ### Techtifai Website
 

@@ -33,16 +33,16 @@ This file is read automatically by Claude Code on every session. It contains ful
 **Full brief:** `Miyar_Product_Brief.md` (read it before any Mi'yar work)
 
 - **Type:** Enterprise Web Platform · concept project for a Behance Product Design case study — fictional, not tied to any real agency or company; all data is fictional and labelled as such
-- **Language:** Arabic, full RTL · **Visual direction:** Light, White & Navy · **Visual reference only:** rouya360.com
+- **Language:** Arabic, full RTL · **Visual direction (v2):** Electric Violet `#5B4CF5` + coral accent `#FF8A4C` on lavender-white — **no navy, no green** (Karim uses those in other projects); status colors sky / amber / red / gray · **Visual reference only:** rouya360.com
 - **Users:** government managers and employees — Ahmed (performance director, primary), Sara (performance analyst, data contributor), Khaled (department head / initiative owner, action owner)
 - **Core flow (prototype):** spot a KPI below target → understand the gap → create a corrective action → assign an owner + deadline → track progress
 - **Supporting flows:** B — update a KPI and submit it for approval · C — follow up on a delayed initiative
 - **Case study rule:** keep assumptions, validated findings, and design decisions clearly separate — personas and the research plan are hypotheses, not real interviews
 - **Decided:** KPI status computed automatically from the approved value vs target, with polarity (higher/lower-is-better), on track ≥95% / needs attention 85–95% / off track <85% / no data · corrective action states New → In progress → Pending verification → Closed (+ Cancelled), with "Overdue" as a flag rather than a state · Arabic-Indic numerals (٠–٩) · Gregorian dates · RTL charts (time runs right→left) · font **IBM Plex Sans Arabic** · balanced dashboard (KPIs plus "needs attention" above the fold)
 - **Case study:** 11-section Behance structure + visual references in the brief · screen order: Dashboard → KPI detail → create corrective action
-- **Figma:** file `1rJxwwH7qnUPwOjFvQDXjd` (Karim Draft, Uniparticle team), page `Mi'yar | مِعيار` `1805:1485` — IA `1808:234` · User Flows `1809:234` · Dashboard Low-Fi `1810:234` · **Dashboard Hi-Fi `1819:268`** · Components `1816:234`
+- **Figma:** file `1rJxwwH7qnUPwOjFvQDXjd` (Karim Draft, Uniparticle team), page `Mi'yar | مِعيار` `1805:1485` — IA `1808:234` · User Flows `1809:234` · Dashboard Low-Fi `1810:234` · Dashboard Hi-Fi v1 (archived) `1819:268` · Components `1816:234` · **v2: Dashboard `1828:656` · KPI Explorer `1834:921` · KPI Detail `1836:1315` · Action Drawer `1838:1455`**
 - **Design system:** variables `Mi'yar · Primitives/Color/Spacing/Radius`, text styles `Mi'yar/*`, shadows `Mi'yar/Shadow/*` — details in the brief
-- **Dashboard = the hero of the case study** — it has to look excellent. IBM Plex Sans Arabic isn't available in Figma, so the wireframes use Noto Sans Arabic as a stand-in
+- **Dashboard = the hero of the case study** — it has to look excellent. IBM Plex Sans Arabic isn't available in Figma; v2 uses **Readex Pro** as the stand-in. Karim wants senior-level, creative screens — not basic layouts
 
 ### Techtifai Website
 

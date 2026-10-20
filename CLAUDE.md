@@ -44,6 +44,18 @@ This file is read automatically by Claude Code on every session. It contains ful
 - **Design system:** variables `Mi'yar · Primitives/Color/Spacing/Radius`, text styles `Mi'yar/*`, shadows `Mi'yar/Shadow/*` — details in the brief
 - **Dashboard = the hero of the case study** — it has to look excellent. IBM Plex Sans Arabic isn't available in Figma; v2 uses **Readex Pro** as the stand-in. Karim wants senior-level, creative screens — not basic layouts
 
+### TIEC Dashboard Redesign (tiec.gov.eg/arabic/pages/dashboard.aspx)
+
+**Status:** Active — desktop redesign v1 done in Figma
+
+- **What:** redesign of TIEC's public impact dashboard page (Technology Innovation & Entrepreneurship Center, part of ITIDA). Karim works on it ("our page")
+- **Figma:** file `1rJxwwH7qnUPwOjFvQDXjd`, page "Page 9" `1842:2896` — Audit `1845:234` · Desktop page `1847:323` · icons `1847:234`. **Don't touch the Mi'yar page** when working on TIEC
+- **Brand:** TIEC colors — red `#E2202B`, ink/charcoal `#141416`/`#232328`, gold `#B08D3C`, warm canvas `#F6F5F2` (variables `TIEC · Color`) — **not violet**
+- **Font:** **Cairo** (text styles `TIEC/*`) · Western digits (matches the live site)
+- **Structure:** header/nav → dark hero (period filter: cumulative / 2026 YTD / years, 4 headline numbers) → impact journey (training → ideas → entrepreneurs → startups → companies → jobs) + supporting metrics → sticky section tabs → pillar sections matching the site nav (ابنِ موهبتك · ادعم فكرتك · ابدأ شركتك · طوّر شركتك · مجتمع الإبداع) → past programs (collapsed) → methodology → newsletter → footer
+- **Rules applied:** 2026 is shown as partial (to June), not a decline · time axis RTL · selective value labels · special 2025 incubation cohort (130) shown separately · data anomalies (2025 platform entities/users, 3× "2026" consulting bars, mixed categories in the jobs chart) flagged "قيد المراجعة" for the data team
+- **Logos in the design are text placeholders** — replace with the official TIEC/ITIDA artwork
+
 ### Techtifai Website
 
 **Status:** Active — design in progress in Figma

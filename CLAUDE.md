@@ -68,7 +68,12 @@ This file is read automatically by Claude Code on every session. It contains ful
 
 ### Techtifai Website
 
-**Status:** Active — design in progress in Figma
+**Status:** Active — design in progress in Figma · **Behance case study deck v1 done**
+
+- **Behance deck:** Karim Draft file `1rJxwwH7qnUPwOjFvQDXjd`, **Page 10** `1937:2611`, section `Techtifai — Behance Case Study (1400px)` `1941:406` — 16 slides, 1400 wide, variable heights, stacked vertically (40px gap), each exports PNG @2x. Order: cover → overview → challenge & goals → IA (sitemap with real thumbnails) → user flow → design system foundations → components → Home hero (MacBook) → Home full page (3 strips) → About+Services → Capabilities+Industries → Process+Why Us → Case Studies+Team → Contact → Responsive → Thank you
+- **Deck style (Karim's direction):** premium/elite like his Tavio deck (page8 `1724:3866`) in quality, NOT copied. Techtifai's own look: deep navy gradients + blue glow + the site's own 3D hero images as backgrounds, Montserrat, sky-blue accent `#5FB4E8`. **No red in the deck's own design** (red only appears inside the real screens / palette as CTA). Avoid "all cards" / AI-looking layouts; every slide anchored by a real visual
+- **Deck parts:** variables `Techtifai Deck · Color`, text styles `Techtifai/Deck/*`, footer `Techtifai/Deck/Footer` `1941:403`, mockups `Techtifai/Mockup/MacBook` `1960:1923`, `/iPhone` `1960:2151`, `/Browser` `1964:427` (URL text prop; screen image uses CROP transform to top-align long pages)
+- **Screens:** Karim pasted the UI sections onto Page 10 (x ≥ 27,000). Rasterized copies live in `Deck assets (rasterized screens)` (x −26000): `<page>/desktop/fold|full`, `<page>/mobile/fold|full`, `comp/*` — re-export these if the UI changes
 
 **Local files:** `E:\Uniparticle\Techtifai Website\Techtifai Website\`
 

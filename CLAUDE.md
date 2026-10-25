@@ -37,6 +37,12 @@ This file is read automatically by Claude Code on every session. It contains ful
 - Home page hero frame: node `51:120`
 - Design System page: `0:1` (children: Colors–Primitives `16:97`, Colors–Semantic `16:171`, Typography `16:285`, Components `16:502`, Navigation & Footer `16:621`)
 
+### Unfold (Personal Startup)
+
+**Status:** Planning — no Figma work yet (don't touch Figma until I say so)
+
+See the full Unfold section below and `Unfold_User_Flow.md`.
+
 ---
 
 ## Techtifai — Brand System
@@ -178,6 +184,38 @@ Tagline: "One Partner for Total Transformation"
 - [ ] Replace old logo with new logo in navbar
 - [ ] Apply design system bindings to remaining page frames
 - [ ] Design remaining 9 pages in Figma
+
+---
+
+## Unfold — Personal Startup
+
+**Status:** Planning. User flow drafted. No Figma file yet.
+
+**User flow:** `Unfold_User_Flow.md` (source of truth for flows and screens)
+
+### Concept
+- AI website that turns a designer's raw project material into a polished, portfolio-ready presentation
+- Problem: making the presentation (case study, UI shots, redesign) often takes more effort than the UI itself
+- Target users: UI/UX designers, product designers, and developers who need to show their work on Behance, Dribbble, and portfolios
+- Powered by the Claude API (Opus tier). Users never see which model is used.
+
+### Product Decisions
+- **Platform:** Website, English, LTR
+- **Handoff:** Design goes to a developer once complete
+- **Project types (user chooses):** Case Study, UI Shots, Redesign, Design System, Landing Page / Website, Mobile App Showcase, Concept / Personal Project, Other
+- **Output formats (user chooses):** Behance Long-scroll, Slides 16:9, Dribbble Shots, PDF Portfolio
+- **Format switching:** Content is written once. Each format is just a different layout, switchable from the Editor ("Create once, publish everywhere")
+- **Industry:** Drives mood, color, and visual style
+- **Scope:** UI / UX / Both. Decides which sections get generated
+- **Pricing direction:** Credit-based, not unlimited subscription
+
+### Core Flow (summary)
+Project type → Output format → Industry → Scope → Upload (screens / Figma link / docs) → Smart AI questions → 3 visual directions → Generate → Editor → Export
+
+### Open Decisions
+- Final pricing and credit amounts
+- Brand identity for Unfold (logo, colors, typography)
+- Showcase examples for the landing page
 
 ---
 

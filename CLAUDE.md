@@ -39,7 +39,13 @@ This file is read automatically by Claude Code on every session. It contains ful
 
 ### Unfold (Personal Startup)
 
-**Status:** Planning — no Figma work yet (don't touch Figma until I say so)
+**Status:** UX phase — don't touch Figma until I say so
+
+**Figma file:** https://www.figma.com/design/1rJxwwH7qnUPwOjFvQDXjd/Karim-Draft
+- File key: `1rJxwwH7qnUPwOjFvQDXjd`
+- UX page: node `2058:632`
+- UI page: node `2058:633`
+- Design System presentation page: node `2058:634` (variables system planned later, not started)
 
 See the full Unfold section below and `Unfold_User_Flow.md`.
 
@@ -189,7 +195,7 @@ Tagline: "One Partner for Total Transformation"
 
 ## Unfold — Personal Startup
 
-**Status:** Planning. User flow drafted. No Figma file yet.
+**Status:** UX phase. User flow drafted. Figma file created (see Active Projects), nothing designed yet. UI and the variables system come after UX.
 
 **User flow:** `Unfold_User_Flow.md` (source of truth for flows and screens)
 

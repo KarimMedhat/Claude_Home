@@ -197,7 +197,7 @@ Tagline: "One Partner for Total Transformation"
 
 ## Unfold — Personal Startup
 
-**Status:** UX phase. User Flow, Competitive Analysis and Proto-Personas done in Figma. UI and the variables system come after UX.
+**Status:** UX phase. User Flow, Competitive Analysis, Proto-Personas and Information Architecture done in Figma. UI and the variables system come after UX.
 
 **User flow:** `Unfold_User_Flow.md` (source of truth for flows and screens)
 
@@ -229,13 +229,21 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 - [x] Added components: Meter (Level 1–5), Bullet Item, Stat
 - [x] Polish pass on all 3 boards: Board Cover (dark gradient hero + 4 stats) on each, upgraded Section Header, Flow Node, Insight Card, Competitor Card (brand mark), Flow Note; flow Goal/Metric/Decision rebuilt as icon cards + dark decision callout
 - [x] Added components: Board Cover, Cover Stat (use Board Cover as the header of every new UX board)
-- [ ] Information Architecture
+- [x] Information Architecture v1 on `Unfold_UX` — frame `2075:1719` (sitemap: 5 areas / 18 pages / 31 views & overlays, navigation model with 4 nav specimens, content model: 7 objects, presentation lifecycle, labeling & URL conventions, 5 IA principles)
+- [x] Added component: IA Node (Page · Sub-page · Overlay)
 - [ ] Wireframes (Wizard + Editor first)
 
 ### Key Findings (Competitive Analysis)
 - Closest threat: UXfolio (AI case studies, but locked to its own site, no Behance/Dribbble/slides export)
 - Gap: no tool exports Behance-ready long-scroll; generic AI deck tools don't understand design process
 - Price anchor: $10–16/mo entry plans; credits already familiar (Gamma, Canva, Figma)
+
+### IA Decisions
+- Marketing at `/`, app under `/app`; wizard steps `/app/new/:step`; one presentation `/app/p/:id/:view`
+- Areas: Marketing (public) · Onboarding (first run) · Core App · Account · Overlays (global)
+- App bar: Dashboard, Brand Kit, New Presentation, credits balance (always visible), Help, avatar menu (Settings · Billing · Log out)
+- Labels: Presentation (not Project/Deck), Brand Kit, Generate / Regenerate, Export, Credits, Format, Visual Direction
+- Lifecycle: Draft → Generating → Ready → Exported, with Failed → Retry (free)
 
 ### Visual Standard for UX Boards
 - Karim wants every deliverable, UX included, to look elite and polished (Senior Product Designer level)

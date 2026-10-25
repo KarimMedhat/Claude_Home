@@ -222,7 +222,8 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 
 ### Work Completed
 - [x] User Flow v1 built in Figma on `Unfold_UX` — frame `2061:283` (Flows A–D with Goal / Success Metric / Key UX Decision, Edge Cases, Screens Inventory: 27 screens)
-- [x] Local flow components on `Unfold_UX` — frame `2061:234`: Flow Node (Screen · AI · Decision · Modal · Edge Case · Terminal), Flow Arrow, Flow Note, Screen Chip, Section Header
+- [x] Local components live in the **UX Components** board on `Unfold_UX` — frame `2061:234` (15 components, 22 variants, grouped: Flow · Competitive Analysis · Personas · Board · IA, each with description). Add every new UX component here, inside its group
+- Board order on `Unfold_UX` (left → right, 400px gaps): User Flow → Competitive Analysis → Proto-Personas → Information Architecture → UX Components
 - [x] Competitive Analysis v1 on `Unfold_UX` — frame `2065:833` (7 competitors, feature matrix, positioning map, pricing benchmark, 5 insights, positioning statement)
 - [x] Added components: Competitor Card (Threat variants), Matrix Cell (Yes/Partial/No), Map Dot, Insight Card
 - [x] Proto-Personas v1 on `Unfold_UX` — frame `2068:1347` (Nour Adel = Primary junior designer, Omar Haddad = Secondary senior freelancer, Priya Nair = Tertiary developer; comparison table, 4 design implications, assumptions to validate, research plan)

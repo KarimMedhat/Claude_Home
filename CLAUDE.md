@@ -197,7 +197,7 @@ Tagline: "One Partner for Total Transformation"
 
 ## Unfold — Personal Startup
 
-**Status:** UX phase. User Flow and Competitive Analysis done in Figma. UI and the variables system come after UX.
+**Status:** UX phase. User Flow, Competitive Analysis and Proto-Personas done in Figma. UI and the variables system come after UX.
 
 **User flow:** `Unfold_User_Flow.md` (source of truth for flows and screens)
 
@@ -225,7 +225,9 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 - [x] Local flow components on `Unfold_UX` — frame `2061:234`: Flow Node (Screen · AI · Decision · Modal · Edge Case · Terminal), Flow Arrow, Flow Note, Screen Chip, Section Header
 - [x] Competitive Analysis v1 on `Unfold_UX` — frame `2065:833` (7 competitors, feature matrix, positioning map, pricing benchmark, 5 insights, positioning statement)
 - [x] Added components: Competitor Card (Threat variants), Matrix Cell (Yes/Partial/No), Map Dot, Insight Card
-- [ ] Personas
+- [x] Proto-Personas v1 on `Unfold_UX` — frame `2068:1347` (Nour Adel = Primary junior designer, Omar Haddad = Secondary senior freelancer, Priya Nair = Tertiary developer; comparison table, 4 design implications, assumptions to validate, research plan)
+- [x] Added components: Meter (Level 1–5), Bullet Item, Stat
+- [ ] Polish pass on User Flow + Competitive Analysis boards to match the Personas visual level
 - [ ] Information Architecture
 - [ ] Wireframes (Wizard + Editor first)
 
@@ -233,6 +235,10 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 - Closest threat: UXfolio (AI case studies, but locked to its own site, no Behance/Dribbble/slides export)
 - Gap: no tool exports Behance-ready long-scroll; generic AI deck tools don't understand design process
 - Price anchor: $10–16/mo entry plans; credits already familiar (Gamma, Canva, Figma)
+
+### Visual Standard for UX Boards
+- Karim wants every deliverable, UX included, to look elite and polished (Senior Product Designer level)
+- Personas board is the reference: gradient hero, big quote, icon tiles, stats, dark gradient callouts
 
 ### Open Decisions
 - Final pricing and credit amounts

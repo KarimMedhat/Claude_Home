@@ -227,7 +227,8 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 - [x] Added components: Competitor Card (Threat variants), Matrix Cell (Yes/Partial/No), Map Dot, Insight Card
 - [x] Proto-Personas v1 on `Unfold_UX` — frame `2068:1347` (Nour Adel = Primary junior designer, Omar Haddad = Secondary senior freelancer, Priya Nair = Tertiary developer; comparison table, 4 design implications, assumptions to validate, research plan)
 - [x] Added components: Meter (Level 1–5), Bullet Item, Stat
-- [ ] Polish pass on User Flow + Competitive Analysis boards to match the Personas visual level
+- [x] Polish pass on all 3 boards: Board Cover (dark gradient hero + 4 stats) on each, upgraded Section Header, Flow Node, Insight Card, Competitor Card (brand mark), Flow Note; flow Goal/Metric/Decision rebuilt as icon cards + dark decision callout
+- [x] Added components: Board Cover, Cover Stat (use Board Cover as the header of every new UX board)
 - [ ] Information Architecture
 - [ ] Wireframes (Wizard + Editor first)
 

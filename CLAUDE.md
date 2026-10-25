@@ -45,6 +45,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 - File key: `1rJxwwH7qnUPwOjFvQDXjd`
 - UX page: node `2058:632`
 - UI page: node `2058:633`
+- Wireframes page (`Unfolf_Wireframes`, name has a typo): node `2083:2447`
 - Design System presentation page: node `2058:634` (variables system planned later, not started)
 
 **Rule:** All Unfold work is done inside Figma (UX deliverables on the UX page, UI on the UI page). No markdown or code deliverables; local files are only for keeping notes in sync.
@@ -197,7 +198,7 @@ Tagline: "One Partner for Total Transformation"
 
 ## Unfold — Personal Startup
 
-**Status:** UX phase. User Flow, Competitive Analysis, Proto-Personas and Information Architecture done in Figma. UI and the variables system come after UX.
+**Status:** UX phase. User Flow, Competitive Analysis, Proto-Personas, Information Architecture and Wireframes v1 done in Figma. UI and the variables system come after UX.
 
 **User flow:** `Unfold_User_Flow.md` (source of truth for flows and screens)
 
@@ -232,7 +233,9 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 - [x] Added components: Board Cover, Cover Stat (use Board Cover as the header of every new UX board)
 - [x] Information Architecture v1 on `Unfold_UX` — frame `2075:1719` (sitemap: 5 areas / 18 pages / 31 views & overlays, navigation model with 4 nav specimens, content model: 7 objects, presentation lifecycle, labeling & URL conventions, 5 IA principles)
 - [x] Added component: IA Node (Page · Sub-page · Overlay)
-- [ ] Wireframes (Wizard + Editor first)
+- [x] Wireframes v1 on `Unfolf_Wireframes` — frame `2087:318`: 10 annotated desktop screens (1440×900): Wizard 01–07 (Basics, Format, Industry, Scope, Upload, Smart Questions, Visual Direction), 08 Generating, 09 Editor, 10 Export; each with numbered pins + annotation panel + states to design (51 annotations, 41 states)
+- [x] Wireframe Kit on `Unfolf_Wireframes` — frame `2085:234` (13 components, 15 variants: Button, Input, Select Card, Chip, Image, Text Lines, Pin, Annotation, Logo, Stepper, App Bar, Wizard Header, Wizard Footer). Wireframes are grayscale; purple only for AI actions and annotations
+- [ ] Wireframes v2: Dashboard (+ empty state), Onboarding, Brand Kit, Paywall, Landing page
 
 ### Key Findings (Competitive Analysis)
 - Closest threat: UXfolio (AI case studies, but locked to its own site, no Behance/Dribbble/slides export)

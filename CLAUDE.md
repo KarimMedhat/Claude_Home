@@ -47,6 +47,8 @@ This file is read automatically by Claude Code on every session. It contains ful
 - UI page: node `2058:633`
 - Design System presentation page: node `2058:634` (variables system planned later, not started)
 
+**Rule:** All Unfold work is done inside Figma (UX deliverables on the UX page, UI on the UI page). No markdown or code deliverables; local files are only for keeping notes in sync.
+
 See the full Unfold section below and `Unfold_User_Flow.md`.
 
 ---

@@ -220,6 +220,14 @@ Tagline: "One Partner for Total Transformation"
 ### Core Flow (summary)
 Project type → Output format → Industry → Scope → Upload (screens / Figma link / docs) → Smart AI questions → 3 visual directions → Generate → Editor → Export
 
+### Work Completed
+- [x] User Flow v1 built in Figma on `Unfold_UX` — frame `2061:283` (Flows A–D with Goal / Success Metric / Key UX Decision, Edge Cases, Screens Inventory: 27 screens)
+- [x] Local flow components on `Unfold_UX` — frame `2061:234`: Flow Node (Screen · AI · Decision · Modal · Edge Case · Terminal), Flow Arrow, Flow Note, Screen Chip, Section Header
+- [ ] Competitive Analysis
+- [ ] Personas
+- [ ] Information Architecture
+- [ ] Wireframes (Wizard + Editor first)
+
 ### Open Decisions
 - Final pricing and credit amounts
 - Brand identity for Unfold (logo, colors, typography)

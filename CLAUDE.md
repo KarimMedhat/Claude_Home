@@ -39,7 +39,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 
 ### Unfold (Personal Startup)
 
-**Status:** UX phase — don't touch Figma until I say so
+**Status:** UX phase — work in Figma step by step, only when I ask
 
 **Figma file:** https://www.figma.com/design/1rJxwwH7qnUPwOjFvQDXjd/Karim-Draft
 - File key: `1rJxwwH7qnUPwOjFvQDXjd`
@@ -197,7 +197,7 @@ Tagline: "One Partner for Total Transformation"
 
 ## Unfold — Personal Startup
 
-**Status:** UX phase. User flow drafted. Figma file created (see Active Projects), nothing designed yet. UI and the variables system come after UX.
+**Status:** UX phase. User Flow and Competitive Analysis done in Figma. UI and the variables system come after UX.
 
 **User flow:** `Unfold_User_Flow.md` (source of truth for flows and screens)
 
@@ -223,10 +223,16 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 ### Work Completed
 - [x] User Flow v1 built in Figma on `Unfold_UX` — frame `2061:283` (Flows A–D with Goal / Success Metric / Key UX Decision, Edge Cases, Screens Inventory: 27 screens)
 - [x] Local flow components on `Unfold_UX` — frame `2061:234`: Flow Node (Screen · AI · Decision · Modal · Edge Case · Terminal), Flow Arrow, Flow Note, Screen Chip, Section Header
-- [ ] Competitive Analysis
+- [x] Competitive Analysis v1 on `Unfold_UX` — frame `2065:833` (7 competitors, feature matrix, positioning map, pricing benchmark, 5 insights, positioning statement)
+- [x] Added components: Competitor Card (Threat variants), Matrix Cell (Yes/Partial/No), Map Dot, Insight Card
 - [ ] Personas
 - [ ] Information Architecture
 - [ ] Wireframes (Wizard + Editor first)
+
+### Key Findings (Competitive Analysis)
+- Closest threat: UXfolio (AI case studies, but locked to its own site, no Behance/Dribbble/slides export)
+- Gap: no tool exports Behance-ready long-scroll; generic AI deck tools don't understand design process
+- Price anchor: $10–16/mo entry plans; credits already familiar (Gamma, Canva, Figma)
 
 ### Open Decisions
 - Final pricing and credit amounts

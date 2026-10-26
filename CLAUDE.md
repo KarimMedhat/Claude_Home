@@ -240,6 +240,8 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 - [x] Added components: Task Card, Metric Card, Question Card (group F in UX Components)
 - [x] Clickable prototype on `Unfolf_Wireframes` — section `2121:2014` "Prototype — Usability Test v1": 18 top-level frames (clean clones of wireframes, no pins) + extra states (05b upload retried, 09r regenerating, 09s Slides view, 10d downloaded toast, T6 start with no credits); 51 click hotspots (transparent "Hotspot → …" rects) + 2 timers (Generating → Editor, Regenerating → Editor); flow starting points: "T1–T5 · Create, edit & export" (Dashboard) and "T6 · Pay for just this one". Selections inside screens (type cards, paywall options) are static
 - [ ] Pilot the prototype with 1 designer, then run the 8 sessions
+- [x] Brand Exploration v1 on `Unfold_Design_System` — frame `2123:234`: Brand Foundation (name story, mission, positioning, promise, personality Confident/Crafted/Smart/Warm with "not" pairs, voice do/don't); 3 directions each with logo stage, concept, 5-color palette, type specimen and 3 applications (product UI, presentation cover, social card): **A Folded Paper** (Paper #F6F1E8 · Ink #14120F · Vermilion #FF4F1F · Clay #D9C9B4 · Stone #6B645B; Instrument Serif + Inter; folded-u mark), **B Studio Violet** (Night #0C0A1D · Violet #7C5CFF · Lilac #C9B8FF; Geist), **C Blueprint** (Graphite #17181C · Lime #D4FF3A · Concrete #E9EAE6; Space Grotesk + Inter); scorecard A 29/30 · B 20 · C 19; recommendation: Folded Paper
+- [ ] Karim to pick the brand direction → refine logo → color variables → type scale → UI kit
 - [x] Updated for pay-per-presentation: User Flow Flow D renamed **Payment** (free first presentation → credits → Paywall with 3 ways to pay → checkout → unlock & resume / payment failed); IA content model now 8 objects in a 3-column grid (new **Purchase** object: kind one-time | pack | pro; Presentation gets "Paid with"; Credit Transaction type generate | regen | grant | refund), 2 new relationships, labeling row "One presentation", Principle 04 adds "a subscription is never required", sitemap Paywall/Checkout/Billing labels
 
 ### Key Findings (Competitive Analysis)
@@ -261,7 +263,7 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 
 ### Open Decisions
 - Final prices for single presentation, credit pack and Pro
-- Brand identity for Unfold (logo, colors, typography)
+- Brand direction: A Folded Paper (recommended) vs B Studio Violet vs C Blueprint — see Brand Exploration board
 - Showcase examples for the landing page
 
 ---

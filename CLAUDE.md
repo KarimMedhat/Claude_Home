@@ -236,7 +236,7 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 - [x] Wireframes v1 on `Unfolf_Wireframes` — frame `2087:318`: 10 annotated desktop screens (1440×900): Wizard 01–07 (Basics, Format, Industry, Scope, Upload, Smart Questions, Visual Direction), 08 Generating, 09 Editor, 10 Export; each with numbered pins + annotation panel + states to design (51 annotations, 41 states)
 - [x] Wireframe Kit on `Unfolf_Wireframes` — frame `2085:234` (13 components, 15 variants: Button, Input, Select Card, Chip, Image, Text Lines, Pin, Annotation, Logo, Stepper, App Bar, Wizard Header, Wizard Footer). Wireframes are grayscale; purple only for AI actions and annotations
 - [x] Wireframes v2 added to the same board (now 17 screens, 95 annotations, 66 states): C Home & Account (11 Dashboard, 12 Empty State, 13 Onboarding Role, 14 Brand Kit), D Pricing & Payment (15 Paywall with 3 ways to pay, 16 Checkout), E Marketing (17 Landing Page, full length with pricing + FAQ)
-- [ ] Update User Flow (Flow D) and IA (content model / Credit Transaction) for pay-per-presentation
+- [x] Updated for pay-per-presentation: User Flow Flow D renamed **Payment** (free first presentation → credits → Paywall with 3 ways to pay → checkout → unlock & resume / payment failed); IA content model now 8 objects in a 3-column grid (new **Purchase** object: kind one-time | pack | pro; Presentation gets "Paid with"; Credit Transaction type generate | regen | grant | refund), 2 new relationships, labeling row "One presentation", Principle 04 adds "a subscription is never required", sitemap Paywall/Checkout/Billing labels
 
 ### Key Findings (Competitive Analysis)
 - Closest threat: UXfolio (AI case studies, but locked to its own site, no Behance/Dribbble/slides export)
@@ -249,6 +249,7 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 - App bar: Dashboard, Brand Kit, New Presentation, credits balance (always visible), Help, avatar menu (Settings · Billing · Log out)
 - Labels: Presentation (not Project/Deck), Brand Kit, Generate / Regenerate, Export, Credits, Format, Visual Direction
 - Lifecycle: Draft → Generating → Ready → Exported, with Failed → Retry (free)
+- Payment label: "One presentation" (not "single credit" / "one-off unlock")
 
 ### Visual Standard for UX Boards
 - Karim wants every deliverable, UX included, to look elite and polished (Senior Product Designer level)

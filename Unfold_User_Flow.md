@@ -98,14 +98,24 @@ Login → Dashboard
 
 ---
 
-## Flow D — Credits & Payment
+## Flow D — Payment
 
 ```
-Generate (no credits left)
-  └─ Paywall modal
-       └─ Pricing page → Checkout
-            └─ Back to generation (progress kept)
+User clicks Generate
+  ├─ Free presentation left? → Yes → Generation runs (first one is free)
+  └─ No → Enough credits?
+       ├─ Yes → Generation runs (credits deducted on success only)
+       └─ No → Paywall: choose how to pay
+            ├─ One presentation → Checkout ($6 one-time, example price)
+            ├─ Credit pack      → Checkout ($12 / 100 credits)
+            └─ Pro              → Checkout ($16 / month)
+
+From any checkout → Payment successful?
+  ├─ Yes → Unlock & resume (one-time: presentation unlocked · pack/pro: credits added) → Generation runs
+  └─ No  → Payment failed → back to Paywall (nothing lost)
 ```
+
+**One presentation (one-time) includes:** 1 generation, 10 section regenerations, all formats & exports, never expires.
 
 **Credit usage (draft):**
 - Full generation = high cost

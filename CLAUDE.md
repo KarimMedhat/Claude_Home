@@ -198,7 +198,7 @@ Tagline: "One Partner for Total Transformation"
 
 ## Unfold — Personal Startup
 
-**Status:** UX phase. User Flow, Competitive Analysis, Proto-Personas, Information Architecture, Wireframes v2 and Usability Test Plan done in Figma. UI and the variables system come after UX.
+**Status:** UI phase. UX deliverables done (User Flow → Usability Test Plan + prototype). Brand, logo, variables, type, UI Kit and the landing page are done in Figma; app screens next.
 
 **User flow:** `Unfold_User_Flow.md` (source of truth for flows and screens)
 
@@ -264,7 +264,10 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
   - "In context" instance rows with real copy (A, C, D) · F Kit in use: Wizard 02 screen built only from instances, Dark `2159:769` + Light `2159:866`
   - Unfold Logo "On Dark" variants now bound to color/brand/* + text/primary → adapt automatically in Light mode
 - Design System page board order: Brand Exploration (x 0) → Logo Refinement (x 3000) → Color System (x 6000) → Type & Layout (x 9000) → UI Kit (x 12000)
-- [ ] Landing page UI (on `Unfold_UI`) → app screens UI from Wireframes v2
+- [x] **Landing page UI v1** on `Unfold_UI` — frame `2162:252` "Landing — Desktop 1440 · Dark" (x 0, 1440 × ~6190), explicit Dark mode, built from UI Kit instances + tokens + Unfold/ styles (Geist only, no images): Marketing Nav · Hero (AI chip eyebrow, Display/XL "Your work deserves a better presentation.", AI + Secondary CTAs, Editor product preview mock: sections list, Behance page being generated, inspector with AI chips/alert) · Publish to strip · How it works (3 Step Cards with illustrations) · Showcase (3 cards: Fintech/Behance, Travel/Slides, Health/Dribbble) · One source, every format · Pricing ($6 one presentation · $12 credit pack highlighted · $16 Pro, example prices) · FAQ (4, first open) · Final CTA · Footer
+- Landing local components in frame `2162:234` "Landing — Local components" (x 1640): Marketing Nav `2162:235` · Illustration/Upload · Questions · Export · Step Card `2163:333` (Number, Title, Body, Visual swap) · Showcase Card `2163:348` (Title, Meta, Cover title; cover = user-work gradient) · Feature Row `2164:398` · Pricing Card `2164:451` (Highlight On/Off; Plan, Amount, Suffix, Description, Show badge) · FAQ Item `2164:544` (Open/Closed; Question, Answer)
+- Note: Wireframe 17 shows $4 for one presentation; UI uses $6 to match the kit/pricing notes — final pricing still TBD
+- [ ] App screens UI from Wireframes v2 (Dashboard, Wizard 01–07, Generating, Editor, Export, Paywall, Checkout…) · optional Light version / mobile of the landing
 - [x] Updated for pay-per-presentation: User Flow Flow D renamed **Payment** (free first presentation → credits → Paywall with 3 ways to pay → checkout → unlock & resume / payment failed); IA content model now 8 objects in a 3-column grid (new **Purchase** object: kind one-time | pack | pro; Presentation gets "Paid with"; Credit Transaction type generate | regen | grant | refund), 2 new relationships, labeling row "One presentation", Principle 04 adds "a subscription is never required", sitemap Paywall/Checkout/Billing labels
 
 ### Key Findings (Competitive Analysis)

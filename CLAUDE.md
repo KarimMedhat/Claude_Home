@@ -216,7 +216,7 @@ Tagline: "One Partner for Total Transformation"
 - **Format switching:** Content is written once. Each format is just a different layout, switchable from the Editor ("Create once, publish everywhere")
 - **Industry:** Drives mood, color, and visual style
 - **Scope:** UI / UX / Both. Decides which sections get generated
-- **Pricing direction:** Credit-based, not unlimited subscription
+- **Pricing:** First presentation free. Then 3 ways to pay: (1) **Pay per presentation** — one-time, 1 generation + 10 section regenerations + all formats/exports, never expires; (2) **Credit pack** (best value, credits never expire); (3) **Pro monthly**. No unlimited subscription. Example prices in wireframes: $6 / $12 for 100 credits / $16 per month — final pricing TBD
 
 ### Core Flow (summary)
 Project type → Output format → Industry → Scope → Upload (screens / Figma link / docs) → Smart AI questions → 3 visual directions → Generate → Editor → Export
@@ -235,7 +235,8 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 - [x] Added component: IA Node (Page · Sub-page · Overlay)
 - [x] Wireframes v1 on `Unfolf_Wireframes` — frame `2087:318`: 10 annotated desktop screens (1440×900): Wizard 01–07 (Basics, Format, Industry, Scope, Upload, Smart Questions, Visual Direction), 08 Generating, 09 Editor, 10 Export; each with numbered pins + annotation panel + states to design (51 annotations, 41 states)
 - [x] Wireframe Kit on `Unfolf_Wireframes` — frame `2085:234` (13 components, 15 variants: Button, Input, Select Card, Chip, Image, Text Lines, Pin, Annotation, Logo, Stepper, App Bar, Wizard Header, Wizard Footer). Wireframes are grayscale; purple only for AI actions and annotations
-- [ ] Wireframes v2: Dashboard (+ empty state), Onboarding, Brand Kit, Paywall, Landing page
+- [x] Wireframes v2 added to the same board (now 17 screens, 95 annotations, 66 states): C Home & Account (11 Dashboard, 12 Empty State, 13 Onboarding Role, 14 Brand Kit), D Pricing & Payment (15 Paywall with 3 ways to pay, 16 Checkout), E Marketing (17 Landing Page, full length with pricing + FAQ)
+- [ ] Update User Flow (Flow D) and IA (content model / Credit Transaction) for pay-per-presentation
 
 ### Key Findings (Competitive Analysis)
 - Closest threat: UXfolio (AI case studies, but locked to its own site, no Behance/Dribbble/slides export)
@@ -254,7 +255,7 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 - Personas board is the reference: gradient hero, big quote, icon tiles, stats, dark gradient callouts
 
 ### Open Decisions
-- Final pricing and credit amounts
+- Final prices for single presentation, credit pack and Pro
 - Brand identity for Unfold (logo, colors, typography)
 - Showcase examples for the landing page
 

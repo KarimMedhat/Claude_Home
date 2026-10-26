@@ -46,7 +46,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 - UX page: node `2058:632`
 - UI page: node `2058:633`
 - Wireframes page (`Unfolf_Wireframes`, name has a typo): node `2083:2447`
-- Design System presentation page: node `2058:634` (variables system planned later, not started)
+- Design System page: node `2058:634` (brand, logo, color/type variables, UI Kit — see Work Completed)
 
 **Rule:** All Unfold work is done inside Figma (UX deliverables on the UX page, UI on the UI page). No markdown or code deliverables; local files are only for keeping notes in sync.
 
@@ -255,8 +255,16 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 - [x] **Text styles** — 16 `Unfold/…` styles, Geist only (other projects' styles in this file: Smooth App/*, Mi'yar/* — don't touch): Display/XL 72/76 · Display/L 56/60 · Heading/H1 40/46 · H2 32/38 · H3 24/30 · H4 20/26 (SemiBold, -4% → -1.5%) · Body/L 18/28 · Body/M 16/24 · Body/S 14/20 (Regular) · Label/L 16/24 · Label/M 14/20 · Label/S 12/16 (Medium) · Overline 12/16 SemiBold UPPER +8% · Caption 12/16 · Code/M 14/20 · Code/S 12/16 (Geist Mono)
 - [x] **Unfold Layout** variables (1 mode): space/0–32 on 4px grid (0,4,8,12,16,20,24,32,40,48,64,80,96,128; scope GAP) · radius/none 0 · xs 4 · sm 8 · md 10 (buttons, inputs) · lg 12 (option cards, alerts) · xl 16 (popovers) · 2xl 20 (cards) · 3xl 24 (modals) · full 9999 (scope CORNER_RADIUS)
 - [x] Type & Layout v1 board — frame `2154:553` (x 9000): A type scale specimen · B type in use (marketing hero + app card) · C spacing & radius (radius swatches bound to variables) · D 6 rules (Geist only, 3 sizes per view, weights have jobs, sentence case, 60–75 chars, styles + tokens). Color System sample screens now use Unfold text styles
-- Design System page board order (left → right): Brand Exploration (x 0) → Logo Refinement (x 3000) → Color System (x 6000) → Type & Layout (x 9000)
-- [ ] UI kit (components bound to tokens + styles) → Landing page UI
+- [x] **UI Kit v1** — board `2156:604` (x 12000) on `Unfold_Design_System`: 13 components / 56 variants, every fill, stroke, padding, gap, radius bound to Unfold Color/Layout variables and every text to an Unfold/ style (switch Dark/Light by mode). Component sets live on dark canvas stages (purple dashed) inside sections:
+  - A Button `2156:739` — Kind Primary · Secondary · Ghost · AI × Size Medium · Large × State Default · Hover · Disabled (24); prop Label
+  - B Input `2157:695` (Default · Hover · Focus · Filled · Error · Disabled; props Label, Value, Helper, Show helper, Show label) · Option Card `2157:717` (Default · Hover · Selected · Disabled; props Title, Description, Show description)
+  - C Chip `2157:732` (Default · Hover · Selected · AI; Label) · Badge `2157:743` (Neutral · Accent · Success · Warning · Danger; Label)
+  - D Alert `2158:689` (Danger · Success · Warning · AI; Title, Body, Action, Show action, Show body) · Toast `2158:690` (inverse; Message, Action, Show action)
+  - E Step `2158:711` (Done · Current · Upcoming; Label, Number) · Stepper `2158:712` (7 steps) · Segment `2158:754` · Segmented Control `2158:755` (Behance · Slides · Dribbble · PDF) · Avatar `2158:771` (S 28 · M 36 · L 48; Initials) · App Bar `2158:772` (1440: logo, Dashboard · Brand Kit · Help, credits chip, New presentation, avatar)
+  - "In context" instance rows with real copy (A, C, D) · F Kit in use: Wizard 02 screen built only from instances, Dark `2159:769` + Light `2159:866`
+  - Unfold Logo "On Dark" variants now bound to color/brand/* + text/primary → adapt automatically in Light mode
+- Design System page board order: Brand Exploration (x 0) → Logo Refinement (x 3000) → Color System (x 6000) → Type & Layout (x 9000) → UI Kit (x 12000)
+- [ ] Landing page UI (on `Unfold_UI`) → app screens UI from Wireframes v2
 - [x] Updated for pay-per-presentation: User Flow Flow D renamed **Payment** (free first presentation → credits → Paywall with 3 ways to pay → checkout → unlock & resume / payment failed); IA content model now 8 objects in a 3-column grid (new **Purchase** object: kind one-time | pack | pro; Presentation gets "Paid with"; Credit Transaction type generate | regen | grant | refund), 2 new relationships, labeling row "One presentation", Principle 04 adds "a subscription is never required", sitemap Paywall/Checkout/Billing labels
 
 ### Key Findings (Competitive Analysis)

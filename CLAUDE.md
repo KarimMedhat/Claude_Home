@@ -198,7 +198,7 @@ Tagline: "One Partner for Total Transformation"
 
 ## Unfold — Personal Startup
 
-**Status:** UX phase. User Flow, Competitive Analysis, Proto-Personas, Information Architecture and Wireframes v1 done in Figma. UI and the variables system come after UX.
+**Status:** UX phase. User Flow, Competitive Analysis, Proto-Personas, Information Architecture, Wireframes v2 and Usability Test Plan done in Figma. UI and the variables system come after UX.
 
 **User flow:** `Unfold_User_Flow.md` (source of truth for flows and screens)
 
@@ -223,8 +223,8 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 
 ### Work Completed
 - [x] User Flow v1 built in Figma on `Unfold_UX` — frame `2061:283` (Flows A–D with Goal / Success Metric / Key UX Decision, Edge Cases, Screens Inventory: 27 screens)
-- [x] Local components live in the **UX Components** board on `Unfold_UX` — frame `2061:234` (15 components, 22 variants, grouped: Flow · Competitive Analysis · Personas · Board · IA, each with description). Add every new UX component here, inside its group
-- Board order on `Unfold_UX` (left → right, 400px gaps): User Flow → Competitive Analysis → Proto-Personas → Information Architecture → UX Components
+- [x] Local components live in the **UX Components** board on `Unfold_UX` — frame `2061:234` (18 components, 22 variants, grouped: Flow · Competitive Analysis · Personas · Board · IA · Usability Testing, each with description). Add every new UX component here, inside its group
+- Board order on `Unfold_UX` (left → right, 400px gaps): User Flow → Competitive Analysis → Proto-Personas → Information Architecture → Usability Test Plan → UX Components
 - [x] Competitive Analysis v1 on `Unfold_UX` — frame `2065:833` (7 competitors, feature matrix, positioning map, pricing benchmark, 5 insights, positioning statement)
 - [x] Added components: Competitor Card (Threat variants), Matrix Cell (Yes/Partial/No), Map Dot, Insight Card
 - [x] Proto-Personas v1 on `Unfold_UX` — frame `2068:1347` (Nour Adel = Primary junior designer, Omar Haddad = Secondary senior freelancer, Priya Nair = Tertiary developer; comparison table, 4 design implications, assumptions to validate, research plan)
@@ -236,6 +236,9 @@ Project type → Output format → Industry → Scope → Upload (screens / Figm
 - [x] Wireframes v1 on `Unfolf_Wireframes` — frame `2087:318`: 10 annotated desktop screens (1440×900): Wizard 01–07 (Basics, Format, Industry, Scope, Upload, Smart Questions, Visual Direction), 08 Generating, 09 Editor, 10 Export; each with numbered pins + annotation panel + states to design (51 annotations, 41 states)
 - [x] Wireframe Kit on `Unfolf_Wireframes` — frame `2085:234` (13 components, 15 variants: Button, Input, Select Card, Chip, Image, Text Lines, Pin, Annotation, Logo, Stepper, App Bar, Wizard Header, Wizard Footer). Wireframes are grayscale; purple only for AI actions and annotations
 - [x] Wireframes v2 added to the same board (now 17 screens, 95 annotations, 66 states): C Home & Account (11 Dashboard, 12 Empty State, 13 Onboarding Role, 14 Brand Kit), D Pricing & Payment (15 Paywall with 3 ways to pay, 16 Checkout), E Marketing (17 Landing Page, full length with pricing + FAQ)
+- [x] Usability Test Plan v1 on `Unfold_UX` — frame `2109:2125`: objective, 5 research questions (RQ1–RQ5), scope; moderated remote think-aloud, 8 participants (3 junior · 3 senior/freelance · 2 developers), Figma prototype of Wireframes v2, 45-min agenda; 6 tasks (T1 start case study · T2 upload · T3 smart questions · T4 generate · T5 edit/switch/export · T6 pay for one presentation); metrics (task success ≥80%, T1 <3 min, SEQ ≥5.5, SUS ≥75, pricing clarity 6/8, 0 critical); severity 0–4; session script + moderator rules; screener, synthesis steps, deliverables, decision rules
+- [x] Added components: Task Card, Metric Card, Question Card (group F in UX Components)
+- [ ] Build the clickable Figma prototype for testing, then run the sessions
 - [x] Updated for pay-per-presentation: User Flow Flow D renamed **Payment** (free first presentation → credits → Paywall with 3 ways to pay → checkout → unlock & resume / payment failed); IA content model now 8 objects in a 3-column grid (new **Purchase** object: kind one-time | pack | pro; Presentation gets "Paid with"; Credit Transaction type generate | regen | grant | refund), 2 new relationships, labeling row "One presentation", Principle 04 adds "a subscription is never required", sitemap Paywall/Checkout/Billing labels
 
 ### Key Findings (Competitive Analysis)

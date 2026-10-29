@@ -50,6 +50,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 - Timeline: build days 29–30 Oct 2026, final 31 Oct 2026
 - Step 01 — User Problem board: node `93:198`
 - Step 03 — Insights + Personas board: node `142:2` (assumption-based; personas Omar · See it, Salma · Relate it, Mariam · Own pace)
+- Step 04 — Journey + How Might We board: node `153:2` (6-stage journey, 9 HMWs, core question; top picks: see it move · start from what they know · retry privately)
 
 **Direction (decided 29 Oct):** an **interactive website** for students in general who struggle to *visualize* what they learn in science and math. Three equally important pillars: **interactive visualization**, **real-world connection**, and **learning at each student's own pace** (with immediate feedback). Ignore the "Praxis PoC Brief (Ahmed)" (AI tutor, Thanaweya STEM/IG niche, teacher mode). Jira is no longer used: work in Figma only.
 

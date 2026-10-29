@@ -45,6 +45,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 - File key: `mGhiIvRvnid6fzkkU3Qnuk`
 - Work happens on page `🛑 UX Process` (`1:2`); ignore the older boards there unless asked
 - **Figma only** — don't use Miro for this project
+- **Jira:** project `KAN` at karimsworkspace-32859686.atlassian.net — epic `KAN-1` "Praxis · UX Process", one task per step (`KAN-2` 01 User Problem … `KAN-8` 07 UI + Prototype + Pitch). Move a step's task to Done when it's finished in Figma
 - Timeline: build days 29–30 Oct 2026, final 31 Oct 2026
 - Step 01 — User Problem board: node `93:198`
 

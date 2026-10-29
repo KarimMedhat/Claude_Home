@@ -49,6 +49,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 - **Team:** UI/UX: Karim, Menna Elmagdoub, Nada Yasser · Research: Ahmed Gamal (a.gamal.mu), Ahmed Shelbaya · Branding: Qurany · Development: Qurany, Abdullah Youssef. Jira allows one assignee, so the first person is the assignee and the full team is listed in the description
 - Timeline: build days 29–30 Oct 2026, final 31 Oct 2026
 - Step 01 — User Problem board: node `93:198`
+- Step 02 — Competitive Analysis board: node `259:2` (placed between 01 and 03; boards 03–06 shifted right by 2120). Competitors chosen by Karim: **Nagwa (نجوى), Science Street (شارع العلوم, Abdullah Enan), Alef (ألف)**. Sections: A who we looked at (3 cards: good at / missing), B feature table (9 features, Praxis vs the 3), C positioning map (watch ↔ hands-on × book-first ↔ real life), D 4 opportunities + curriculum watch-out. Desk research 29 Oct 2026, to validate by the Research team
 - Step 03 — Insights + Personas board: node `142:2` (assumption-based; personas Omar · See it, Salma · Relate it, Mariam · Check it)
 - Step 04 — Journey + How Might We board: node `153:2` (6-stage journey, 9 HMWs, core question; top picks: see it move · start from what they know · know right away they got it)
 - Step 05 — Concept board: node `167:2` (15 ideas, impact vs effort, concept "Relate it. See it. Check it.", core loop Hook → Predict → Play → Check, MVP (5) = real-life hook, interactive simulation, AR mode, quick check + confidence, mastery map; demo lesson Forces & motion F = m × a)

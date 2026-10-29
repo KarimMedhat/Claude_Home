@@ -66,7 +66,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 - Palette: lavender / plum / coral on dark glass. Collections: Praxis Primitives, Praxis Color (Dark + Light), Praxis Spacing, Praxis Radius, Praxis Effects
 - 29 component sets + 22 components (Learning page: Quiz Option, Concept Card with real-world Hook, Parameter Slider, Formula Chip, Progress Steps), 58 icons, 12 3D illustrations, logos
 - The name is **Praxis** (it was misspelled "Parxis"; fixed everywhere, including the vector wordmark)
-- The older page "🎨 Design System" predates it
+- Page "🎨 Design System · Overview" (`0:1`, was the older empty DS page) shows the whole system on one page as linked instances: 00 Cover (live counts) · 01 Foundations (color, typography, space/radius/glass) · 02 Components (one board per category, every variant incl. RTL, plus patterns) · 03 Assets (7 logos, 64 icons, 12 3D illustrations). Counts on 29 Oct: 147 variables, 20 text + 10 effect styles, 34 sets / 209 variants + 17 patterns
 - DS extension (29 Oct): `Slider` (`133:2037`) got a `Value` property (0/25/50/75/100); Parameter Slider picks it via its nested Slider instance
 - DS extension (29 Oct): `Direction` variant property (LTR default / RTL: mirrored order + padding, right-aligned text, arrows/chevrons swapped, sliders fill from the right) on Button, Badge, Alert, Toast, Slider, Checkbox, Accordion Item, Lesson Row, Concept Card, Quiz Option, Progress Steps, Nav Item; single components turned into sets for it: Segmented Control `225:66`, Stat `225:1607`, Parameter Slider `225:1845`, Breadcrumb `225:2099`, Loading Bar `225:2490`. ⚠️ When cloning variants via the API, copy `componentPropertyReferences` from the LTR twin — clones lose them
 

@@ -62,7 +62,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 - The older page "🎨 Design System" predates it
 
 **UX process board style rules** (boards on the UX Process page only):
-- **Font: Geist** for UX process boards (the product UI uses DM Sans + Noto Kufi Arabic)
+- **Font: DM Sans** for UX process boards too (same as the product; Noto Kufi Arabic for Arabic). Geist is no longer used
 - Visual language of "UI/UX Sprint Board — v2" (`58:4313`): dark `#121218` cover + panels, warm `#fbf7f0` background, accents orange `#f2603f`, purple `#6c5ce7`, teal `#0f9478`, pink `#f0577a`, gold `#b07a00`, yellow `#ffc83d`; big section numerals, lettered sub-headers (A, B, C…), tinted cards with radius 32–48
 - **No coloured circle motifs** — use photos of students in the 12–18 age range instead (Figma AI images, faded into the dark background)
 

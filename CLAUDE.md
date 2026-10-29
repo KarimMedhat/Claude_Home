@@ -50,6 +50,8 @@ This file is read automatically by Claude Code on every session. It contains ful
 - Timeline: build days 29–30 Oct 2026, final 31 Oct 2026
 - Step 01 — User Problem board: node `93:198`
 
+**Direction (decided 29 Oct):** an **interactive website** for students in general who struggle to *visualize* what they learn in science and math. Ignore the "Praxis PoC Brief (Ahmed)" (AI tutor, Thanaweya STEM/IG niche, teacher mode). Jira is no longer used: work in Figma only.
+
 **Problem:** Grades 7–12 students struggle with complex, abstract math & science concepts (textbooks, static illustrations, one-size-fits-all explanations) → hard to visualize, connect to real life, learn at own pace → lower engagement, learning gaps, lower confidence, weak STEM foundations. Missing: personalized guidance, interactive visualization, immediate feedback.
 
 **Board style rules:**

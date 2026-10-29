@@ -44,6 +44,8 @@ This file is read automatically by Claude Code on every session. It contains ful
 **Figma file:** https://www.figma.com/design/mGhiIvRvnid6fzkkU3Qnuk/Praxis
 - File key: `mGhiIvRvnid6fzkkU3Qnuk`
 - Work happens on page `🛑 UX Process` (`1:2`); ignore the older boards there unless asked
+- **Figma only** — don't use Miro for this project
+- Timeline: build days 29–30 Oct 2026, final 31 Oct 2026
 - Step 01 — User Problem board: node `93:198`
 
 **Problem:** Grades 7–12 students struggle with complex, abstract math & science concepts (textbooks, static illustrations, one-size-fits-all explanations) → hard to visualize, connect to real life, learn at own pace → lower engagement, learning gaps, lower confidence, weak STEM foundations. Missing: personalized guidance, interactive visualization, immediate feedback.

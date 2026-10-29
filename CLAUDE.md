@@ -37,6 +37,22 @@ This file is read automatically by Claude Code on every session. It contains ful
 - Home page hero frame: node `51:120`
 - Design System page: `0:1` (children: Colors–Primitives `16:97`, Colors–Semantic `16:171`, Typography `16:285`, Components `16:502`, Navigation & Footer `16:621`)
 
+### Praxis — Products League (K7–K12 STEM challenge)
+
+**Status:** Active — running the UX process step by step, from the beginning
+
+**Figma file:** https://www.figma.com/design/mGhiIvRvnid6fzkkU3Qnuk/Praxis
+- File key: `mGhiIvRvnid6fzkkU3Qnuk`
+- Work happens on page `🛑 UX Process` (`1:2`); ignore the older boards there unless asked
+- Step 01 — User Problem board: node `93:198`
+
+**Problem:** Grades 7–12 students struggle with complex, abstract math & science concepts (textbooks, static illustrations, one-size-fits-all explanations) → hard to visualize, connect to real life, learn at own pace → lower engagement, learning gaps, lower confidence, weak STEM foundations. Missing: personalized guidance, interactive visualization, immediate feedback.
+
+**Board style rules:**
+- **Font: Geist only** — for every board and everything new (no Bricolage / Plus Jakarta / Inter)
+- Visual language of "UI/UX Sprint Board — v2" (`58:4313`): dark `#121218` cover + panels, warm `#fbf7f0` background, accents orange `#f2603f`, purple `#6c5ce7`, teal `#0f9478`, pink `#f0577a`, gold `#b07a00`, yellow `#ffc83d`; big section numerals, lettered sub-headers (A, B, C…), tinted cards with radius 32–48
+- **No coloured circle motifs** — use photos of students in the 12–18 age range instead (Figma AI images, faded into the dark background)
+
 ---
 
 ## Techtifai — Brand System

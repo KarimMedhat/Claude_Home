@@ -54,8 +54,15 @@ This file is read automatically by Claude Code on every session. It contains ful
 
 **Problem:** Grades 7–12 students struggle with complex, abstract math & science concepts (textbooks, static illustrations, one-size-fits-all explanations) → hard to visualize, connect to real life, learn at own pace → lower engagement, learning gaps, lower confidence, weak STEM foundations. Missing: personalized guidance, interactive visualization, immediate feedback.
 
-**Board style rules:**
-- **Font: Geist only** — for every board and everything new (no Bricolage / Plus Jakarta / Inter)
+**Product design system (pages "Cover" → "Illustrations", v1 Oct 2026):** this is the product's own look, separate from the UX process boards.
+- **Fonts: DM Sans (Latin) + Noto Kufi Arabic (Arabic)** — text styles `Praxis/Latin/*` and `Praxis/Arabic/*`
+- Palette: lavender / plum / coral on dark glass. Collections: Praxis Primitives, Praxis Color (Dark + Light), Praxis Spacing, Praxis Radius, Praxis Effects
+- 29 component sets + 22 components (Learning page: Quiz Option, Concept Card with real-world Hook, Parameter Slider, Formula Chip, Progress Steps), 58 icons, 12 3D illustrations, logos
+- The name is **Praxis** (it was misspelled "Parxis"; fixed everywhere, including the vector wordmark)
+- The older page "🎨 Design System" predates it
+
+**UX process board style rules** (boards on the UX Process page only):
+- **Font: Geist** for UX process boards (the product UI uses DM Sans + Noto Kufi Arabic)
 - Visual language of "UI/UX Sprint Board — v2" (`58:4313`): dark `#121218` cover + panels, warm `#fbf7f0` background, accents orange `#f2603f`, purple `#6c5ce7`, teal `#0f9478`, pink `#f0577a`, gold `#b07a00`, yellow `#ffc83d`; big section numerals, lettered sub-headers (A, B, C…), tinted cards with radius 32–48
 - **No coloured circle motifs** — use photos of students in the 12–18 age range instead (Figma AI images, faded into the dark background)
 

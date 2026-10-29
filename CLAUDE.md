@@ -49,10 +49,10 @@ This file is read automatically by Claude Code on every session. It contains ful
 - **Team:** UI/UX: Karim, Menna Elmagdoub, Nada Yasser · Research: Ahmed Gamal (a.gamal.mu), Ahmed Shelbaya · Branding: Qurany · Development: Qurany, Abdullah Youssef. Jira allows one assignee, so the first person is the assignee and the full team is listed in the description
 - Timeline: build days 29–30 Oct 2026, final 31 Oct 2026
 - Step 01 — User Problem board: node `93:198`
-- Step 03 — Insights + Personas board: node `142:2` (assumption-based; personas Omar · See it, Salma · Relate it, Mariam · Own pace)
+- Step 03 — Insights + Personas board: node `142:2` (assumption-based; personas Omar · See it, Salma · Relate it, Mariam · Check it)
 - Step 04 — Journey + How Might We board: node `153:2` (6-stage journey, 9 HMWs, core question; top picks: see it move · start from what they know · retry privately)
 
-**Direction (decided 29 Oct):** an **interactive website** for students in general who struggle to *visualize* what they learn in science and math. Three equally important pillars: **interactive visualization**, **real-world connection**, and **learning at each student's own pace** (with immediate feedback). Ignore the "Praxis PoC Brief (Ahmed)" (AI tutor, Thanaweya STEM/IG niche, teacher mode). Jira is no longer used: work in Figma only.
+**Direction (decided 29 Oct):** an **interactive website** for students in general who struggle to *visualize* what they learn in science and math. Three equally important pillars: **interactive visualization**, **real-world connection**, and **confidence to move on** ("Check it": students can't tell if they understood the current part, so they keep rereading and stall; small steps with a quick check + instant feedback). Ignore the "Praxis PoC Brief (Ahmed)" (AI tutor, Thanaweya STEM/IG niche, teacher mode). Jira is no longer used: work in Figma only.
 
 **Problem:** Grades 7–12 students struggle with complex, abstract math & science concepts (textbooks, static illustrations, one-size-fits-all explanations) → hard to visualize, connect to real life, learn at own pace → lower engagement, learning gaps, lower confidence, weak STEM foundations. Missing: personalized guidance, interactive visualization, immediate feedback.
 

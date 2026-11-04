@@ -18,6 +18,7 @@ This file is read automatically by Claude Code on every session. It contains ful
 
 - Keep responses short and direct — no long explanations unless I ask
 - When working in Figma, always use the `figma-use` skill before calling any Figma tool
+- The `figma-designer` skill (`.claude/skills/figma-designer/`) gives general Figma rules. For Techtifai, the existing design system below (variable names, Montserrat text styles, sizes) takes precedence over that skill's token names and type scale. Never rename or rebuild existing Techtifai tokens to match the skill.
 - Use the Figma MCP tools to make changes directly in Figma, not by writing code files
 - When I share a new reference file (PDF, image, doc), read it fully before doing anything else
 - Always compare new brand files against what's already in the design system before updating

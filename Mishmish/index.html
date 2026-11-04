@@ -1042,8 +1042,6 @@ const ITEMS = [
    draw:() => `${sky('#BDE7FF')}<circle cx="60" cy="56" r="24" fill="#FFD23F"/><rect y="200" width="300" height="60" fill="#3FA9E0"/><path d="M0 214 Q25 206 50 214 T100 214 T150 214 T200 214 T250 214 T300 214" stroke="#FFFFFF" stroke-width="3" fill="none"/><path d="M0 252 Q150 236 300 252 L300 330 L0 330 Z" fill="#F6D98B"/><path d="M262 200 L262 236 M246 236 L278 236" stroke="#8B5A3C" stroke-width="3"/><path d="M240 204 Q262 176 284 204 Z" fill="#E8433A"/>`},
   {id:'space',slot:'bg',en:'space',ar:'الفضاء',price:30,
    draw:() => `${sky('#25204A')}<g fill="#FFFFFF"><circle cx="30" cy="40" r="2"/><circle cx="80" cy="90" r="1.6"/><circle cx="270" cy="120" r="2"/><circle cx="240" cy="30" r="1.6"/><circle cx="20" cy="190" r="2"/><circle cx="285" cy="250" r="1.6"/><circle cx="60" cy="300" r="2"/></g><polygon fill="#FFD23F" points="${starPts(258,74,10,4.5)}"/><polygon fill="#FFD23F" points="${starPts(34,236,8,3.5)}"/><circle cx="56" cy="64" r="22" fill="#FFE9A8"/><circle cx="66" cy="58" r="20" fill="#25204A"/><ellipse cx="150" cy="322" rx="190" ry="34" fill="#4B3F8F"/>`},
-  {id:'rainbow',slot:'bg',en:'rainbow',ar:'قوس قزح',price:35,
-   draw:() => `${sky('#EAF6FF')}${['#E8433A','#FF8A3D','#FFD23F','#3DBB5C','#3A7BE8','#9B5DE5'].map((c,k) => `<path d="M${-60+k*14} 330 A${210-k*14} ${210-k*14} 0 0 1 ${360-k*14} 330" fill="none" stroke="${c}" stroke-width="15"/>`).join('')}<g fill="#FFFFFF"><ellipse cx="40" cy="300" rx="34" ry="16"/><ellipse cx="262" cy="300" rx="34" ry="16"/></g>`}
 ];
 /* ---------- more mall items (emoji products, fur colors, pattern places) ---------- */
 const DEPT_OF = {hat:'hats', eyes:'glasses', neck:'neck', toy:'toys', pattern:'fur', bg:'places'};
@@ -1151,7 +1149,6 @@ const ROOM_ITEMS = [
  R('r_lamp','floordecor','floor','lamp','أباجورة',18,{size:7, act:'light', ...SV('0 0 60 140', '<circle class="glow" cx="30" cy="30" r="30" fill="#FFE066" stroke="none"/><polygon points="14,10 46,10 54,44 6,44" fill="#FF8FC2"/><rect x="27" y="44" width="6" height="84" fill="#8A5A30"/><ellipse cx="30" cy="132" rx="20" ry="6" fill="#8A5A30"/>')}),
  R('r_rugpink','floordecor','rug','pink rug','سجادة بمبي',15,{size:32, ...rug('#FF8FC2','#FFFFFF')}),
  R('r_rugblue','floordecor','rug','blue rug','سجادة زرقا',15,{size:32, ...rug('#7FB2F0','#FFFFFF')}),
- R('r_rugrainbow','floordecor','rug','rainbow rug','سجادة قوس قزح',30,{size:34, isNew:true, ...SV('0 0 200 44', ['#E8433A','#FF8A3D','#FFD23F','#3DBB5C','#3A7BE8'].map((c, k) => `<ellipse cx="100" cy="22" rx="${96 - k * 17}" ry="${19 - k * 3.4}" fill="${c}"/>`).join(''))}),
  R('r_plant','floordecor','floor','plant','زرعة',10,{e:'🪴', size:8, act:'plant'}),
  R('r_cactus','floordecor','floor','cactus','صبار',8,{e:'🌵', size:7}),
  R('r_sunflower','floordecor','floor','sunflower','عباد الشمس',8,{e:'🌻', size:7}),
@@ -1167,7 +1164,6 @@ const ROOM_ITEMS = [
  R('r_calendar','walldecor','wall','calendar','نتيجة',8,{e:'📅', size:7, act:'date'}),
  R('r_lights','walldecor','wall','fairy lights','إضاءة ملونة',25,{size:26, isNew:true, ...SV('0 0 220 44', bulbs)}),
  R('r_bunting','walldecor','wall','flags','زينة أعلام',15,{size:28, ...SV('0 0 220 50', flags)}),
- R('r_rainbow','walldecor','wall','rainbow','قوس قزح',12,{e:'🌈', size:12}),
  R('r_moonlamp','walldecor','wall','moon light','نور قمر',10,{e:'🌙', size:7}),
  R('r_wallstar','walldecor','wall','star','نجمة',5,{e:'⭐', size:5}),
  R('r_balloons','walldecor','wall','balloons','بالونات',8,{e:'🎈', size:8}),
@@ -1219,7 +1215,6 @@ const WALLS = [
  ['w_bricks','bricks','طوب',20,'linear-gradient(#E3A27E 2px,transparent 2px) 0 0/60px 26px,linear-gradient(90deg,#E3A27E 2px,transparent 2px) 0 0/60px 52px,linear-gradient(90deg,#E3A27E 2px,transparent 2px) 30px 26px/60px 52px,#F6C9A9'],
  ['w_clouds','sky and clouds','سما وسحاب',30,'radial-gradient(ellipse 60px 22px at 30% 30%,#FFFFFF 98%,transparent),radial-gradient(ellipse 80px 26px at 75% 60%,#FFFFFF 98%,transparent),radial-gradient(ellipse 50px 18px at 15% 75%,#FFFFFF 98%,transparent),linear-gradient(#9FD8FF,#D6F0FF)'],
  ['w_stars','starry night','ليل ونجوم',30,'radial-gradient(#FFFFFF 1.5px,transparent 2px) 0 0/40px 40px,radial-gradient(#FFE066 2px,transparent 2.5px) 20px 20px/56px 56px,#2E2A5E'],
- ['w_rainbow','rainbow wall','حيطة قوس قزح',35,'linear-gradient(#FFC7C7,#FFE1BF,#FFF4BF,#D6F5D6,#D2E6FF,#E8D9FF)'],
  ['w_hearts','hearts','قلوب',25,`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M22 32 C6 22 12 10 22 17 C32 10 38 22 22 32Z' fill='%23FF9CC6'/%3E%3C/svg%3E") 0 0/44px 44px,#FFF0F6`],
  ['w_flowers','flowers','ورد',25,`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Cg fill='%23FFB3D1'%3E%3Ccircle cx='25' cy='17' r='6'/%3E%3Ccircle cx='33' cy='25' r='6'/%3E%3Ccircle cx='25' cy='33' r='6'/%3E%3Ccircle cx='17' cy='25' r='6'/%3E%3C/g%3E%3Ccircle cx='25' cy='25' r='4' fill='%23FFD23F'/%3E%3C/svg%3E") 0 0/50px 50px,#F2FFF2`]
 ].map(([id, en, ar, price, bg]) => R(id, 'walls', 'wallpaper', en, ar, price, {bg}));
@@ -1230,7 +1225,6 @@ const FLOORS = [
  ['f_tiles','checker tiles','بلاط شطرنج',20,'repeating-conic-gradient(#FFFFFF 0 25%,#C9C2DE 0 50%) 0 0/48px 48px'],
  ['f_marble','marble','رخام',25,'linear-gradient(115deg,transparent 40%,rgba(160,150,190,.25) 41%,transparent 43%),linear-gradient(60deg,transparent 60%,rgba(160,150,190,.2) 61%,transparent 63%),#F4F1FA'],
  ['f_grass','grass','نجيلة',30,'repeating-linear-gradient(100deg,#7CCB6E 0 6px,#6BBD5E 6px 12px)'],
- ['f_rainbow','rainbow floor','أرضية قوس قزح',35,'repeating-linear-gradient(90deg,#FFB3B3 0 40px,#FFD9A8 40px 80px,#FFF0A8 80px 120px,#B8EBB8 120px 160px,#B3D4FF 160px 200px,#D9C2FF 200px 240px)']
 ].map(([id, en, ar, price, bg]) => R(id, 'walls', 'flooring', en, ar, price, {bg}));
 ITEMS.push(...ROOM_ITEMS, ...WALLS, ...FLOORS);
 DEPTS.forEach(d => d.floor = 'cat');
@@ -3473,6 +3467,13 @@ function initRoom(){
   }
   ['c_box','c_bowl','w_default','f_default'].forEach(id => { if(!S.owned.includes(id)) S.owned.push(id); });
   save('owned');
+  /* drop anything no longer sold (e.g. removed items) from older saves */
+  S.owned = S.owned.filter(id => ITEM_BY_ID[id]);
+  Object.keys(S.equip || {}).forEach(k => { if(!ITEM_BY_ID[S.equip[k]]) delete S.equip[k]; });
+  S.room.items = S.room.items.filter(p => ITEM_BY_ID[p.id]);
+  if(!ITEM_BY_ID[S.room.wall]) S.room.wall = 'w_default';
+  if(!ITEM_BY_ID[S.room.floor]) S.room.floor = 'f_default';
+  save('owned'); save('equip'); save('room');
   if(!S.treats){ S.treats = {t_food:3, t_milk:2}; save('treats'); }
   if(!S.pet){ S.pet = {hearts:3, last:Date.now(), fedAt:0, pettedAt:0, playedAt:0}; save('pet'); }
 }

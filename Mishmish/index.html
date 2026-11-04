@@ -235,7 +235,64 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 .qa{display:grid;gap:16px;justify-items:center;width:100%;scroll-margin-top:90px}
 .qtext{font-size:32px;font-weight:700;margin:0}
 
+.stars{cursor:pointer}
+/* mall */
+.mall-door{display:block;width:100%;margin-top:28px;padding:0;border:3px solid var(--ink);border-radius:var(--r);background:var(--card);box-shadow:var(--shadow);overflow:hidden;text-align:start;transition:transform .12s,box-shadow .12s}
+.mall-door:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.awning{display:block;width:100%;height:44px}
+.door-in{display:flex;flex-wrap:wrap;align-items:center;gap:16px;padding:10px 20px 18px}
+.door-text{flex:1 1 260px;min-width:0;font-size:28px;font-weight:800;line-height:1.3}
+.door-text .en{font-size:18px;color:var(--ink-soft)}
+.door-text small{font-size:16px;font-weight:500;color:var(--ink-soft)}
+.door-items{display:flex;gap:8px;flex-wrap:wrap}
+.mini{width:60px;height:60px;border:2px solid var(--ink);border-radius:14px;background:var(--grape-l);display:grid;place-items:center;padding:6px}
+.mini svg{width:100%;height:100%}
+.mall{display:grid;gap:18px}
+.mall-sign{border:3px solid var(--ink);border-radius:var(--r);overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
+.sign-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:6px 20px 14px}
+.sign-in h2{margin:0;font-size:32px;line-height:1.2}
+.sign-in h2 .en{font-size:20px;color:var(--ink-soft)}
+.wallet{font-size:20px}
+.mall-grid{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:22px;align-items:start}
+.fitting{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);padding:14px;display:grid;gap:10px}
+.fit-label{font-weight:800;font-size:16px;color:var(--ink-soft);text-align:center}
+.fit-cat{border-radius:22px;background:var(--grape-l);padding:6px;border:2px dashed var(--grape)}
+.fit-cat svg{width:100%;height:auto;display:block}
+.fit-cat .tryon{animation:pop .4s}
+.fit-info{display:grid;gap:8px;justify-items:center;text-align:center;min-height:120px;align-content:start}
+.fit-info .muted{margin:0}
+.fit-hint{margin:0;color:var(--ink-soft);font-size:17px}
+.fit-name{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
+.fit-name .en{font-size:30px;font-weight:700}
+.need{margin:0;color:var(--bad);font-weight:700}
+.linkish{background:none;border:0;text-decoration:underline;color:var(--ink-soft);font-size:15px}
+.shelves{display:grid;gap:14px;min-width:0}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tab{border:3px solid var(--ink);border-radius:999px;background:var(--card);padding:5px 14px;font-weight:700;font-size:17px;display:inline-flex;gap:6px;align-items:baseline}
+.tab .en{font-size:14px;color:var(--ink-soft)}
+.tab[aria-selected="true"]{background:var(--tangerine);box-shadow:3px 3px 0 var(--ink)}
+.tab[aria-selected="true"] .en{color:var(--ink)}
+.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:22px 16px;padding:22px 16px 16px;border:3px solid var(--ink);border-radius:var(--r);background:var(--sun-l)}
+.item{position:relative;border:3px solid var(--ink);border-radius:18px;background:var(--card);padding:12px 10px 10px;display:grid;justify-items:center;gap:2px;transition:transform .1s,box-shadow .1s}
+.item:hover{transform:translateY(-3px)}
+.item .thumb{width:100%;aspect-ratio:1;display:grid;place-items:center;border-radius:12px;background:var(--paper);overflow:hidden;margin-bottom:4px}
+.item .thumb svg{width:80%;height:80%}
+.item .thumb.t-bg svg,.item .thumb.t-pattern svg{width:100%;height:100%}
+.item .name{font-size:18px;font-weight:700;line-height:1.2}
+.item small{font-size:14px;color:var(--ink-soft)}
+.tag{position:absolute;top:-12px;inset-inline-start:-8px;z-index:1;transform:rotate(-8deg);background:var(--sun);border:2px solid var(--ink);border-radius:8px;padding:0 8px;font-weight:800;font-size:15px;font-variant-numeric:tabular-nums}
+.item.pricey .tag{background:var(--card);color:var(--ink-soft)}
+.item.owned .tag{background:var(--good-l);color:var(--ink)}
+.item.worn .tag{background:var(--good);color:#FFFFFF}
+.item.sel{box-shadow:0 0 0 4px var(--grape);transform:translateY(-3px)}
+
 @media (max-width:760px){
+  .mall-grid{grid-template-columns:1fr}
+  .fitting{position:static}
+  .fit-cat{max-width:240px;justify-self:center;width:100%}
+  .mini{width:48px;height:48px}
+  .door-text{font-size:24px}
+  .shelf{grid-template-columns:repeat(2,minmax(0,1fr))}
   .opts.opts3{max-width:100%;gap:10px}
   .story p{font-size:24px}
   .storybox{padding:16px}
@@ -266,7 +323,7 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
       <div class="brand" id="brand"></div>
       <div class="spacer"></div>
       <button class="icon-btn" id="soundBtn" aria-pressed="true" title="الصوت">🔊</button>
-      <div class="pill stars" id="stars" aria-label="عدد النجوم">⭐ <b id="starCount">0</b></div>
+      <button class="pill stars" id="stars" title="مول مشمش" aria-label="النجوم: ادخلي المول">⭐ <b id="starCount">0</b></button>
     </div>
   </header>
   <main id="screen"></main>
@@ -288,7 +345,8 @@ const DEFAULT_MISH = {tail:'#FF9F4A',body:'#FF9F4A',paws:'#FFFFFF',ball:'#3A7BE8
 const S = {
   stars: store.get('stars', 0),
   topic: store.get('topic', 'all'),
-  wear: store.get('wear', {}),
+  owned: store.get('owned', null),
+  equip: store.get('equip', {}),
   gallery: store.get('gallery', []),
   tricky: store.get('tricky', {}),
   mish: store.get('mish', DEFAULT_MISH),
@@ -326,12 +384,6 @@ const TOPICS = [
 ];
 const topicWords = () => S.topic === 'all' ? VOCAB : VOCAB.filter(w => w.t === S.topic);
 
-const ACC = [
-  {id:'flower',en:'flower',ar:'وردة',ico:'🌸',cost:10},
-  {id:'glasses',en:'glasses',ar:'نضارة',ico:'👓',cost:25},
-  {id:'crown',en:'crown',ar:'تاج',ico:'👑',cost:45},
-  {id:'wand',en:'wand',ar:'عصاية سحرية',ico:'🪄',cost:70}
-];
 const PARTS = {
   head:{en:'head',ar:'الراس'}, body:{en:'body',ar:'الجسم'}, ears:{en:'ears',ar:'الودان'}, eyes:{en:'eyes',ar:'العينين'},
   nose:{en:'nose',ar:'المناخير'}, tail:{en:'tail',ar:'الديل'}, paws:{en:'paws',ar:'الرجلين'}, bow:{en:'bow',ar:'الفيونكة'}, ball:{en:'ball',ar:'الكورة'}
@@ -472,58 +524,142 @@ function toast(msg){
   clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, 3200);
 }
 
-/* ---------- stars & unlocks ---------- */
+/* ---------- stars (wallet) ---------- */
 let roundStars = 0;
 function addStars(n){
-  const before = S.stars;
   S.stars += n; roundStars += n; save('stars');
   renderStars(true);
-  ACC.forEach(a => {
-    if(before < a.cost && S.stars >= a.cost){
-      S.wear[a.id] = true; save('wear');
-      setTimeout(() => { toast(`🎉 مشمش كسبت حاجة جديدة: ${a.ico} ${a.en} (${a.ar})`); meow(); }, 600);
-    }
-  });
 }
 function renderStars(bump){
   $('#starCount').textContent = S.stars;
   if(bump){ const s = $('#stars'); s.classList.remove('bump'); void s.offsetWidth; s.classList.add('bump'); }
 }
 function markTricky(w){ S.tricky[w.en] = (S.tricky[w.en]||0) + 1; save('tricky'); }
-const worn = () => ACC.filter(a => S.stars >= a.cost && S.wear[a.id]).map(a => a.id);
+
+/* ---------- Mishmish Mall: departments and items ---------- */
+const SLOTS = [
+  {id:'hat',en:'Hats',ar:'القبعات'},{id:'eyes',en:'Glasses',ar:'النضارات'},{id:'neck',en:'Neck',ar:'للرقبة'},
+  {id:'toy',en:'Toys',ar:'اللعب'},{id:'pattern',en:'Fur',ar:'نقشة الفرو'},{id:'bg',en:'Places',ar:'الأماكن'}
+];
+const heart = (x, y, s=1) => `M${x} ${y+16*s} C${x-34*s} ${y-4*s} ${x-16*s} ${y-28*s} ${x} ${y-12*s} C${x+16*s} ${y-28*s} ${x+34*s} ${y-4*s} ${x} ${y+16*s} Z`;
+const pearls = () => { let o = ''; for(let k=0;k<=10;k++){ const t=k/10, x=(1-t)*(1-t)*102+2*(1-t)*t*150+t*t*198, y=(1-t)*(1-t)*190+2*(1-t)*t*224+t*t*190; o += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="#FFF7FB" stroke-width="2.5"/>`; } return o + `<path d="${heart(150,214,.45)}" fill="#F2558F" stroke-width="2.5"/>`; };
+const starPts = (cx, cy, R, r) => Array.from({length:10}, (_,k) => { const a = -Math.PI/2 + k*Math.PI/5, d = k%2 ? r : R; return `${(cx+Math.cos(a)*d).toFixed(1)},${(cy+Math.sin(a)*d).toFixed(1)}`; }).join(' ');
+const sky = c => `<rect width="300" height="330" fill="${c}"/>`;
+
+const ITEMS = [
+  // hats
+  {id:'flower',slot:'hat',en:'flower',ar:'وردة',price:8,box:'176 36 48 50',
+   draw:() => `<g fill="#F2558F"><circle cx="200" cy="52" r="9"/><circle cx="209.5" cy="58.9" r="9"/><circle cx="205.9" cy="70.1" r="9"/><circle cx="194.1" cy="70.1" r="9"/><circle cx="190.5" cy="58.9" r="9"/></g><circle cx="200" cy="62" r="6" fill="#FFD23F"/>`},
+  {id:'party',slot:'hat',en:'party hat',ar:'طرطور',price:15,box:'110 0 80 92',
+   draw:() => `<polygon points="122,84 150,16 178,84" fill="#F2558F"/><g fill="#FFD23F" stroke="none"><circle cx="141" cy="64" r="4.5"/><circle cx="158" cy="50" r="4.5"/><circle cx="156" cy="74" r="4.5"/><circle cx="148" cy="38" r="3.5"/></g><circle cx="150" cy="15" r="9" fill="#FFD23F"/>`},
+  {id:'cap',slot:'hat',en:'cap',ar:'كاب',price:20,box:'96 28 150 70',
+   draw:() => `<path d="M196 84 Q236 82 240 92 Q236 100 196 96 Z" fill="#2B5FC0"/><path d="M104 88 Q104 40 150 38 Q196 40 196 88 Z" fill="#3A7BE8"/><circle cx="150" cy="38" r="5" fill="#E8433A"/>`},
+  {id:'chef',slot:'hat',en:'chef hat',ar:'طاقية شيف',price:25,box:'102 12 96 80',
+   draw:() => `<g fill="#FFFFFF"><circle cx="128" cy="54" r="17"/><circle cx="172" cy="54" r="17"/><circle cx="150" cy="42" r="22"/><rect x="120" y="62" width="60" height="22" rx="3"/></g>`},
+  {id:'witch',slot:'hat',en:'witch hat',ar:'برنيطة ساحرة',price:35,box:'82 0 136 96',
+   draw:() => `<ellipse cx="150" cy="80" rx="64" ry="11" fill="#7A4FD6"/><polygon points="120,78 168,6 180,78" fill="#7A4FD6"/><path d="M124 68 L179 68 L180 78 L120 78 Z" fill="#FFD23F"/>`},
+  {id:'crown',slot:'hat',en:'crown',ar:'تاج',price:50,box:'108 30 84 56',
+   draw:() => `<polygon fill="#FFC93C" points="116,80 122,46 137,66 150,38 163,66 178,46 184,80"/><circle cx="150" cy="70" r="5" fill="#E8433A"/><circle cx="128" cy="72" r="3.5" fill="#3A7BE8"/><circle cx="172" cy="72" r="3.5" fill="#3DBB5C"/>`},
+  // glasses
+  {id:'glasses',slot:'eyes',en:'glasses',ar:'نضارة',price:12,box:'94 96 112 56',
+   draw:() => `<g fill="rgba(255,255,255,.28)" stroke-width="4"><circle cx="122" cy="124" r="21"/><circle cx="178" cy="124" r="21"/><path d="M143 121 Q150 115 157 121" fill="none"/></g>`},
+  {id:'sunglasses',slot:'eyes',en:'sunglasses',ar:'نضارة شمس',price:18,box:'94 102 112 44',
+   draw:() => `<rect x="100" y="110" width="44" height="28" rx="10" fill="#2B2233"/><rect x="156" y="110" width="44" height="28" rx="10" fill="#2B2233"/><path d="M144 120 Q150 114 156 120" fill="none"/><path d="M107 117 L119 117 M163 117 L175 117" stroke="#FFFFFF" stroke-width="3"/>`},
+  {id:'hearts',slot:'eyes',en:'heart glasses',ar:'نضارة قلوب',price:25,box:'88 92 124 54',
+   draw:() => `<path d="${heart(122,124)}" fill="#FF6FA5" fill-opacity=".85"/><path d="${heart(178,124)}" fill="#FF6FA5" fill-opacity=".85"/><path d="M144 118 Q150 112 156 118" fill="none"/>`},
+  {id:'mask',slot:'eyes',en:'mask',ar:'ماسك',price:30,box:'82 96 136 52',
+   draw:() => `<path fill="#E8433A" fill-rule="evenodd" d="M88 112 Q150 96 212 112 Q215 136 196 140 Q170 142 150 130 Q130 142 104 140 Q85 136 88 112 Z M111 124 a11 13 0 1 0 22 0 a11 13 0 1 0 -22 0 Z M167 124 a11 13 0 1 0 22 0 a11 13 0 1 0 -22 0 Z"/>`},
+  // neck
+  {id:'tie',slot:'neck',en:'tie',ar:'كرافتة',price:10,box:'128 186 44 80',
+   draw:() => `<path d="M150 204 L162 214 L156 252 L150 260 L144 252 L138 214 Z" fill="#3A7BE8"/><path d="M140 193 L160 193 L156 206 L144 206 Z" fill="#2B5FC0"/>`},
+  {id:'bell',slot:'neck',en:'bell',ar:'جرس',price:12,box:'92 178 116 54',
+   draw:() => `<path d="M98 186 Q150 210 202 186 L202 197 Q150 221 98 197 Z" fill="#E8433A"/><circle cx="150" cy="216" r="10" fill="#FFD23F"/><path d="M144 219 L156 219" stroke-width="2.5"/>`},
+  {id:'scarf',slot:'neck',en:'scarf',ar:'كوفية',price:15,box:'86 174 128 88',
+   draw:() => `<path d="M176 202 L194 250 L176 254 L164 208 Z" fill="#E8433A"/><path d="M94 182 Q150 210 206 182 L208 200 Q150 228 92 200 Z" fill="#E8433A"/><path d="M120 196 L118 212 M150 204 L150 218 M180 196 L182 210" stroke="#FFFFFF" stroke-width="4"/>`},
+  {id:'necklace',slot:'neck',en:'necklace',ar:'سلسلة',price:22,box:'92 180 116 50',draw:pearls},
+  // toys
+  {id:'fish',slot:'toy',en:'fish toy',ar:'سمكة لعبة',price:10,box:'14 264 90 56',
+   draw:() => `<path d="M78 292 L96 278 L96 306 Z" fill="#3A7BE8"/><path d="M22 292 Q52 266 80 292 Q52 318 22 292 Z" fill="#3A7BE8"/><circle cx="38" cy="288" r="3.5" fill="#2B2233" stroke="none"/><path d="M52 282 Q58 292 52 302" fill="none" stroke-width="2.5"/>`},
+  {id:'brush',slot:'toy',en:'paintbrush',ar:'فرشاة رسم',price:12,box:'20 226 104 100',
+   draw:() => `<g transform="rotate(-40 70 290)"><rect x="62" y="262" width="16" height="58" rx="6" fill="#C98B52"/><rect x="60" y="250" width="20" height="14" fill="#C9C7D1"/><path d="M60 250 Q70 214 80 250 Z" fill="#F2558F"/></g>`},
+  {id:'mouse',slot:'toy',en:'toy mouse',ar:'فار لعبة',price:15,box:'14 262 96 58',
+   draw:() => `<path d="M82 300 Q102 290 98 314" fill="none" stroke-width="3"/><circle cx="40" cy="282" r="9" fill="#FF8FC2"/><circle cx="56" cy="280" r="9" fill="#FF8FC2"/><ellipse cx="54" cy="298" rx="30" ry="18" fill="#A8A6B3"/><circle cx="25" cy="298" r="4" fill="#F2558F"/><circle cx="38" cy="292" r="3" fill="#2B2233" stroke="none"/>`},
+  {id:'balloon',slot:'toy',en:'balloon',ar:'بالونة',price:18,box:'12 110 92 190',
+   draw:() => `<path d="M46 186 Q60 240 100 292" fill="none" stroke-width="2.5"/><path d="M42 183 L50 183 L46 191 Z" fill="#E8433A"/><ellipse cx="46" cy="150" rx="28" ry="34" fill="#E8433A"/><path d="M33 138 Q37 128 46 126" fill="none" stroke="#FFFFFF" stroke-width="4"/>`},
+  {id:'wand',slot:'toy',en:'magic wand',ar:'عصاية سحرية',price:40,box:'218 182 80 90',
+   draw:() => `<path d="M226 266 L270 216" stroke-width="6"/><polygon fill="#FFD23F" points="${starPts(276,204,16,7)}"/>`},
+  // fur patterns
+  {id:'stripes',slot:'pattern',en:'stripes',ar:'خطوط',price:15,
+   head:`<path d="M136 72 L139 92 M150 69 L150 95 M164 72 L161 92" stroke="rgba(43,34,51,.35)" stroke-width="6" fill="none"/>`,
+   body:`<path d="M72 218 Q100 228 106 250 M66 260 Q96 266 102 288 M228 218 Q200 228 194 250 M234 260 Q204 266 198 288" stroke="rgba(43,34,51,.3)" stroke-width="8" fill="none"/>`},
+  {id:'spots',slot:'pattern',en:'spots',ar:'نُقط',price:15,
+   head:`<g fill="rgba(255,255,255,.6)" stroke="none"><circle cx="190" cy="98" r="11"/><circle cx="110" cy="94" r="7"/></g>`,
+   body:`<g fill="rgba(255,255,255,.6)" stroke="none"><circle cx="118" cy="238" r="13"/><circle cx="178" cy="262" r="16"/><circle cx="140" cy="282" r="8"/><circle cx="192" cy="222" r="9"/><circle cx="100" cy="270" r="7"/></g>`},
+  {id:'heartsfur',slot:'pattern',en:'hearts',ar:'قلوب',price:22,
+   head:`<g fill="#F2558F" fill-opacity=".7" stroke="none"><path d="${heart(112,98,.35)}"/><path d="${heart(190,96,.35)}"/></g>`,
+   body:`<g fill="#F2558F" fill-opacity=".7" stroke="none"><path d="${heart(118,236,.45)}"/><path d="${heart(182,256,.5)}"/><path d="${heart(140,282,.35)}"/><path d="${heart(196,222,.35)}"/></g>`},
+  // places (backgrounds)
+  {id:'garden',slot:'bg',en:'garden',ar:'جنينة',price:20,
+   draw:() => `${sky('#CDEBFF')}<circle cx="252" cy="52" r="24" fill="#FFD23F"/><g fill="#FFFFFF"><ellipse cx="64" cy="56" rx="30" ry="12"/><ellipse cx="84" cy="48" rx="20" ry="12"/></g><path d="M0 246 Q150 222 300 246 L300 330 L0 330 Z" fill="#8FD694"/><g fill="#F2558F"><circle cx="30" cy="262" r="6"/><circle cx="268" cy="270" r="6"/><circle cx="246" cy="300" r="6"/></g><g fill="#FFD23F"><circle cx="30" cy="262" r="2.5"/><circle cx="268" cy="270" r="2.5"/><circle cx="246" cy="300" r="2.5"/></g>`},
+  {id:'beach',slot:'bg',en:'beach',ar:'بحر',price:25,
+   draw:() => `${sky('#BDE7FF')}<circle cx="60" cy="56" r="24" fill="#FFD23F"/><rect y="200" width="300" height="60" fill="#3FA9E0"/><path d="M0 214 Q25 206 50 214 T100 214 T150 214 T200 214 T250 214 T300 214" stroke="#FFFFFF" stroke-width="3" fill="none"/><path d="M0 252 Q150 236 300 252 L300 330 L0 330 Z" fill="#F6D98B"/><path d="M262 200 L262 236 M246 236 L278 236" stroke="#8B5A3C" stroke-width="3"/><path d="M240 204 Q262 176 284 204 Z" fill="#E8433A"/>`},
+  {id:'space',slot:'bg',en:'space',ar:'الفضاء',price:30,
+   draw:() => `${sky('#25204A')}<g fill="#FFFFFF"><circle cx="30" cy="40" r="2"/><circle cx="80" cy="90" r="1.6"/><circle cx="270" cy="120" r="2"/><circle cx="240" cy="30" r="1.6"/><circle cx="20" cy="190" r="2"/><circle cx="285" cy="250" r="1.6"/><circle cx="60" cy="300" r="2"/></g><polygon fill="#FFD23F" points="${starPts(258,74,10,4.5)}"/><polygon fill="#FFD23F" points="${starPts(34,236,8,3.5)}"/><circle cx="56" cy="64" r="22" fill="#FFE9A8"/><circle cx="66" cy="58" r="20" fill="#25204A"/><ellipse cx="150" cy="322" rx="190" ry="34" fill="#4B3F8F"/>`},
+  {id:'rainbow',slot:'bg',en:'rainbow',ar:'قوس قزح',price:35,
+   draw:() => `${sky('#EAF6FF')}${['#E8433A','#FF8A3D','#FFD23F','#3DBB5C','#3A7BE8','#9B5DE5'].map((c,k) => `<path d="M${-60+k*14} 330 A${210-k*14} ${210-k*14} 0 0 1 ${360-k*14} 330" fill="none" stroke="${c}" stroke-width="15"/>`).join('')}<g fill="#FFFFFF"><ellipse cx="40" cy="300" rx="34" ry="16"/><ellipse cx="262" cy="300" rx="34" ry="16"/></g>`}
+];
+const ITEM_BY_ID = Object.fromEntries(ITEMS.map(i => [i.id, i]));
+
+/* migrate older saves (free unlocks by star count) into owned items */
+if(!S.owned){
+  const legacy = {flower:10, glasses:25, crown:45, wand:70}, w = store.get('wear', {});
+  S.owned = Object.keys(legacy).filter(k => S.stars >= legacy[k]);
+  S.equip = {};
+  S.owned.forEach(id => { if(w[id] !== false) S.equip[ITEM_BY_ID[id].slot] = id; });
+  save('owned'); save('equip');
+}
 
 /* ---------- Mishmish (SVG) ---------- */
-function catSVG(fills={}, acc=[], cls=''){
+let svgUid = 0;
+function catSVG(fills={}, look={}, cls=''){
   const f = p => fills[p] || '#FFFFFF';
-  const A = new Set(acc);
+  const u = ++svgUid;
+  const it = slot => (look && look[slot] && ITEM_BY_ID[look[slot]]) || null;
+  const bg = it('bg'), pat = it('pattern'), hat = it('hat'), eyes = it('eyes'), neck = it('neck'), toy = it('toy');
   return `<svg class="cat ${cls}" viewBox="0 0 300 330" role="img" aria-label="Mishmish the cat">
+  <defs><clipPath id="cb${u}"><ellipse cx="150" cy="245" rx="72" ry="62"/></clipPath><clipPath id="ch${u}"><ellipse cx="150" cy="128" rx="74" ry="60"/></clipPath><clipPath id="cf${u}"><rect width="300" height="330" rx="26"/></clipPath></defs>
+  ${bg ? `<g clip-path="url(#cf${u})" stroke="none" pointer-events="none">${bg.draw()}</g>` : ''}
   <g stroke="#2B2233" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
     <path data-part="tail" fill="${f('tail')}" d="M205 262 C262 262 285 205 262 168 C252 152 232 160 240 175 C255 200 245 235 200 236 Z"/>
     <ellipse data-part="body" fill="${f('body')}" cx="150" cy="245" rx="72" ry="62"/>
+    ${pat ? `<g clip-path="url(#cb${u})" pointer-events="none">${pat.body}</g>` : ''}
     <ellipse data-part="paws" fill="${f('paws')}" cx="118" cy="300" rx="24" ry="14"/>
     <ellipse data-part="paws" fill="${f('paws')}" cx="182" cy="300" rx="24" ry="14"/>
-    <circle data-part="ball" fill="${f('ball')}" cx="52" cy="288" r="31"/>
-    <path fill="none" stroke-width="2.5" pointer-events="none" d="M27 274 Q52 264 79 278 M23 294 Q52 284 82 298 M38 313 Q56 302 74 314"/>
+    ${toy ? '' : `<circle data-part="ball" fill="${f('ball')}" cx="52" cy="288" r="31"/>
+    <path fill="none" stroke-width="2.5" pointer-events="none" d="M27 274 Q52 264 79 278 M23 294 Q52 284 82 298 M38 313 Q56 302 74 314"/>`}
     <path data-part="ears" fill="${f('ears')}" d="M92 112 L98 40 L148 82 Z"/>
     <path data-part="ears" fill="${f('ears')}" d="M208 112 L202 40 L152 82 Z"/>
     <ellipse data-part="head" fill="${f('head')}" cx="150" cy="128" rx="74" ry="60"/>
+    ${pat ? `<g clip-path="url(#ch${u})" pointer-events="none">${pat.head}</g>` : ''}
     <ellipse data-part="eyes" fill="${f('eyes')}" cx="122" cy="124" rx="11" ry="14"/>
     <ellipse data-part="eyes" fill="${f('eyes')}" cx="178" cy="124" rx="11" ry="14"/>
     <circle fill="#FFFFFF" stroke="none" pointer-events="none" cx="125" cy="119" r="3.5"/>
     <circle fill="#FFFFFF" stroke="none" pointer-events="none" cx="181" cy="119" r="3.5"/>
     <path data-part="nose" fill="${f('nose')}" d="M141 146 L159 146 L150 157 Z"/>
     <path fill="none" stroke-width="3" pointer-events="none" d="M150 157 Q150 167 140 167 M150 157 Q150 167 160 167 M116 150 L72 143 M116 157 L74 161 M184 150 L228 143 M184 157 L226 161"/>
-    <path data-part="bow" fill="${f('bow')}" d="M150 192 L116 176 L116 208 Z"/>
+    ${neck ? '' : `<path data-part="bow" fill="${f('bow')}" d="M150 192 L116 176 L116 208 Z"/>
     <path data-part="bow" fill="${f('bow')}" d="M150 192 L184 176 L184 208 Z"/>
-    <circle data-part="bow" fill="${f('bow')}" cx="150" cy="192" r="9"/>
+    <circle data-part="bow" fill="${f('bow')}" cx="150" cy="192" r="9"/>`}
   </g>
-  <g stroke="#2B2233" stroke-width="3.5" stroke-linejoin="round" pointer-events="none">
-    ${A.has('flower') ? `<g fill="#F2558F"><circle cx="200" cy="52" r="9"/><circle cx="209.5" cy="58.9" r="9"/><circle cx="205.9" cy="70.1" r="9"/><circle cx="194.1" cy="70.1" r="9"/><circle cx="190.5" cy="58.9" r="9"/></g><circle cx="200" cy="62" r="6" fill="#FFD23F"/>` : ''}
-    ${A.has('glasses') ? `<g fill="rgba(255,255,255,.28)" stroke-width="4"><circle cx="122" cy="124" r="21"/><circle cx="178" cy="124" r="21"/><path d="M143 121 Q150 115 157 121" fill="none"/></g>` : ''}
-    ${A.has('crown') ? `<polygon fill="#FFC93C" points="116,80 122,46 137,66 150,38 163,66 178,46 184,80"/><circle cx="150" cy="70" r="5" fill="#E8433A"/>` : ''}
-    ${A.has('wand') ? `<path d="M226 266 L270 216" stroke-width="6"/><polygon fill="#FFD23F" points="276,188 280.1,198.3 291.2,199.1 282.7,206.2 285.4,216.9 276,211 266.6,216.9 269.3,206.2 260.8,199.1 271.9,198.3"/>` : ''}
+  <g stroke="#2B2233" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" pointer-events="none">
+    ${neck ? neck.draw() : ''}${toy ? toy.draw() : ''}${eyes ? eyes.draw() : ''}${hat ? hat.draw() : ''}
   </g>
 </svg>`;
+}
+function itemThumb(item){
+  if(item.slot === 'pattern') return catSVG(DEFAULT_MISH, {pattern:item.id});
+  if(item.slot === 'bg') return `<svg viewBox="0 0 300 330" aria-hidden="true">${item.draw()}</svg>`;
+  return `<svg viewBox="${item.box}" aria-hidden="true"><g stroke="#2B2233" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">${item.draw()}</g></svg>`;
 }
 
 /* ---------- tile icons ---------- */
@@ -540,6 +676,7 @@ const PAW = `<svg viewBox="0 0 40 40" aria-hidden="true" fill="rgba(255,255,255,
 $('#brand').innerHTML = `${catSVG(DEFAULT_MISH)}<div>مشمش<small>English Studio</small></div>`;
 $('#brand svg').setAttribute('viewBox','40 20 220 190');
 $('#homeBtn').onclick = () => { if(hasTTS) speechSynthesis.cancel(); home(); };
+$('#stars').onclick = () => { actx(); mall(); };
 function renderSound(){ const b = $('#soundBtn'); b.textContent = S.sound ? '🔊' : '🔇'; b.setAttribute('aria-pressed', String(S.sound)); }
 $('#soundBtn').onclick = () => { S.sound = !S.sound; save('sound'); renderSound(); if(!S.sound && hasTTS) speechSynthesis.cancel(); };
 function setTop(inGame, keep){ $('#homeBtn').hidden = !inGame; if(!keep) window.scrollTo(0,0); }
@@ -553,17 +690,26 @@ document.addEventListener('click', e => {
 function home(keep){
   setTop(false, keep === true);
   const nm = S.name ? ', ' + S.name : '';
-  const unlockedAny = ACC.some(a => S.stars >= a.cost);
-  const next = ACC.find(a => S.stars < a.cost);
+  const afford = ITEMS.filter(i => !S.owned.includes(i.id) && i.price <= S.stars).sort((a,b) => b.price - a.price)[0];
+  const nextBuy = ITEMS.filter(i => !S.owned.includes(i.id)).sort((a,b) => a.price - b.price)[0];
   screenEl.innerHTML = `
   <section class="hero">
-    <div class="hero-cat">${catSVG(S.mish, worn())}</div>
+    <div class="hero-cat">${catSVG(S.mish, S.equip)}</div>
     <div class="bubble sticker">
       <p class="hello en" lang="en">Hi${esc(nm)}! I'm Mishmish.</p>
-      <p>أنا مشمش، القطة الرسّامة. كل ما تلعبي وتتعلمي كلمات إنجليزي جديدة هتجمعي نجوم، والنجوم بتفتح حاجات حلوة ألبسها.${next ? ` فاضل <b>${next.cost - S.stars}</b> نجمة وأكسب <span class="en">${next.en}</span> ${next.ico}` : ' كسبتي كل حاجة في الدولاب!'}</p>
+      <p>أنا مشمش، القطة الرسّامة. كل ما تلعبي وتتعلمي كلمات إنجليزي جديدة هتجمعي نجوم، وتقدري تشتريلي بيها حاجات حلوة من المول.${afford ? ` معاكي نجوم تكفي تشتري <span class="en">${afford.en}</span> (${afford.ar})!` : nextBuy ? ` فاضل <b>${nextBuy.price - S.stars}</b> نجمة وتقدري تشتري <span class="en">${nextBuy.en}</span>.` : ' اشتريتي كل حاجة في المول!'}</p>
       <div class="row">${sayBtn(`Hi${nm}! I'm Mishmish. Let's play and learn English!`)}</div>
     </div>
   </section>
+
+  <button class="mall-door" id="mallDoor">
+    ${AWNING}
+    <span class="door-in">
+      <span class="door-text"><b>مول مشمش</b> <span class="en">Mishmish Mall</span><br><small>قبعات ونضارات ولعب وأماكن. ادخلي واشتري لمشمش اللي يعجبك!</small></span>
+      <span class="door-items" aria-hidden="true">${['crown','sunglasses','balloon','scarf'].map(id => `<span class="mini">${itemThumb(ITEM_BY_ID[id])}</span>`).join('')}</span>
+      <span class="pill stars">⭐ ${S.stars}</span>
+    </span>
+  </button>
 
   <h2 class="sec-title">اختاري الموضوع <span class="en">Choose a topic</span></h2>
   <div class="chips" id="chips">
@@ -578,17 +724,6 @@ function home(keep){
     <button class="tile t-color" data-game="color">${ICONS.color}<div><h3>لوّني مشمش</h3><span class="en">Color Mishmish</span><p>اقري الجملة ولوّني بالإنجليزي، وبعدين ارسمي براحتك</p></div></button>
     <button class="tile t-memory" data-game="memory">${ICONS.memory}<div><h3>لعبة الذاكرة</h3><span class="en">Memory Cards</span><p>طابقي الكلمة مع صورتها</p></div></button>
   </div>
-
-  <h2 class="sec-title">دولاب مشمش <span class="en">Mishmish's closet</span></h2>
-  <div class="closet">
-    ${ACC.map(a => {
-      const open = S.stars >= a.cost;
-      return `<button class="acc ${open ? (S.wear[a.id] ? 'on' : '') : 'locked'}" data-acc="${a.id}" ${open ? `aria-pressed="${!!S.wear[a.id]}"` : 'aria-disabled="true"'}>
-        <span class="ico" aria-hidden="true">${a.ico}</span><span class="en">${a.en}</span>
-        <small>${open ? (S.wear[a.id] ? 'لابساها · دوسي تقلعيها' : 'دوسي تلبسيها') : `🔒 محتاجة ${a.cost} ⭐`}</small></button>`;
-    }).join('')}
-  </div>
-  ${unlockedAny ? '' : '<p class="muted" style="margin-top:10px">العبي واجمعي نجوم عشان تفتحي الحاجات دي.</p>'}
 
   <h2 class="sec-title">معرض رسوماتي <span class="en">My gallery</span></h2>
   ${S.gallery.length ? `<div class="gallery">${S.gallery.map((g,i) => `
@@ -628,18 +763,14 @@ function home(keep){
     const t = TOPICS.find(t => t.id === S.topic); say(t.en);
   });
   screenEl.querySelectorAll('[data-game]').forEach(b => b.onclick = () => { actx(); roundStars = 0; GAMES[b.dataset.game](); });
-  screenEl.querySelectorAll('[data-acc]').forEach(b => b.onclick = () => {
-    const a = ACC.find(x => x.id === b.dataset.acc);
-    if(S.stars < a.cost){ toast(`محتاجة ${a.cost - S.stars} نجمة كمان عشان تفتحي ${a.ar}`); return; }
-    S.wear[a.id] = !S.wear[a.id]; save('wear'); say(a.en); home(true); 
-  });
+  $('#mallDoor').onclick = () => { actx(); mall(); };
   screenEl.querySelectorAll('[data-gset]').forEach(b => b.onclick = () => { S.mish = {...S.gallery[+b.dataset.gset]}; save('mish'); meow(); toast('مشمش بقت بالألوان بتاعتك!'); home(true); });
   screenEl.querySelectorAll('[data-gdel]').forEach(b => b.onclick = () => { S.gallery.splice(+b.dataset.gdel, 1); save('gallery'); home(true); });
   $('#kidName').onchange = e => { S.name = e.target.value.trim().replace(/[^A-Za-z \-]/g,'').slice(0,20); save('name'); };
   $('#resetBtn').onclick = () => {
     $('#resetRow').innerHTML = '<span>متأكدين؟ النجوم والرسومات هتتمسح.</span><button class="btn" id="yesReset" style="background:var(--bad-l)">أيوه امسح</button><button class="btn" id="noReset">لأ</button>';
     $('#noReset').onclick = () => home(true);
-    $('#yesReset').onclick = () => { Object.assign(S, {stars:0, wear:{}, gallery:[], tricky:{}, mish:{...DEFAULT_MISH}, readWords:[], famDone:{}, storyDone:{}}); ['stars','wear','gallery','tricky','mish','readWords','famDone','storyDone'].forEach(save); renderStars(); home(true); };
+    $('#yesReset').onclick = () => { Object.assign(S, {stars:0, owned:[], equip:{}, gallery:[], tricky:{}, mish:{...DEFAULT_MISH}, readWords:[], famDone:{}, storyDone:{}}); ['stars','owned','equip','gallery','tricky','mish','readWords','famDone','storyDone'].forEach(save); renderStars(); home(true); };
   };
 }
 
@@ -1023,18 +1154,112 @@ function gameStory(idx){
   }
 }
 
+/* ============ MISHMISH MALL ============ */
+const AWNING = `<svg class="awning" viewBox="0 0 400 38" preserveAspectRatio="none" aria-hidden="true">${Array.from({length:10}, (_,k) => {
+  const c = k % 2 ? '#FFFFFF' : '#FF8A3D';
+  return `<rect x="${k*40}" width="40" height="24" fill="${c}"/><path d="M${k*40} 24 Q${k*40+20} 42 ${k*40+40} 24" fill="${c}" stroke="#2B2233" stroke-width="2.5" vector-effect="non-scaling-stroke"/>`;
+}).join('')}<path d="M0 1.5 H400" stroke="#2B2233" stroke-width="3" vector-effect="non-scaling-stroke"/></svg>`;
+const PLURAL = new Set(['glasses','sunglasses','hearts','stripes','spots','heartsfur']);
+const NO_ART = new Set(['space']);
+function itemLine(it, withPrice){
+  const pl = PLURAL.has(it.id);
+  const name = pl || NO_ART.has(it.id) ? it.en : (/^[aeiou]/.test(it.en) ? 'an ' : 'a ') + it.en;
+  const head = (pl ? `They're ${name}!` : `It's ${name}!`);
+  return withPrice ? `${head} ${pl ? 'They cost' : 'It costs'} ${it.price} stars.` : head;
+}
+const sfxCash = () => { tone(1046,0,.08,'square',.05); tone(1318,.08,.12,'triangle'); tone(1568,.18,.25,'triangle'); };
+let mallTab = 'hat', preview = null;
+
+function mall(){
+  setTop(true);
+  preview = null;
+  screenEl.innerHTML = `<section class="mall">
+    <div class="mall-sign">${AWNING}
+      <div class="sign-in"><h2>مول مشمش <span class="en">Mishmish Mall</span></h2>
+        <span class="pill stars wallet">معاكي ⭐ <b id="wallet">${S.stars}</b></span></div></div>
+    <div class="mall-grid">
+      <aside class="fitting sticker" id="fitting">
+        <span class="fit-label">غرفة القياس · <span class="en">Fitting room</span></span>
+        <div class="fit-cat" id="fitCat"></div>
+        <div class="fit-info" id="fitInfo" aria-live="polite"></div>
+      </aside>
+      <div class="shelves">
+        <div class="tabs" id="tabs" role="tablist"></div>
+        <div class="shelf" id="shelf"></div>
+      </div>
+    </div>
+  </section>`;
+  renderTabs(); renderShelf(); renderFit();
+}
+function renderTabs(){
+  const tabs = [...SLOTS, {id:'mine',en:'My things',ar:'حاجاتي'}];
+  $('#tabs').innerHTML = tabs.map(t => `<button class="tab" role="tab" data-tab="${t.id}" aria-selected="${mallTab === t.id}">${t.ar} <span class="en">${t.en}</span></button>`).join('');
+  $('#tabs').querySelectorAll('.tab').forEach(b => b.onclick = () => { mallTab = b.dataset.tab; renderTabs(); renderShelf(); if(b.dataset.tab !== 'mine') say(tabs.find(t => t.id === mallTab).en); });
+}
+function renderShelf(){
+  const list = mallTab === 'mine' ? ITEMS.filter(i => S.owned.includes(i.id)) : ITEMS.filter(i => i.slot === mallTab);
+  if(!list.length){ $('#shelf').innerHTML = '<p class="empty" style="grid-column:1/-1">لسه مشترتيش حاجة. لفّي على الأقسام واختاري اللي يعجبك!</p>'; return; }
+  $('#shelf').innerHTML = list.map(it => {
+    const own = S.owned.includes(it.id), on = S.equip[it.slot] === it.id;
+    return `<button class="item ${own ? 'owned' : ''} ${on ? 'worn' : ''} ${!own && it.price > S.stars ? 'pricey' : ''} ${preview === it.id ? 'sel' : ''}" data-item="${it.id}">
+      <span class="tag">${on ? 'لابساه ✓' : own ? 'عندك ✓' : `⭐ ${it.price}`}</span>
+      <span class="thumb t-${it.slot}">${itemThumb(it)}</span>
+      <span class="en name">${it.en}</span><small>${it.ar}</small></button>`;
+  }).join('');
+  $('#shelf').querySelectorAll('.item').forEach(b => b.onclick = () => {
+    preview = b.dataset.item; const it = ITEM_BY_ID[preview];
+    say(itemLine(it, !S.owned.includes(it.id)));
+    renderShelf(); renderFit(true);
+    if(window.innerWidth <= 760) $('#fitting').scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
+  });
+}
+function renderFit(anim){
+  const look = {...S.equip};
+  const it = preview ? ITEM_BY_ID[preview] : null;
+  if(it) look[it.slot] = it.id;
+  $('#fitCat').innerHTML = catSVG(S.mish, look, anim ? 'tryon' : '');
+  const info = $('#fitInfo');
+  if(!it){ info.innerHTML = '<p class="fit-hint">دوسي على أي حاجة في الرفوف عشان تجربيها على مشمش قبل ما تشتري.</p>'; return; }
+  const own = S.owned.includes(it.id), on = S.equip[it.slot] === it.id;
+  let act;
+  if(own) act = on ? '<button class="btn" id="act">اقلعيه</button>' : '<button class="btn primary" id="act">البسيه</button>';
+  else if(S.stars >= it.price) act = `<button class="btn primary" id="act">اشتري بـ ⭐ ${it.price}</button>`;
+  else act = `<p class="need">محتاجة <b>${it.price - S.stars}</b> نجمة كمان</p><button class="btn soft" id="earn">العبي واجمعي نجوم</button>`;
+  info.innerHTML = `<div class="fit-name"><span class="en">${it.en}</span>${sayBtn(itemLine(it, !own), 'اسمعي')}</div>
+    <p class="muted">${it.ar}${own ? '' : ` · ⭐ ${it.price}`}</p>
+    <div class="row" style="justify-content:center">${act}</div>
+    ${!on ? '<button class="linkish" id="cancel">رجّعي مشمش زي ما كانت</button>' : ''}`;
+  const actB = $('#act');
+  if(actB) actB.onclick = () => {
+    if(!own){
+      S.stars -= it.price; S.owned.push(it.id); S.equip[it.slot] = it.id;
+      save('stars'); save('owned'); save('equip'); renderStars(true); $('#wallet').textContent = S.stars;
+      sfxCash(); setTimeout(meow, 350); burst($('#fitCat'));
+      say(`You bought ${PLURAL.has(it.id) || NO_ART.has(it.id) ? '' : 'a '}${it.en}! Thank you!`);
+      toast(`🛍️ اشتريتي ${it.ar}! مشمش لابساه دلوقتي`);
+    } else if(on){ delete S.equip[it.slot]; save('equip'); preview = null; }
+    else { S.equip[it.slot] = it.id; save('equip'); meow(); }
+    renderShelf(); renderFit();
+  };
+  const earn = $('#earn'); if(earn) earn.onclick = () => home();
+  const cancel = $('#cancel'); if(cancel) cancel.onclick = () => { preview = null; renderShelf(); renderFit(); };
+}
+
 /* ============ FINISH ============ */
 const GAMES = {listen:gameListen, spell:gameSpell, color:gameColor, memory:gameMemory, read:readingHub};
 function finish(game, msg, back, backLabel='الرئيسية'){
   const again = typeof game === 'function' ? game : GAMES[game];
   setTop(true);
+  const afford = ITEMS.filter(i => !S.owned.includes(i.id) && i.price <= S.stars).sort((a,b) => a.price - b.price)[0];
   meow(); setTimeout(() => say(`Great job${S.name ? ', ' + S.name : ''}! You are a star!`), 500);
   screenEl.innerHTML = `<section class="done-wrap">
-    ${catSVG(S.mish, worn(), 'bounce')}
+    ${catSVG(S.mish, S.equip, 'bounce')}
     <h2 lang="en" dir="ltr">Great job!</h2>
     <p>${msg}</p>
     <p class="pill stars" style="font-size:22px">كسبتي ⭐ ${roundStars} في الجولة دي</p>
+    ${afford ? `<p>معاكي ⭐ ${S.stars}، تقدري تشتري لمشمش <span class="en">${afford.en}</span> (${afford.ar}) من المول!</p>` : ''}
     <div class="row" style="justify-content:center;margin-top:8px">
+      ${afford ? '<button class="btn soft" id="toMall">روحي المول 🛍️</button>' : ''}
       <button class="btn primary" id="again">العبي تاني</button>
       <button class="btn" id="goHome">${backLabel}</button>
     </div>
@@ -1042,6 +1267,7 @@ function finish(game, msg, back, backLabel='الرئيسية'){
   burst($('.done-wrap svg'));
   $('#again').onclick = () => { roundStars = 0; again(); };
   $('#goHome').onclick = () => (back ? back() : home());
+  const tm = $('#toMall'); if(tm) tm.onclick = () => { mallTab = afford.slot; mall(); };
 }
 
 /* ---------- boot ---------- */

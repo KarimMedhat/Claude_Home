@@ -450,7 +450,58 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 .wr{border:2px solid var(--ink);border-radius:12px;padding:6px 12px;background:var(--paper)}
 .wr summary{cursor:pointer;font-weight:700}
 .wr p{margin:6px 0 0;font-family:var(--learn);font-size:16px;text-align:left}
+
+/* exam hall */
+.exam-door{display:flex;flex-wrap:wrap;align-items:center;gap:14px;width:100%;margin-top:18px;padding:16px 20px;border:3px solid var(--ink);border-radius:var(--r);background:#B8EBD9;color:var(--ink);box-shadow:var(--shadow);text-align:start;transition:transform .12s,box-shadow .12s}
+.exam-door:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.exam-door .bd-text small{opacity:1;color:var(--ink-soft)}
+.hall-banner{background:#B8EBD9}
+.hall-head{padding:18px 20px;display:grid;gap:12px;background:#B8EBD9}
+.hall-head h2{margin:0;font-size:30px}
+.hall-head h2 .en{font-size:18px;color:var(--ink-soft)}
+.hall-head p{margin:0;max-width:65ch}
+.exam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.exam-card{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center;text-align:start;padding:16px;border:3px solid var(--ink);border-radius:var(--r);background:var(--ucl);box-shadow:var(--shadow);transition:transform .12s}
+.exam-card:hover{transform:translate(-2px,-2px)}
+.exam-card small{font-size:14px;color:var(--ink-soft)}
+.pass-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.pass-card{display:grid;gap:4px;justify-items:start;text-align:start;padding:12px 14px;border:3px solid var(--ink);border-radius:16px;background:var(--card);border-inline-start:10px solid var(--uc)}
+.pass-card.done{background:var(--good-l)}
+.p-kind{font-size:13px;font-weight:800;color:var(--ink-soft)}
+.p-title{font-size:19px;font-weight:700;line-height:1.25}
+.pass-card small{font-size:14px;color:var(--ink-soft)}
+.ex-head{display:grid;gap:8px;width:100%;max-width:820px}
+.ex-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.ex-top b{font-size:20px}
+.ex-sec{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:8px 14px;border-radius:12px;background:var(--grape-l);border:2px solid var(--ink);direction:ltr;text-align:left}
+.ex-sec .en{font-weight:700;font-size:19px;color:var(--grape)}
+.ex-sec small{color:var(--ink-soft);font-size:14px;direction:rtl}
+.ex-num{width:30px;height:30px;border-radius:50%;background:var(--grape);color:#FFFFFF;display:grid;place-items:center;font-weight:800}
+.ctx{width:100%;max-width:820px;padding:10px 16px;text-align:start}
+.ctx summary{cursor:pointer;font-weight:800}
+.ctx .story p{font-size:20px;line-height:1.6}
+.exbox{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px 14px;border:3px dashed var(--grape);border-radius:14px;background:var(--card)}
+.exbox span{font-weight:700;font-size:20px;padding:0 8px}
+.exo .lt{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;border:2px solid var(--ink);font-size:16px;margin-inline-end:6px;background:var(--paper)}
+.exo:disabled{cursor:default}
+.opts.words.n2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:560px}
+.punct{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;padding:16px 20px}
+.pword{border:2px solid var(--ink);border-radius:10px;background:var(--card);padding:6px 12px;font-size:26px}
+.pword.cap{background:var(--sun-l);border-color:var(--grape);color:var(--grape);font-weight:700}
+.pend{font-size:30px;font-weight:700;color:var(--grape);min-width:24px}
+.wbox{width:100%;max-width:760px;font-family:var(--learn);font-size:20px;line-height:1.6;padding:12px 16px;border:3px solid var(--ink);border-radius:16px;background:#FFFDF6}
+.result{padding:22px 40px;display:grid;justify-items:center;gap:4px;text-align:center}
+.res-ic{font-size:64px;line-height:1}
+.result h2{margin:0;font-size:36px}
+.res-score{margin:0;font-size:28px;font-variant-numeric:tabular-nums}
+.res-score b{font-size:44px;color:var(--good)}
+.mistakes{padding:14px 18px;display:grid;gap:8px;width:100%;max-width:760px;text-align:start}
+.mistakes h3{margin:0}
+.mis{border:2px solid var(--ink);border-radius:12px;background:var(--good-l);padding:8px 12px;font-size:18px;text-align:left;direction:ltr}
 @media (max-width:760px){
+  .exam-grid{grid-template-columns:1fr}
+  .pword{font-size:20px}
+  .result{padding:18px}
   .mword{font-size:44px}
   .magic{padding:16px}
   .draft p{font-size:19px}
@@ -534,6 +585,8 @@ const S = {
   gDone: store.get('gDone', {}),
   vDone: store.get('vDone', {}),
   writings: store.get('writings', []),
+  exams: store.get('exams', {}),
+  pDone: store.get('pDone', {}),
   wDone: store.get('wDone', {})
 };
 const save = k => store.set(k, S[k]);
@@ -1426,6 +1479,286 @@ function writeRun(wid, back){
   model();
 }
 
+/* ============ PASSAGES + EXAMS (school book, Superior tests) ============ */
+const TF = (q, t) => ({t:'c', q, o:['True','False'], a: t ? 0 : 1, tf:true});
+const MC = (q, o, a) => ({t:'c', q, o, a});
+const BX = (words, q, ans) => ({t:'c', q, o:words, a:words.indexOf(ans), box:true});
+const ORD = (s, ar) => ({t:'b', w:s.split(' '), ar});
+const PUN = (raw, fixed) => ({t:'p', raw, fixed});
+
+const PASSAGES = [
+ {id:'p11', u:'u1', title:"Let's Talk About Our Senses", kind:'حوار', lines:[
+  "Ms. Mona: Good morning, children! What a beautiful day in the school garden.",
+  "Sami: Good morning, Ms. Mona! What will we learn today?",
+  "Ms. Mona: Today, we'll learn about our amazing senses.",
+  "Salma: What are senses, Ms. Mona?",
+  "Ms. Mona: Senses help us understand the world around us, like sight, hearing, and smell.",
+  "Sami: I can hear birds singing!",
+  "Ms. Mona: Yes! That's your sense of hearing. What else can we use?",
+  "Salma: I can smell the flowers and see the colorful butterflies!",
+  "Ms. Mona: Excellent, Salma! Senses also help us stay safe. For example, if we smell smoke, we know there's a fire."],
+  qs:[MC("Ms. Mona and the students are in the ___.", ['school garden','classroom','library','market'], 0),
+      MC("Sami can hear ___ singing.", ['birds','children','teachers','cats'], 0),
+      MC("We use our sense of ___ to see butterflies.", ['sight','smell','taste','hearing'], 0),
+      TF("If we smell smoke, we know there's a fire.", true),
+      TF("Salma can smell the flowers.", true)]},
+ {id:'p12', u:'u1', title:"My Healthy Day", kind:'نص', lines:[
+  "Sarah is a healthy 10-year-old girl. She follows good habits every day to stay strong and healthy.",
+  "In the morning, Sarah wakes up early at 6:00 a.m. She brushes her teeth and washes her face. Next, she does some simple exercises in the garden.",
+  "For breakfast, Sarah drinks orange juice and eats eggs and brown bread. These foods give her energy for the day.",
+  "At school, Sarah drinks plenty of water between classes. She plays sports with her friends during break time.",
+  "In the afternoon, Sarah does her homework first. After that, she helps her mother in the garden. They grow fresh vegetables together.",
+  "For dinner, Sarah eats lots of vegetables and fruits. She doesn't eat too many sweets. She goes to bed early at 8:30 p.m. and sleeps for 9 hours every night."],
+  qs:[TF("Sarah wakes up late every day.", false), TF("She eats eggs and brown bread for breakfast.", true), TF("She drinks plenty of water at school.", true), TF("She helps her mother in the kitchen.", false), TF("She goes to bed at 10:00 p.m.", false),
+      MC("Sarah does exercises in the ___.", ['room','garden','school','library'], 1),
+      MC("For breakfast, Sarah drinks ___.", ['tea','orange juice','milk','coffee'], 1),
+      MC("In the afternoon, Sarah ___.", ['watches TV','plays video games','does her homework','goes to sleep'], 2)]},
+ {id:'p13', u:'u1', title:"Goha's Great Meal", kind:'قصة', lines:[
+  "One morning, Goha was walking through the market. He was very hungry, but didn't have enough money to buy food. Suddenly, he smelled something wonderful. The yummy smell was coming from a restaurant's window. Goha stopped and sat outside the restaurant.",
+  "\"Ah,\" he said. \"This wonderful smell makes me feel less hungry!\"",
+  "The restaurant owner saw Goha and asked, \"What are you doing?\" Goha said, \"I'm enjoying the smell of your delicious soup.\"",
+  "The owner was greedy. He said, \"You can't smell the soup for free! You must pay for it!\"",
+  "Goha took out a few coins from his pocket. He shook them in his hand, and they made a jingling sound. \"Here,\" said Goha. \"If you want money for the smell of your soup, then you can take the sound of my coins.\"",
+  "The owner laughed at Goha's clever answer. \"Come inside,\" he said. \"Let's share this soup. Good food tastes better when shared with others!\""],
+  qs:[TF("Goha felt less hungry after smelling the delicious soup.", true), TF("The owner was happy to see Goha enjoying the smell of the soup.", false), TF("Goha paid the owner a few coins for the smell of the soup.", false), TF("The owner invited Goha inside to share the soup.", true),
+      BX(['smell','coins','restaurant','share'], "Goha smelled delicious soup from a ___.", 'restaurant'),
+      BX(['smell','coins','restaurant','share'], "He offered to pay with the sound of his ___.", 'coins'),
+      BX(['smell','coins','restaurant','share'], "The owner invited him in to ___ the soup.", 'share'),
+      MC("\"greedy\" means ___.", ['always wanting more than what is needed','wanting to eat','a light ringing sound'], 0)]},
+ {id:'p21', u:'u2', title:"Helping Hands", kind:'حوار', lines:[
+  "Amira: Hello, Adam! What do you do to help our community?",
+  "Adam: Hello, Amira! I clean trash from the streets with my friends every Saturday.",
+  "Amira: That's cool! Do you plant trees?",
+  "Adam: Yes, I do. I plant trees in the park. Sometimes, I feed the dogs and cats.",
+  "Amira: Does your sister help too?",
+  "Adam: Yes, she does! She helps our neighbors, and she volunteers at the community park. What about you?",
+  "Amira: I collect clothes and give them to people who need them.",
+  "Adam: That's great! When we all help, we make our community great."],
+  qs:[MC("Adam cleans trash from the streets every ___.", ['Saturday','Friday','morning','night'], 0),
+      MC("Adam plants trees in the ___.", ['park','school','street','garden'], 0),
+      MC("Amira collects ___ and gives them to people.", ['clothes','coins','books','toys'], 0),
+      TF("Adam's sister volunteers at the community park.", true),
+      TF("Adam never feeds animals.", false)]},
+ {id:'p22', u:'u2', title:"Ali and Mona Make a Difference", kind:'حوار', lines:[
+  "Ali: Our community has many problems, so let's talk about them.",
+  "Mona: OK! Let's also discuss solutions to fix them.",
+  "Ali: The first problem is traffic. Cars don't move quickly in the morning, especially near schools. We don't need to use cars every day. We can take the school bus instead.",
+  "Mona: That's right! The second problem is trash. Some people don't put trash in bins, so the streets look dirty. Does your street have this problem?",
+  "Ali: Not anymore. Our neighbors don't throw trash on the ground. We put new bins everywhere. Everyone uses them, and now our street is very clean!"],
+  qs:[TF("Traffic happens because there are many cars on the road.", true), TF("Throwing trash on the ground makes the streets clean.", false), TF("Traffic is not a problem near schools in the morning.", false), TF("Ali's street has new bins. Everyone uses them now.", true),
+      BX(['ground','bins','schools','traffic'], "The bus helps reduce ___.", 'traffic'),
+      BX(['ground','bins','schools','traffic'], "Our neighbors don't throw trash on the ___.", 'ground'),
+      BX(['ground','bins','schools','traffic'], "Cars don't move quickly near ___.", 'schools')]},
+ {id:'p23', u:'u2', title:"Egypt My Culture", kind:'نص', lines:[
+  "Egypt has two special regions: the Delta in the north and Upper Egypt in the south. Each region has its traditions and culture.",
+  "In the Delta region, they celebrate the Spring Festival with colorful decorations and special foods. Farmers grow rice and cotton. Many people work in factories and make beautiful crafts.",
+  "In Upper Egypt, people celebrate the sugar cane harvest with big festivals. They make pottery and weave colorful carpets by hand. In some places like Nubia, houses are painted in bright colors and have special designs.",
+  "Even though the two places have some differences, they share many of the same traditions. Egyptians are proud of their culture and love to celebrate it together!"],
+  qs:[TF("Upper Egypt is in the south.", true), TF("People grow sugar cane in the Delta.", false), TF("Houses are painted in bright colors in Nubia.", true), TF("Nobody makes crafts in the Delta region.", false),
+      MC("The two regions of Egypt are ___.", ['Cairo and Alexandria','Upper Egypt and the Delta','the desert and the Nile','the Red Sea and the Mediterranean Sea'], 1),
+      MC("People in Upper Egypt celebrate ___.", ['the Spring Festival','the sugar cane harvest','the cotton harvest','the rice festival'], 1),
+      MC("Egyptians are proud of their ___.", ['culture','songs','carpets','factories'], 0)]},
+ {id:'p24', u:'u2', title:"Dear Diary", kind:'يوميات', lines:WRITING.diary.model.text,
+  qs:[MC("What did the neighborhood look like 50 years ago?", ['tall buildings and busy streets','small houses with beautiful gardens','big shopping malls and lots of cars','quiet farms and lots of animals'], 1),
+      MC("Where the big supermarket stands now, there was ___.", ['an old market','a school','a hospital','a park'], 0),
+      TF("Hana feels proud of her community's history.", true)]},
+ {id:'p31', u:'u3', title:"A Day at the Forest Park", kind:'حوار', lines:[
+  "Omar: Hi, Nadia! What does your dad do at the forest park?",
+  "Nadia: He works as a forest guide. He shows visitors the animals.",
+  "Omar: Do you usually go with him?",
+  "Nadia: Sometimes. Visitors see elephants drinking water and monkeys climbing trees. They see lions and giraffes as well.",
+  "Omar: Lions often hunt at night and sleep during the day. Giraffes eat leaves from tall trees.",
+  "Nadia: That's right! How do you know all of this?",
+  "Omar: I watch a TV program about animals."],
+  qs:[MC("Nadia's dad is a ___.", ['forest guide','vet','teacher','doctor'], 0),
+      MC("Nadia goes with her dad ___.", ['sometimes','always','never'], 0),
+      MC("Lions often hunt ___.", ['at night','in the morning','at noon'], 0),
+      MC("Giraffes eat ___ from tall trees.", ['leaves','fish','meat'], 0),
+      TF("Omar watches a TV program about animals.", true)]},
+ {id:'p32', u:'u3', title:"Helping Animals", kind:'نص', lines:[
+  "Animals need our help to stay healthy and safe. Some animals live in the wild, while others live in zoos or homes.",
+  "Zoo animals need special attention. Elephants need bigger spaces than monkeys to move around. Giraffes need taller trees to reach their food. Vets often check their health.",
+  "Wild animals face different challenges. Their homes are getting smaller because of new cities. They need clean water and safe places to live. Forest officers work harder than before to protect them.",
+  "Pets need daily care from their owners. Dogs need exercise. Rabbits eat fresh vegetables, and they are healthier than other animals. Small acts of kindness make our world better."],
+  qs:[MC("Who often checks animals' health?", ['vets','owners','forest officers'], 0),
+      MC("Elephants need ___ than monkeys.", ['smaller spaces','bigger spaces','cleaner water','taller trees'], 1),
+      MC("Wild animals need ___ and safe homes.", ['bigger cities','hotter food','clean water','smaller cages'], 2),
+      MC("Pets need ___ care from their owners.", ['weekly','daily','monthly','yearly'], 1),
+      MC("Everyone can help animals by ___.", ['keeping them in zoos','showing kindness and caring for them','avoiding them'], 1)]},
+ {id:'p33', u:'u3', title:"The Old Lion and the Fox", kind:'قصة', lines:[
+  "Once there was an old lion who couldn't hunt anymore. He was too weak to catch animals for food. So, he thought of a clever trick.",
+  "The lion went into his cave and pretended to be very sick. He lay down and called out, \"Oh! I am so sick! Please, come visit me before I die!\"",
+  "One by one, the animals went into his cave to visit him. But none of them came out! The lion was catching and eating each visitor.",
+  "A wise fox came near the cave. He saw many footprints going in, but none coming out. \"Hello, dear lion! How are you feeling?\"",
+  "\"Please come in and visit me!\" said the lion. The fox replied, \"Thank you, but many animals went into your cave, and none came out. I learn from the mistakes of others!\" And the wise fox ran away safely."],
+  qs:[TF("The lion was young and strong.", false), TF("The lion pretended to be sick.", true), TF("The fox went into the cave.", false), TF("The fox saw footprints going into the cave.", true), TF("Many animals came out of the cave.", false),
+      BX(['pretended','cave','hunt','footprints'], "The old lion couldn't ___ anymore.", 'hunt'),
+      BX(['pretended','cave','hunt','footprints'], "He ___ to be sick.", 'pretended'),
+      BX(['pretended','cave','hunt','footprints'], "The fox noticed the one-way ___.", 'footprints'),
+      MC("The moral of the story is ___.", ['learn from the mistakes of others','eat a lot of food','sleep in a cave'], 0)]},
+ {id:'p34', u:'u3', title:"Endangered Animals", kind:'تقرير', lines:WRITING.report.model.text.concat(["The Arabian Leopard is one of the most endangered animals in Egypt and the Middle East. Less than 200 of these beautiful cats remain in the wild, because people build houses in their habitats."]),
+  qs:[MC("Less than ___ Arabian Leopards remain in the wild.", ['200','2,000','20','500'], 0),
+      MC("Dugongs eat ___.", ['sea grass','fish','meat'], 0),
+      MC("Dugongs are in danger because of ___.", ['pollution and fishing nets','cold weather','other animals'], 0),
+      TF("Endangered animals could disappear forever.", true)]},
+ {id:'p41', u:'u4', title:"Exploring Egypt with Ali!", kind:'حوار', lines:[
+  "Ali: Hi, I'm Ali! I work as a tour guide in Egypt. Welcome to Egypt!",
+  "John: Nice to meet you, Ali! I'm John. This is my first time in Egypt.",
+  "Ali: You will like it here! The Pyramids are very nice. Tourists take many pictures here.",
+  "John: Great! Can I ride a camel, too?",
+  "Ali: Yes! Many people ride camels near the Pyramids. Next, we can visit the Egyptian Museum. It has many treasures to see, and history too!",
+  "John: I love history! Are there more places to visit?",
+  "Ali: Yes! We can go to Khan Al-Khalili to buy some gifts.",
+  "John: That sounds fun!"],
+  qs:[MC("Ali is a ___.", ['tour guide','teacher','tourist','doctor'], 0),
+      MC("Tourists ___ at the Pyramids.", ['take many pictures','swim','buy books'], 0),
+      MC("After the Pyramids, they will visit ___.", ['the Egyptian Museum','Siwa Oasis','Cairo Tower'], 0),
+      MC("They will go to Khan Al-Khalili to ___.", ['buy gifts','ride camels','see animals'], 0),
+      TF("This is John's first time in Egypt.", true)]},
+ {id:'p42', u:'u4', title:"The Places We Go in Our City", kind:'نص', lines:[
+  "Our city has many important places that help people every day. One important place is the school. Students go there to learn and meet friends. Teachers help them, and the library has many books to read or borrow.",
+  "Another important place is the hospital. Doctors and nurses help sick people feel better. Next to the hospital is the post office, where people send letters and packages to stay connected.",
+  "The shopping mall has many stores and restaurants. People buy things and eat there. Behind it is a museum with treasures that teach us about our history."],
+  qs:[MC("Students go to school to ___.", ['learn and meet friends','buy things','send letters'], 0),
+      MC("Next to the hospital is the ___.", ['post office','museum','shopping mall'], 0),
+      MC("Behind the shopping mall is a ___.", ['museum','school','library'], 0),
+      BX(['shopping mall','borrow','sick','school'], "Children can ___ books from the library.", 'borrow'),
+      BX(['shopping mall','borrow','sick','school'], "When people feel ___, they go to the hospital.", 'sick')]},
+ {id:'p43', u:'u4', title:"A Visit to St. Catherine Mountain", kind:'مدونة', lines:WRITING.blog.model.text,
+  qs:[MC("Where is St. Catherine Mountain?", ['North Egypt','South Sinai, Egypt','Cairo, Egypt'], 1),
+      MC("What do tourists do at the old monastery?", ['sleep','learn','play'], 1),
+      MC("How is the weather in the morning?", ['hot','cold','rainy'], 1),
+      TF("Tourists see colorful rocks and small plants.", true)]},
+ {id:'p51', u:'u5', title:"When I grow up...", kind:'حوار', lines:[
+  "Ms. Hala: Good morning, dear students! Let's talk about your costumes.",
+  "Sara: I'm a doctor. I wear a white coat. I help sick people and check their health.",
+  "Ali: I'm an engineer. I wear a yellow helmet. I design new buildings.",
+  "Talia: I'm a nurse. I wear a blue uniform. I help the doctors and care for the patients.",
+  "Omar: I'm a firefighter. I stop fires and save people.",
+  "Ms. Hala: All your jobs are really important. Well done!"],
+  qs:[MC("What does a nurse do?", ['helps the doctors and cares for patients','designs buildings','stops fires'], 0),
+      MC("An engineer wears a ___.", ['yellow helmet','white coat','blue cap'], 0),
+      MC("A doctor wears a ___.", ['white coat','yellow helmet','red uniform'], 0),
+      TF("Omar stops fires and saves people.", true)]},
+ {id:'p52', u:'u5', title:"Four Amazing Jobs", kind:'نص', lines:[
+  "Noha is a mentor. She helps young students learn and grow. \"I help shy students become brave,\" she says.",
+  "Amr is a wildlife photographer. He takes pictures of wild animals. \"I find the biggest lions and the smallest birds. Sometimes, I wait a long time to get the best picture!\"",
+  "Salma works with puppets. She uses puppets to tell stories. \"I love seeing children's big smiles and hearing their loud laughs.\"",
+  "Adel is a voice-over actor. He makes voices for cartoons. \"I make little voices for small characters and loud voices for large ones!\""],
+  qs:[TF("Noha helps shy students.", true), TF("Amr has a safe job.", false), TF("Amr needs a camera to do his job.", true), TF("Salma makes puppets tell stories.", true), TF("Adel is a voice-over actor.", true),
+      BX(['photo','photographer','dangerous','animals'], "Amr takes pictures of wild ___.", 'animals'),
+      BX(['photo','photographer','dangerous','animals'], "He is a smart wildlife ___.", 'photographer'),
+      BX(['photo','photographer','dangerous','animals'], "He waits a long time to get the best ___.", 'photo')]},
+ {id:'p53', u:'u5', title:"The Last House", kind:'قصة', lines:[
+  "Sami was a skilled carpenter who lived in a quiet village. For many years, he built strong houses and beautiful furniture.",
+  "After a lifetime of hard work, Sami grew tired. But before he could retire, the village king came with a request. \"Please build one last house. It will be your final gift to the village.\"",
+  "Sami agreed, but his heart was not in it. He used weak wood. He didn't check the windows or the doors.",
+  "When the house was finished, the king smiled kindly and said, \"This house is for you, Sami. It's a gift for all your wonderful work.\"",
+  "Sami stood in shock. His face turned red with regret. From that day on, Sami promised to always give his best, and he slowly repaired the house."],
+  qs:[MC("Sami was a ___ carpenter.", ['skilled','poor'], 0),
+      MC("The king asked Sami to build ___.", ['his own house','a gift for the village'], 1),
+      MC("Sami used ___ wood to build the house.", ['strong','weak'], 1),
+      MC("Sami was ___ when he knew the house was for him.", ['happy','shocked'], 1),
+      MC("The story teaches us to ___.", ['do our best','stop when tired'], 0),
+      BX(['gift','wood','carpenter','work'], "After many years of hard ___, he felt tired.", 'work')]},
+ {id:'p54', u:'u5', title:"Heroes Who Fight Fires", kind:'نص حقيقي', lines:WRITING.nonfiction.model.text,
+  qs:[MC("Omar works at the local ___.", ['fire station','hospital','school'], 0),
+      MC("His uniform has bright ___ stripes.", ['yellow','red','blue'], 0),
+      MC("He uses ___ to fight fires.", ['water hoses and ladders','books and pens','computers'], 0),
+      TF("Omar is proud to be a firefighter.", true)]},
+ {id:'p61', u:'st', title:"The Hundred Dresses", kind:'قصة', lines:[
+  "In a small school, there was a quiet girl named Wanda. Wanda always wore the same faded blue dress every day. But she told everyone she had a hundred beautiful dresses at home, all lined up in her closet.",
+  "The popular girls, especially Peggy and Maddie, annoyed Wanda every morning in the playground. \"Hey, Wanda, tell us about your hundred dresses!\" Maddie didn't like it, but she stayed quiet.",
+  "One day, Miss Mason announced the annual drawing competition. The walls were covered with a hundred beautiful drawings of dresses. Wanda drew and signed all of them. She won, but she wasn't there to receive her medal.",
+  "Miss Mason read a letter from Wanda's dad: the family moved to the big city. Peggy and Maddie felt terrible. They wrote Wanda a letter to apologize.",
+  "Wanda wrote back: \"I'm happy at my new school, and I want you to keep my drawings.\" Peggy and Maddie learned that kindness matters more than expensive clothes."],
+  qs:[TF("Wanda had one hundred real dresses.", false), TF("Peggy and Maddie were always kind to Wanda.", false), TF("Wanda won the annual drawing competition.", true), TF("Wanda's family moved to the big city.", true), TF("Wanda's mom sent a letter to Miss Mason.", false), TF("Wanda wasn't there to receive her medal.", true),
+      MC("The moral of the story is ___.", ['kindness matters more than expensive clothes','always wear new dresses','never draw pictures'], 0)]}
+];
+
+/* unit exams: section = {n, en, ar, items, ctx?} */
+const EXAMS = [
+ {id:'e1', u:'u1', title:"Test on Unit 1", secs:[
+  {en:"Choose the correct answer from a, b, c or d.", ar:"اختاري الإجابة الصحيحة", items:[
+   MC("Sarah wakes up ___ at 6:00.", ['late','early','sadly','badly'], 1), MC("She ___ her face.", ['washes','watches','brushes','chops'], 0),
+   MC("When ___ you go to school?", ['does','do','did','are'], 1), MC("We taste things with our ___.", ['noses','eyes','tongues','ears'], 2),
+   MC("She ___ her teeth twice a day.", ['brush','brushes','brushing','brushed'], 1), MC("When we shake coins they make a ___ sound.", ['jingling','sad','quiet','silent'], 0),
+   MC("If we smell ___, we know there's a fire.", ['flowers','smoke','soup','bread'], 1), MC("___, I go to bed at 9:00 p.m.", ['First','Next','Then','Finally'], 3)]},
+  {en:"Read and complete with the words in the box.", ar:"كمّلي بالكلمات اللي في البوكس", box:['taste','see','hear','smell','touch'], items:[
+   BX(['taste','see','hear','smell','touch'], "Our eyes ___ colors and shapes.", 'see'), BX(['taste','see','hear','smell','touch'], "Our ears ___ sounds.", 'hear'),
+   BX(['taste','see','hear','smell','touch'], "Our noses ___ flowers.", 'smell'), BX(['taste','see','hear','smell','touch'], "Our tongues ___ food.", 'taste')]},
+  {en:"Read the text and answer the questions.", ar:"اقري القطعة وجاوبي", passage:'p12', items:[
+   TF("Sarah wakes up late every day.", false), TF("She drinks plenty of water at school.", true), MC("Sarah does her homework first in the ___.", ['morning','afternoon','evening','night'], 1), MC("Vegetables and fruits give her ___.", ['protein','vitamins','fibers','sugar'], 1)]},
+  {en:"Choose the correct form of the word(s) between brackets.", ar:"اختاري الصيغة الصح", items:[
+   MC("Ali ___ (eat) healthy food every day.", ['eat','eats','eating'], 1), MC("My sister and I ___ (sleeps) early every night.", ['sleep','sleeps','sleeping'], 0),
+   MC("We ___ (sees) with our eyes.", ['see','sees','seeing'], 0), MC("Layla ___ (drink) water every morning.", ['drink','drinks','drinking'], 1)]},
+  {en:"Rearrange the words to make correct sentences.", ar:"رتّبي الكلمات", items:[ORD("I brush my teeth every day.", "أنا بغسل سناني كل يوم."), ORD("She eats eggs and brown bread.", "هي بتاكل بيض وعيش أسمر.")]},
+  {en:"Punctuate the following.", ar:"صححي الحروف الكبيرة وعلامة الآخر", items:[PUN("i touch with my hands", "I touch with my hands."), PUN("sarah wakes up early", "Sarah wakes up early.")]},
+  {en:"Write a text of about EIGHTEEN (18) words.", ar:"اكتبي موضوع", items:[{t:'w', title:"Your Daily Routine", guide:['get up','have dinner','sleep'], target:18}]}
+ ]},
+ {id:'e2', u:'u2', title:"Test on Unit 2", secs:[
+  {en:"Choose the correct answer from a, b, c or d.", ar:"اختاري الإجابة الصحيحة", items:[
+   MC("I ___ trash from the garden.", ['help','collect','play','plant'], 1), MC("She ___ at the community park.", ['volunteers','volunteer','volunteering','volunteered'], 0),
+   MC("___ your sister help too?", ['Do','Does','Is','Are'], 1), MC("They ___ throw trash on the ground.", ["doesn't","don't","isn't","aren't"], 1),
+   MC("Farmers in the Delta grow rice and ___.", ['cotton','sugar cane','pottery','carpets'], 0), MC("Cars don't move quickly because of ___.", ['traffic','trees','bins','flowers'], 0),
+   MC("dis + appear = ___", ['unappear','disappear','irappear','illappear'], 1), MC("In Upper Egypt, people celebrate the ___ harvest.", ['rice','cotton','sugar cane','wheat'], 2)]},
+  {en:"Complete with do/does or don't/doesn't.", ar:"كمّلي بـ do / does / don't / doesn't", items:[
+   MC("I ___ go to school by car.", ["don't","doesn't"], 0), MC("___ they collect plastic bottles from the street?", ['Do','Does'], 0),
+   MC("He ___ throw trash on the ground.", ["don't","doesn't"], 1), MC("___ she help her community?", ['Do','Does'], 1), MC("___ you volunteer?", ['Do','Does'], 0)]},
+  {en:"Read the text and answer the questions.", ar:"اقري القطعة وجاوبي", passage:'p22', items:[
+   TF("Traffic happens because there are many cars on the road.", true), TF("Throwing trash on the ground makes the streets clean.", false), TF("Ali's street has new bins.", true), MC("The second problem is ___.", ['traffic','trash','noise','water'], 1)]},
+  {en:"Rearrange the words to make correct sentences.", ar:"رتّبي الكلمات", items:[ORD("We plant trees in the park.", "احنا بنزرع شجر في الجنينة."), ORD("Does he help his neighbors?", "هو بيساعد جيرانه؟")]},
+  {en:"Punctuate the following.", ar:"صححي الحروف الكبيرة وعلامة الآخر", items:[PUN("do you volunteer", "Do you volunteer?"), PUN("adam cleans the streets", "Adam cleans the streets.")]},
+  {en:"Write a diary entry of about EIGHTEEN (18) words.", ar:"اكتبي يوميات", items:[{t:'w', title:"A Day Helping My Community", guide:['collect','plant','clean'], target:18}]}
+ ]},
+ {id:'e3', u:'u3', title:"Test on Unit 3", secs:[
+  {en:"Choose the correct answer from a, b, c or d.", ar:"اختاري الإجابة الصحيحة", items:[
+   MC("The ___ is black and white.", ['monkey','zebra','bear','lion'], 1), MC("Giraffes eat ___ from tall trees.", ['leaves','fish','meat','rocks'], 0),
+   MC("A giraffe is ___ than a zebra.", ['tall','taller','tallest','more tall'], 1), MC("Bears are ___ than dogs.", ['big','biger','bigger','biggest'], 2),
+   MC("A ___ checks animals' health.", ['vet','guide','visitor','king'], 0), MC("The fox saw many ___ going into the cave.", ['footprints','leaves','trees','coins'], 0),
+   MC("The lion ___ to be sick.", ['pretended','hunted','laughed','ran'], 0), MC("Rabbits are ___ than other animals.", ['healthy','healthier','healthyer','healthiest'], 1)]},
+  {en:"Complete using the comparative form.", ar:"كمّلي بصيغة المقارنة", items:[
+   BX(['smaller','faster','healthier','louder'], "A mouse is ___ than a rabbit. (small)", 'smaller'), BX(['smaller','faster','healthier','louder'], "A cheetah is ___ than a turtle. (fast)", 'faster'),
+   BX(['smaller','faster','healthier','louder'], "Eating vegetables is ___ than eating junk food. (healthy)", 'healthier'), BX(['smaller','faster','healthier','louder'], "The music is ___ than the conversation. (loud)", 'louder')]},
+  {en:"Read the text and answer the questions.", ar:"اقري القطعة وجاوبي", passage:'p33', items:[
+   TF("The lion was young and strong.", false), TF("The lion pretended to be sick.", true), TF("The fox went into the cave.", false), MC("The moral of the story is ___.", ['learn from the mistakes of others','eat a lot','sleep early','live in a cave'], 0)]},
+  {en:"Rearrange the words to make correct sentences.", ar:"رتّبي الكلمات", items:[ORD("The elephant is bigger than the monkey.", "الفيل أكبر من القرد."), ORD("Lions hunt at night.", "الأسود بتصطاد بالليل.")]},
+  {en:"Punctuate the following.", ar:"صححي الحروف الكبيرة وعلامة الآخر", items:[PUN("lions often hunt at night", "Lions often hunt at night."), PUN("do giraffes eat leaves", "Do giraffes eat leaves?")]},
+  {en:"Write a text of about EIGHTEEN (18) words.", ar:"اكتبي موضوع", items:[{t:'w', title:"My Favorite Animal", guide:['lives','eats','looks'], target:18}]}
+ ]},
+ {id:'e4', u:'u4', title:"Test on Unit 4", secs:[
+  {en:"Choose the correct answer from a, b, c or d.", ar:"اختاري الإجابة الصحيحة", items:[
+   MC("The Cairo ___ is tall and has a great view.", ['Oasis','Tower','Bazaar','River'], 1), MC("The Egyptian ___ is full of history.", ['Museum','Tower','Mall','Office'], 0),
+   MC("People send letters at the ___.", ['hospital','post office','library','school'], 1), MC("We can ___ books from the library.", ['borrow','sell','cook','ride'], 0),
+   MC("A billion is a thousand ___.", ['hundred','million','thousand','ten'], 1), MC("Tourists ride ___ near the Pyramids.", ['camels','boats','trains','bikes'], 0),
+   MC("Many tourists climb St. Catherine ___.", ['Mountain','River','Museum','Mall'], 0), MC("The book is ___ the table. (فوق)", ['on','in','behind','between'], 0)]},
+  {en:"Read and match.", ar:"وصّلي", items:[
+   BX(['Nile','Egyptian','Khan Al-Khalili','Cairo','Siwa'], "___ River", 'Nile'), BX(['Nile','Egyptian','Khan Al-Khalili','Cairo','Siwa'], "___ Museum", 'Egyptian'),
+   BX(['Nile','Egyptian','Khan Al-Khalili','Cairo','Siwa'], "___ Bazaar", 'Khan Al-Khalili'), BX(['Nile','Egyptian','Khan Al-Khalili','Cairo','Siwa'], "___ Oasis", 'Siwa')]},
+  {en:"Look and choose the correct preposition.", ar:"بصي على الصورة واختاري", items:'PREP4'},
+  {en:"Read the text and answer the questions.", ar:"اقري القطعة وجاوبي", passage:'p43', items:[
+   MC("Where is St. Catherine Mountain?", ['North Egypt','South Sinai','Cairo','Aswan'], 1), MC("Tourists wear ___ clothes.", ['warm','light','summer','old'], 0), TF("At the top, they visit an old monastery.", true), TF("It's hot in the morning.", false)]},
+  {en:"Rearrange the words to make correct sentences.", ar:"رتّبي الكلمات", items:[ORD("The hospital is next to the post office.", "المستشفى جنب مكتب البريد.")]},
+  {en:"Punctuate the following.", ar:"صححي الحروف الكبيرة وعلامة الآخر", items:[PUN("we visited the pyramids", "We visited the Pyramids."), PUN("where is the library", "Where is the library?")]},
+  {en:"Write a blog of about EIGHTEEN (18) words.", ar:"اكتبي بوست", items:[{t:'w', title:"A Place in Egypt", guide:['place','wear','see'], target:18}]}
+ ]},
+ {id:'e5', u:'u5', title:"Test on Unit 5", secs:[
+  {en:"Choose the correct answer from a, b, c or d.", ar:"اختاري الإجابة الصحيحة", items:[
+   MC("A/An ___ works in a school and teaches lessons.", ['engineer','nurse','teacher','firefighter'], 2), MC("A/An ___ helps sick people feel better.", ['teacher','doctor','engineer','police officer'], 1),
+   MC("An engineer designs new ___.", ['buildings','birds','cakes','clothes'], 0), MC("This is the ___ box in the room.", ['big','bigger','biggest','bigest'], 2),
+   MC("Nora is the ___ girl in the class.", ['happiest','happier','happyest','happy'], 0), MC("Sami was a skilled ___.", ['carpenter','doctor','king','nurse'], 0),
+   MC("A firefighter uses a long water ___.", ['hose','helmet','truck','nail'], 0), MC("Amr takes pictures. He is a ___.", ['photographer','mentor','puppet','nurse'], 0)]},
+  {en:"Choose the correct superlative.", ar:"اختاري صيغة التفضيل", items:[
+   MC("I think the teacher's job is the ___ job. (nice)", ['nicest','niceest','nicer'], 0), MC("A firefighter carries the ___ tools. (heavy)", ['heavyest','heaviest','heavier'], 1),
+   MC("Sami built the ___ house. (weak)", ['weakest','weaker','weakiest'], 0)]},
+  {en:"Read the text and answer the questions.", ar:"اقري القطعة وجاوبي", ctx:["Omar is a firefighter. He wears a blue uniform and a helmet to stay safe. Every day, he checks his equipment and keeps the fire truck ready. When people need help, Omar and his team quickly drive to help them. He uses a long water hose to stop fires. He also has a special ladder for tall buildings. He loves his job because he likes saving people and animals."], items:[
+   MC("The main idea of the text is about a ___.", ['nurse','doctor','firefighter','teacher'], 2), MC("Omar uses a long water ___ to stop fires.", ['truck','ladder','helmet','hose'], 3), TF("Omar wears a helmet to stay safe.", true), TF("Omar has a short ladder.", false)]},
+  {en:"Rearrange the words to make correct sentences.", ar:"رتّبي الكلمات", items:[ORD("She wears a white coat.", "هي بتلبس بالطو أبيض."), ORD("He is the tallest boy.", "هو أطول ولد.")]},
+  {en:"Punctuate the following.", ar:"صححي الحروف الكبيرة وعلامة الآخر", items:[PUN("omar is a firefighter", "Omar is a firefighter."), PUN("what does a nurse do", "What does a nurse do?")]},
+  {en:"Write a non-fiction text of about EIGHTEEN (18) words.", ar:"اكتبي نص حقيقي", items:[{t:'w', title:"A Family Member's Job", guide:['job','wears','helps'], target:18}]}
+ ]}
+];
+
 /* ---------- tile icons ---------- */
 const ICONS = {
   listen:`<svg viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="38" fill="#159E8F" stroke="#2B2233" stroke-width="3"/><path d="M20 35v14h10l12 10V25L30 35z" fill="#fff" stroke="#2B2233" stroke-width="3" stroke-linejoin="round"/><path d="M50 33a12 12 0 0 1 0 18M56 26a21 21 0 0 1 0 32" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>`,
@@ -1472,6 +1805,13 @@ function home(keep){
       <small>الترم الأول: ٥ وحدات وقصة. ازرعي الكلمات في الحديقة واتعلمي القواعد مع مشمش.</small></span>
     <span class="bd-units" aria-hidden="true">${BOOK.map(u => `<i style="background:${u.c}">${u.id === 'st' ? '★' : u.n}</i>`).join('')}</span>
     ${dueWords().length ? `<span class="pill due">💧 ${dueWords().length} كلمة عطشانة</span>` : ''}
+  </button>
+
+  <button class="exam-door" id="examDoor">
+    <span class="bd-ico" aria-hidden="true">📝</span>
+    <span class="bd-text"><b>قاعة الامتحانات</b> <span class="en">Exam Hall</span><br>
+      <small>${PASSAGES.length} قطعة قراءة و${EXAMS.length + 1} امتحانات بشكل امتحان المدرسة، والدرجة بتطلع على طول.</small></span>
+    ${Object.keys(S.exams).length ? `<span class="pill">آخر نتايجك: ${Object.values(S.exams).map(v => v + '%').slice(-3).join(' · ')}</span>` : ''}
   </button>
 
   <button class="mall-door" id="mallDoor">
@@ -1541,13 +1881,14 @@ function home(keep){
   screenEl.querySelectorAll('[data-game]').forEach(b => b.onclick = () => { actx(); roundStars = 0; GAMES[b.dataset.game](); });
   $('#mallDoor').onclick = () => { actx(); mall(); };
   $('#bookDoor').onclick = () => { actx(); bookHome(); };
+  $('#examDoor').onclick = () => { actx(); examHall(); };
   screenEl.querySelectorAll('[data-gset]').forEach(b => b.onclick = () => { S.mish = {...S.gallery[+b.dataset.gset]}; save('mish'); meow(); toast('مشمش بقت بالألوان بتاعتك!'); home(true); });
   screenEl.querySelectorAll('[data-gdel]').forEach(b => b.onclick = () => { S.gallery.splice(+b.dataset.gdel, 1); save('gallery'); home(true); });
   $('#kidName').onchange = e => { S.name = e.target.value.trim().replace(/[^A-Za-z \-]/g,'').slice(0,20); save('name'); };
   $('#resetBtn').onclick = () => {
     $('#resetRow').innerHTML = '<span>متأكدين؟ النجوم والرسومات هتتمسح.</span><button class="btn" id="yesReset" style="background:var(--bad-l)">أيوه امسح</button><button class="btn" id="noReset">لأ</button>';
     $('#noReset').onclick = () => home(true);
-    $('#yesReset').onclick = () => { Object.assign(S, {stars:0, owned:[], equip:{}, wl:{}, gDone:{}, vDone:{}, writings:[], wDone:{}, gallery:[], tricky:{}, mish:{...DEFAULT_MISH}, readWords:[], famDone:{}, storyDone:{}}); ['stars','owned','equip','wl','gDone','vDone','writings','wDone','gallery','tricky','mish','readWords','famDone','storyDone'].forEach(save); renderStars(); home(true); };
+    $('#yesReset').onclick = () => { Object.assign(S, {stars:0, owned:[], equip:{}, wl:{}, gDone:{}, vDone:{}, writings:[], wDone:{}, exams:{}, pDone:{}, gallery:[], tricky:{}, mish:{...DEFAULT_MISH}, readWords:[], famDone:{}, storyDone:{}}); ['stars','owned','equip','wl','gDone','vDone','writings','wDone','exams','pDone','gallery','tricky','mish','readWords','famDone','storyDone'].forEach(save); renderStars(); home(true); };
   };
 }
 
@@ -1955,6 +2296,7 @@ function bookHome(){
     <div class="g-head"><h2>منهج المدرسة <span class="en" style="font-size:20px;color:var(--ink-soft)">My School Book</span></h2>
       <p class="ask">الترم الأول · كل وحدة فيها كلمات تتزرع في الحديقة، وقاعدة مشمش بتشرحها.</p></div>
     ${gardenBanner()}
+    <button class="garden-banner hall-banner" id="hallBtn"><span class="gb-ico" aria-hidden="true">📝</span><span class="gb-text"><b>قاعة الامتحانات</b> <span class="en">Exam Hall</span><br><small>قطع القراءة وامتحانات الوحدات بشكل امتحان المدرسة</small></span></button>
     <div class="units">${BOOK.map(u => {
       const all = [...new Set(u.lessons.flatMap(l => l.words))], p = planted(all);
       const gs = u.lessons.filter(l => l.g);
@@ -1967,6 +2309,7 @@ function bookHome(){
     }).join('')}</div>
   </section>`;
   $('#gardenBtn').onclick = garden;
+  $('#hallBtn').onclick = examHall;
   screenEl.querySelectorAll('[data-unit]').forEach(b => b.onclick = () => unitScreen(b.dataset.unit));
 }
 
@@ -2391,6 +2734,203 @@ function magicQ(q, head, done){
     };
   }
   render();
+}
+
+/* ============ EXAM HALL ============ */
+const unitLabel = uid => { const u = BOOK.find(x => x.id === uid); return u.id === 'st' ? 'القصة' : `الوحدة ${u.n}`; };
+const gradeOf = pct => pct >= 90 ? ['ممتاز', '🏆'] : pct >= 75 ? ['جيد جدًا', '🌟'] : pct >= 50 ? ['كويس', '👍'] : ['محتاجين نراجع', '💪'];
+let hallTab = 'exams';
+function examHall(){
+  setTop(true);
+  const units = BOOK.filter(u => PASSAGES.some(p => p.u === u.id) || EXAMS.some(e => e.u === u.id));
+  screenEl.innerHTML = `<section class="hub">
+    <div class="hall-head sticker">
+      <div><h2>قاعة الامتحانات <span class="en">Exam Hall</span></h2>
+      <p>قطع القراءة والامتحانات من كتاب المدرسة وكتاب مستر عبد الباري، بنفس شكل امتحان المدرسة. الدرجة بتطلع على طول.</p></div>
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" data-ht="exams" aria-selected="${hallTab === 'exams'}">📝 الامتحانات <span class="en">Tests</span></button>
+        <button class="tab" role="tab" data-ht="passages" aria-selected="${hallTab === 'passages'}">📄 قطع القراءة <span class="en">Passages</span></button>
+      </div>
+    </div>
+    ${hallTab === 'exams' ? `
+      <div class="exam-grid">${EXAMS.map(e => { const u = BOOK.find(x => x.id === e.u), best = S.exams[e.id];
+        return `<button class="exam-card" data-exam="${e.id}" style="--uc:${u.c};--ucl:${u.cl}">
+          <span class="u-badge">${u.n}</span><span class="u-body"><span class="u-title en">${e.title}</span><span class="u-ar">${u.ar}</span>
+          <small>${best != null ? `أحسن درجة: <b>${best}%</b> ${gradeOf(best)[1]}` : `${e.secs.length} أسئلة رئيسية · مع كتابة`}</small></span></button>`; }).join('')}
+        <button class="exam-card final" data-exam="final" style="--uc:#2B2233;--ucl:#FFF0BF">
+          <span class="u-badge">★</span><span class="u-body"><span class="u-title en">Final Term Exam</span><span class="u-ar">امتحان شامل على الترم كله · أسئلة جديدة كل مرة</span>
+          <small>${S.exams.final != null ? `أحسن درجة: <b>${S.exams.final}%</b> ${gradeOf(S.exams.final)[1]}` : 'من كل الوحدات'}</small></span></button>
+      </div>` : units.map(u => `
+      <h3 class="sec-title">${unitLabel(u.id)} <span class="en">${u.en}</span></h3>
+      <div class="pass-grid">${PASSAGES.filter(p => p.u === u.id).map(p => `<button class="pass-card ${S.pDone[p.id] ? 'done' : ''}" data-pass="${p.id}" style="--uc:${u.c};--ucl:${u.cl}">
+        <span class="p-kind">${p.kind}</span><span class="en p-title">${p.title}</span><small>${p.qs.length} أسئلة${S.pDone[p.id] != null ? ` · ✔ ${S.pDone[p.id]}%` : ''}</small></button>`).join('')}</div>`).join('')}
+  </section>`;
+  screenEl.querySelectorAll('[data-ht]').forEach(b => b.onclick = () => { hallTab = b.dataset.ht; examHall(); });
+  screenEl.querySelectorAll('[data-exam]').forEach(b => b.onclick = () => { roundStars = 0; examRun(b.dataset.exam === 'final' ? finalExam() : EXAMS.find(e => e.id === b.dataset.exam), examHall); });
+  screenEl.querySelectorAll('[data-pass]').forEach(b => b.onclick = () => { roundStars = 0; examRun(passageExam(PASSAGES.find(p => p.id === b.dataset.pass)), examHall); });
+}
+function passageExam(p){
+  return {id:p.id, passageId:p.id, title:p.title, isPassage:true, secs:[{en:"Read the text and answer the questions.", ar:"اقري القطعة وجاوبي", passage:p.id, items:p.qs}]};
+}
+function finalExam(){
+  const pick = (arr, n) => shuffle(arr).slice(0, n);
+  const mcs = pick(EXAMS.flatMap(e => e.secs[0].items), 10);
+  const forms = pick(EXAMS.flatMap(e => e.secs[1].items === 'PREP4' ? [] : e.secs[1].items), 5);
+  const p = pick(PASSAGES.filter(x => x.u !== 'st'), 1)[0];
+  const ords = pick(EXAMS.flatMap(e => e.secs.flatMap(s => Array.isArray(s.items) ? s.items.filter(i => i.t === 'b') : [])), 2);
+  const puns = pick(EXAMS.flatMap(e => e.secs.flatMap(s => Array.isArray(s.items) ? s.items.filter(i => i.t === 'p') : [])), 2);
+  const w = pick(EXAMS.flatMap(e => e.secs.flatMap(s => Array.isArray(s.items) ? s.items.filter(i => i.t === 'w') : [])), 1);
+  return {id:'final', title:"Final Term Exam", secs:[
+    {en:"Choose the correct answer from a, b, c or d.", ar:"اختاري الإجابة الصحيحة", items:mcs},
+    {en:"Complete the sentences.", ar:"كمّلي الجمل", items:forms},
+    {en:"Read the text and answer the questions.", ar:"اقري القطعة وجاوبي", passage:p.id, items:pick(p.qs, 4)},
+    {en:"Rearrange the words to make correct sentences.", ar:"رتّبي الكلمات", items:ords},
+    {en:"Punctuate the following.", ar:"صححي الحروف الكبيرة وعلامة الآخر", items:puns},
+    {en:"Write a text of about EIGHTEEN (18) words.", ar:"اكتبي موضوع", items:w}
+  ]};
+}
+
+function examRun(ex, back){
+  setTop(true);
+  const flat = [];
+  ex.secs.forEach((s, si) => {
+    const items = s.items === 'PREP4' ? shuffle(PREPS).slice(0, 4).map(([p]) => ({t:'c', q:`Mishmish is ___ ${p === 'between' ? 'the boxes' : 'the box'}.`, o:shuffle(PREPS.map(x => x[0]).filter(x => x !== p)).slice(0, 2).concat(p), a:2, vis:scene(p), shuf:true})) : s.items;
+    items.forEach((it, k) => flat.push({s, si, it, k, n:items.length}));
+  });
+  const graded = flat.filter(f => f.it.t !== 'w').length;
+  let i = 0, score = 0; const wrong = [];
+  const ctxHTML = s => {
+    const lines = s.passage ? PASSAGES.find(p => p.id === s.passage).lines : s.ctx;
+    const ttl = s.passage ? PASSAGES.find(p => p.id === s.passage).title : '';
+    if(lines) return `<details class="ctx sticker" ${ex.isPassage || flat[i].k === 0 ? 'open' : ''}><summary>📄 القطعة <span class="en">${esc(ttl)}</span></summary>
+      <div class="story en" lang="en">${lines.map(l => `<p>${l.split(' ').map(w => `<button class="wtok" data-say="${esc(w.replace(/[^A-Za-z']/g,''))}">${esc(w)}</button>`).join(' ')}</p>`).join('')}</div>
+      <div class="row" style="justify-content:center">${sayBtn(lines.map(l => l.replace(/^[A-Za-z. ]+: /, '')).join(' '), 'اسمعي القطعة')}</div></details>`;
+    if(s.box) return `<div class="exbox" dir="ltr">${s.box.map(w => `<span class="en">${esc(w)}</span>`).join('')}</div>`;
+    return '';
+  };
+  function next(){
+    if(i >= flat.length) return result();
+    const {s, si, it, k, n} = flat[i];
+    const head = `<div class="ex-head">
+        <div class="ex-top"><b class="en">${esc(ex.title)}</b><span class="pill">الدرجة ${score} / ${graded}</span><span class="muted">سؤال ${i + 1} من ${flat.length}</span></div>
+        <div class="ex-sec"><span class="ex-num">${si + 1}</span><span class="en">${esc(s.en)}</span><small>${s.ar}</small></div>
+      </div>${ctxHTML(s)}`;
+    const after = ok => { if(it.t !== 'w'){ if(ok){ score++; addStars(1); } else wrong.push(it); } };
+    const nextBtn = () => { const nb = document.createElement('button'); nb.className = 'btn primary'; nb.id = 'exNext'; nb.textContent = i < flat.length - 1 ? 'السؤال اللي بعده' : 'شوفي النتيجة'; nb.onclick = () => { i++; next(); }; $('#exActions').appendChild(nb); nb.focus(); };
+    if(it.t === 'c') exChoose(it, head, ok => { after(ok); nextBtn(); });
+    else if(it.t === 'b') exBuild(it, head, ok => { after(ok); nextBtn(); });
+    else if(it.t === 'p') exPunct(it, head, ok => { after(ok); nextBtn(); });
+    else exWrite(it, head, () => nextBtn());
+  }
+  function result(){
+    const pct = graded ? Math.round(score / graded * 100) : 100;
+    const [g, ic] = gradeOf(pct);
+    if(ex.isPassage){ S.pDone[ex.passageId] = Math.max(S.pDone[ex.passageId] || 0, pct); save('pDone'); }
+    else { S.exams[ex.id] = Math.max(S.exams[ex.id] || 0, pct); save('exams'); }
+    if(pct >= 90){ meow(); }
+    setTimeout(() => say(pct >= 75 ? `Great job! You got ${score} out of ${graded}!` : `You got ${score} out of ${graded}. Let's practice more!`), 400);
+    const ansOf = it => it.tf ? `${it.q} → ${it.a === 0 ? 'True' : 'False'}` : it.t === 'c' ? it.q.replace('___', it.o[it.a]).replace(/\s*\([^)]*\)\s*$/, '') : it.t === 'b' ? it.w.join(' ') : it.fixed;
+    screenEl.innerHTML = `<section class="stage">
+      <div class="result sticker">
+        <span class="res-ic">${ic}</span>
+        <h2>${g}</h2>
+        <p class="res-score"><b>${score}</b> / ${graded} · ${pct}%</p>
+        <p class="muted">${esc(ex.title)} · كسبتي ⭐ ${roundStars}</p>
+      </div>
+      ${wrong.length ? `<div class="mistakes sticker"><h3>راجعي الأسئلة دي</h3>${wrong.map(it => `<button class="mis en" data-say="${esc(it.tf ? it.q : ansOf(it))}">✔ ${esc(ansOf(it))}</button>`).join('')}</div>` : '<p class="feedback good">ولا غلطة! برافو عليكي</p>'}
+      <div class="row" style="justify-content:center">
+        <button class="btn primary" id="again">امتحني تاني</button>
+        <button class="btn" id="hall">قاعة الامتحانات</button>
+      </div>
+    </section>`;
+    burst($('.result'));
+    $('#again').onclick = () => { roundStars = 0; examRun(ex.id === 'final' ? finalExam() : ex, back); };
+    $('#hall').onclick = back;
+  }
+  next();
+}
+function exChoose(it, head, done){
+  let idx = it.o.map((_, k) => k); if(it.shuf) idx = shuffle(idx);
+  const L = 'abcdefgh';
+  screenEl.innerHTML = `<section class="stage exam">${head}
+    <div class="qcard sticker gq">${it.vis || ''}<p class="gsent en" lang="en">${esc(it.q).replace('___', '<span class="blank">?</span>')}</p></div>
+    <div class="opts words ${it.tf ? 'n2 tfopts' : 'n' + idx.length}">${idx.map((k, j) => `<button class="opt wopt en exo" data-k="${k}"><span class="lt">${it.tf ? (k === 0 ? '✔' : '✘') : L[j]}</span> ${esc(it.o[k])}</button>`).join('')}</div>
+    <div class="feedback" id="fb" aria-live="polite"></div><div class="row" id="exActions" style="justify-content:center"></div></section>`;
+  let over = false;
+  screenEl.querySelectorAll('.exo').forEach(b => b.onclick = () => {
+    if(over) return; over = true;
+    const ok = +b.dataset.k === it.a;
+    screenEl.querySelectorAll('.exo').forEach(x => x.disabled = true);
+    screenEl.querySelector(`.exo[data-k="${it.a}"]`).classList.add('right');
+    if(!ok){ b.classList.add('wrong'); sfxBad(); } else { sfxGood(); burst(b); }
+    const blank = $('.blank'); if(blank && !it.tf){ blank.textContent = it.o[it.a]; blank.classList.add('filled'); }
+    $('#fb').className = `feedback ${ok ? 'good' : 'bad'}`; $('#fb').textContent = ok ? rand(['صح!','برافو!','شاطرة!']) : `الإجابة الصح: ${it.tf ? (it.a === 0 ? 'True' : 'False') : it.o[it.a]}`;
+    done(ok);
+  });
+}
+function exBuild(it, head, done){
+  let tiles; for(let n = 0; n < 6; n++){ tiles = shuffle(it.w.map((w, k) => ({w, k, used:false}))); if(tiles.map(t => t.k).join() !== it.w.map((_, k) => k).join()) break; }
+  const line = []; let over = false;
+  function render(state = ''){
+    screenEl.innerHTML = `<section class="stage exam">${head}
+      <div class="qcard sticker"><p class="flash-ar">${it.ar}</p></div>
+      <div class="bline ${state}" dir="ltr">${line.length ? line.map((t, p) => `<button class="btile on en" data-p="${p}">${esc(tiles[t].w)}</button>`).join('') : '<span class="muted">دوسي على الكلمات بالترتيب...</span>'}</div>
+      <div class="bpool" dir="ltr">${tiles.map((t, k) => `<button class="btile en" data-t="${k}" ${t.used || over ? 'disabled' : ''}>${esc(t.w)}</button>`).join('')}</div>
+      <div class="feedback" id="fb" aria-live="polite"></div><div class="row" id="exActions" style="justify-content:center"></div></section>`;
+    if(over) return;
+    screenEl.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { const t = +b.dataset.t; tiles[t].used = true; line.push(t); sfxTick(); render(); if(line.length === tiles.length) check(); });
+    screenEl.querySelectorAll('[data-p]').forEach(b => b.onclick = () => { const p = +b.dataset.p; tiles[line[p]].used = false; line.splice(p, 1); render(); });
+  }
+  function check(){
+    over = true;
+    const ok = line.map(t => tiles[t].w).join(' ') === it.w.join(' ');
+    render(ok ? 'ok' : 'no'); ok ? sfxGood() : sfxBad();
+    $('#fb').className = `feedback ${ok ? 'good' : 'bad'}`;
+    $('#fb').innerHTML = ok ? 'ترتيب مظبوط!' : `الصح: <span class="en">${esc(it.w.join(' '))}</span>`;
+    say(it.w.join(' ')); done(ok);
+  }
+  render();
+}
+function exPunct(it, head, done){
+  const words = it.raw.split(' '); const caps = words.map(() => false); let end = '';
+  const shown = () => words.map((w, k) => caps[k] ? w[0].toUpperCase() + w.slice(1) : w).join(' ') + end;
+  let over = false;
+  function render(){
+    screenEl.innerHTML = `<section class="stage exam">${head}
+      <p class="muted">دوسي على أي كلمة محتاجة حرف كبير (Capital)، وبعدين اختاري العلامة اللي في آخر الجملة.</p>
+      <div class="punct sticker" dir="ltr">${words.map((w, k) => `<button class="pword en ${caps[k] ? 'cap' : ''}" data-w="${k}" ${over ? 'disabled' : ''}>${esc(caps[k] ? w[0].toUpperCase() + w.slice(1) : w)}</button>`).join('')}<span class="pend en">${end || '▢'}</span></div>
+      <div class="row" style="justify-content:center" dir="ltr">${['.', '?', '!'].map(m => `<button class="btn ${end === m ? 'soft' : ''}" data-m="${m}" ${over ? 'disabled' : ''}>${m}</button>`).join('')}</div>
+      <div class="feedback" id="fb" aria-live="polite"></div>
+      <div class="row" id="exActions" style="justify-content:center">${over ? '' : `<button class="btn primary" id="chk" ${end ? '' : 'disabled'}>صححي</button>`}</div></section>`;
+    if(over) return;
+    screenEl.querySelectorAll('[data-w]').forEach(b => b.onclick = () => { caps[+b.dataset.w] = !caps[+b.dataset.w]; sfxTick(); render(); });
+    screenEl.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { end = b.dataset.m; sfxTick(); render(); });
+    $('#chk').onclick = () => {
+      over = true; const ok = shown() === it.fixed; render();
+      ok ? sfxGood() : sfxBad();
+      $('#fb').className = `feedback ${ok ? 'good' : 'bad'}`;
+      $('#fb').innerHTML = ok ? `<span class="en">${esc(it.fixed)}</span><span>مظبوطة!</span>` : `<span>الصح:</span><span class="en">${esc(it.fixed)}</span><span>أول الجملة والأسماء بتبدأ بحرف كبير</span>`;
+      done(ok);
+    };
+  }
+  render();
+}
+function exWrite(it, head, done){
+  screenEl.innerHTML = `<section class="stage exam">${head}
+    <div class="qcard sticker"><p class="gsent en" lang="en">${esc(it.title)}</p>
+      <div class="row" style="justify-content:center"><span class="muted">Guiding elements:</span>${it.guide.map(g => `<span class="pill en">${esc(g)}</span>`).join('')}</div></div>
+    <textarea id="wtext" class="wbox en" dir="ltr" rows="6" placeholder="Start writing here..."></textarea>
+    <p class="muted" id="wcount">0 كلمة · المطلوب ${it.target}</p>
+    <p class="muted">الكتابة مش بتتصحح أوتوماتيك. هتتحفظ في «كتاباتها» في ركن الأهل علشان تصححوها معاها. ولو محتاجة مساعدة، ادخلي ورشة الكتابة من منهج المدرسة.</p>
+    <div class="row" id="exActions" style="justify-content:center"><button class="btn primary" id="wdone">سلّمي الموضوع</button></div></section>`;
+  const ta = $('#wtext');
+  ta.oninput = () => { const n = ta.value.split(/\s+/).filter(Boolean).length; $('#wcount').textContent = `${n} كلمة · المطلوب ${it.target}${n >= it.target ? ' ✔' : ''}`; };
+  $('#wdone').onclick = () => {
+    const text = ta.value.trim();
+    if(text){ S.writings.unshift({wid:'exam', title:it.title, text, date:todayStr()}); S.writings = S.writings.slice(0, 20); save('writings'); addStars(2); }
+    $('#wdone').remove(); ta.readOnly = true;
+    done();
+  };
 }
 
 /* ============ MISHMISH MALL ============ */

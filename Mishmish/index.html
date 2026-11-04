@@ -470,6 +470,8 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 .p-kind{font-size:13px;font-weight:800;color:var(--ink-soft)}
 .p-title{font-size:19px;font-weight:700;line-height:1.25}
 .pass-card small{font-size:14px;color:var(--ink-soft)}
+.speaker.sm{width:64px;height:64px}
+.speaker.sm svg{width:32px;height:32px}
 .ex-head{display:grid;gap:8px;width:100%;max-width:820px}
 .ex-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
 .ex-top b{font-size:20px}
@@ -1759,6 +1761,97 @@ const EXAMS = [
  ]}
 ];
 
+/* ---------- El-Moasser exams (General Exercises on Unit + Sample Tests) ---------- */
+const LS = (q, o, a) => ({t:'c', q, o, a, listen:q.replace('___', o[a])});
+const SEC = {
+  listen:{en:"Listen and circle the correct answer.", ar:"اسمعي واختاري الإجابة الصحيحة"},
+  mc:{en:"Choose the correct answer from a, b, c or d.", ar:"اختاري الإجابة الصحيحة"},
+  box:{en:"Read and complete the text with the words in the box.", ar:"كمّلي بالكلمات اللي في البوكس"},
+  read:{en:"Read the text and answer the questions.", ar:"اقري القطعة وجاوبي"},
+  form:{en:"Read and write the correct form of the word(s) between brackets.", ar:"اختاري الصيغة الصح للكلمة اللي بين القوسين"},
+  ord:{en:"Reorder to make correct sentences.", ar:"رتّبي الكلمات"},
+  pun:{en:"Punctuate the following.", ar:"صححي الحروف الكبيرة وعلامة الآخر"},
+  story:{en:"The Story: The Hundred Dresses", ar:"أسئلة القصة"}
+};
+const sec = (k, items, extra) => Object.assign({en:SEC[k].en, ar:SEC[k].ar, items}, extra || {});
+const boxSec = (words, items) => sec('box', items.map(([q, a]) => BX(words, q, a)), {box:words});
+const writeSec = (title, guide) => ({en:"Write a paragraph of THREE sentences (18 words) using the guiding elements.", ar:"اكتبي موضوع", items:[{t:'w', title, guide, target:18}]});
+const MONKEY = ["One day, a monkey saw a small bird with a broken wing. The bird could not fly. The monkey picked some leaves and made a soft bed for the bird. It gave the bird fruits to eat. The bird was happy and thanked the kind monkey. After a few days, the bird's wing got better and it could fly away. The monkey was very happy that it could help."];
+const POSTOFFICE = ["Our city has many important places. These places help people every day. One of these places is the post office. It is next to a big hospital. At the post office, people send letters and packages. They send them to family and friends. The post office helps people stay connected."];
+const ALIFIRE = ["Ali is a firefighter. He wears a thick protective uniform with bright yellow stripes and a heavy helmet to keep him safe. Every day at the station, he checks his equipment and keeps the big red fire truck ready. When people need help, Ali and his team quickly drive to help them. He uses a long water hose to stop fires. He also has special ladders for tall buildings. Ali saves people and pets from the fires. Ali loves his job because he likes saving people and making a difference."];
+const OLDLION = ["Once, there was an old lion. He was very weak and couldn't hunt anymore. He tricked animals and pretended to be sick in his cave. He called the animals and asked them to visit him before he died. Many animals entered and never returned. A wise fox noticed the one-way footprints. He didn't go into the cave and ran away safely."];
+
+const MEXAMS = [
+ {id:'m1', u:'u1', title:"El-Moasser · General Exercises on Unit 1", secs:[
+  sec('listen', [LS("Goha was hungry, but he didn't have enough ___.", ['time','money'], 1), LS("He smelled delicious ___.", ['pizza','soup'], 1), LS("He sat outside the ___.", ['restaurant','city'], 0), LS("The ___ asked Goha to pay for the smell.", ['villager','owner'], 1)]),
+  sec('mc', [MC("I ___ my tongue to taste food.", ['to use','using','use','uses'], 2), MC("She doesn't have enough money to ___ for her dress.", ['pay','grow','sit','solve'], 0), MC("We can ___ flowers in the garden with our noses.", ['taste','touch','smell','hear'], 2), MC("When someone ___ greedy, they want more than they need.", ['are','is','have','do'], 1)]),
+  boxSec(['learn','senses','park','smell','taste'], [["Today is a beautiful day. We are at the ___ on a school trip.", 'park'], ["We want to ___ more about things around us.", 'learn'], ["We use our ___ to help us understand more.", 'senses'], ["We can ___ the flowers.", 'smell']]),
+  sec('read', [MC("The monkey saw a bird with a broken ___.", ['leg','wing','beak','feather'], 1), MC("The monkey was ___.", ['dangerous','strong','brave','kind'], 3), TF("The bird could not fly at first.", true), TF("The monkey was sad that it helped.", false)], {ctx:MONKEY}),
+  sec('form', [MC("Ali ___ (brush) his teeth every morning.", ['brush','brushes','brushing'], 1), MC("We ___ (sees) with our eyes.", ['see','sees','seeing'], 0), MC("___ (Do) Sarah drink milk?", ['Do','Does','Is'], 1)]),
+  sec('pun', [PUN("i hear with my ears", "I hear with my ears."), PUN("does sarah eat sweets", "Does Sarah eat sweets?")]),
+  writeSec("My Healthy Habits", ['wake up','breakfast','sleep'])
+ ]},
+ {id:'m2', u:'u2', title:"El-Moasser · General Exercises on Unit 2", secs:[
+  sec('listen', [LS("Egypt has ___ special regions.", ['two','three','four'], 0), LS("The Delta is in the ___.", ['north','south'], 0), LS("Egyptians are proud of their ___.", ['culture','cars'], 0)]),
+  sec('mc', [MC("She ___ to help in the community park for free.", ["don't volunteer",'volunteers','volunteering','volunteer'], 1), MC("Put your bag on the ___. It's very heavy.", ['ground','air','traffic','sound'], 0), MC("We ___ clothes and give them to people who need them.", ['collect','help','grow','stay'], 0), MC("Some people ___ weave colorful carpets by hand.", ["hasn't","don't","doesn't","isn't"], 1)]),
+  boxSec(['volunteer','traffic','buses','move','cycle'], [["One of these problems is ___.", 'traffic'], ["Cars don't ___ quickly in the morning.", 'move'], ["We should take public transportation, like the metro and ___.", 'buses'], ["We can also ___ or walk to near places.", 'cycle']]),
+  sec('read', [MC("This text is about \"Our ___\".", ['Egyptian food',"community's history",'traditional clothes','beautiful school'], 1), MC("The opposite of \"old\" is ___.", ['new','different','huge','lazy'], 0), MC("People sold fresh fruits and vegetables at ___.", ['the old market','the supermarket','school'], 0), MC("Grandpa showed Hana ___.", ['old photos','a new car','a book'], 0)], {passage:'p24'}),
+  sec('form', [MC("Some people don't ___ (puts) trash in bins.", ['put','puts','putting'], 0), MC("___ (Do) Ehab go running in the morning?", ['Do','Does','Is'], 1), MC("Do you ___ (feeds) the fish every day?", ['feed','feeds','feeding'], 0), MC("Shaza doesn't ___ (uses) plastic bottles.", ['use','uses','using'], 0)]),
+  sec('story', [MC("Wanda is a/an ___ girl in a small school.", ['busy','angry','late','quiet'], 3), MC("Wanda wore the same ___ blue dress every day.", ['faded','dark','colorful','light'], 0), MC("Who annoyed Wanda every morning?", ['Peggy and Maddie','Miss Mason','her dad'], 0), MC("Why did Maddie stay quiet?", ["She was afraid of losing Peggy's friendship",'She was sick',"She didn't see them"], 0)]),
+  writeSec("How to Stop Air Pollution", ['plastic','cycle','trees'])
+ ]},
+ {id:'m3', u:'u3', title:"El-Moasser · General Exercises on Unit 3", secs:[
+  sec('listen', [LS("Animals need our ___ to stay healthy and safe.", ['money','help'], 1), LS("Some animals live in the ___.", ['nests','wild'], 1), LS("Each animal needs special ___ to live well.", ['air','care'], 1), LS("___ animals need special attention, too.", ['Wild','Zoo'], 1)]),
+  sec('mc', [MC("Teachers give some ___ to students to study well.", ['habits','spaces','advice','visits'], 2), MC("I take my cat to the ___ to check its health.", ['engineer','vet','teacher','farmer'], 1), MC("Elephants are ___ than lions.", ['big','bigger','biggest','the big'], 1), MC("No one in the class is ___ than Hatem.", ['smarter','smart','as smart','smartest'], 0)]),
+  boxSec(['kindness','animals','care','happier','go'], [["Small acts of ___ make our world better.", 'kindness'], ["When we ___ for animals, we create a safe place for them.", 'care'], ["Being kind to ___ teaches us to be better people.", 'animals'], ["Together, we can make their lives ___ and healthier.", 'happier']]),
+  sec('read', [MC("Animals need our help to stay ___ and safe.", ['sad','hungry','healthy','angry'], 2), MC("Wild animals need ___ to live in.", ['clean water and safe places','bigger cities','smaller cages'], 0), MC("Pets need ___ care.", ['daily','yearly','no'], 0)], {passage:'p32'}),
+  sec('form', [MC("The factory is ___ (big) than the museum.", ['big','bigger','biggest'], 1), MC("Adam is ___ (strong) than his little brother.", ['strong','stronger','strongest'], 1), MC("His house is bigger ___ (the) mine.", ['the','then','than'], 2), MC("Flowers are ___ (pretty) than grass.", ['prettyer','prettier','prettiest'], 1)]),
+  sec('ord', [ORD("Winter is colder than summer.", "الشتا أبرد من الصيف."), ORD("The music is very loud.", "المزيكا عالية أوي.")]),
+  sec('story', [BX(['surprise','medal','competition','announce','drawings'], "When it was time to ___ the winner...", 'announce'), BX(['surprise','medal','competition','announce','drawings'], "The walls were covered with a hundred beautiful ___ of dresses.", 'drawings'), BX(['surprise','medal','competition','announce','drawings'], "Wanda won the ___.", 'competition'), BX(['surprise','medal','competition','announce','drawings'], "She wasn't there to receive her ___.", 'medal')]),
+  writeSec("A Forest Animal", ['see','tail','hunt'])
+ ]},
+ {id:'m4', u:'u4', title:"El-Moasser · General Exercises on Unit 4", secs:[
+  sec('listen', [LS("The shopping mall has many stores and ___.", ['restaurants','hospitals'], 0), LS("Behind the shopping mall is a ___.", ['museum','school'], 0), LS("Doctors and nurses help ___ people.", ['sick','tall'], 0)]),
+  sec('mc', [MC("There are a lot of ___ in the museums.", ['packages','treasures','stores','letters'], 1), MC("I bought a/an ___ for my mom's birthday.", ['view','adventure','nature','gift'], 3), MC("The bird is ___ the tree.", ['between','on','next','front'], 1), MC("The chair is ___ two tables.", ['between','in','next','on'], 0)]),
+  boxSec(['monastery','warm','people','rocks','pictures'], [["They wake up early to climb, and wear ___ clothes because it's cold.", 'warm'], ["Along the way, they see colorful ___.", 'rocks'], ["Some tourists take ___.", 'pictures'], ["At the top, they visit the old ___.", 'monastery']]),
+  sec('read', [MC("People send ___ at the post office.", ['emails','meals','packages','projects'], 2), MC("The post office helps people stay ___.", ['connected','healthy','friendly','honest'], 0), MC("Where is the post office?", ['next to a big hospital','behind the museum','in the mall'], 0)], {ctx:POSTOFFICE}),
+  sec('form', [MC("My school is ___ (on) the park and the museum.", ['on','between','next'], 1), MC("The vase is ___ (in) the table.", ['in','on','of'], 1), MC("The garage is in front ___ (to) the shopping mall.", ['to','of','on'], 1), MC("The lamp is next ___ (of) the desk.", ['of','to','in'], 1)]),
+  sec('ord', [ORD("He works as a tour guide.", "هو بيشتغل مرشد سياحي."), ORD("Egypt has many interesting places.", "مصر فيها أماكن كتير ممتعة.")]),
+  sec('story', [MC("Wanda's ___ sent a letter to Miss Mason.", ['mom','dad','sister','neighbor'], 1), MC("Peggy and Maddie wanted to write a/an ___ to Wanda.", ['email','letter','text message','report'], 1), MC("Who drew all the beautiful dresses?", ['Wanda','Peggy','Maddie'], 0)]),
+  writeSec("Schools", ['subject','learn','library'])
+ ]},
+ {id:'m5', u:'u5', title:"El-Moasser · General Exercises on Unit 5", secs:[
+  sec('listen', [LS("Wildlife photographers take pictures of ___.", ['factories','actors','buildings','wild animals'], 3), LS("They can take great photos in ___ places.", ['smallest','tallest','nearest','faraway'], 3), LS("They wait a long time to get the best ___!", ['picture','project','voice','place'], 0)]),
+  sec('mc', [MC("A/An ___ designs new buildings.", ['farmer','nurse','engineer','firefighter'], 2), MC("A voice-over actor makes ___ for cartoons.", ['homes','shapes','colors','voices'], 3), MC("Dalia is the ___ friend I have.", ['nice','nicer','as nice','nicest'], 3), MC("Is Sara ___ than Mona?", ['old','as old','oldest','older'], 3)]),
+  boxSec(['brave','wild','station','protect','uniform'], [["I am a police officer. I work in a police ___.", 'station'], ["I wear a white ___ and a cap.", 'uniform'], ["I work hard to ___ the people in the community.", 'protect'], ["A police officer needs to be ___ and helpful.", 'brave']]),
+  sec('read', [TF("Ali is a police officer.", false), TF("Ali uses a short water hose to stop fires.", false), TF("Ali has special ladders for tall buildings.", true), TF("Ali hates his job.", false)], {ctx:ALIFIRE}),
+  sec('form', [MC("Nada's house is the ___ (near) house to me.", ['near','nearer','nearest'], 2), MC("Basketball players are the ___ (tall) in the club.", ['tallest','taller','tall'], 0), MC("She is the ___ (braver) girl in her class.", ['brave','braver','bravest'], 2), MC("Sami built the ___ (weak) house.", ['weak','weaker','weakest'], 2)]),
+  sec('ord', [ORD("What does a nurse do?", "الممرضة بتعمل إيه؟"), ORD("She works with puppets.", "هي بتشتغل بالعرايس.")]),
+  sec('pun', [PUN("why is your job important", "Why is your job important?")]),
+  sec('story', [MC("Wanda ___ Peggy and Maddie for writing a letter to her.", ['thanked','bullied','threw','saw'], 0), MC("The experience ___ Peggy and Maddie forever.", ['harmed','forgot','asked','changed'], 3), MC("How did Wanda feel when she got the letter?", ['happy','angry','sad'], 0)]),
+  writeSec("Jobs", ['sick people','design','fires'])
+ ]},
+ {id:'ms1', u:'all', title:"El-Moasser · Sample Test 1", secs:[
+  sec('listen', [LS("Goha was walking through the ___.", ['market','museum'], 0), LS("He was ___, but he didn't have enough money.", ['happy','hungry'], 1), LS("He smelled something from the ___.", ['library','restaurant'], 1), LS("He stopped and sat ___ the restaurant.", ['inside','outside'], 1)]),
+  sec('mc', [MC("We ___ with our tongue.", ['see','hear','smell','taste'], 3), MC("The ___ has a spotted coat and eats leaves from tall trees.", ['bear','zebra','giraffe','monkey'], 2), MC("My school is in front ___ my house.", ['of','off','at','on'], 0), MC("She is the ___ student in the class.", ['smart','smartest','smarter','smart as'], 1)]),
+  boxSec(['wakes','healthy','exercises','habits','unhealthy'], [["She has good ___ every day to stay strong and healthy.", 'habits'], ["She ___ up early at 6:00 a.m.", 'wakes'], ["She does some simple ___ in the garden.", 'exercises'], ["She eats ___ food.", 'healthy']]),
+  sec('read', [MC("___ work hard to protect animals and their homes.", ['Nurses','Mentors','Engineers','Forest officers'], 3), MC("Animals live in the ___, zoos or homes.", ['station','wild','moon','sky'], 1), MC("Who checks animals' health?", ['vets','tourists','teachers'], 0)], {passage:'p32'}),
+  sec('form', [MC("He ___ (go) to school every day.", ['go','goes','going'], 1), MC("A giraffe is ___ (tallest) than a zebra.", ['tall','taller','tallest'], 1), MC("The post office is ___ (behind) the school and the hospital.", ['behind','between','next'], 1), MC("My school is next ___ (too) my house.", ['too','to','of'], 1)]),
+  sec('story', [TF("Wanda's family moved to the big city.", true), TF("Wanda's drawings are ugly.", false), MC("Wanda was a/an ___ girl.", ['lazy','noisy','quiet','angry'], 2), MC("Maddie was ___ of losing Peggy's friendship.", ['afraid','happy','excited','amazing'], 0)]),
+  sec('pun', [PUN("pets need daily care from their owners", "Pets need daily care from their owners."), PUN("do you live in a city or a village", "Do you live in a city or a village?")]),
+  writeSec("Places in Egypt", ['famous','visit','tourists'])
+ ]},
+ {id:'ms2', u:'all', title:"El-Moasser · Sample Test 2", secs:[
+  sec('listen', [LS("In Upper Egypt, life is ___.", ['different','the same'], 0), LS("People make ___ and weave colorful carpets by hand.", ['pottery','cars'], 0), LS("In Nubia, houses are painted in ___ colors.", ['bright','dark'], 0)]),
+  sec('mc', [MC("Cheetahs are the ___ animal.", ['fast','fastest','faster','faster than'], 1), MC("The armchair is ___ of the bookcase.", ['in front','next','between','behind'], 0), MC("The ___ is black and white. It has a striped coat.", ['bear','zebra','monkey','lion'], 1), MC("I touch soft and hard things with my ___.", ['hands','nose','ears','tongue'], 0)]),
+  boxSec(['books','visit','history','Egypt','Mountain'], [["I'm a tour guide. Many people come to visit ___ every year.", 'Egypt'], ["There are many interesting places to ___ in Egypt.", 'visit'], ["It's my job to explain the ___ to the tourists.", 'history'], ["Today, I have a visit to St. Catherine ___.", 'Mountain']]),
+  sec('read', [TF("The old lion was very strong.", false), TF("The old lion pretended to be sick.", true), TF("Many animals entered and never returned.", true), TF("The fox is wise.", true)], {ctx:OLDLION}),
+  {en:"Read and correct the underlined mistakes.", ar:"صححي الغلط", items:[MC("A mouse is (small) than a rabbit.", ['smaller','smallest','small'], 0), MC("I carry the (heavy) bag.", ['heavier','heaviest','heavy'], 1), MC("The park is next (of) the museum.", ['to','of','in'], 0), MC("He (catch) the bus to Giza every day.", ['catch','catches','catching'], 1)]},
+  {en:"Read and match (A) with (B).", ar:"وصّلي", items:[MC("To share means ___.", ['to give some of what you have to others','marks left by feet','appear'], 0), MC("The word \"disappear\" is the opposite of ___.", ['appear','share','hunt'], 0), MC("Hunt means to look ___.", ['for and catch animals for food','at the sky','for a book'], 0)]},
+  writeSec("My Favorite Job", ['wear','help','proud'])
+ ]}
+];
+
 /* ---------- tile icons ---------- */
 const ICONS = {
   listen:`<svg viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="38" fill="#159E8F" stroke="#2B2233" stroke-width="3"/><path d="M20 35v14h10l12 10V25L30 35z" fill="#fff" stroke="#2B2233" stroke-width="3" stroke-linejoin="round"/><path d="M50 33a12 12 0 0 1 0 18M56 26a21 21 0 0 1 0 32" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>`,
@@ -1810,7 +1903,7 @@ function home(keep){
   <button class="exam-door" id="examDoor">
     <span class="bd-ico" aria-hidden="true">📝</span>
     <span class="bd-text"><b>قاعة الامتحانات</b> <span class="en">Exam Hall</span><br>
-      <small>${PASSAGES.length} قطعة قراءة و${EXAMS.length + 1} امتحانات بشكل امتحان المدرسة، والدرجة بتطلع على طول.</small></span>
+      <small>${PASSAGES.length} قطعة قراءة و${EXAMS.length + MEXAMS.length + 1} امتحان من كتاب المدرسة ومستر عبد الباري والمعاصر، والدرجة بتطلع على طول.</small></span>
     ${Object.keys(S.exams).length ? `<span class="pill">آخر نتايجك: ${Object.values(S.exams).map(v => v + '%').slice(-3).join(' · ')}</span>` : ''}
   </button>
 
@@ -2746,13 +2839,14 @@ function examHall(){
   screenEl.innerHTML = `<section class="hub">
     <div class="hall-head sticker">
       <div><h2>قاعة الامتحانات <span class="en">Exam Hall</span></h2>
-      <p>قطع القراءة والامتحانات من كتاب المدرسة وكتاب مستر عبد الباري، بنفس شكل امتحان المدرسة. الدرجة بتطلع على طول.</p></div>
+      <p>قطع القراءة والامتحانات من كتاب المدرسة وكتاب مستر عبد الباري والمعاصر، بنفس شكل امتحان المدرسة. الدرجة بتطلع على طول.</p></div>
       <div class="tabs" role="tablist">
         <button class="tab" role="tab" data-ht="exams" aria-selected="${hallTab === 'exams'}">📝 الامتحانات <span class="en">Tests</span></button>
         <button class="tab" role="tab" data-ht="passages" aria-selected="${hallTab === 'passages'}">📄 قطع القراءة <span class="en">Passages</span></button>
       </div>
     </div>
     ${hallTab === 'exams' ? `
+      <h3 class="sec-title">امتحانات كتاب المدرسة ومستر عبد الباري</h3>
       <div class="exam-grid">${EXAMS.map(e => { const u = BOOK.find(x => x.id === e.u), best = S.exams[e.id];
         return `<button class="exam-card" data-exam="${e.id}" style="--uc:${u.c};--ucl:${u.cl}">
           <span class="u-badge">${u.n}</span><span class="u-body"><span class="u-title en">${e.title}</span><span class="u-ar">${u.ar}</span>
@@ -2760,13 +2854,19 @@ function examHall(){
         <button class="exam-card final" data-exam="final" style="--uc:#2B2233;--ucl:#FFF0BF">
           <span class="u-badge">★</span><span class="u-body"><span class="u-title en">Final Term Exam</span><span class="u-ar">امتحان شامل على الترم كله · أسئلة جديدة كل مرة</span>
           <small>${S.exams.final != null ? `أحسن درجة: <b>${S.exams.final}%</b> ${gradeOf(S.exams.final)[1]}` : 'من كل الوحدات'}</small></span></button>
+      </div>
+      <h3 class="sec-title">امتحانات المعاصر <span class="en">El-Moasser</span></h3>
+      <div class="exam-grid">${MEXAMS.map(e => { const u = BOOK.find(x => x.id === e.u) || {n:'★', c:'#2B2233', cl:'#FFF0BF', ar:'على المنهج كله'}, best = S.exams[e.id];
+        return `<button class="exam-card" data-exam="${e.id}" style="--uc:${u.c};--ucl:${u.cl}">
+          <span class="u-badge">${u.n}</span><span class="u-body"><span class="u-title en">${e.title.replace('El-Moasser · ', '')}</span><span class="u-ar">المعاصر · ${u.ar}</span>
+          <small>${best != null ? `أحسن درجة: <b>${best}%</b> ${gradeOf(best)[1]}` : `${e.secs.length} أسئلة رئيسية · فيها استماع`}</small></span></button>`; }).join('')}
       </div>` : units.map(u => `
       <h3 class="sec-title">${unitLabel(u.id)} <span class="en">${u.en}</span></h3>
       <div class="pass-grid">${PASSAGES.filter(p => p.u === u.id).map(p => `<button class="pass-card ${S.pDone[p.id] ? 'done' : ''}" data-pass="${p.id}" style="--uc:${u.c};--ucl:${u.cl}">
         <span class="p-kind">${p.kind}</span><span class="en p-title">${p.title}</span><small>${p.qs.length} أسئلة${S.pDone[p.id] != null ? ` · ✔ ${S.pDone[p.id]}%` : ''}</small></button>`).join('')}</div>`).join('')}
   </section>`;
   screenEl.querySelectorAll('[data-ht]').forEach(b => b.onclick = () => { hallTab = b.dataset.ht; examHall(); });
-  screenEl.querySelectorAll('[data-exam]').forEach(b => b.onclick = () => { roundStars = 0; examRun(b.dataset.exam === 'final' ? finalExam() : EXAMS.find(e => e.id === b.dataset.exam), examHall); });
+  screenEl.querySelectorAll('[data-exam]').forEach(b => b.onclick = () => { roundStars = 0; examRun(b.dataset.exam === 'final' ? finalExam() : [...EXAMS, ...MEXAMS].find(e => e.id === b.dataset.exam), examHall); });
   screenEl.querySelectorAll('[data-pass]').forEach(b => b.onclick = () => { roundStars = 0; examRun(passageExam(PASSAGES.find(p => p.id === b.dataset.pass)), examHall); });
 }
 function passageExam(p){
@@ -2853,10 +2953,11 @@ function exChoose(it, head, done){
   let idx = it.o.map((_, k) => k); if(it.shuf) idx = shuffle(idx);
   const L = 'abcdefgh';
   screenEl.innerHTML = `<section class="stage exam">${head}
-    <div class="qcard sticker gq">${it.vis || ''}<p class="gsent en" lang="en">${esc(it.q).replace('___', '<span class="blank">?</span>')}</p></div>
+    <div class="qcard sticker gq">${it.listen ? `<button class="speaker sm" id="lspk" aria-label="اسمعي">${SPK}</button>` : ''}${it.vis || ''}<p class="gsent en" lang="en">${esc(it.q).replace('___', '<span class="blank">?</span>')}</p></div>
     <div class="opts words ${it.tf ? 'n2 tfopts' : 'n' + idx.length}">${idx.map((k, j) => `<button class="opt wopt en exo" data-k="${k}"><span class="lt">${it.tf ? (k === 0 ? '✔' : '✘') : L[j]}</span> ${esc(it.o[k])}</button>`).join('')}</div>
     <div class="feedback" id="fb" aria-live="polite"></div><div class="row" id="exActions" style="justify-content:center"></div></section>`;
   let over = false;
+  if(it.listen){ $('#lspk').onclick = () => say(it.listen, .75); setTimeout(() => say(it.listen, .75), 350); }
   screenEl.querySelectorAll('.exo').forEach(b => b.onclick = () => {
     if(over) return; over = true;
     const ok = +b.dataset.k === it.a;

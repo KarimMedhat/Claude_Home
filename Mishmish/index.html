@@ -500,7 +500,53 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 .mistakes{padding:14px 18px;display:grid;gap:8px;width:100%;max-width:760px;text-align:start}
 .mistakes h3{margin:0}
 .mis{border:2px solid var(--ink);border-radius:12px;background:var(--good-l);padding:8px 12px;font-size:18px;text-align:left;direction:ltr}
+
+/* mall v2: shop shelves */
+.store{display:grid;gap:18px;min-width:0}
+.window{padding:0;overflow:hidden;background:#FFF4E6;border-color:var(--ink)}
+.window-h{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;padding:10px 16px;background:var(--bad);color:#FFFFFF}
+.window-h b{font-size:22px}
+.window-h span{font-size:15px;opacity:.95}
+.aisle-nav{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px);z-index:3;padding:8px;background:var(--paper);border-radius:14px}
+.aisle-nav .chip{font-size:15px;padding:4px 12px}
+.aisle{border:3px solid var(--ink);border-radius:var(--r);background:var(--wall);overflow:hidden;box-shadow:var(--shadow);scroll-margin-top:140px}
+.aisle-sign{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 16px;background:var(--ink);color:#FFFFFF}
+.aisle-sign .a-ico{font-size:28px;line-height:1}
+.aisle-sign b{font-size:22px}
+.aisle-sign .en{font-size:15px;opacity:.75}
+.aisle-sign small{margin-inline-start:auto;background:var(--sun);color:var(--ink);border-radius:99px;padding:0 10px;font-weight:800}
+.shelf2{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));grid-auto-rows:176px;column-gap:8px;padding:12px 12px 0;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 134px,#D39A5E 134px 152px,#8A5A30 152px 158px,rgba(0,0,0,.08) 158px 162px,transparent 162px 176px);background-position:0 12px}
+.deal-shelf{grid-template-columns:repeat(4,minmax(0,1fr))}
+.prod{position:relative;display:grid;grid-template-rows:112px 22px 24px;justify-items:center;align-items:end;padding:0;border:0;background:none;color:var(--ink);transition:transform .12s}
+.prod:hover{transform:translateY(-4px)}
+.prod:hover .p-ico{filter:drop-shadow(0 6px 4px rgba(43,34,51,.25))}
+.p-ico{display:grid;place-items:end center;width:100%;height:112px;padding-bottom:2px}
+.p-ico svg{width:82px;height:82px}
+.p-ico.t-fur svg,.p-ico.t-pattern svg{width:92px;height:100px}
+.p-ico.t-bg svg{width:84px;height:92px;border:3px solid var(--ink);border-radius:8px;background:var(--card)}
+.emo-thumb{font-size:62px;line-height:1;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif}
+.p-name{font-size:13px;font-weight:700;line-height:1.1;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;align-self:start;padding-top:3px;color:#3B2410}
+.p-price{direction:ltr;align-self:start;margin-top:1px;background:#FFE066;border:2px solid var(--ink);border-radius:6px;padding:0 8px;font-weight:800;font-size:14px;line-height:1.35;font-variant-numeric:tabular-nums;box-shadow:1px 2px 0 rgba(0,0,0,.25)}
+.p-price s{opacity:.6;margin-inline-end:4px;font-weight:600}
+.prod.pricey .p-price{background:#F1EEF6;color:var(--ink-soft)}
+.prod.owned .p-price{background:var(--good-l)}
+.prod.sel .p-ico{background:radial-gradient(circle at 50% 70%,rgba(255,255,255,.95) 0 45%,transparent 70%)}
+.prod.sel .p-price{box-shadow:0 0 0 3px var(--grape)}
+.ribbon{position:absolute;top:6px;inset-inline-start:2px;z-index:1;font-size:12px;font-weight:800;padding:1px 8px;border-radius:6px;border:2px solid var(--ink);transform:rotate(-6deg)}
+.ribbon.deal{background:var(--bad);color:#FFFFFF}
+.ribbon.new{background:var(--grape);color:#FFFFFF}
+.stamp{position:absolute;top:34px;left:50%;transform:translateX(-50%) rotate(-12deg);z-index:1;font-size:13px;font-weight:800;color:var(--good);border:2px solid var(--good);border-radius:8px;padding:0 6px;background:rgba(255,255,255,.85)}
+.stamp.on{color:#FFFFFF;background:var(--good)}
 @media (max-width:760px){
+  .fitting{position:sticky;top:calc(env(safe-area-inset-top,0px) + 62px);z-index:4;grid-template-columns:110px minmax(0,1fr);align-items:center;padding:8px}
+  .fitting .fit-label{grid-column:1/-1}
+  .fit-cat{max-width:110px}
+  .fit-info{min-height:0;gap:4px}
+  .fit-info .fit-name .en{font-size:20px}
+  .fit-hint{font-size:14px}
+  .aisle-nav{position:static}
+  .deal-shelf{grid-template-columns:repeat(2,minmax(0,1fr))}
   .exam-grid{grid-template-columns:1fr}
   .pword{font-size:20px}
   .result{padding:18px}
@@ -844,6 +890,84 @@ const ITEMS = [
   {id:'rainbow',slot:'bg',en:'rainbow',ar:'قوس قزح',price:35,
    draw:() => `${sky('#EAF6FF')}${['#E8433A','#FF8A3D','#FFD23F','#3DBB5C','#3A7BE8','#9B5DE5'].map((c,k) => `<path d="M${-60+k*14} 330 A${210-k*14} ${210-k*14} 0 0 1 ${360-k*14} 330" fill="none" stroke="${c}" stroke-width="15"/>`).join('')}<g fill="#FFFFFF"><ellipse cx="40" cy="300" rx="34" ry="16"/><ellipse cx="262" cy="300" rx="34" ry="16"/></g>`}
 ];
+/* ---------- more mall items (emoji products, fur colors, pattern places) ---------- */
+const DEPT_OF = {hat:'hats', eyes:'glasses', neck:'neck', toy:'toys', pattern:'fur', bg:'places'};
+ITEMS.forEach(i => { i.dept = i.id === 'brush' ? 'art' : DEPT_OF[i.slot]; });
+const EMO_FONT = `font-family="'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif"`;
+const POS = {hat:[150,84,74], clip:[204,80,38], eyes:[150,166,112], neck:[150,226,48], toy:[50,316,64], pet:[262,322,54]};
+const emoT = (e, [x, y, s]) => `<text x="${x}" y="${y}" font-size="${s}" text-anchor="middle" stroke="none" ${EMO_FONT}>${e}</text>`;
+const E = (id, dept, slot, en, ar, price, e, pos, isNew) => ({id, dept, slot, en, ar, price, e, isNew:!!isNew, draw:() => emoT(e, POS[pos || slot])});
+const FUR = (id, en, ar, price, color) => ({id, dept:'fur', slot:'fur', en, ar, price, color});
+const SCATTER = [[30,42],[112,24],[200,50],[276,32],[62,112],[252,122],[22,192],[284,204],[40,282],[272,292],[150,26],[146,322]];
+const BGE = (id, en, ar, price, sky, e, isNew) => ({id, dept:'places', slot:'bg', en, ar, price, isNew:!!isNew,
+  draw:() => `<rect width="300" height="330" fill="${sky}"/>` + SCATTER.map(([x, y], k) => `<text x="${x}" y="${y}" font-size="${k % 3 === 0 ? 30 : 22}" text-anchor="middle" opacity=".9" ${EMO_FONT}>${e}</text>`).join('')});
+ITEMS.push(
+  // hats & clips
+  E('tophat','hats','hat','top hat','برنيطة شيك',30,'🎩'), E('gradcap','hats','hat','graduation cap','كاب تخرج',45,'🎓'),
+  E('sunhat','hats','hat','sun hat','برنيطة صيفي',22,'👒'), E('rescue','hats','hat','rescue helmet','خوذة إنقاذ',28,'⛑️'),
+  E('cupcakehat','hats','hat','cupcake hat','طاقية كب كيك',26,'🧁',null,true), E('pinkbow','hats','hat','pink bow','فيونكة بمبي',12,'🎀','clip'),
+  E('sunclip','hats','hat','sunflower clip','توكة عباد شمس',10,'🌻','clip'), E('hibiscus','hats','hat','flower clip','توكة وردة',10,'🌺','clip'),
+  E('butterflyclip','hats','hat','butterfly clip','توكة فراشة',14,'🦋','clip',true), E('starclip','hats','hat','star clip','توكة نجمة',8,'⭐','clip'),
+  E('cherryclip','hats','hat','cherry clip','توكة كريز',9,'🍒','clip'),
+  // glasses
+  E('coolshades','glasses','eyes','cool shades','نضارة كول',20,'🕶️'), E('goggles','glasses','eyes','swim goggles','نضارة سباحة',16,'🥽'),
+  // necklaces & medals
+  E('goldmedal','neck','neck','gold medal','ميدالية دهب',60,'🥇'), E('sportsmedal','neck','neck','sports medal','ميدالية رياضة',35,'🏅'),
+  E('neckbow','neck','neck','big bow','فيونكة كبيرة',14,'🎀'), E('beads','neck','neck','beads','عقد خرز',18,'📿'),
+  E('diamond','neck','neck','diamond','ألماظة',90,'💎',null,true), E('heartneck','neck','neck','heart necklace','سلسلة قلب',25,'💖'),
+  // toys
+  E('teddy','toys','toy','teddy bear','دبدوب',25,'🧸'), E('yoyo','toys','toy','yo-yo','يويو',10,'🪀'),
+  E('football','toys','toy','football','كورة',12,'⚽'), E('basketball','toys','toy','basketball','كورة سلة',14,'🏀'),
+  E('tennis','toys','toy','tennis ball','كورة تنس',8,'🎾'), E('kite','toys','toy','kite','طيارة ورق',18,'🪁'),
+  E('guitar','toys','toy','guitar','جيتار',40,'🎸'), E('violinE','toys','toy','violin','كمان',45,'🎻'),
+  E('drumE','toys','toy','drum','طبلة',30,'🥁'), E('giftbox','toys','toy','gift box','علبة هدية',15,'🎁'),
+  E('booksE','toys','toy','books','كتب',12,'📚'), E('rose','toys','toy','rose','وردة حمرا',10,'🌹'),
+  E('bouquet','toys','toy','flowers','بوكيه ورد',20,'💐'), E('robot','toys','toy','robot','روبوت',50,'🤖',null,true),
+  E('rocket','toys','toy','toy rocket','صاروخ',55,'🚀',null,true),
+  // art corner
+  E('palette','art','toy','paint palette','باليتة ألوان',20,'🎨',null,true), E('crayonE','art','toy','crayon','قلم شمع',8,'🖍️'),
+  E('pencilE','art','toy','pencil','قلم رصاص',6,'✏️'), E('scissorsE','art','toy','scissors','مقص',9,'✂️'),
+  E('painting','art','toy','painting','لوحة',35,'🖼️',null,true), E('sketchbook','art','toy','sketchbook','كشكول رسم',12,'📒'),
+  E('rulerE','art','toy','ruler','مسطرة',5,'📏'), E('penE','art','toy','pen','قلم',5,'🖊️'),
+  // sweets
+  E('lollipop','sweets','toy','lollipop','مصاصة',6,'🍭'), E('icecream','sweets','toy','ice cream','آيس كريم',9,'🍦'),
+  E('cupcake','sweets','toy','cupcake','كب كيك',8,'🧁'), E('donut','sweets','toy','donut','دونت',7,'🍩'),
+  E('cookie','sweets','toy','cookie','بسكوتة',5,'🍪'), E('bdaycake','sweets','toy','birthday cake','تورتة',30,'🎂',null,true),
+  E('watermelon','sweets','toy','watermelon','بطيخ',7,'🍉'), E('strawberry','sweets','toy','strawberry','فراولة',5,'🍓'),
+  E('candy','sweets','toy','candy','بونبوني',4,'🍬'), E('milkE','sweets','toy','milk','لبن',4,'🥛'),
+  // pet shop
+  E('petmouse','pets','pet','mouse friend','فار صاحبها',20,'🐭'), E('chick','pets','pet','chick','كتكوت',15,'🐥'),
+  E('birdE','pets','pet','bird','عصفورة',18,'🐦'), E('parrot','pets','pet','parrot','ببغان',40,'🦜',null,true),
+  E('bunny','pets','pet','bunny','أرنب',30,'🐇'), E('turtle','pets','pet','turtle','سلحفاة',25,'🐢'),
+  E('frogE','pets','pet','frog','ضفدعة',15,'🐸'), E('puppy','pets','pet','puppy','كلب صغير',45,'🐶'),
+  E('hamster','pets','pet','hamster','هامستر',25,'🐹'), E('ladybug','pets','pet','ladybug','دعسوقة',8,'🐞'),
+  E('snail','pets','pet','snail','حلزونة',6,'🐌'), E('goldfish','pets','pet','goldfish','سمكة زينة',20,'🐠'),
+  E('unicorn','pets','pet','unicorn','يونيكورن',120,'🦄',null,true),
+  // fur salon
+  FUR('furgray','gray fur','فرو رمادي',20,'#B9B6C6'), FUR('furwhite','white fur','فرو أبيض',20,'#FFFFFF'),
+  FUR('furblack','black fur','فرو أسود',25,'#4A4252'), FUR('furpink','pink fur','فرو بمبي',35,'#FFA8CF'),
+  FUR('furlav','lavender fur','فرو بنفسجي',35,'#C9AEF2'), FUR('furgold','golden fur','فرو دهبي',40,'#F5C542'),
+  FUR('fursky','sky blue fur','فرو لبني',35,'#93D2F5'), FUR('furmint','mint fur','فرو نعناعي',35,'#A3E8C4'),
+  FUR('furbrown','brown fur','فرو بني',20,'#B27C50'), FUR('furcream','cream fur','فرو كريمي',20,'#F6E3C0'),
+  // places with patterns
+  BGE('bghearts','hearts','قلوب',25,'#FFE3F0','💖'), BGE('bgstars','starry night','ليل ونجوم',30,'#2E2A5E','⭐'),
+  BGE('bgsnow','snow day','يوم تلج',25,'#DFF3FF','❄️'), BGE('bgflowers','flower garden','جنينة ورد',25,'#E3F8EA','🌸'),
+  BGE('bgbubbles','bubbles','فقاقيع',20,'#D7F4F7','🫧',true), BGE('bgcandy','candy land','أرض الحلويات',35,'#F1E6FF','🍬',true),
+  BGE('bgsea','under the sea','تحت البحر',35,'#BFE6FF','🐠'), BGE('bgautumn','autumn','الخريف',20,'#FFE7CC','🍂'),
+  BGE('bgballoons','balloon party','حفلة بالونات',30,'#E8F4FF','🎈'), BGE('bgmusic','music room','أوضة مزيكا',25,'#FFF6CC','🎵'),
+  BGE('bgbutterfly','butterflies','فراشات',25,'#E9FFE9','🦋'), BGE('bgpaint','art studio','مرسم',40,'#FFF0E6','🎨',true)
+);
+const DEPTS = [
+  {id:'hats', ar:'قبعات وتوك', en:'Hats & Clips', ico:'🎩', wall:'#FFE1CC'},
+  {id:'glasses', ar:'نضارات', en:'Glasses', ico:'🕶️', wall:'#CDF1EA'},
+  {id:'neck', ar:'عقود وميداليات', en:'Necklaces & Medals', ico:'🥇', wall:'#FFF0BF'},
+  {id:'toys', ar:'لعب', en:'Toys', ico:'🧸', wall:'#FFDCEA'},
+  {id:'art', ar:'أدوات الرسم', en:'Art Corner', ico:'🎨', wall:'#E6DCFF'},
+  {id:'sweets', ar:'حلويات', en:'Sweets', ico:'🍭', wall:'#FFE3F0'},
+  {id:'pets', ar:'محل الحيوانات', en:'Pet Shop', ico:'🐰', wall:'#D7F5E0'},
+  {id:'fur', ar:'صالون الفرو', en:'Fur Salon', ico:'✨', wall:'#F3E6FF'},
+  {id:'places', ar:'أماكن وخلفيات', en:'Places', ico:'🏞️', wall:'#DDF0FF'}
+];
 const ITEM_BY_ID = Object.fromEntries(ITEMS.map(i => [i.id, i]));
 
 /* migrate older saves (free unlocks by star count) into owned items */
@@ -858,10 +982,11 @@ if(!S.owned){
 /* ---------- Mishmish (SVG) ---------- */
 let svgUid = 0;
 function catSVG(fills={}, look={}, cls=''){
-  const f = p => fills[p] || '#FFFFFF';
   const u = ++svgUid;
   const it = slot => (look && look[slot] && ITEM_BY_ID[look[slot]]) || null;
-  const bg = it('bg'), pat = it('pattern'), hat = it('hat'), eyes = it('eyes'), neck = it('neck'), toy = it('toy');
+  const bg = it('bg'), pat = it('pattern'), hat = it('hat'), eyes = it('eyes'), neck = it('neck'), toy = it('toy'), pet = it('pet'), fur = it('fur');
+  if(fur) fills = {...fills, head:fur.color, body:fur.color, ears:fur.color, tail:fur.color};
+  const f = p => fills[p] || '#FFFFFF';
   return `<svg class="cat ${cls}" viewBox="0 0 300 330" role="img" aria-label="Mishmish the cat">
   <defs><clipPath id="cb${u}"><ellipse cx="150" cy="245" rx="72" ry="62"/></clipPath><clipPath id="ch${u}"><ellipse cx="150" cy="128" rx="74" ry="60"/></clipPath><clipPath id="cf${u}"><rect width="300" height="330" rx="26"/></clipPath></defs>
   ${bg ? `<g clip-path="url(#cf${u})" stroke="none" pointer-events="none">${bg.draw()}</g>` : ''}
@@ -888,11 +1013,13 @@ function catSVG(fills={}, look={}, cls=''){
     <circle data-part="bow" fill="${f('bow')}" cx="150" cy="192" r="9"/>`}
   </g>
   <g stroke="#2B2233" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" pointer-events="none">
-    ${neck ? neck.draw() : ''}${toy ? toy.draw() : ''}${eyes ? eyes.draw() : ''}${hat ? hat.draw() : ''}
+    ${pet ? pet.draw() : ''}${neck ? neck.draw() : ''}${toy ? toy.draw() : ''}${eyes ? eyes.draw() : ''}${hat ? hat.draw() : ''}
   </g>
 </svg>`;
 }
 function itemThumb(item){
+  if(item.e) return `<span class="emo-thumb" aria-hidden="true">${item.e}</span>`;
+  if(item.slot === 'fur') return catSVG(DEFAULT_MISH, {fur:item.id});
   if(item.slot === 'pattern') return catSVG(DEFAULT_MISH, {pattern:item.id});
   if(item.slot === 'bg') return `<svg viewBox="0 0 300 330" aria-hidden="true">${item.draw()}</svg>`;
   return `<svg viewBox="${item.box}" aria-hidden="true"><g stroke="#2B2233" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">${item.draw()}</g></svg>`;
@@ -1910,8 +2037,8 @@ function home(keep){
   <button class="mall-door" id="mallDoor">
     ${AWNING}
     <span class="door-in">
-      <span class="door-text"><b>مول مشمش</b> <span class="en">Mishmish Mall</span><br><small>قبعات ونضارات ولعب وأماكن. ادخلي واشتري لمشمش اللي يعجبك!</small></span>
-      <span class="door-items" aria-hidden="true">${['crown','sunglasses','balloon','scarf'].map(id => `<span class="mini">${itemThumb(ITEM_BY_ID[id])}</span>`).join('')}</span>
+      <span class="door-text"><b>مول مشمش</b> <span class="en">Mishmish Mall</span><br><small>${ITEMS.length} حاجة على الرفوف: قبعات وتوك ولعب وحلويات وحيوانات وألوان فرو. وعروض نص التمن كل يوم!</small></span>
+      <span class="door-items" aria-hidden="true">${['tophat','teddy','unicorn','palette','crown'].map(id => `<span class="mini">${itemThumb(ITEM_BY_ID[id])}</span>`).join('')}</span>
       <span class="pill stars">⭐ ${S.stars}</span>
     </span>
   </button>
@@ -3039,16 +3166,24 @@ const AWNING = `<svg class="awning" viewBox="0 0 400 38" preserveAspectRatio="no
   const c = k % 2 ? '#FFFFFF' : '#FF8A3D';
   return `<rect x="${k*40}" width="40" height="24" fill="${c}"/><path d="M${k*40} 24 Q${k*40+20} 42 ${k*40+40} 24" fill="${c}" stroke="#2B2233" stroke-width="2.5" vector-effect="non-scaling-stroke"/>`;
 }).join('')}<path d="M0 1.5 H400" stroke="#2B2233" stroke-width="3" vector-effect="non-scaling-stroke"/></svg>`;
-const PLURAL = new Set(['glasses','sunglasses','hearts','stripes','spots','heartsfur']);
-const NO_ART = new Set(['space']);
+const PLURAL = new Set(['glasses','sunglasses','hearts','stripes','spots','heartsfur','coolshades','goggles','beads','booksE','bouquet','scissorsE','bgbubbles','bgbutterfly','bghearts','bgballoons']);
+const NO_ART = new Set(['space','candy','milkE','bgsnow','bgautumn','bgsea','bgcandy','bgmusic','bgpaint','furgray','furwhite','furblack','furpink','furlav','furgold','fursky','furmint','furbrown','furcream','bgflowers','bgstars']);
 function itemLine(it, withPrice){
   const pl = PLURAL.has(it.id);
   const name = pl || NO_ART.has(it.id) ? it.en : (/^[aeiou]/.test(it.en) ? 'an ' : 'a ') + it.en;
   const head = (pl ? `They're ${name}!` : `It's ${name}!`);
-  return withPrice ? `${head} ${pl ? 'They cost' : 'It costs'} ${it.price} stars.` : head;
+  return withPrice ? `${head} ${pl ? 'They cost' : 'It costs'} ${priceOf(it)} stars.` : head;
 }
 const sfxCash = () => { tone(1046,0,.08,'square',.05); tone(1318,.08,.12,'triangle'); tone(1568,.18,.25,'triangle'); };
-let mallTab = 'hat', preview = null;
+let preview = null;
+function mulberry(a){ return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const DEALS = (() => {
+  const d = new Date(), r = mulberry(d.getFullYear() * 500 + d.getMonth() * 40 + d.getDate());
+  const pool = ITEMS.filter(i => i.price >= 12), out = [];
+  while(out.length < 4){ const id = pool[Math.floor(r() * pool.length)].id; if(!out.includes(id)) out.push(id); }
+  return new Set(out);
+})();
+const priceOf = it => DEALS.has(it.id) ? Math.ceil(it.price / 2) : it.price;
 
 function mall(){
   setTop(true);
@@ -3056,6 +3191,7 @@ function mall(){
   screenEl.innerHTML = `<section class="mall">
     <div class="mall-sign">${AWNING}
       <div class="sign-in"><h2>مول مشمش <span class="en">Mishmish Mall</span></h2>
+        <span class="muted">${ITEMS.length} حاجة في ${DEPTS.length} أقسام · عندك ${S.owned.length}</span>
         <span class="pill stars wallet">معاكي ⭐ <b id="wallet">${S.stars}</b></span></div></div>
     <div class="mall-grid">
       <aside class="fitting sticker" id="fitting">
@@ -3063,35 +3199,47 @@ function mall(){
         <div class="fit-cat" id="fitCat"></div>
         <div class="fit-info" id="fitInfo" aria-live="polite"></div>
       </aside>
-      <div class="shelves">
-        <div class="tabs" id="tabs" role="tablist"></div>
-        <div class="shelf" id="shelf"></div>
+      <div class="store">
+        <div class="window sticker">
+          <div class="window-h"><b>🔥 عروض النهارده</b><span>كل حاجة هنا بنص التمن، والعروض بتتغير كل يوم!</span></div>
+          <div class="shelf2 deal-shelf" id="deals"></div>
+        </div>
+        <nav class="aisle-nav" aria-label="أقسام المول">${DEPTS.map(d => `<button class="chip" data-go="${d.id}">${d.ico} ${d.ar}</button>`).join('')}<button class="chip" data-go="mine">🛍️ حاجاتي</button></nav>
+        <div id="aisles"></div>
       </div>
     </div>
   </section>`;
-  renderTabs(); renderShelf(); renderFit();
+  screenEl.querySelectorAll('[data-go]').forEach(b => b.onclick = () => { const a = $('#aisle-' + b.dataset.go); if(a) a.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'}); });
+  renderStore(); renderFit();
 }
-function renderTabs(){
-  const tabs = [...SLOTS, {id:'mine',en:'My things',ar:'حاجاتي'}];
-  $('#tabs').innerHTML = tabs.map(t => `<button class="tab" role="tab" data-tab="${t.id}" aria-selected="${mallTab === t.id}">${t.ar} <span class="en">${t.en}</span></button>`).join('');
-  $('#tabs').querySelectorAll('.tab').forEach(b => b.onclick = () => { mallTab = b.dataset.tab; renderTabs(); renderShelf(); if(b.dataset.tab !== 'mine') say(tabs.find(t => t.id === mallTab).en); });
+function prodHTML(it){
+  const own = S.owned.includes(it.id), on = S.equip[it.slot] === it.id, deal = DEALS.has(it.id), p = priceOf(it);
+  return `<button class="prod ${own ? 'owned' : ''} ${!own && p > S.stars ? 'pricey' : ''} ${preview === it.id ? 'sel' : ''}" data-item="${it.id}" aria-label="${esc(it.en)}${own ? '' : `, ${p} stars`}">
+    ${deal && !own ? '<span class="ribbon deal">-50%</span>' : it.isNew && !own ? '<span class="ribbon new">جديد</span>' : ''}
+    ${own ? `<span class="stamp ${on ? 'on' : ''}">${on ? 'لابساه' : 'عندك ✓'}</span>` : ''}
+    <span class="p-ico t-${it.slot}">${itemThumb(it)}</span>
+    <span class="p-name en">${esc(it.en)}</span>
+    <span class="p-price">${own ? (on ? '👕' : '✓') : `${deal ? `<s>${it.price}</s>` : ''}⭐ ${p}`}</span>
+  </button>`;
 }
-function renderShelf(){
-  const list = mallTab === 'mine' ? ITEMS.filter(i => S.owned.includes(i.id)) : ITEMS.filter(i => i.slot === mallTab);
-  if(!list.length){ $('#shelf').innerHTML = '<p class="empty" style="grid-column:1/-1">لسه مشترتيش حاجة. لفّي على الأقسام واختاري اللي يعجبك!</p>'; return; }
-  $('#shelf').innerHTML = list.map(it => {
-    const own = S.owned.includes(it.id), on = S.equip[it.slot] === it.id;
-    return `<button class="item ${own ? 'owned' : ''} ${on ? 'worn' : ''} ${!own && it.price > S.stars ? 'pricey' : ''} ${preview === it.id ? 'sel' : ''}" data-item="${it.id}">
-      <span class="tag">${on ? 'لابساه ✓' : own ? 'عندك ✓' : `⭐ ${it.price}`}</span>
-      <span class="thumb t-${it.slot}">${itemThumb(it)}</span>
-      <span class="en name">${it.en}</span><small>${it.ar}</small></button>`;
-  }).join('');
-  $('#shelf').querySelectorAll('.item').forEach(b => b.onclick = () => {
-    preview = b.dataset.item; const it = ITEM_BY_ID[preview];
-    say(itemLine(it, !S.owned.includes(it.id)));
-    renderShelf(); renderFit(true);
-    if(window.innerWidth <= 760) $('#fitting').scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
-  });
+function renderStore(){
+  $('#deals').innerHTML = [...DEALS].map(id => prodHTML(ITEM_BY_ID[id])).join('');
+  const mine = ITEMS.filter(i => S.owned.includes(i.id));
+  $('#aisles').innerHTML = DEPTS.map(d => {
+    const list = ITEMS.filter(i => i.dept === d.id);
+    return `<section class="aisle" id="aisle-${d.id}" style="--wall:${d.wall}">
+      <div class="aisle-sign"><span class="a-ico" aria-hidden="true">${d.ico}</span><b>${d.ar}</b><span class="en">${d.en}</span><small>${list.length} حاجة</small></div>
+      <div class="shelf2">${list.map(prodHTML).join('')}</div></section>`;
+  }).join('') + `<section class="aisle" id="aisle-mine" style="--wall:#EFEDF7">
+      <div class="aisle-sign"><span class="a-ico" aria-hidden="true">🛍️</span><b>حاجاتي</b><span class="en">My things</span><small>${mine.length} حاجة</small></div>
+      ${mine.length ? `<div class="shelf2">${mine.map(prodHTML).join('')}</div>` : '<p class="empty" style="margin:14px">لسه مشترتيش حاجة. لفّي على الرفوف واختاري اللي يعجبك!</p>'}</section>`;
+  screenEl.querySelectorAll('.prod').forEach(b => b.onclick = () => pickItem(b.dataset.item));
+}
+function pickItem(id){
+  preview = id; const it = ITEM_BY_ID[id];
+  say(itemLine(it, !S.owned.includes(id)));
+  screenEl.querySelectorAll('.prod').forEach(x => x.classList.toggle('sel', x.dataset.item === id));
+  renderFit(true);
 }
 function renderFit(anim){
   const look = {...S.equip};
@@ -3100,29 +3248,29 @@ function renderFit(anim){
   $('#fitCat').innerHTML = catSVG(S.mish, look, anim ? 'tryon' : '');
   const info = $('#fitInfo');
   if(!it){ info.innerHTML = '<p class="fit-hint">دوسي على أي حاجة في الرفوف عشان تجربيها على مشمش قبل ما تشتري.</p>'; return; }
-  const own = S.owned.includes(it.id), on = S.equip[it.slot] === it.id;
+  const own = S.owned.includes(it.id), on = S.equip[it.slot] === it.id, p = priceOf(it);
   let act;
   if(own) act = on ? '<button class="btn" id="act">اقلعيه</button>' : '<button class="btn primary" id="act">البسيه</button>';
-  else if(S.stars >= it.price) act = `<button class="btn primary" id="act">اشتري بـ ⭐ ${it.price}</button>`;
-  else act = `<p class="need">محتاجة <b>${it.price - S.stars}</b> نجمة كمان</p><button class="btn soft" id="earn">العبي واجمعي نجوم</button>`;
-  info.innerHTML = `<div class="fit-name"><span class="en">${it.en}</span>${sayBtn(itemLine(it, !own), 'اسمعي')}</div>
-    <p class="muted">${it.ar}${own ? '' : ` · ⭐ ${it.price}`}</p>
+  else if(S.stars >= p) act = `<button class="btn primary" id="act">اشتري بـ ⭐ ${p}</button>`;
+  else act = `<p class="need">محتاجة <b>${p - S.stars}</b> نجمة كمان</p><button class="btn soft" id="earn">العبي واجمعي نجوم</button>`;
+  info.innerHTML = `<div class="fit-name"><span class="en">${esc(it.en)}</span>${sayBtn(itemLine(it, !own), 'اسمعي')}</div>
+    <p class="muted">${it.ar}${own ? '' : ` · ${DEALS.has(it.id) ? `<s>${it.price}</s> ` : ''}⭐ ${p}`}</p>
     <div class="row" style="justify-content:center">${act}</div>
     ${!on ? '<button class="linkish" id="cancel">رجّعي مشمش زي ما كانت</button>' : ''}`;
   const actB = $('#act');
   if(actB) actB.onclick = () => {
     if(!own){
-      S.stars -= it.price; S.owned.push(it.id); S.equip[it.slot] = it.id;
+      S.stars -= p; S.owned.push(it.id); S.equip[it.slot] = it.id;
       save('stars'); save('owned'); save('equip'); renderStars(true); $('#wallet').textContent = S.stars;
       sfxCash(); setTimeout(meow, 350); burst($('#fitCat'));
-      say(`You bought ${PLURAL.has(it.id) || NO_ART.has(it.id) ? '' : 'a '}${it.en}! Thank you!`);
+      say(`You bought ${PLURAL.has(it.id) || NO_ART.has(it.id) ? '' : /^[aeiou]/.test(it.en) ? 'an ' : 'a '}${it.en}! Thank you!`);
       toast(`🛍️ اشتريتي ${it.ar}! مشمش لابساه دلوقتي`);
     } else if(on){ delete S.equip[it.slot]; save('equip'); preview = null; }
     else { S.equip[it.slot] = it.id; save('equip'); meow(); }
-    renderShelf(); renderFit();
+    renderStore(); renderFit();
   };
   const earn = $('#earn'); if(earn) earn.onclick = () => home();
-  const cancel = $('#cancel'); if(cancel) cancel.onclick = () => { preview = null; renderShelf(); renderFit(); };
+  const cancel = $('#cancel'); if(cancel) cancel.onclick = () => { preview = null; screenEl.querySelectorAll('.prod.sel').forEach(x => x.classList.remove('sel')); renderFit(); };
 }
 
 /* ============ FINISH ============ */
@@ -3147,7 +3295,7 @@ function finish(game, msg, back, backLabel='الرئيسية'){
   burst($('.done-wrap svg'));
   $('#again').onclick = () => { roundStars = 0; again(); };
   $('#goHome').onclick = () => (back ? back() : home());
-  const tm = $('#toMall'); if(tm) tm.onclick = () => { mallTab = afford.slot; mall(); };
+  const tm = $('#toMall'); if(tm) tm.onclick = () => mall();
 }
 
 /* ---------- boot ---------- */

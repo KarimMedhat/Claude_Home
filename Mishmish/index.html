@@ -247,6 +247,7 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 .door-items{display:flex;gap:8px;flex-wrap:wrap}
 .mini{width:60px;height:60px;border:2px solid var(--ink);border-radius:14px;background:var(--grape-l);display:grid;place-items:center;padding:6px}
 .mini svg{width:100%;height:100%}
+.mini .emo-thumb{font-size:38px}
 .mall{display:grid;gap:18px}
 .mall-sign{border:3px solid var(--ink);border-radius:var(--r);overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
 .sign-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:6px 20px 14px}
@@ -517,7 +518,6 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 .aisle-sign small{margin-inline-start:auto;background:var(--sun);color:var(--ink);border-radius:99px;padding:0 10px;font-weight:800}
 .shelf2{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));grid-auto-rows:176px;column-gap:8px;padding:12px 12px 0;
   background-image:repeating-linear-gradient(to bottom,transparent 0 134px,#D39A5E 134px 152px,#8A5A30 152px 158px,rgba(0,0,0,.08) 158px 162px,transparent 162px 176px);background-position:0 12px}
-.deal-shelf{grid-template-columns:repeat(4,minmax(0,1fr))}
 .prod{position:relative;display:grid;grid-template-rows:112px 22px 24px;justify-items:center;align-items:end;padding:0;border:0;background:none;color:var(--ink);transition:transform .12s}
 .prod:hover{transform:translateY(-4px)}
 .prod:hover .p-ico{filter:drop-shadow(0 6px 4px rgba(43,34,51,.25))}
@@ -538,7 +538,157 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 .ribbon.new{background:var(--grape);color:#FFFFFF}
 .stamp{position:absolute;top:34px;left:50%;transform:translateX(-50%) rotate(-12deg);z-index:1;font-size:13px;font-weight:800;color:var(--good);border:2px solid var(--good);border-radius:8px;padding:0 6px;background:rgba(255,255,255,.85)}
 .stamp.on{color:#FFFFFF;background:var(--good)}
+
+/* farha's room */
+.room-page{display:grid;gap:14px}
+.room-top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.room-top h2{margin:0;font-size:32px;line-height:1.2}
+.room-top h2 .en{font-size:18px;color:var(--ink-soft)}
+.room-top p{margin:2px 0 0}
+.hearts-box{display:grid;justify-items:center;border:3px solid var(--ink);border-radius:16px;background:var(--card);padding:4px 14px;box-shadow:3px 3px 0 var(--ink)}
+.hearts-box small{font-size:13px;font-weight:700;color:var(--ink-soft)}
+.hearts-box span{font-size:22px;letter-spacing:1px;line-height:1.3}
+.room-wrap{border:4px solid var(--ink);border-radius:22px;overflow:hidden;box-shadow:var(--shadow);background:var(--card)}
+.room{position:relative;isolation:isolate;aspect-ratio:16/10;width:100%;max-width:100%;container-type:inline-size;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.room.rmini{pointer-events:none}
+.r-wall{position:absolute;inset:0 0 36% 0}
+.r-floor{position:absolute;inset:64% 0 0 0}
+.r-floor::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(43,34,51,.16),transparent 35%)}
+.r-skirt{position:absolute;left:0;right:0;top:62.6%;height:1.8%;background:#FFFFFF;border-block:2px solid rgba(43,34,51,.3);z-index:1}
+.rwin{position:absolute;left:68%;top:7%;width:20%;height:34%;z-index:2;cursor:pointer}
+.rwin .sky{position:absolute;inset:6%;overflow:hidden;border-radius:3px}
+.sky-day .sky{background:linear-gradient(#8FD0FF,#D2F0FF)}
+.sky-sunset .sky{background:linear-gradient(#FF8F6B,#FFD08A)}
+.sky-night .sky{background:linear-gradient(#1C1A45,#3B3580)}
+.rwin .sun,.rwin .moon{position:absolute;top:8%;right:10%;font-size:4.6cqw;line-height:1}
+.rwin .cloud{position:absolute;bottom:12%;left:8%;font-size:4.2cqw;line-height:1;animation:drift 9s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(4cqw)}}
+.sky i{position:absolute;width:.5cqw;height:.5cqw;background:#FFFFFF;border-radius:50%;animation:tw 1.6s ease-in-out infinite alternate}
+.sky i:nth-of-type(1){left:15%;top:20%}.sky i:nth-of-type(2){left:40%;top:60%;animation-delay:.5s}.sky i:nth-of-type(3){left:25%;top:75%;animation-delay:1s}.sky i:nth-of-type(4){left:55%;top:30%;animation-delay:.3s}
+.rwin .frame{position:absolute;inset:0;border:1cqw solid #FFFFFF;box-shadow:0 0 0 2px #2B2233,inset 0 0 0 2px #2B2233;border-radius:4px;background:linear-gradient(#FFFFFF,#FFFFFF) center/.7cqw 100% no-repeat,linear-gradient(#FFFFFF,#FFFFFF) center/100% .7cqw no-repeat}
+.rwin .cur{position:absolute;top:-5%;bottom:-10%;width:26%;background:repeating-linear-gradient(90deg,#FF9CC6 0 1.2cqw,#FF7FB4 1.2cqw 1.8cqw);border:2px solid #2B2233;border-radius:0 0 8px 8px;transition:width .6s ease}
+.rwin .cur.l{left:-9%}.rwin .cur.r{right:-9%}
+.rwin.closed .cur{width:61%}
+.ritem{position:absolute;transform:translate(-50%,-100%);transform-origin:50% 100%;cursor:pointer;line-height:0}
+.ritem svg{width:100%;height:auto;display:block;overflow:visible}
+.r-emo{display:block;text-align:center;line-height:1;white-space:nowrap;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif}
+.ritem.k-floor,.ritem.k-catbed,.ritem.k-bowl,.ritem.k-cattoy{filter:drop-shadow(0 .5cqw 0 rgba(43,34,51,.16))}
+.ritem.k-wall{filter:drop-shadow(.3cqw .4cqw 0 rgba(43,34,51,.14))}
+.ritem.pv{animation:pvglow .9s ease-in-out infinite alternate}
+@keyframes pvglow{to{filter:drop-shadow(0 0 1.4cqw #FFC93C)}}
+.ritem .rm{display:none}
+.room.editing .ritem{cursor:grab;outline:2px dashed rgba(122,79,214,.75);outline-offset:3px;touch-action:none}
+.room.editing .ritem .rm{display:grid;place-items:center;position:absolute;top:-12px;right:-12px;width:26px;height:26px;padding:0;border-radius:50%;border:2px solid #2B2233;background:#FFFFFF;color:#2B2233;font-size:13px;line-height:1;z-index:2}
+.room.editing .rmish{display:none}
+.room.editing::before{content:"وضع الترتيب";position:absolute;top:2%;left:2%;z-index:300;background:var(--grape);color:#FFFFFF;border-radius:99px;padding:2px 12px;font-family:var(--display);font-weight:700;font-size:14px}
+.ritem.dragging{cursor:grabbing;opacity:.85;filter:drop-shadow(0 1cqw 1cqw rgba(43,34,51,.35))}
+.ritem.bop{animation:bop .5s}
+@keyframes bop{30%{transform:translate(-50%,-100%) scale(1.12,.88)}65%{transform:translate(-50%,-108%) scale(.95,1.08)}}
+.ritem.hop{animation:hop .8s}
+@keyframes hop{30%,65%{transform:translate(-50%,-128%)}}
+.ritem.spin>*{animation:spin 1.2s ease-in-out}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ritem.launch{animation:launch 1.6s ease-in}
+@keyframes launch{55%{transform:translate(-50%,-320%);opacity:1}56%{opacity:0}57%{transform:translate(-50%,-100%);opacity:0}100%{opacity:1}}
+.ritem.dancing{animation:wig .45s ease-in-out 6}
+@keyframes wig{25%{transform:translate(-50%,-100%) rotate(-9deg)}75%{transform:translate(-50%,-100%) rotate(9deg)}}
+.glow{opacity:0;transition:opacity .4s}
+.ritem.on .glow{opacity:.75}
+.swim{animation:swim 4s ease-in-out infinite alternate}
+.swim.s2{animation-duration:5.5s;animation-direction:alternate-reverse}
+@keyframes swim{to{transform:translateX(46px)}}
+.tw{animation:tw 1.3s ease-in-out infinite alternate}
+@keyframes tw{to{opacity:.3}}
+.rmish{position:absolute;width:12cqw;transform:translate(-50%,-100%);cursor:pointer}
+.room.rmini .rmish{width:12cqw}
+.rmish .flip{transition:transform .25s}
+.rmish.left .flip{transform:scaleX(-1)}
+.rmish svg{width:100%;height:auto;display:block;transform-origin:50% 100%}
+.rmish.walking svg{animation:walkbob .3s ease-in-out infinite alternate}
+@keyframes walkbob{to{transform:translateY(-5%) rotate(3deg)}}
+.rmish.sleeping svg{transform:scaleY(.9)}
+.rmish.sleeping::after{content:"💤";position:absolute;top:-6%;right:-6%;font-size:3.4cqw;animation:zz 2s ease-in-out infinite}
+@keyframes zz{50%{transform:translate(.6cqw,-1cqw)}}
+.rmish.eating svg{animation:eat .28s ease-in-out 9 alternate}
+@keyframes eat{to{transform:rotate(7deg) translateY(4%)}}
+.rmish.dancing svg{animation:dance2 .4s ease-in-out 9 alternate}
+@keyframes dance2{from{transform:rotate(-11deg)}to{transform:rotate(11deg) translateY(-7%)}}
+.rmish.jump svg{animation:jumpc .5s ease-out 2}
+@keyframes jumpc{50%{transform:translateY(-32%)}}
+.bubble-r{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:.5cqw;white-space:nowrap;background:#FFFFFF;border:2px solid #2B2233;border-radius:1.6cqw;padding:.3cqw 1.2cqw;font-family:var(--learn);font-weight:700;font-size:2.1cqw;line-height:1.4;color:#2B2233;box-shadow:2px 2px 0 rgba(43,34,51,.2)}
+.flabel{position:absolute;transform:translate(-50%,-100%);z-index:400;pointer-events:none;background:#2B2233;color:#FFFFFF;border-radius:1.4cqw;padding:.4cqw 1.4cqw;display:grid;justify-items:center;line-height:1.25;font-size:2.4cqw;white-space:nowrap;animation:fl 2s ease-out forwards}
+.flabel b{font-family:var(--learn)}
+.flabel small{font-size:1.7cqw;opacity:.85;font-family:var(--display)}
+@keyframes fl{0%{opacity:0}12%{opacity:1}80%{opacity:1;margin-top:-2cqw}100%{opacity:0;margin-top:-4cqw}}
+.fnote{position:absolute;z-index:400;pointer-events:none;font-size:3cqw;line-height:1;transform:translate(-50%,-100%);animation:note 1.7s ease-out forwards}
+.fnote.big{font-size:5cqw}
+@keyframes note{to{transform:translate(calc(-50% + var(--dx)),-260%);opacity:0}}
+.room.disco::after{content:"";position:absolute;inset:0;z-index:350;pointer-events:none;background:conic-gradient(from 0deg at 50% 0%,rgba(255,0,128,.28),rgba(255,230,0,.28),rgba(0,200,255,.28),rgba(140,0,255,.28),rgba(255,0,128,.28));animation:disco .8s linear infinite}
+@keyframes disco{to{filter:hue-rotate(360deg)}}
+.room-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.treats{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.treat-btn{display:inline-flex;align-items:center;gap:4px;border:3px solid var(--ink);border-radius:14px;background:var(--card);padding:2px 10px;font-size:28px;line-height:1.2;box-shadow:2px 2px 0 var(--ink)}
+.treat-btn b{font-size:15px;font-variant-numeric:tabular-nums}
+.treat-btn:hover{background:var(--sun-l)}
+.btn.sm{padding:6px 14px;font-size:16px}
+.find-info[hidden]{display:none}
+.find-info{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 14px;border:3px solid var(--ink);border-radius:16px;background:var(--teal-l)}
+.find-info .en{font-weight:700;font-size:20px}
+.mission{display:grid;gap:10px;padding:14px 18px;background:var(--sun-l)}
+.mi-row{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline}
+.mi-row b{font-size:20px}
+.mbar{height:18px;border:2px solid var(--ink);border-radius:99px;background:var(--card);overflow:hidden}
+.mbar i{display:block;height:100%;background:linear-gradient(90deg,var(--tangerine),var(--pink));transition:width .5s}
+.gift-pulse{animation:pulse 1s infinite}
+.storage{display:grid;gap:10px;padding:14px 18px}
+.storage h4{margin:4px 0 0}
+.inv{display:flex;flex-wrap:wrap;gap:8px}
+.inv-it{display:grid;justify-items:center;width:92px;padding:6px;border:2px solid var(--ink);border-radius:12px;background:var(--card)}
+.inv-it .p-ico{height:64px;width:100%}
+.inv-it .p-ico svg{width:56px;height:56px}
+.inv-it .emo-thumb{font-size:44px}
+.inv-it small{font-size:12px;font-weight:700}
+.sw-btn{width:56px;height:56px;border-radius:12px;border:3px solid var(--ink)}
+.sw-btn.on{box-shadow:0 0 0 3px var(--card),0 0 0 6px var(--grape)}
+.room-card{position:fixed;inset:0;z-index:60;background:rgba(43,34,51,.45);display:grid;place-items:center;padding:16px}
+.rc-in{display:grid;justify-items:center;gap:8px;padding:22px 28px;max-width:min(460px,100%);text-align:center}
+.rc-in .bigword{margin:0}
+.gift-ico{font-size:64px;line-height:1;animation:bop .6s 2}
+.p-ico.big{height:120px}
+.p-ico.big svg{width:110px;height:110px}
+.p-ico.big .emo-thumb{font-size:90px}
+.swatch{display:block;width:76px;height:84px;border-radius:10px;border:3px solid var(--ink)}
+.room-door{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:18px;align-items:center;width:100%;margin-top:28px;padding:14px;border:3px solid var(--ink);border-radius:var(--r);background:var(--pink-l);box-shadow:var(--shadow);text-align:start;transition:transform .12s,box-shadow .12s}
+.room-door:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.rd-scene{display:block;border:3px solid var(--ink);border-radius:14px;overflow:hidden}
+.rd-text{font-size:30px;font-weight:800;line-height:1.3;min-width:0}
+.rd-text .en{font-size:18px;color:var(--ink-soft)}
+.rd-text small{font-size:16px;font-weight:500;color:var(--ink-soft)}
+.rd-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.rd-pills .pill{font-size:15px}
+/* mall levels */
+.levels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.level-btn{display:grid;justify-items:center;gap:0;padding:10px 6px;border:3px solid var(--ink);border-radius:16px;background:var(--card);box-shadow:3px 3px 0 var(--ink);text-align:center}
+.level-btn .lv-ico{font-size:30px;line-height:1.2}
+.level-btn b{font-size:17px;line-height:1.3}
+.level-btn small{font-size:13px;color:var(--ink-soft)}
+.level-btn.on{background:var(--tangerine);transform:translateY(2px);box-shadow:1px 1px 0 var(--ink)}
+.level-btn.on small{color:var(--ink)}
+.level-btn.go-room{background:var(--pink-l)}
+.fitting.roomy .fit-cat{padding:0;border-style:solid;overflow:hidden;background:var(--card)}
+.fit-cat{position:relative}
+.fit-treat{position:absolute;bottom:6%;right:6%;font-size:56px;line-height:1;animation:bop .6s}
+.cnt{position:absolute;top:6px;inset-inline-end:4px;z-index:1;background:var(--teal);color:#FFFFFF;border:2px solid var(--ink);border-radius:99px;padding:0 7px;font-size:13px;font-weight:800}
+.p-ico.k-rug svg{width:96px;height:auto}
+.p-ico.k-wall svg,.p-ico.k-floor svg,.p-ico.k-catbed svg{max-height:96px}
+.deal-shelf{grid-template-columns:repeat(auto-fill,minmax(108px,1fr))}
 @media (max-width:760px){
+  .levels{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .room-door{grid-template-columns:1fr}
+  .rd-text{font-size:24px}
+  .room-top h2{font-size:26px}
+  .fitting.roomy{grid-template-columns:150px minmax(0,1fr)}
+  .fitting.roomy .fit-cat{max-width:150px}
   .fitting{position:sticky;top:calc(env(safe-area-inset-top,0px) + 62px);z-index:4;grid-template-columns:110px minmax(0,1fr);align-items:center;padding:8px}
   .fitting .fit-label{grid-column:1/-1}
   .fit-cat{max-width:110px}
@@ -624,6 +774,10 @@ const S = {
   gallery: store.get('gallery', []),
   tricky: store.get('tricky', {}),
   mish: store.get('mish', DEFAULT_MISH),
+  room: store.get('room', null),
+  treats: store.get('treats', null),
+  pet: store.get('pet', null),
+  day: store.get('day', null),
   name: store.get('name', ''),
   sound: store.get('sound', true),
   readWords: store.get('readWords', []),
@@ -809,6 +963,7 @@ function toast(msg){
 /* ---------- stars (wallet) ---------- */
 let roundStars = 0;
 function addStars(n){
+  if(n > 0){ dayState().earned += n; save('day'); }
   S.stars += n; roundStars += n; save('stars');
   renderStars(true);
 }
@@ -968,6 +1123,129 @@ const DEPTS = [
   {id:'fur', ar:'صالون الفرو', en:'Fur Salon', ico:'✨', wall:'#F3E6FF'},
   {id:'places', ar:'أماكن وخلفيات', en:'Places', ico:'🏞️', wall:'#DDF0FF'}
 ];
+/* ============ FARHA'S ROOM: items ============ */
+const KID_AR = 'فرحة';
+const R = (id, dept, kind, en, ar, price, o) => Object.assign({id, dept, slot:'room', kind, en, ar, price}, o || {});
+const books = () => { let o = '', cols = ['#E8433A','#3A7BE8','#FFD23F','#3DBB5C','#9B5DE5','#FF8A3D','#F2558F']; [[14,44],[50,80],[86,115]].forEach(([t, b], r) => { let x = 12; for(let k = 0; k < 6; k++){ const w = 7 + (k * 3 + r) % 4, h = (b - t) - 4 - ((k + r) % 3) * 4; o += `<rect x="${x}" y="${b - h}" width="${w}" height="${h}" fill="${cols[(k + r * 2) % 7]}" stroke-width="2"/>`; x += w + 1; } }); return o; };
+const bulbs = () => { let o = '<path d="M2 8 Q55 34 110 10 Q165 34 218 8" fill="none" stroke-width="2.5"/>', cols = ['#FF6FA5','#FFD23F','#3DBB5C','#3A7BE8','#FF8A3D','#9B5DE5']; for(let k = 0; k < 9; k++){ const x = 14 + k * 24, y = 16 + Math.sin(k * 1.4) * 6; o += `<ellipse class="tw" style="animation-delay:${(k % 4) * .35}s" cx="${x}" cy="${y + 10}" rx="6" ry="8" fill="${cols[k % 6]}" stroke-width="2"/>`; } return o; };
+const flags = () => { let o = '<path d="M2 6 Q110 26 218 6" fill="none" stroke-width="2.5"/>', cols = ['#E8433A','#FFD23F','#3A7BE8','#3DBB5C','#F2558F','#FF8A3D']; for(let k = 0; k < 8; k++){ const x = 10 + k * 26, y = 8 + Math.sin((k + .5) / 8 * Math.PI) * 14; o += `<polygon points="${x},${y} ${x + 22},${y + 1} ${x + 11},${y + 26}" fill="${cols[k % 6]}" stroke-width="2"/>`; } return o; };
+const nestCat = (fills, x, y, w, look) => catSVG(fills, look || {}).replace('<svg class="cat ', `<svg x="${x}" y="${y}" width="${w}" height="${(w * 1.1).toFixed(1)}" class="cat `);
+const SV = (vb, fn) => ({vb, svg: typeof fn === 'function' ? fn : () => fn});
+const rug = (c1, c2) => SV('0 0 200 44', `<ellipse cx="100" cy="22" rx="96" ry="19" fill="${c1}"/><ellipse cx="100" cy="22" rx="70" ry="12" fill="none" stroke="${c2}" stroke-width="3" stroke-dasharray="8 6"/>`);
+
+const ROOM_ITEMS = [
+ // furniture
+ R('r_bed','furniture','floor','bed','سرير',40,{e:'🛏️', size:24}),
+ R('r_sofa','furniture','floor','sofa','كنبة',45,{e:'🛋️', size:22}),
+ R('r_chair','furniture','floor','chair','كرسي',12,{e:'🪑', size:9}),
+ R('r_desk','furniture','floor','desk','مكتب',35,{size:20, ...SV('0 0 120 92', '<rect x="18" y="2" width="20" height="18" rx="2" fill="#7A4FD6"/><rect x="40" y="6" width="14" height="14" rx="2" fill="#FF8A3D"/><rect x="4" y="20" width="112" height="12" rx="3" fill="#C98B52"/><rect x="10" y="32" width="9" height="58" fill="#A86E3C"/><rect x="101" y="32" width="9" height="58" fill="#A86E3C"/><rect x="58" y="32" width="43" height="28" fill="#D9A15B"/><circle cx="79.5" cy="46" r="3" fill="#2B2233"/>')}),
+ R('r_shelf','furniture','floor','bookshelf','مكتبة كتب',40,{size:12, act:'read', ...SV('0 0 80 124', () => `<rect x="3" y="3" width="74" height="118" rx="4" fill="#C98B52"/><rect x="9" y="9" width="62" height="106" fill="#8A5A30"/><rect x="9" y="44" width="62" height="5" fill="#C98B52"/><rect x="9" y="80" width="62" height="5" fill="#C98B52"/>${books()}`)}),
+ R('r_wardrobe','furniture','floor','wardrobe','دولاب',45,{size:13, ...SV('0 0 84 134', '<rect x="4" y="4" width="76" height="120" rx="5" fill="#E9B872"/><rect x="8" y="8" width="32" height="112" rx="3" fill="#F3D9A8"/><rect x="44" y="8" width="32" height="112" rx="3" fill="#F3D9A8"/><circle cx="36" cy="64" r="3" fill="#2B2233"/><circle cx="48" cy="64" r="3" fill="#2B2233"/><rect x="10" y="124" width="8" height="8" fill="#A86E3C"/><rect x="66" y="124" width="8" height="8" fill="#A86E3C"/>')}),
+ R('r_toybox','furniture','floor','toy box','صندوق لعب',20,{size:11, ...SV('0 0 90 66', '<rect x="4" y="18" width="82" height="44" rx="5" fill="#3A7BE8"/><rect x="2" y="8" width="86" height="14" rx="4" fill="#5B93F0"/><polygon points="45,28 49,38 60,38 51,44 54,55 45,48 36,55 39,44 30,38 41,38" fill="#FFD23F" stroke-width="2"/>')}),
+ R('r_beanbag','furniture','floor','bean bag','بين باج',20,{size:12, ...SV('0 0 100 76', '<path d="M8 70 Q0 30 30 20 Q50 0 72 18 Q100 30 92 70 Z" fill="#F2558F"/><path d="M30 42 Q50 32 70 42" fill="none" stroke-width="2.5"/>')}),
+ R('r_tent','furniture','floor','play tent','خيمة لعب',50,{e:'⛺', size:19, isNew:true}),
+ R('r_piano','furniture','floor','piano','بيانو',60,{e:'🎹', size:15, act:'piano'}),
+ R('r_tv','furniture','floor','TV','تلفزيون',55,{e:'📺', size:12, act:'tv'}),
+ R('r_computer','furniture','floor','computer','كمبيوتر',45,{e:'🖥️', size:10, act:'wotd'}),
+ // floor decor
+ R('r_lamp','floordecor','floor','lamp','أباجورة',18,{size:7, act:'light', ...SV('0 0 60 140', '<circle class="glow" cx="30" cy="30" r="30" fill="#FFE066" stroke="none"/><polygon points="14,10 46,10 54,44 6,44" fill="#FF8FC2"/><rect x="27" y="44" width="6" height="84" fill="#8A5A30"/><ellipse cx="30" cy="132" rx="20" ry="6" fill="#8A5A30"/>')}),
+ R('r_rugpink','floordecor','rug','pink rug','سجادة بمبي',15,{size:32, ...rug('#FF8FC2','#FFFFFF')}),
+ R('r_rugblue','floordecor','rug','blue rug','سجادة زرقا',15,{size:32, ...rug('#7FB2F0','#FFFFFF')}),
+ R('r_rugrainbow','floordecor','rug','rainbow rug','سجادة قوس قزح',30,{size:34, isNew:true, ...SV('0 0 200 44', ['#E8433A','#FF8A3D','#FFD23F','#3DBB5C','#3A7BE8'].map((c, k) => `<ellipse cx="100" cy="22" rx="${96 - k * 17}" ry="${19 - k * 3.4}" fill="${c}"/>`).join(''))}),
+ R('r_plant','floordecor','floor','plant','زرعة',10,{e:'🪴', size:8, act:'plant'}),
+ R('r_cactus','floordecor','floor','cactus','صبار',8,{e:'🌵', size:7}),
+ R('r_sunflower','floordecor','floor','sunflower','عباد الشمس',8,{e:'🌻', size:7}),
+ R('r_aquarium','floordecor','floor','fish tank','حوض سمك',50,{size:16, act:'fish', isNew:true, ...SV('0 0 120 100', () => `<rect x="4" y="6" width="112" height="70" rx="6" fill="#BFE6FF"/><rect x="7" y="60" width="106" height="13" fill="#F6D98B" stroke="none"/><path d="M20 62 Q24 44 18 32 M28 62 Q32 48 30 38 M98 62 Q94 46 102 34" stroke="#3DBB5C" stroke-width="4" fill="none"/><text class="swim" x="30" y="40" font-size="22" stroke="none" ${EMO_FONT}>🐠</text><text class="swim s2" x="64" y="56" font-size="16" stroke="none" ${EMO_FONT}>🐟</text><rect x="14" y="76" width="92" height="20" fill="#8A5A30"/>`)}),
+ R('r_globe','floordecor','floor','globe','مجسم الكرة الأرضية',20,{e:'🌍', size:7, act:'globe'}),
+ R('r_telescope','floordecor','floor','telescope','تلسكوب',30,{e:'🔭', size:9, act:'stars'}),
+ R('r_trophy','floordecor','floor','trophy','كاس',40,{e:'🏆', size:7}),
+ R('r_easel','floordecor','floor','my painting','لوحتي',25,{size:12, act:'art', ...SV('0 0 90 120', () => `<path d="M20 116 L40 10 M70 116 L50 10 M45 10 V116" stroke="#8A5A30" stroke-width="5"/><rect x="8" y="14" width="74" height="70" rx="3" fill="#FFFFFF"/>${nestCat(S.gallery[0] || S.mish, 22, 18, 46)}<rect x="6" y="84" width="78" height="6" fill="#8A5A30"/>`)}),
+ // wall decor
+ R('r_frame','walldecor','wall','picture frame','برواز',9,{e:'🖼️', size:9}),
+ R('r_clock','walldecor','wall','clock','ساعة حيطة',15,{e:'🕰️', size:8, act:'clock'}),
+ R('r_mirror','walldecor','wall','mirror','مراية',15,{e:'🪞', size:8, act:'mirror'}),
+ R('r_calendar','walldecor','wall','calendar','نتيجة',8,{e:'📅', size:7, act:'date'}),
+ R('r_lights','walldecor','wall','fairy lights','إضاءة ملونة',25,{size:26, isNew:true, ...SV('0 0 220 44', bulbs)}),
+ R('r_bunting','walldecor','wall','flags','زينة أعلام',15,{size:28, ...SV('0 0 220 50', flags)}),
+ R('r_rainbow','walldecor','wall','rainbow','قوس قزح',12,{e:'🌈', size:12}),
+ R('r_moonlamp','walldecor','wall','moon light','نور قمر',10,{e:'🌙', size:7}),
+ R('r_wallstar','walldecor','wall','star','نجمة',5,{e:'⭐', size:5}),
+ R('r_balloons','walldecor','wall','balloons','بالونات',8,{e:'🎈', size:8}),
+ R('r_disco','walldecor','wall','disco ball','كورة ديسكو',30,{e:'🪩', size:7, act:'disco', isNew:true}),
+ R('r_lantern','walldecor','wall','lantern','فانوس',12,{e:'🏮', size:6}),
+ R('r_chime','walldecor','wall','wind chime','جرس رياح',10,{e:'🎐', size:6, act:'chime'}),
+ R('r_poster','walldecor','wall','Mishmish poster','بوستر مشمش',20,{size:10, ...SV('0 0 80 100', () => `<rect x="3" y="3" width="74" height="94" rx="4" fill="#FFF3B0"/>${nestCat(S.mish, 14, 12, 52)}<text x="40" y="92" font-size="11" text-anchor="middle" fill="#2B2233" stroke="none" font-family="Andika,Arial" font-weight="700">MISHMISH</text>`)}),
+ // fun stuff
+ R('r_radio','fun','floor','radio','راديو',25,{e:'📻', size:8, act:'music'}),
+ R('r_drum','fun','floor','drum','طبلة',20,{e:'🥁', size:8, act:'drum'}),
+ R('r_guitar','fun','floor','guitar','جيتار',30,{e:'🎸', size:8, act:'guitar'}),
+ R('r_teddy','fun','floor','teddy bear','دبدوب',15,{e:'🧸', size:8, act:'hop'}),
+ R('r_robot','fun','floor','robot','روبوت',35,{e:'🤖', size:8, act:'dance'}),
+ R('r_dollhouse','fun','floor','doll house','بيت عرايس',30,{e:'🏠', size:12}),
+ R('r_carousel','fun','floor','carousel','مراجيح',40,{e:'🎠', size:11, act:'spin', isNew:true}),
+ R('r_ball','fun','floor','ball','كورة',6,{e:'⚽', size:5, act:'hop'}),
+ R('r_books','fun','floor','books','كتب',8,{e:'📚', size:7, act:'read'}),
+ R('r_rocket','fun','floor','toy rocket','صاروخ لعبة',45,{e:'🚀', size:8, act:'launch'}),
+ R('r_puzzle','fun','floor','puzzle','بازل',10,{e:'🧩', size:6, act:'hop'}),
+ // Mishmish's corner
+ R('c_box','catcorner','catbed','cardboard box','كرتونة',0,{size:15, perch:34, ...SV('0 0 110 74', '<path d="M6 26 L0 8 L52 14 L55 26 Z" fill="#E9B872"/><path d="M104 26 L110 8 L58 14 L55 26 Z" fill="#E9B872"/><rect x="6" y="26" width="98" height="46" rx="3" fill="#D9A15B"/><path d="M40 46 Q55 54 70 46" fill="none" stroke-width="2.5"/>')}),
+ R('c_basket','catcorner','catbed','basket','سلة نوم',15,{e:'🧺', size:14, perchF:.45}),
+ R('c_cushion','catcorner','catbed','cushion','مخدة',20,{size:15, perch:24, front:true, ...SV('0 0 110 44', '<ellipse cx="55" cy="26" rx="52" ry="16" fill="#FF8FC2"/><ellipse cx="55" cy="22" rx="38" ry="9" fill="#FFC9E0"/>')}),
+ R('c_house','catcorner','catbed','cat house','بيت قطط',35,{size:15, perch:100, front:true, ...SV('0 0 110 110', '<polygon points="10,48 55,6 100,48" fill="#E8433A"/><rect x="16" y="46" width="78" height="60" fill="#FFD23F"/><path d="M38 106 V78 A17 17 0 0 1 72 78 V106 Z" fill="#2B2233"/>')}),
+ R('c_tree','catcorner','catbed','cat tree','شجرة قطط',50,{size:14, perch:20, front:true, isNew:true, ...SV('0 0 100 180', '<rect x="44" y="28" width="12" height="140" fill="#C98B52"/><rect x="10" y="20" width="80" height="12" rx="6" fill="#B27C50"/><rect x="18" y="90" width="64" height="10" rx="5" fill="#B27C50"/><rect x="8" y="166" width="84" height="12" rx="6" fill="#8A5A30"/><circle cx="78" cy="44" r="7" fill="#FF8FC2"/><path d="M78 36 V32" stroke-width="2"/>')}),
+ R('c_castle','catcorner','catbed','cat castle','قصر مشمش',80,{e:'🏰', size:17, perchF:.15, front:true, isNew:true}),
+ R('c_bowl','catcorner','bowl','food bowl','طبق أكل',0,{size:7, act:'bowl', ...SV('0 0 70 34', () => `<ellipse cx="35" cy="10" rx="30" ry="6" fill="${S.pet && Date.now() - S.pet.fedAt < 3 * 3600e3 ? '#8B5A3C' : '#C7DDFB'}"/><path d="M4 10 H66 L58 32 H12 Z" fill="#3A7BE8"/>`)}),
+ R('c_yarn','catcorner','cattoy','yarn ball','كورة صوف',5,{size:4, ...SV('0 0 40 40', '<circle cx="20" cy="20" r="17" fill="#9B5DE5"/><path d="M6 14 Q20 8 34 16 M5 24 Q20 18 35 26 M10 32 Q22 26 30 34" fill="none" stroke-width="2"/>')}),
+ R('c_mouse','catcorner','cattoy','toy mouse','فار لعبة',8,{e:'🐭', size:5}),
+ R('c_feather','catcorner','cattoy','feather','ريشة',10,{e:'🪶', size:5}),
+ R('c_butterfly','catcorner','cattoy','butterfly toy','فراشة لعبة',12,{e:'🦋', size:5}),
+ R('c_fountain','catcorner','floor','water fountain','نافورة مية',25,{e:'⛲', size:9, act:'fountain'}),
+ // treats (you can buy many)
+ R('t_food','treats','treat','cat food','أكل قطط',4,{e:'🥫', joy:2}),
+ R('t_milk','treats','treat','milk','لبن',3,{e:'🥛', joy:1}),
+ R('t_fish','treats','treat','fish','سمكة',6,{e:'🐟', joy:3}),
+ R('t_chicken','treats','treat','chicken','فراخ',7,{e:'🍗', joy:3}),
+ R('t_cheese','treats','treat','cheese','جبنة',5,{e:'🧀', joy:2}),
+ R('t_icecream','treats','treat','ice cream','آيس كريم',6,{e:'🍦', joy:2}),
+ R('t_cake','treats','treat','cake','كيكة',10,{e:'🍰', joy:4, isNew:true}),
+ R('t_shrimp','treats','treat','shrimp','جمبري',8,{e:'🍤', joy:3})
+];
+const WALLS = [
+ ['w_default','lilac wall','حيطة بنفسجي',0,'radial-gradient(#D9CFF4 1.5px,transparent 1.8px) 0 0/22px 22px,#ECE5FF'],
+ ['w_peach','peach wall','حيطة خوخي',10,'#FFE3CF'],
+ ['w_mint','mint wall','حيطة نعناعي',10,'#D3F5E4'],
+ ['w_stripes','pink stripes','خطوط بمبي',20,'repeating-linear-gradient(90deg,#FFD6E7 0 26px,#FFEFF6 26px 52px)'],
+ ['w_dots','polka dots','نُقط',20,'radial-gradient(#FFB3D1 22%,transparent 24%) 0 0/34px 34px,#FFF3F8'],
+ ['w_bricks','bricks','طوب',20,'linear-gradient(#E3A27E 2px,transparent 2px) 0 0/60px 26px,linear-gradient(90deg,#E3A27E 2px,transparent 2px) 0 0/60px 52px,linear-gradient(90deg,#E3A27E 2px,transparent 2px) 30px 26px/60px 52px,#F6C9A9'],
+ ['w_clouds','sky and clouds','سما وسحاب',30,'radial-gradient(ellipse 60px 22px at 30% 30%,#FFFFFF 98%,transparent),radial-gradient(ellipse 80px 26px at 75% 60%,#FFFFFF 98%,transparent),radial-gradient(ellipse 50px 18px at 15% 75%,#FFFFFF 98%,transparent),linear-gradient(#9FD8FF,#D6F0FF)'],
+ ['w_stars','starry night','ليل ونجوم',30,'radial-gradient(#FFFFFF 1.5px,transparent 2px) 0 0/40px 40px,radial-gradient(#FFE066 2px,transparent 2.5px) 20px 20px/56px 56px,#2E2A5E'],
+ ['w_rainbow','rainbow wall','حيطة قوس قزح',35,'linear-gradient(#FFC7C7,#FFE1BF,#FFF4BF,#D6F5D6,#D2E6FF,#E8D9FF)'],
+ ['w_hearts','hearts','قلوب',25,`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M22 32 C6 22 12 10 22 17 C32 10 38 22 22 32Z' fill='%23FF9CC6'/%3E%3C/svg%3E") 0 0/44px 44px,#FFF0F6`],
+ ['w_flowers','flowers','ورد',25,`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Cg fill='%23FFB3D1'%3E%3Ccircle cx='25' cy='17' r='6'/%3E%3Ccircle cx='33' cy='25' r='6'/%3E%3Ccircle cx='25' cy='33' r='6'/%3E%3Ccircle cx='17' cy='25' r='6'/%3E%3C/g%3E%3Ccircle cx='25' cy='25' r='4' fill='%23FFD23F'/%3E%3C/svg%3E") 0 0/50px 50px,#F2FFF2`]
+].map(([id, en, ar, price, bg]) => R(id, 'walls', 'wallpaper', en, ar, price, {bg}));
+const FLOORS = [
+ ['f_default','wood floor','أرضية خشب',0,'repeating-linear-gradient(90deg,#D9A15B 0 70px,#C48A4C 70px 73px)'],
+ ['f_pinkwood','pink wood','خشب بمبي',15,'repeating-linear-gradient(90deg,#F5B6CF 0 70px,#E79BB9 70px 73px)'],
+ ['f_carpet','blue carpet','موكيت أزرق',15,'radial-gradient(#9CC2F2 1.5px,transparent 2px) 0 0/14px 14px,#7FAAE8'],
+ ['f_tiles','checker tiles','بلاط شطرنج',20,'repeating-conic-gradient(#FFFFFF 0 25%,#C9C2DE 0 50%) 0 0/48px 48px'],
+ ['f_marble','marble','رخام',25,'linear-gradient(115deg,transparent 40%,rgba(160,150,190,.25) 41%,transparent 43%),linear-gradient(60deg,transparent 60%,rgba(160,150,190,.2) 61%,transparent 63%),#F4F1FA'],
+ ['f_grass','grass','نجيلة',30,'repeating-linear-gradient(100deg,#7CCB6E 0 6px,#6BBD5E 6px 12px)'],
+ ['f_rainbow','rainbow floor','أرضية قوس قزح',35,'repeating-linear-gradient(90deg,#FFB3B3 0 40px,#FFD9A8 40px 80px,#FFF0A8 80px 120px,#B8EBB8 120px 160px,#B3D4FF 160px 200px,#D9C2FF 200px 240px)']
+].map(([id, en, ar, price, bg]) => R(id, 'walls', 'flooring', en, ar, price, {bg}));
+ITEMS.push(...ROOM_ITEMS, ...WALLS, ...FLOORS);
+DEPTS.forEach(d => d.floor = 'cat');
+DEPTS.push(
+  {id:'furniture', ar:'أثاث', en:'Furniture', ico:'🛋️', wall:'#FFE9D6', floor:'room'},
+  {id:'walldecor', ar:'ديكور الحيطة', en:'Wall Decor', ico:'🖼️', wall:'#E9E1FF', floor:'room'},
+  {id:'floordecor', ar:'زرع وسجاجيد ولمبات', en:'Plants & Rugs', ico:'🪴', wall:'#DDF5E4', floor:'room'},
+  {id:'fun', ar:'ألعاب ومزيكا', en:'Toys & Music', ico:'🎸', wall:'#FFE3F0', floor:'room'},
+  {id:'walls', ar:'ورق حيطة وأرضيات', en:'Walls & Floors', ico:'🎨', wall:'#FFF3CC', floor:'room'},
+  {id:'catcorner', ar:'ركن مشمش', en:"Mishmish's Corner", ico:'🧺', wall:'#E3F2FF', floor:'food'},
+  {id:'treats', ar:'أكل مشمش', en:"Mishmish's Food", ico:'🍗', wall:'#FFF0D6', floor:'food'}
+);
+const isRoomThing = it => it.slot === 'room';
+const isPlaceable = it => isRoomThing(it) && !['treat','wallpaper','flooring'].includes(it.kind);
+
 const ITEM_BY_ID = Object.fromEntries(ITEMS.map(i => [i.id, i]));
 
 /* migrate older saves (free unlocks by star count) into owned items */
@@ -1019,6 +1297,7 @@ function catSVG(fills={}, look={}, cls=''){
 }
 function itemThumb(item){
   if(item.e) return `<span class="emo-thumb" aria-hidden="true">${item.e}</span>`;
+  if(item.slot === 'room'){ if(item.bg) return `<span class="swatch" style="background:${esc(item.bg)}"></span>`; return `<svg viewBox="${item.vb}" aria-hidden="true"><g stroke="#2B2233" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">${item.svg()}</g></svg>`; }
   if(item.slot === 'fur') return catSVG(DEFAULT_MISH, {fur:item.id});
   if(item.slot === 'pattern') return catSVG(DEFAULT_MISH, {pattern:item.id});
   if(item.slot === 'bg') return `<svg viewBox="0 0 300 330" aria-hidden="true">${item.draw()}</svg>`;
@@ -2019,6 +2298,13 @@ function home(keep){
     </div>
   </section>
 
+  <button class="room-door" id="roomDoor">
+    <span class="rd-scene">${roomScene({mini:true})}</span>
+    <span class="rd-text"><b>أوضة ${KID_AR}</b> <span class="en">Farha's Room</span><br>
+      <small>العبي مع مشمش، أكّليها، ورتّبي أوضتك بالحاجات اللي بتشتريها من المول.</small>
+      <span class="rd-pills"><span class="pill">${(petTick(), heartsStr())}</span><span class="pill">🎯 ${Math.min(dayState().earned, GOAL)}/${GOAL} ⭐ ${dayState().gift ? '🎁 ✔' : dayState().earned >= GOAL ? '🎁 جاهزة!' : 'للهدية'}</span></span></span>
+  </button>
+
   <button class="book-door" id="bookDoor">
     <span class="bd-ico" aria-hidden="true">📘</span>
     <span class="bd-text"><b>منهج المدرسة</b> <span class="en">My School Book</span><br>
@@ -2037,8 +2323,8 @@ function home(keep){
   <button class="mall-door" id="mallDoor">
     ${AWNING}
     <span class="door-in">
-      <span class="door-text"><b>مول مشمش</b> <span class="en">Mishmish Mall</span><br><small>${ITEMS.length} حاجة على الرفوف: قبعات وتوك ولعب وحلويات وحيوانات وألوان فرو. وعروض نص التمن كل يوم!</small></span>
-      <span class="door-items" aria-hidden="true">${['tophat','teddy','unicorn','palette','crown'].map(id => `<span class="mini">${itemThumb(ITEM_BY_ID[id])}</span>`).join('')}</span>
+      <span class="door-text"><b>مول مشمش</b> <span class="en">Mishmish Mall</span><br><small>${ITEMS.filter(i => i.price > 0).length} حاجة في ٣ أدوار: لبس مشمش، وأثاث وديكور لأوضتك، وأكل مشمش. وعروض نص التمن كل يوم!</small></span>
+      <span class="door-items" aria-hidden="true">${['tophat','r_bed','unicorn','r_disco','t_cake'].map(id => `<span class="mini">${itemThumb(ITEM_BY_ID[id])}</span>`).join('')}</span>
       <span class="pill stars">⭐ ${S.stars}</span>
     </span>
   </button>
@@ -2101,6 +2387,7 @@ function home(keep){
   screenEl.querySelectorAll('[data-game]').forEach(b => b.onclick = () => { actx(); roundStars = 0; GAMES[b.dataset.game](); });
   $('#mallDoor').onclick = () => { actx(); mall(); };
   $('#bookDoor').onclick = () => { actx(); bookHome(); };
+  $('#roomDoor').onclick = () => { actx(); roomScreen(); };
   $('#examDoor').onclick = () => { actx(); examHall(); };
   screenEl.querySelectorAll('[data-gset]').forEach(b => b.onclick = () => { S.mish = {...S.gallery[+b.dataset.gset]}; save('mish'); meow(); toast('مشمش بقت بالألوان بتاعتك!'); home(true); });
   screenEl.querySelectorAll('[data-gdel]').forEach(b => b.onclick = () => { S.gallery.splice(+b.dataset.gdel, 1); save('gallery'); home(true); });
@@ -2108,7 +2395,7 @@ function home(keep){
   $('#resetBtn').onclick = () => {
     $('#resetRow').innerHTML = '<span>متأكدين؟ النجوم والرسومات هتتمسح.</span><button class="btn" id="yesReset" style="background:var(--bad-l)">أيوه امسح</button><button class="btn" id="noReset">لأ</button>';
     $('#noReset').onclick = () => home(true);
-    $('#yesReset').onclick = () => { Object.assign(S, {stars:0, owned:[], equip:{}, wl:{}, gDone:{}, vDone:{}, writings:[], wDone:{}, exams:{}, pDone:{}, gallery:[], tricky:{}, mish:{...DEFAULT_MISH}, readWords:[], famDone:{}, storyDone:{}}); ['stars','owned','equip','wl','gDone','vDone','writings','wDone','exams','pDone','gallery','tricky','mish','readWords','famDone','storyDone'].forEach(save); renderStars(); home(true); };
+    $('#yesReset').onclick = () => { Object.assign(S, {stars:0, owned:[], equip:{}, wl:{}, gDone:{}, vDone:{}, writings:[], wDone:{}, exams:{}, pDone:{}, gallery:[], tricky:{}, mish:{...DEFAULT_MISH}, readWords:[], famDone:{}, storyDone:{}}); ['stars','owned','equip','wl','gDone','vDone','writings','wDone','exams','pDone','gallery','tricky','mish','readWords','famDone','storyDone'].forEach(save); S.room = null; S.treats = null; S.pet = null; S.day = null; initRoom(); ['room','treats','pet','day'].forEach(save); renderStars(); home(true); };
   };
 }
 
@@ -3166,8 +3453,8 @@ const AWNING = `<svg class="awning" viewBox="0 0 400 38" preserveAspectRatio="no
   const c = k % 2 ? '#FFFFFF' : '#FF8A3D';
   return `<rect x="${k*40}" width="40" height="24" fill="${c}"/><path d="M${k*40} 24 Q${k*40+20} 42 ${k*40+40} 24" fill="${c}" stroke="#2B2233" stroke-width="2.5" vector-effect="non-scaling-stroke"/>`;
 }).join('')}<path d="M0 1.5 H400" stroke="#2B2233" stroke-width="3" vector-effect="non-scaling-stroke"/></svg>`;
-const PLURAL = new Set(['glasses','sunglasses','hearts','stripes','spots','heartsfur','coolshades','goggles','beads','booksE','bouquet','scissorsE','bgbubbles','bgbutterfly','bghearts','bgballoons']);
-const NO_ART = new Set(['space','candy','milkE','bgsnow','bgautumn','bgsea','bgcandy','bgmusic','bgpaint','furgray','furwhite','furblack','furpink','furlav','furgold','fursky','furmint','furbrown','furcream','bgflowers','bgstars']);
+const PLURAL = new Set(['r_books','r_lights','r_bunting','r_balloons','w_hearts','w_flowers','w_dots','w_bricks','w_stripes','f_tiles','w_clouds','glasses','sunglasses','hearts','stripes','spots','heartsfur','coolshades','goggles','beads','booksE','bouquet','scissorsE','bgbubbles','bgbutterfly','bghearts','bgballoons']);
+const NO_ART = new Set(['t_food','t_milk','t_cheese','t_icecream','t_cake','t_chicken','f_marble','f_grass','w_stars','space','candy','milkE','bgsnow','bgautumn','bgsea','bgcandy','bgmusic','bgpaint','furgray','furwhite','furblack','furpink','furlav','furgold','fursky','furmint','furbrown','furcream','bgflowers','bgstars']);
 function itemLine(it, withPrice){
   const pl = PLURAL.has(it.id);
   const name = pl || NO_ART.has(it.id) ? it.en : (/^[aeiou]/.test(it.en) ? 'an ' : 'a ') + it.en;
@@ -3175,101 +3462,549 @@ function itemLine(it, withPrice){
   return withPrice ? `${head} ${pl ? 'They cost' : 'It costs'} ${priceOf(it)} stars.` : head;
 }
 const sfxCash = () => { tone(1046,0,.08,'square',.05); tone(1318,.08,.12,'triangle'); tone(1568,.18,.25,'triangle'); };
-let preview = null;
+/* ============ FARHA'S ROOM: screen ============ */
+const GOAL = 20, RH = 62.5;
+const todayKey = () => new Date().toDateString();
+function dayState(){ if(!S.day || S.day.date !== todayKey()){ S.day = {date: todayKey(), earned: 0, gift: false, find: 0}; save('day'); } return S.day; }
+function initRoom(){
+  if(!S.room){
+    S.room = {items:[{uid:1, id:'c_box', x:14, y:93}, {uid:2, id:'c_bowl', x:29, y:96}], wall:'w_default', floor:'f_default', next:3, curtain:false};
+    save('room');
+  }
+  ['c_box','c_bowl','w_default','f_default'].forEach(id => { if(!S.owned.includes(id)) S.owned.push(id); });
+  save('owned');
+  if(!S.treats){ S.treats = {t_food:3, t_milk:2}; save('treats'); }
+  if(!S.pet){ S.pet = {hearts:3, last:Date.now(), fedAt:0, pettedAt:0, playedAt:0}; save('pet'); }
+}
+initRoom();
+function petTick(){
+  const p = S.pet, steps = Math.floor((Date.now() - p.last) / (8 * 3600e3));
+  if(steps > 0){ p.hearts = Math.max(0, p.hearts - steps); p.last += steps * 8 * 3600e3; save('pet'); }
+  return p;
+}
+function addJoy(n){ petTick(); S.pet.hearts = Math.min(5, S.pet.hearts + n); S.pet.last = Date.now(); save('pet'); renderHearts(); }
+const heartsStr = () => '❤️'.repeat(S.pet.hearts) + '🤍'.repeat(5 - S.pet.hearts);
+const kidName = () => S.name || 'Farha';
+
+/* geometry: x = center %, y = bottom % of the room */
+const aspectOf = it => { if(it.vb){ const v = it.vb.split(' ').map(Number); return v[3] / v[2]; } return 1; };
+const itemHPct = it => (it.size || 8) * aspectOf(it) / RH * 100;
+const zOf = (it, pl) => it.kind === 'rug' ? 2 : it.kind === 'wall' ? 3 : 10 + Math.round(pl.y * 2);
+function clampPl(it, x, y){
+  const half = (it.size || 8) / 2, h = itemHPct(it);
+  x = Math.max(half, Math.min(100 - half, x));
+  if(it.kind === 'wall') y = Math.max(h + 2, Math.min(61, y));
+  else if(it.kind === 'rug') y = Math.max(72, Math.min(99, y));
+  else y = Math.max(67, Math.min(99, y));
+  return {x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10};
+}
+function defaultSpot(it, fixed){
+  const r = fixed ? .5 : Math.random(), r2 = fixed ? .5 : Math.random();
+  if(it.kind === 'wall') return clampPl(it, Math.min(64 - it.size / 2, 8 + it.size / 2 + r * 44), 30 + r2 * 18);
+  if(it.kind === 'rug') return clampPl(it, 30 + r * 40, 93);
+  return clampPl(it, 8 + r * 84, 72 + r2 * 24);
+}
+function perchOf(it, pl){
+  const h = itemHPct(it);
+  const f = it.perch != null ? 1 - it.perch / it.vb.split(' ').map(Number)[3] : (it.perchF != null ? it.perchF : .3);
+  return {x: pl.x, y: pl.y - h * f, z: it.front ? zOf(it, pl) + 1 : zOf(it, pl) - 1};
+}
+function placeItem(it){
+  let best = null, bestD = -1;
+  for(let k = 0; k < 12; k++){
+    const c = defaultSpot(it);
+    const d = Math.min(99, ...S.room.items.filter(p => ITEM_BY_ID[p.id] && (ITEM_BY_ID[p.id].kind === 'wall') === (it.kind === 'wall')).map(p => Math.hypot(p.x - c.x, (p.y - c.y) * 1.6)));
+    if(d > bestD){ bestD = d; best = c; }
+  }
+  const pl = {uid: S.room.next++, id: it.id, ...best};
+  S.room.items.push(pl); save('room'); return pl;
+}
+const placed = kind => S.room.items.filter(p => ITEM_BY_ID[p.id] && ITEM_BY_ID[p.id].kind === kind);
+const lookNoBg = () => { const l = {...S.equip}; delete l.bg; return l; };
+
+/* rendering */
+function itemArt(it, pl){
+  const g = 1 + .14 * ((pl && pl.grow) || 0);
+  return it.e ? `<span class="r-emo" style="font-size:${(it.size * .86 * g).toFixed(2)}cqw">${it.e}</span>`
+    : `<svg viewBox="${it.vb}" aria-hidden="true"><g stroke="#2B2233" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">${it.svg()}</g></svg>`;
+}
+function itemNode(pl, it, extra, mini){
+  return `<div class="ritem k-${it.kind} ${pl.on ? 'on' : ''} ${extra || ''}" data-uid="${pl.uid}" style="left:${pl.x}%;top:${pl.y}%;width:${it.size}cqw;z-index:${zOf(it, pl)}">${itemArt(it, pl)}${mini ? '' : `<button class="rm" data-rm="${pl.uid}" aria-label="رجّعيها الدولاب">✕</button>`}</div>`;
+}
+function skyNow(){ const h = new Date().getHours(); return h >= 6 && h < 17 ? 'day' : h >= 17 && h < 19 ? 'sunset' : 'night'; }
+function windowHTML(){
+  const s = skyNow();
+  return `<div class="rwin sky-${s} ${S.room.curtain ? 'closed' : ''}" id="rwin"><div class="sky">${s === 'night' ? '<span class="moon">🌙</span><i></i><i></i><i></i><i></i>' : s === 'day' ? '<span class="sun">☀️</span><span class="cloud">☁️</span>' : '<span class="sun">🌇</span>'}</div><div class="frame"></div><div class="cur l"></div><div class="cur r"></div></div>`;
+}
+function mishHTML(x, y, z, id){
+  return `<div class="rmish" ${id ? 'id="rmish"' : ''} style="left:${x}%;top:${y}%;z-index:${z}"><div class="flip">${catSVG(S.mish, lookNoBg())}</div><div class="bubble-r" hidden></div></div>`;
+}
+function roomScene(opts = {}){
+  let items = S.room.items.slice(), wall = S.room.wall, floor = S.room.floor;
+  const pv = opts.preview;
+  if(pv){
+    if(pv.kind === 'wallpaper') wall = pv.id;
+    else if(pv.kind === 'flooring') floor = pv.id;
+    else if(isPlaceable(pv) && !items.some(p => p.id === pv.id)) items.push({uid:'pv', id:pv.id, ...defaultSpot(pv, true)});
+  }
+  const W = ITEM_BY_ID[wall] || ITEM_BY_ID.w_default, F = ITEM_BY_ID[floor] || ITEM_BY_ID.f_default;
+  const nodes = items.map(pl => { const it = ITEM_BY_ID[pl.id]; return it ? itemNode(pl, it, pl.uid === 'pv' ? 'pv' : '', opts.mini) : ''; }).join('');
+  let m = '';
+  if(opts.mini){
+    const bed = items.find(p => ITEM_BY_ID[p.id] && ITEM_BY_ID[p.id].kind === 'catbed');
+    const q = bed ? perchOf(ITEM_BY_ID[bed.id], bed) : {x:45, y:94, z:200};
+    m = mishHTML(q.x, q.y, q.z);
+  }
+  return `<div class="room ${opts.mini ? 'rmini' : ''}" dir="ltr" ${opts.mini ? 'aria-hidden="true"' : 'id="room" role="img" aria-label="Farha\'s room"'}>
+    <div class="r-wall" style="background:${esc(W.bg)}"></div><div class="r-floor" style="background:${esc(F.bg)}"></div><div class="r-skirt"></div>
+    ${windowHTML()}${nodes}${m}</div>`;
+}
+
+/* ---------- interactive room ---------- */
+let roomTimer = null, editMode = false, findSt = null, drag = null, dragMoved = false;
+let mishSt = {x:45, y:94, mode:'idle', busy:0};
+const IDLE_LINES = ["Meow!","I love my room!","Let's study English!","I'm happy!","Play with me!","Can we buy a new toy?","I want a cake, please!","Purr..."];
+
+function roomScreen(){
+  setTop(true); petTick(); dayState(); editMode = false; findSt = null;
+  mishSt = {x:45, y:94, mode:'idle', busy:0};
+  screenEl.innerHTML = `<section class="room-page">
+    <div class="room-top">
+      <div><h2>أوضة ${KID_AR} <span class="en">Farha's Room</span></h2>
+        <p class="muted">دوسي على أي حاجة في الأوضة تسمعي اسمها وتشوفي هتعمل إيه. دوسي على الأرض ومشمش هتمشي لهناك!</p></div>
+      <div class="hearts-box" title="سعادة مشمش"><small>سعادة مشمش</small><span id="hearts">${heartsStr()}</span></div>
+    </div>
+    <div class="room-wrap" id="roomWrap"></div>
+    <div class="room-bar">
+      <div class="treats" id="treats"></div>
+      <div class="row">
+        <button class="btn soft" id="findBtn">🔎 دوّري مع مشمش</button>
+        <button class="btn" id="editBtn">🪄 رتّبي الأوضة</button>
+        <button class="btn primary" id="toMall2">🛍️ المول</button>
+      </div>
+    </div>
+    <div class="find-info" id="findInfo" hidden></div>
+    <div id="storage" hidden></div>
+    <div class="mission sticker" id="mission"></div>
+  </section>`;
+  renderRoomArea(); renderTreats(); renderMission();
+  $('#editBtn').onclick = () => setEdit(!editMode);
+  $('#toMall2').onclick = () => mall('room');
+  $('#findBtn').onclick = startFind;
+  clearInterval(roomTimer); roomTimer = setInterval(idleTick, 6000);
+  setTimeout(() => { if(S.pet.hearts <= 1){ bubble("I'm hungry!"); say("I'm hungry! Please feed me."); } else { const t = `Hi, ${kidName()}! Welcome to your room!`; bubble(t); say(t); } }, 700);
+}
+function renderRoomArea(){
+  $('#roomWrap').innerHTML = roomScene();
+  const room = $('#room');
+  room.insertAdjacentHTML('beforeend', mishHTML(mishSt.x, mishSt.y, 10 + Math.round(mishSt.y * 2), true));
+  room.classList.toggle('editing', editMode);
+  room.addEventListener('pointerdown', onDown);
+  room.addEventListener('click', onRoomClick);
+}
+function renderHearts(){ const h = $('#hearts'); if(h) h.textContent = heartsStr(); }
+function renderTreats(){
+  const el = $('#treats'); if(!el) return;
+  const have = ITEMS.filter(i => i.kind === 'treat' && S.treats[i.id] > 0);
+  el.innerHTML = `<b>أكّلي مشمش:</b>${have.length ? have.map(i => `<button class="treat-btn" data-feed="${i.id}" title="${esc(i.en)}" aria-label="${esc(i.en)}">${i.e}<b>${S.treats[i.id]}</b></button>`).join('') : '<span class="muted">الأكل خلص!</span>'}<button class="btn soft sm" id="buyFood">🛒 اشتري أكل</button>`;
+  el.querySelectorAll('[data-feed]').forEach(b => b.onclick = () => feed(b.dataset.feed));
+  $('#buyFood').onclick = () => mall('food');
+}
+function renderMission(){
+  const el = $('#mission'); if(!el) return;
+  const d = dayState(), p = Math.min(d.earned, GOAL);
+  el.innerHTML = `<div class="mi-row"><b>🎯 مهمة النهارده</b><span>اكسبي ${GOAL} ⭐ من المذاكرة والألعاب، وخدي هدية مفاجأة لأوضتك أو لمشمش!</span></div>
+    <div class="mbar"><i style="width:${p / GOAL * 100}%"></i></div>
+    <div class="row"><span class="pill">${p} / ${GOAL} ⭐</span>
+      ${d.gift ? '<span class="muted">✔ خدتي هدية النهارده. بكرة فيه هدية جديدة!</span>' : d.earned >= GOAL ? '<button class="btn primary gift-pulse" id="giftBtn">🎁 افتحي الهدية</button>' : `<span class="muted">فاضل ${GOAL - p} نجمة</span><button class="btn soft" id="goStudy">📘 يلا نذاكر</button>`}
+      <button class="btn" id="goDeals">🔥 عروض النهارده في المول</button></div>`;
+  if($('#giftBtn')) $('#giftBtn').onclick = openGift;
+  if($('#goStudy')) $('#goStudy').onclick = () => bookHome();
+  $('#goDeals').onclick = () => mall();
+}
+
+/* Mishmish */
+function bubble(text, ms = 2800){
+  const m = $('#rmish'); if(!m) return;
+  const b = m.querySelector('.bubble-r'); b.textContent = text; b.hidden = false;
+  clearTimeout(mishSt.bt); mishSt.bt = setTimeout(() => { b.hidden = true; }, ms);
+}
+function walkTo(x, y, cb, z){
+  const m = $('#rmish'); if(!m) return;
+  m.classList.remove('sleeping','eating','dancing');
+  mishSt.mode = 'walk';
+  const d = Math.hypot(x - mishSt.x, (y - mishSt.y) * .6), t = Math.round(Math.max(250, Math.min(2400, d * 45)));
+  if(Math.abs(x - mishSt.x) > .5) m.classList.toggle('left', x < mishSt.x);
+  m.classList.add('walking');
+  m.style.transition = `left ${t}ms linear, top ${t}ms linear`;
+  m.style.left = x + '%'; m.style.top = y + '%'; m.style.zIndex = z != null ? z : 10 + Math.round(y * 2);
+  mishSt.x = x; mishSt.y = y; mishSt.busy = Date.now() + t;
+  clearTimeout(mishSt.tm);
+  mishSt.tm = setTimeout(() => { m.classList.remove('walking'); mishSt.mode = 'idle'; if(cb) cb(); }, t + 40);
+}
+const clampX = x => Math.max(6, Math.min(94, x));
+function mishAnim(cls, ms){ const m = $('#rmish'); if(!m) return; m.classList.remove(cls); void m.offsetWidth; m.classList.add(cls); setTimeout(() => m.classList.remove(cls), ms); }
+function wake(){ const m = $('#rmish'); m.classList.remove('sleeping'); mishSt.mode = 'idle'; bubble('Good morning!'); }
+function goSleep(pl){
+  const it = ITEM_BY_ID[pl.id], q = perchOf(it, pl);
+  walkTo(q.x, q.y, () => { $('#rmish').classList.add('sleeping'); mishSt.mode = 'sleep'; bubble('Zzz...'); }, q.z);
+}
+function playWith(pl, quiet){
+  const it = ITEM_BY_ID[pl.id];
+  walkTo(clampX(pl.x - it.size / 2 - 5), pl.y, () => {
+    mishAnim('jump', 1100);
+    const n = $(`#room [data-uid="${pl.uid}"]`); if(n){ n.classList.remove('hop'); void n.offsetWidth; n.classList.add('hop'); }
+    bubble("Let's play!");
+    if(!quiet){ say("Let's play!"); meow(); if(Date.now() - S.pet.playedAt > 15 * 60e3){ S.pet.playedAt = Date.now(); addJoy(1); } }
+  });
+}
+function mishTap(){
+  if(mishSt.mode === 'sleep'){ wake(); say('Good morning!'); return; }
+  meow(); mishAnim('jump', 600);
+  const line = rand([`I love you, ${kidName()}!`, 'Purr... purr...', "You're my best friend!", 'Thank you!', "Let's study together!"]);
+  bubble(line); setTimeout(() => say(line), 450);
+  if(Date.now() - S.pet.pettedAt > 20 * 60e3){ S.pet.pettedAt = Date.now(); addJoy(1); }
+}
+function feed(tid){
+  const it = ITEM_BY_ID[tid]; if(!(S.treats[tid] > 0) || findSt) return;
+  S.treats[tid]--; save('treats'); renderTreats();
+  const bowl = placed('bowl')[0];
+  const gx = bowl ? clampX(bowl.x - 7) : mishSt.x, gy = bowl ? bowl.y : mishSt.y;
+  walkTo(gx, gy, () => {
+    const m = $('#rmish'); m.classList.remove('left');
+    S.pet.fedAt = Date.now(); addJoy(it.joy);
+    if(bowl) refreshNode(bowl);
+    m.classList.add('eating'); floatAt(gx + 4, gy - 16, it.e, 'fnote big');
+    const t = `Yum! I love ${it.en}! Thank you, ${kidName()}!`; bubble(t, 3200); say(t);
+    setTimeout(() => { m.classList.remove('eating'); meow(); }, 2600);
+  });
+}
+function idleTick(){
+  if(!$('#room')){ clearInterval(roomTimer); roomTimer = null; return; }
+  if(editMode || findSt || Date.now() < mishSt.busy + 2500 || document.hidden) return;
+  const r = Math.random(), beds = placed('catbed'), toys = placed('cattoy');
+  if(mishSt.mode === 'sleep'){ if(r < .25) wake(); return; }
+  if(S.pet.hearts <= 1 && r < .4) return bubble(rand(["I'm hungry!","Feed me, please!"]));
+  if(r < .45) walkTo(clampX(6 + Math.random() * 88), 74 + Math.random() * 23);
+  else if(r < .6 && beds.length) goSleep(rand(beds));
+  else if(r < .75 && toys.length) playWith(rand(toys), true);
+  else bubble(rand(IDLE_LINES));
+}
+
+/* item effects */
+function refreshNode(pl){ const n = $(`#room [data-uid="${pl.uid}"]`), it = ITEM_BY_ID[pl.id]; if(n) n.innerHTML = itemArt(it, pl) + `<button class="rm" data-rm="${pl.uid}" aria-label="رجّعيها الدولاب">✕</button>`; }
+function floatAt(x, y, html, cls = 'fnote'){
+  const room = $('#room'); if(!room) return;
+  const d = document.createElement('div'); d.className = cls; d.innerHTML = html;
+  d.style.left = x + '%'; d.style.top = y + '%'; d.style.setProperty('--dx', (Math.random() * 6 - 3) + 'cqw');
+  room.appendChild(d); setTimeout(() => d.remove(), 1900);
+}
+function floatLabel(pl, it, en, ar){ floatAt(pl.x, pl.y - itemHPct(it) - 1, `<b>${esc(en || it.en)}</b><small>${esc(ar || it.ar)}</small>`, 'flabel'); }
+function notes(pl, it, n = 5, set = ['🎵','🎶']){ for(let k = 0; k < n; k++) setTimeout(() => floatAt(pl.x + (Math.random() * 8 - 4), pl.y - itemHPct(it), rand(set)), k * 220); }
+function nodeAnim(n, cls, ms = 1200){ n.classList.remove(cls); void n.offsetWidth; n.classList.add(cls); setTimeout(() => n.classList.remove(cls), ms); }
+const NOTE = {C:523, D:587, E:659, F:698, G:784, A:880, B:988, c:1046};
+const TUNES = ['CCGGAAG','EDCDEEE','CDEFGGA','GEEFDDC','CEGcGEC','EEFGGFED'];
+const playTune = (seq, step = .22) => seq.split('').forEach((k, i) => NOTE[k] && tone(NOTE[k], i * step, step * .9, 'triangle', .12));
+const NUMS = ['twelve','one','two','three','four','five','six','seven','eight','nine','ten','eleven'];
+function wordCard(title, k){
+  const w = WORDS[k]; if(!w) return;
+  const ov = document.createElement('div'); ov.className = 'room-card';
+  ov.innerHTML = `<div class="sticker rc-in"><b>${title}</b>${w.e ? `<span class="emo big" aria-hidden="true">${w.e}</span>` : ''}<p class="bigword en">${esc(w.en)}</p><p class="flash-ar" id="rcAr" hidden>${esc(w.ar)}</p>
+    <div class="row" style="justify-content:center">${sayBtn(w.en)}<button class="btn soft" id="rcShow">اعرفي المعنى</button><button class="btn" id="rcClose">تمام</button></div></div>`;
+  screenEl.appendChild(ov);
+  ov.onclick = e => { if(e.target === ov) ov.remove(); };
+  $('#rcShow').onclick = () => { $('#rcAr').hidden = false; $('#rcShow').remove(); };
+  $('#rcClose').onclick = () => ov.remove();
+}
+const ACTIONS = {
+  read: () => { const ks = Object.keys(S.wl).filter(k => WORDS[k]); wordCard('اقري الكلمة دي · Can you read it?', ks.length ? rand(ks) : rand(Object.keys(WORDS))); },
+  wotd: () => { const ks = Object.keys(WORDS); wordCard('كلمة النهارده · Word of the day', ks[Math.floor(Date.now() / 864e5) % ks.length]); },
+  piano: (pl, it) => { playTune(rand(TUNES)); notes(pl, it); },
+  music: (pl, it) => { playTune(rand(TUNES) + rand(TUNES), .2); notes(pl, it, 8); mishAnim('dancing', 3200); bubble("Let's dance!"); },
+  drum: (pl, it) => { [0, .18, .36, .5].forEach(t => tone(120, t, .15, 'sine', .3)); notes(pl, it, 3, ['🥁','💥']); },
+  guitar: (pl, it) => { [330, 415, 494, 659].forEach((f, i) => tone(f, i * .04, .7, 'triangle', .08)); notes(pl, it, 3); },
+  light: (pl, it, n) => { pl.on = !pl.on; n.classList.toggle('on', pl.on); save('room'); say(pl.on ? 'Lamp on!' : 'Lamp off!'); },
+  clock: (pl, it) => { const d = new Date(), h = d.getHours() % 12, m = d.getMinutes(); const t = m < 15 ? `It's ${NUMS[h]} o'clock.` : m < 45 ? `It's half past ${NUMS[h]}.` : `It's ${NUMS[(h + 1) % 12]} o'clock.`; floatLabel(pl, it, t, 'الساعة كام؟'); say(t); },
+  date: (pl, it) => { const t = `Today is ${new Date().toLocaleDateString('en-US', {weekday:'long'})}.`; floatLabel(pl, it, t, 'النهارده إيه؟'); say(t); },
+  mirror: (pl, it) => { say('mirror'); walkTo(clampX(pl.x), 92, () => { bubble("Look! It's me!"); say("Look! It's me!"); }); },
+  disco: (pl, it) => { const r = $('#room'); r.classList.add('disco'); playTune('CEGcGECEGc', .18); mishAnim('dancing', 4000); bubble('Disco party!'); say('Disco party!'); setTimeout(() => r.classList.remove('disco'), 5000); },
+  chime: (pl, it) => { [1568, 2093, 1760, 2349].forEach((f, i) => tone(f, i * .12, .5, 'sine', .05)); notes(pl, it, 3, ['✨']); say('wind chime'); },
+  globe: (pl, it, n) => { nodeAnim(n, 'spin', 1300); say(rand(['Egypt is my homeland!','This is Egypt!','Look! China!','The world is big!'])); },
+  stars: (pl, it, n) => { burst(n); say('I can see the stars!'); },
+  plant: (pl, it, n) => { pl.grow = Math.min(3, (pl.grow || 0) + 1); save('room'); refreshNode(pl); for(let k = 0; k < 3; k++) setTimeout(() => floatAt(pl.x, pl.y - itemHPct(it) - 2, '💧'), k * 200); say(pl.grow >= 3 ? 'My plant is big now!' : 'I water the plant.'); },
+  fish: (pl, it, n) => { notes(pl, it, 4, ['🫧']); say('fish'); walkTo(clampX(pl.x - it.size / 2 - 4), Math.min(98, pl.y + 1), () => bubble('Fish! Yum!')); },
+  art: (pl, it) => { say(S.gallery.length ? 'My painting!' : 'Paint a picture and save it!'); },
+  tv: (pl, it) => { notes(pl, it, 4, ['⭐','🐭','🐱']); say("Let's watch cartoons!"); },
+  hop: (pl, it, n) => { nodeAnim(n, 'hop', 900); say(it.en); },
+  dance: (pl, it, n) => { nodeAnim(n, 'dancing', 3000); playTune(rand(TUNES)); mishAnim('dancing', 3000); say("Let's dance!"); },
+  spin: (pl, it, n) => { nodeAnim(n, 'spin', 1300); say('carousel'); },
+  launch: (pl, it, n) => { nodeAnim(n, 'launch', 1700); say('Three, two, one, go!'); },
+  fountain: (pl, it) => { notes(pl, it, 4, ['💧']); say('water'); },
+  bowl: () => { const t = Object.keys(S.treats).find(k => S.treats[k] > 0); if(t) feed(t); else { say('food bowl'); toast('الأكل خلص! اشتري أكل لمشمش من المول'); } },
+  catbed: (pl, it) => { say(it.en); goSleep(pl); },
+  cattoy: (pl, it) => { say(it.en); playWith(pl); }
+};
+function itemTap(n){
+  const pl = S.room.items.find(p => String(p.uid) === n.dataset.uid); if(!pl) return;
+  const it = ITEM_BY_ID[pl.id];
+  if(findSt) return findCheck(pl, it, n);
+  nodeAnim(n, 'bop', 500);
+  floatLabel(pl, it);
+  const A = ACTIONS[it.act] || ACTIONS[it.kind];
+  if(A) A(pl, it, n); else say(it.en);
+}
+function windowTap(){
+  S.room.curtain = !S.room.curtain; save('room');
+  $('#rwin').classList.toggle('closed', S.room.curtain);
+  const s = skyNow(), t = S.room.curtain ? 'Good night, window!' : s === 'night' ? 'It is night. I can see the moon.' : s === 'sunset' ? 'Look at the sunset!' : 'It is sunny today!';
+  say(t); bubble(t);
+}
+function onRoomClick(e){
+  if(editMode){ const rm = e.target.closest('[data-rm]'); if(rm) removePlaced(rm.dataset.rm); return; }
+  if(e.target.closest('#rmish')) return mishTap();
+  if(e.target.closest('#rwin')) return windowTap();
+  const n = e.target.closest('.ritem'); if(n) return itemTap(n);
+  const r = $('#room').getBoundingClientRect(), x = (e.clientX - r.left) / r.width * 100, y = (e.clientY - r.top) / r.height * 100;
+  if(y > 66 && !findSt){ floatAt(x, y, '✨'); walkTo(clampX(x), Math.min(98, y)); }
+}
+
+/* edit mode: drag, store, wallpapers */
+function setEdit(on){
+  editMode = on;
+  $('#room').classList.toggle('editing', on);
+  $('#editBtn').textContent = on ? '✔ خلّصت الترتيب' : '🪄 رتّبي الأوضة';
+  $('#storage').hidden = !on;
+  if(on){ renderStorage(); if(findSt) endFind(); }
+}
+function onDown(e){
+  if(!editMode || e.target.closest('[data-rm]')) return;
+  const n = e.target.closest('.ritem'); if(!n) return;
+  e.preventDefault();
+  const pl = S.room.items.find(p => String(p.uid) === n.dataset.uid);
+  drag = {n, pl, it: ITEM_BY_ID[pl.id], r: $('#room').getBoundingClientRect()};
+  n.classList.add('dragging');
+  try{ n.setPointerCapture(e.pointerId); }catch(err){}
+  n.onpointermove = ev => {
+    const {r, it} = drag;
+    const q = clampPl(it, (ev.clientX - r.left) / r.width * 100, (ev.clientY - r.top) / r.height * 100 + itemHPct(it) / 2);
+    drag.pl.x = q.x; drag.pl.y = q.y;
+    n.style.left = q.x + '%'; n.style.top = q.y + '%'; n.style.zIndex = zOf(it, drag.pl);
+  };
+  n.onpointerup = n.onpointercancel = () => { n.classList.remove('dragging'); n.onpointermove = null; save('room'); drag = null; };
+}
+function removePlaced(uid){
+  S.room.items = S.room.items.filter(p => String(p.uid) !== String(uid)); save('room');
+  const n = $(`#room [data-uid="${uid}"]`); if(n) n.remove();
+  renderStorage();
+}
+function renderStorage(){
+  const el = $('#storage'); if(!el) return;
+  const inv = ITEMS.filter(i => isPlaceable(i) && S.owned.includes(i.id) && !S.room.items.some(p => p.id === i.id));
+  const walls = ITEMS.filter(i => i.kind === 'wallpaper' && S.owned.includes(i.id)), floors = ITEMS.filter(i => i.kind === 'flooring' && S.owned.includes(i.id));
+  const sw = (i, key) => `<button class="sw-btn ${S.room[key] === i.id ? 'on' : ''}" data-${key}="${i.id}" style="background:${esc(i.bg)}" title="${esc(i.en)}" aria-label="${esc(i.en)}"></button>`;
+  el.innerHTML = `<div class="storage sticker">
+    <p class="muted">✋ اسحبي أي حاجة في الأوضة وحطيها في المكان اللي يعجبك. علامة ✕ بترجّعها الدولاب.</p>
+    <h4>الدولاب <small>(${inv.length})</small></h4>
+    <div class="inv">${inv.length ? inv.map(i => `<button class="inv-it" data-place="${i.id}"><span class="p-ico t-${i.slot}">${itemThumb(i)}</span><small class="en">${esc(i.en)}</small></button>`).join('') : '<span class="muted">كل حاجاتك في الأوضة. اشتري حاجات جديدة من المول!</span>'}</div>
+    <h4>ورق الحيطة</h4><div class="inv">${walls.map(i => sw(i, 'wall')).join('')}</div>
+    <h4>الأرضية</h4><div class="inv">${floors.map(i => sw(i, 'floor')).join('')}</div>
+  </div>`;
+  el.querySelectorAll('[data-place]').forEach(b => b.onclick = () => { placeItem(ITEM_BY_ID[b.dataset.place]); sfxTick(); renderRoomArea(); renderStorage(); });
+  el.querySelectorAll('[data-wall]').forEach(b => b.onclick = () => { S.room.wall = b.dataset.wall; save('room'); renderRoomArea(); renderStorage(); });
+  el.querySelectorAll('[data-floor]').forEach(b => b.onclick = () => { S.room.floor = b.dataset.floor; save('room'); renderRoomArea(); renderStorage(); });
+}
+
+/* "Where is the ...?" game */
+function startFind(){
+  if(findSt) return endFind();
+  const ids = [...new Set(S.room.items.map(p => p.id))].filter(id => ITEM_BY_ID[id]);
+  if(ids.length < 3){ toast('محتاجة ٣ حاجات على الأقل في الأوضة. اشتري حاجات من المول!'); return; }
+  if(editMode) setEdit(false);
+  findSt = {round:0, ids, target:null};
+  $('#findBtn').textContent = '✖ وقّفي اللعبة';
+  nextFind();
+}
+function nextFind(){
+  if(!findSt) return;
+  if(findSt.round >= 4){ const t = `Great job, ${kidName()}!`; bubble(t); say(t); endFind(); return; }
+  let id; do { id = rand(findSt.ids); } while(id === findSt.target && findSt.ids.length > 1);
+  findSt.target = id; findSt.round++;
+  const q = `Where is the ${ITEM_BY_ID[id].en}?`;
+  bubble(q, 5000); say(q);
+  const d = dayState();
+  $('#findInfo').hidden = false;
+  $('#findInfo').innerHTML = `<span class="pill">سؤال ${findSt.round} من 4</span> <b>مشمش بتسأل:</b> <span class="en">${esc(q)}</span> ${sayBtn(q, 'اسمعي تاني')} <small class="muted">${d.find < 5 ? `كل إجابة صح = ⭐ (لسه ${5 - d.find} نجوم النهارده)` : 'خلّصتي نجوم اللعبة دي النهارده، بس كمّلي اتمرني!'}</small>`;
+}
+function findCheck(pl, it, n){
+  if(pl.id === findSt.target){
+    sfxGood(); burst(n); floatLabel(pl, it); nodeAnim(n, 'bop', 500);
+    const d = dayState(); if(d.find < 5){ d.find++; save('day'); addStars(1); renderMission(); }
+    say(`Yes! The ${it.en}!`); findSt.target = null;
+    setTimeout(nextFind, 1500);
+  } else {
+    sfxBad(); nodeAnim(n, 'bop', 500); floatLabel(pl, it);
+    say(`This is the ${it.en}. Find the ${ITEM_BY_ID[findSt.target].en}.`);
+  }
+}
+function endFind(){ findSt = null; const f = $('#findInfo'); if(f) f.hidden = true; const b = $('#findBtn'); if(b) b.textContent = '🔎 دوّري مع مشمش'; }
+
+/* daily surprise gift */
+function openGift(){
+  const d = dayState(); if(d.gift || d.earned < GOAL) return;
+  const pool = ITEMS.filter(i => !S.owned.includes(i.id) && i.kind !== 'treat' && i.price >= 5 && i.price <= 45);
+  d.gift = true; save('day');
+  const it = pool.length ? rand(pool) : null;
+  if(it){ S.owned.push(it.id); save('owned'); if(isPlaceable(it)) placeItem(it); }
+  else { S.treats.t_cake = (S.treats.t_cake || 0) + 2; save('treats'); }
+  sfxCash(); meow();
+  const ov = document.createElement('div'); ov.className = 'room-card';
+  ov.innerHTML = `<div class="sticker rc-in gift-open"><span class="gift-ico">🎁</span><b>مفاجأة!</b>
+    ${it ? `<span class="p-ico t-${it.slot} big">${itemThumb(it)}</span><p class="bigword en" style="font-size:40px">${esc(it.en)}</p><p class="flash-ar">${esc(it.ar)}</p><p class="muted">${isPlaceable(it) ? 'اتحطت في أوضتك!' : isRoomThing(it) ? 'هتلاقيها في «رتّبي الأوضة»' : 'هتلاقيها في المول تحت «حاجاتي»، والبسيها لمشمش!'}</p>` : '<p class="bigword">🍰🍰</p><p>عندك كل حاجة! خدي ٢ كيكة لمشمش</p>'}
+    <button class="btn primary" id="rcClose">يااااي! شكرًا</button></div>`;
+  screenEl.appendChild(ov);
+  if(it) say(`Surprise! ${/^[aeiou]/i.test(it.en) ? 'An' : 'A'} ${it.en}!`);
+  $('#rcClose').onclick = () => { ov.remove(); renderRoomArea(); renderMission(); };
+  burst($('.gift-ico'));
+}
+
+let preview = null, mallFloor = 'cat';
 function mulberry(a){ return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 const DEALS = (() => {
-  const d = new Date(), r = mulberry(d.getFullYear() * 500 + d.getMonth() * 40 + d.getDate());
-  const pool = ITEMS.filter(i => i.price >= 12), out = [];
-  while(out.length < 4){ const id = pool[Math.floor(r() * pool.length)].id; if(!out.includes(id)) out.push(id); }
+  const d = new Date(), r = mulberry(d.getFullYear() * 500 + d.getMonth() * 40 + d.getDate()), out = [];
+  const pick = (pool, n) => { let g = 0; while(n > 0 && g++ < 500){ const id = pool[Math.floor(r() * pool.length)].id; if(!out.includes(id)){ out.push(id); n--; } } };
+  pick(ITEMS.filter(i => !isRoomThing(i) && i.price >= 12), 3);
+  pick(ITEMS.filter(i => isRoomThing(i) && i.kind !== 'treat' && i.price >= 12), 3);
+  pick(ITEMS.filter(i => i.kind === 'treat'), 1);
   return new Set(out);
 })();
 const priceOf = it => DEALS.has(it.id) ? Math.ceil(it.price / 2) : it.price;
+const MALL_LEVELS = [
+  {id:'cat', ico:'🐱', ar:'دور مشمش', en:'Mishmish Fashion'},
+  {id:'room', ico:'🏠', ar:`دور أوضة ${KID_AR}`, en:'Room Shop'},
+  {id:'food', ico:'🍗', ar:'أكل مشمش وركنها', en:'Food & Corner'}
+];
+const levelItems = lv => ITEMS.filter(i => (DEPTS.find(d => d.id === i.dept) || {}).floor === lv && i.price > 0);
+function ownState(it){
+  if(it.kind === 'treat') return {own:false, count:S.treats[it.id] || 0};
+  const own = S.owned.includes(it.id);
+  if(!own) return {own:false};
+  if(it.kind === 'wallpaper' || it.kind === 'flooring'){ const on = S.room[it.kind === 'wallpaper' ? 'wall' : 'floor'] === it.id; return {own, on, label: on ? 'متركّبة' : 'عندك ✓'}; }
+  if(isRoomThing(it)){ const on = S.room.items.some(p => p.id === it.id); return {own, on, label: on ? 'في الأوضة' : 'في الدولاب'}; }
+  const on = S.equip[it.slot] === it.id; return {own, on, label: on ? 'لابساه' : 'عندك ✓'};
+}
 
-function mall(){
+function mall(level){
+  if(level) mallFloor = level;
   setTop(true);
   preview = null;
   screenEl.innerHTML = `<section class="mall">
     <div class="mall-sign">${AWNING}
       <div class="sign-in"><h2>مول مشمش <span class="en">Mishmish Mall</span></h2>
-        <span class="muted">${ITEMS.length} حاجة في ${DEPTS.length} أقسام · عندك ${S.owned.length}</span>
+        <span class="muted">${ITEMS.filter(i => i.price > 0).length} حاجة في ${DEPTS.length} أقسام</span>
         <span class="pill stars wallet">معاكي ⭐ <b id="wallet">${S.stars}</b></span></div></div>
+    <div class="levels" role="tablist">${MALL_LEVELS.map(l => `<button class="level-btn ${mallFloor === l.id ? 'on' : ''}" role="tab" aria-selected="${mallFloor === l.id}" data-level="${l.id}"><span class="lv-ico" aria-hidden="true">${l.ico}</span><b>${l.ar}</b><small>${levelItems(l.id).length} حاجة</small></button>`).join('')}
+      <button class="level-btn go-room" id="goRoom"><span class="lv-ico" aria-hidden="true">🚪</span><b>روحي الأوضة</b><small>شوفي حاجاتك</small></button></div>
     <div class="mall-grid">
       <aside class="fitting sticker" id="fitting">
-        <span class="fit-label">غرفة القياس · <span class="en">Fitting room</span></span>
+        <span class="fit-label" id="fitLabel">غرفة القياس · <span class="en">Fitting room</span></span>
         <div class="fit-cat" id="fitCat"></div>
         <div class="fit-info" id="fitInfo" aria-live="polite"></div>
       </aside>
       <div class="store">
         <div class="window sticker">
-          <div class="window-h"><b>🔥 عروض النهارده</b><span>كل حاجة هنا بنص التمن، والعروض بتتغير كل يوم!</span></div>
+          <div class="window-h"><b>🔥 عروض النهارده</b><span>نص التمن على الحاجات دي بس النهارده! بكرة عروض تانية.</span></div>
           <div class="shelf2 deal-shelf" id="deals"></div>
         </div>
-        <nav class="aisle-nav" aria-label="أقسام المول">${DEPTS.map(d => `<button class="chip" data-go="${d.id}">${d.ico} ${d.ar}</button>`).join('')}<button class="chip" data-go="mine">🛍️ حاجاتي</button></nav>
+        <nav class="aisle-nav" id="aisleNav" aria-label="أقسام المول"></nav>
         <div id="aisles"></div>
       </div>
     </div>
   </section>`;
-  screenEl.querySelectorAll('[data-go]').forEach(b => b.onclick = () => { const a = $('#aisle-' + b.dataset.go); if(a) a.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'}); });
+  screenEl.querySelectorAll('[data-level]').forEach(b => b.onclick = () => { mallFloor = b.dataset.level; screenEl.querySelectorAll('[data-level]').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', String(x === b)); }); renderStore(); say(MALL_LEVELS.find(l => l.id === mallFloor).en); });
+  $('#goRoom').onclick = () => roomScreen();
   renderStore(); renderFit();
 }
 function prodHTML(it){
-  const own = S.owned.includes(it.id), on = S.equip[it.slot] === it.id, deal = DEALS.has(it.id), p = priceOf(it);
-  return `<button class="prod ${own ? 'owned' : ''} ${!own && p > S.stars ? 'pricey' : ''} ${preview === it.id ? 'sel' : ''}" data-item="${it.id}" aria-label="${esc(it.en)}${own ? '' : `, ${p} stars`}">
-    ${deal && !own ? '<span class="ribbon deal">-50%</span>' : it.isNew && !own ? '<span class="ribbon new">جديد</span>' : ''}
-    ${own ? `<span class="stamp ${on ? 'on' : ''}">${on ? 'لابساه' : 'عندك ✓'}</span>` : ''}
-    <span class="p-ico t-${it.slot}">${itemThumb(it)}</span>
+  const s = ownState(it), deal = DEALS.has(it.id), p = priceOf(it);
+  return `<button class="prod ${s.own ? 'owned' : ''} ${!s.own && p > S.stars ? 'pricey' : ''} ${preview === it.id ? 'sel' : ''}" data-item="${it.id}" aria-label="${esc(it.en)}${s.own ? '' : `, ${p} stars`}">
+    ${deal && !s.own ? '<span class="ribbon deal">-50%</span>' : it.isNew && !s.own ? '<span class="ribbon new">جديد</span>' : ''}
+    ${s.own ? `<span class="stamp ${s.on ? 'on' : ''}">${s.label}</span>` : ''}
+    ${s.count ? `<span class="cnt">×${s.count}</span>` : ''}
+    <span class="p-ico t-${it.slot} ${it.kind ? 'k-' + it.kind : ''}">${itemThumb(it)}</span>
     <span class="p-name en">${esc(it.en)}</span>
-    <span class="p-price">${own ? (on ? '👕' : '✓') : `${deal ? `<s>${it.price}</s>` : ''}⭐ ${p}`}</span>
+    <span class="p-price">${s.own ? (s.on ? '✓' : '•') : `${deal ? `<s>${it.price}</s>` : ''}⭐ ${p}`}</span>
   </button>`;
 }
 function renderStore(){
   $('#deals').innerHTML = [...DEALS].map(id => prodHTML(ITEM_BY_ID[id])).join('');
-  const mine = ITEMS.filter(i => S.owned.includes(i.id));
-  $('#aisles').innerHTML = DEPTS.map(d => {
-    const list = ITEMS.filter(i => i.dept === d.id);
+  const depts = DEPTS.filter(d => d.floor === mallFloor);
+  const mine = ITEMS.filter(i => S.owned.includes(i.id) && i.price > 0 && depts.some(d => d.id === i.dept));
+  $('#aisleNav').innerHTML = depts.map(d => `<button class="chip" data-go="${d.id}">${d.ico} ${d.ar}</button>`).join('') + '<button class="chip" data-go="mine">🛍️ حاجاتي</button>';
+  $('#aisles').innerHTML = depts.map(d => {
+    const list = ITEMS.filter(i => i.dept === d.id && i.price > 0);
     return `<section class="aisle" id="aisle-${d.id}" style="--wall:${d.wall}">
       <div class="aisle-sign"><span class="a-ico" aria-hidden="true">${d.ico}</span><b>${d.ar}</b><span class="en">${d.en}</span><small>${list.length} حاجة</small></div>
       <div class="shelf2">${list.map(prodHTML).join('')}</div></section>`;
   }).join('') + `<section class="aisle" id="aisle-mine" style="--wall:#EFEDF7">
       <div class="aisle-sign"><span class="a-ico" aria-hidden="true">🛍️</span><b>حاجاتي</b><span class="en">My things</span><small>${mine.length} حاجة</small></div>
-      ${mine.length ? `<div class="shelf2">${mine.map(prodHTML).join('')}</div>` : '<p class="empty" style="margin:14px">لسه مشترتيش حاجة. لفّي على الرفوف واختاري اللي يعجبك!</p>'}</section>`;
+      ${mine.length ? `<div class="shelf2">${mine.map(prodHTML).join('')}</div>` : '<p class="empty" style="margin:14px">لسه مشترتيش حاجة من الدور ده. لفّي على الرفوف واختاري اللي يعجبك!</p>'}</section>`;
+  screenEl.querySelectorAll('[data-go]').forEach(b => b.onclick = () => { const a = $('#aisle-' + b.dataset.go); if(a) a.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'}); });
   screenEl.querySelectorAll('.prod').forEach(b => b.onclick = () => pickItem(b.dataset.item));
 }
 function pickItem(id){
   preview = id; const it = ITEM_BY_ID[id];
-  say(itemLine(it, !S.owned.includes(id)));
+  say(itemLine(it, !ownState(it).own));
   screenEl.querySelectorAll('.prod').forEach(x => x.classList.toggle('sel', x.dataset.item === id));
   renderFit(true);
+  if(window.innerWidth <= 760) $('#fitting').scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'nearest'});
 }
 function renderFit(anim){
-  const look = {...S.equip};
   const it = preview ? ITEM_BY_ID[preview] : null;
-  if(it) look[it.slot] = it.id;
-  $('#fitCat').innerHTML = catSVG(S.mish, look, anim ? 'tryon' : '');
+  const roomy = it && isRoomThing(it) && it.kind !== 'treat';
+  $('#fitLabel').innerHTML = roomy ? `شوفيها في أوضتك · <span class="en">Your room</span>` : `غرفة القياس · <span class="en">Fitting room</span>`;
+  $('#fitting').classList.toggle('roomy', !!roomy);
+  if(roomy) $('#fitCat').innerHTML = roomScene({mini:true, preview:it});
+  else {
+    const look = {...S.equip}; if(it && !isRoomThing(it)) look[it.slot] = it.id;
+    $('#fitCat').innerHTML = catSVG(S.mish, look, anim ? 'tryon' : '') + (it && it.kind === 'treat' ? `<span class="fit-treat" aria-hidden="true">${it.e}</span>` : '');
+  }
   const info = $('#fitInfo');
-  if(!it){ info.innerHTML = '<p class="fit-hint">دوسي على أي حاجة في الرفوف عشان تجربيها على مشمش قبل ما تشتري.</p>'; return; }
-  const own = S.owned.includes(it.id), on = S.equip[it.slot] === it.id, p = priceOf(it);
-  let act;
-  if(own) act = on ? '<button class="btn" id="act">اقلعيه</button>' : '<button class="btn primary" id="act">البسيه</button>';
-  else if(S.stars >= p) act = `<button class="btn primary" id="act">اشتري بـ ⭐ ${p}</button>`;
-  else act = `<p class="need">محتاجة <b>${p - S.stars}</b> نجمة كمان</p><button class="btn soft" id="earn">العبي واجمعي نجوم</button>`;
-  info.innerHTML = `<div class="fit-name"><span class="en">${esc(it.en)}</span>${sayBtn(itemLine(it, !own), 'اسمعي')}</div>
-    <p class="muted">${it.ar}${own ? '' : ` · ${DEALS.has(it.id) ? `<s>${it.price}</s> ` : ''}⭐ ${p}`}</p>
+  if(!it){ info.innerHTML = '<p class="fit-hint">دوسي على أي حاجة في الرفوف عشان تجربيها على مشمش أو تشوفيها في أوضتك قبل ما تشتري.</p>'; return; }
+  const s = ownState(it), p = priceOf(it), canBuy = S.stars >= p;
+  let act = '';
+  if(it.kind === 'treat') act = (canBuy ? `<button class="btn primary" id="act">اشتري بـ ⭐ ${p}</button>` : '') + (s.count ? `<button class="btn" id="toRoom">أكّليها لمشمش 🍽️</button>` : '');
+  else if(!s.own) act = canBuy ? `<button class="btn primary" id="act">اشتري بـ ⭐ ${p}</button>` : '';
+  else if(isRoomThing(it)) act = s.on ? '<button class="btn primary" id="toRoom">روحي الأوضة 🚪</button>' : `<button class="btn primary" id="act">${it.kind === 'wallpaper' || it.kind === 'flooring' ? 'ركّبيها في الأوضة' : 'حطيها في الأوضة'}</button>`;
+  else act = s.on ? '<button class="btn" id="act">اقلعيه</button>' : '<button class="btn primary" id="act">البسيه</button>';
+  if(!s.own && !canBuy) act += `<p class="need">محتاجة <b>${p - S.stars}</b> نجمة كمان</p><button class="btn soft" id="earn">📘 يلا نذاكر ونجمع نجوم</button>`;
+  info.innerHTML = `<div class="fit-name"><span class="en">${esc(it.en)}</span>${sayBtn(itemLine(it, !s.own), 'اسمعي')}</div>
+    <p class="muted">${it.ar}${s.own ? '' : ` · ${DEALS.has(it.id) ? `<s>${it.price}</s> ` : ''}⭐ ${p}`}${s.count ? ` · عندك ${s.count}` : ''}</p>
     <div class="row" style="justify-content:center">${act}</div>
-    ${!on ? '<button class="linkish" id="cancel">رجّعي مشمش زي ما كانت</button>' : ''}`;
+    ${!s.on && !isRoomThing(it) ? '<button class="linkish" id="cancel">رجّعي مشمش زي ما كانت</button>' : ''}`;
   const actB = $('#act');
   if(actB) actB.onclick = () => {
-    if(!own){
-      S.stars -= p; S.owned.push(it.id); S.equip[it.slot] = it.id;
-      save('stars'); save('owned'); save('equip'); renderStars(true); $('#wallet').textContent = S.stars;
-      sfxCash(); setTimeout(meow, 350); burst($('#fitCat'));
-      say(`You bought ${PLURAL.has(it.id) || NO_ART.has(it.id) ? '' : /^[aeiou]/.test(it.en) ? 'an ' : 'a '}${it.en}! Thank you!`);
-      toast(`🛍️ اشتريتي ${it.ar}! مشمش لابساه دلوقتي`);
-    } else if(on){ delete S.equip[it.slot]; save('equip'); preview = null; }
-    else { S.equip[it.slot] = it.id; save('equip'); meow(); }
+    const buying = !s.own;
+    if(buying){ S.stars -= p; save('stars'); renderStars(true); $('#wallet').textContent = S.stars; sfxCash(); burst($('#fitCat')); }
+    if(it.kind === 'treat'){
+      S.treats[it.id] = (S.treats[it.id] || 0) + 1; save('treats');
+      say(`You bought ${it.en}! Mishmish says thank you!`); toast(`🛍️ اشتريتي ${it.ar}! روحي الأوضة وأكّلي مشمش`);
+    } else if(isRoomThing(it)){
+      if(buying){ S.owned.push(it.id); save('owned'); }
+      if(it.kind === 'wallpaper') S.room.wall = it.id;
+      else if(it.kind === 'flooring') S.room.floor = it.id;
+      else if(!S.room.items.some(q => q.id === it.id)) placeItem(it);
+      save('room');
+      if(buying){ say(`You bought ${/^[aeiou]/i.test(it.en) ? 'an' : 'a'} ${it.en}! Thank you!`); toast(`🛍️ اشتريتي ${it.ar}! اتحطت في أوضتك`); }
+      setTimeout(meow, 350);
+    } else {
+      if(buying){ S.owned.push(it.id); S.equip[it.slot] = it.id; save('owned'); save('equip'); setTimeout(meow, 350); say(`You bought ${PLURAL.has(it.id) || NO_ART.has(it.id) ? '' : /^[aeiou]/.test(it.en) ? 'an ' : 'a '}${it.en}! Thank you!`); toast(`🛍️ اشتريتي ${it.ar}! مشمش لابساه دلوقتي`); }
+      else if(s.on){ delete S.equip[it.slot]; save('equip'); preview = null; }
+      else { S.equip[it.slot] = it.id; save('equip'); meow(); }
+    }
     renderStore(); renderFit();
   };
-  const earn = $('#earn'); if(earn) earn.onclick = () => home();
+  const tr = $('#toRoom'); if(tr) tr.onclick = () => roomScreen();
+  const earn = $('#earn'); if(earn) earn.onclick = () => bookHome();
   const cancel = $('#cancel'); if(cancel) cancel.onclick = () => { preview = null; screenEl.querySelectorAll('.prod.sel').forEach(x => x.classList.remove('sel')); renderFit(); };
 }
 

@@ -417,7 +417,43 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 .seq-card .emo{font-size:40px}
 .seq-card .en{font-size:16px}
 .seq-card.wrong{animation:shake .4s;background:var(--bad-l)}
+
+/* sound lab + writing studio */
+.pic-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.pic-word{display:grid;justify-items:center;gap:2px;padding:8px 10px;border:2px solid var(--ink);border-radius:14px;background:var(--card);min-width:84px}
+.pic-word .emo{font-size:34px}
+.pic-word .en{font-size:19px;font-weight:700}
+.lopt{aspect-ratio:auto;padding:14px;display:grid;justify-items:center;gap:4px}
+.lopt .emo{font-size:56px}
+.lopt .en{font-size:24px;font-weight:700}
+.opts.opts2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:520px}
+.magic{display:flex;align-items:center;gap:18px;padding:24px 34px}
+.mword{font-size:64px;font-weight:700;display:inline-flex;align-items:center;gap:12px}
+.mword.grew{animation:pop .6s}
+.magic-e{border:3px solid var(--ink);border-radius:18px;background:var(--grape);color:#FFFFFF;font-size:30px;padding:8px 18px;box-shadow:4px 4px 0 var(--ink)}
+.magic-e:disabled{opacity:.4}
+.a-sound{background:var(--pink-l)} .a-write{background:var(--tangerine-l)}
+.mini-chip.s{background:var(--pink-l)} .mini-chip.w{background:var(--tangerine-l)}
+.paper{background:#FFFDF6;background-image:linear-gradient(transparent 31px,#E4DDF5 32px);background-size:100% 32px}
+.paper-title{margin:0;text-align:center;font-size:28px;color:var(--grape)}
+.draft{width:100%;max-width:760px;padding:16px 22px;text-align:left;display:grid;gap:4px}
+.draft p{margin:0;font-size:22px;line-height:1.5}
+.now-line{color:var(--ink);background:var(--sun-l);border-radius:8px;padding:2px 6px}
+.slot-q{display:inline-block;min-width:60px;border-bottom:3px dashed var(--grape);color:var(--grape)}
+.slot-row{width:100%;max-width:760px}
+.slot-row .chips{justify-content:center}
+.chip.on{background:var(--grape);color:#FFFFFF;box-shadow:3px 3px 0 var(--ink)}
+.wcheck{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:12px 16px}
+.wcheck .pill{font-size:15px;background:var(--card)}
+.wcheck .pill.ok{background:var(--good-l)}
+.writings{display:grid;gap:8px}
+.wr{border:2px solid var(--ink);border-radius:12px;padding:6px 12px;background:var(--paper)}
+.wr summary{cursor:pointer;font-weight:700}
+.wr p{margin:6px 0 0;font-family:var(--learn);font-size:16px;text-align:left}
 @media (max-width:760px){
+  .mword{font-size:44px}
+  .magic{padding:16px}
+  .draft p{font-size:19px}
   .teach{grid-template-columns:1fr}
   .teach-cat{width:110px;justify-self:center}
   .gsent{font-size:26px}
@@ -496,7 +532,9 @@ const S = {
   storyDone: store.get('storyDone', {}),
   wl: store.get('wl', {}),
   gDone: store.get('gDone', {}),
-  vDone: store.get('vDone', {})
+  vDone: store.get('vDone', {}),
+  writings: store.get('writings', []),
+  wDone: store.get('wDone', {})
 };
 const save = k => store.set(k, S[k]);
 
@@ -1120,6 +1158,274 @@ function prepQs(){
   return [...qs, ...pick];
 }
 
+/* ============ SOUND LAB (pronunciation, one per unit) ============ */
+const big = e => `<span class="emo big" aria-hidden="true">${e}</span>`;
+const picRow = list => `<div class="pic-row">${list.map(([w, e, mark]) => `<button class="pic-word" data-say="${w}"><span class="emo">${e}</span><span class="en">${mark ? w.replace(mark, `<b class="hl">${mark}</b>`) : w}</span></button>`).join('')}</div>`;
+Object.assign(GRAMMAR, {
+ pv: {en:"Short and Long Vowels", ar:"الحروف المتحركة القصيرة والطويلة", sound:true,
+  slides:[
+   {h:"الصوت القصير", b:"الحرف المتحرك القصير بيتنطق <b>بسرعة</b>، ومش زي اسم الحرف. زي حرف <b class='en'>a</b> في <b class='en'>hat</b>.",
+    ex:["hat","cat","pot","pen"], vis:picRow([['hat','👒','a'],['cat','🐱','a'],['rat','🐀','a'],['pot','🍲','o'],['hot','🔥','o'],['pen','🖊️','e']])},
+   {h:"الصوت الطويل", b:"الحرف المتحرك الطويل بيتنطق <b>زي اسم الحرف</b> نفسه. زي حرف <b class='en'>a</b> في <b class='en'>plate</b>.",
+    ex:["plate","home","feed","bean"], vis:picRow([['plate','🍽️','a'],['home','🏠','o'],['feed','🥣','ee'],['heat','🌡️','ea'],['bean','🫘','ea']])}
+  ],
+  qs:[
+   {t:'l', w:'heat', o:[['hat','👒'],['heat','🌡️']]},
+   {t:'l', w:'plate', o:[['plate','🍽️'],['cat','🐱']]},
+   {t:'l', w:'hot', o:[['home','🏠'],['hot','🔥']]},
+   {t:'l', w:'bean', o:[['pen','🖊️'],['bean','🫘']]},
+   {t:'s', q:"الصوت قصير ولا طويل؟ اسمعي الكلمة وحطيها في مكانها", buckets:['short','long'], items:[['cat',0],['feed',1],['pot',0],['home',1],['pen',0],['plate',1],['hat',0],['heat',1]], speak:true},
+   {t:'c', q:"Hany went ___ and changed into his best clothes.", o:['hot','home'], a:1},
+   {t:'c', q:"The children ___ their cat in the morning.", o:['feed','fed'], a:0},
+   {t:'c', q:"I washed the ___ after dinner.", o:['plate','pot'], a:0}
+  ]},
+ pfv: {en:"The /f/ and /v/ Sounds", ar:"صوت f وصوت v", sound:true,
+  slides:[
+   {h:"صوت /f/", b:"حطي إيدك على رقبتك وقولي <b class='en'>fish</b>. رقبتك <b>مش بتتهز</b>، علشان صوت /f/ من غير صوت (voiceless).",
+    ex:["fish","frog","forest"], vis:picRow([['fish','🐟','f'],['frog','🐸','f'],['flag','🚩','f'],['factory','🏭','f']])},
+   {h:"صوت /v/", b:"دلوقتي قولي <b class='en'>van</b>. حاسة رقبتك <b>بتتهز</b>؟ صوت /v/ فيه صوت (voiced). السنان بتلمس الشفايف في الاتنين.",
+    ex:["van","violin","vest"], vis:picRow([['van','🚐','v'],['violin','🎻','v'],['vest','🦺','v'],['vet','🩺','v']])}
+  ],
+  qs:[
+   {t:'c', q:"___an", o:['f','v'], a:1, vis:big('🚐'), say:'van'},
+   {t:'c', q:"___rog", o:['f','v'], a:0, vis:big('🐸'), say:'frog'},
+   {t:'c', q:"___iolin", o:['f','v'], a:1, vis:big('🎻'), say:'violin'},
+   {t:'c', q:"___lag", o:['f','v'], a:0, vis:big('🚩'), say:'flag'},
+   {t:'c', q:"___est", o:['f','v'], a:1, vis:big('🦺'), say:'vest'},
+   {t:'c', q:"___actory", o:['f','v'], a:0, vis:big('🏭'), say:'factory'},
+   {t:'s', q:"/f/ ولا /v/؟", buckets:['/f/','/v/'], items:[['forest',0],['violin',1],['flag',0],['vest',1],['fish',0],['view',1],['frog',0],['van',1]], speak:true}
+  ]},
+ pbl: {en:"Blending Sounds", ar:"دمج الأصوات", sound:true,
+  slides:[
+   {h:"يعني إيه blend؟", b:"لما نقرا كلمة بنجمع <b>صوتين أو أكتر مع بعض</b> بسرعة. زي <b class='en'>d + r = dr</b> في <b class='en'>drum</b>.",
+    ex:["drum","fruit","plant"], vis:picRow([['drum','🥁','dr'],['fruit','🍎','fr'],['plant','🪴','pl']])},
+   {h:"blends تانية", b:"<b class='en'>cr</b> زي crown، <b class='en'>pl</b> زي plane، <b class='en'>dr</b> زي draw، <b class='en'>fr</b> زي frog.",
+    ex:["crown","plane","draw","frog"], vis:picRow([['crown','👑','cr'],['plane','✈️','pl'],['draw','✏️','dr'],['frog','🐸','fr']])}
+  ],
+  qs:[
+   {t:'c', q:"___own", o:['cr','dr','pl','fr'], a:0, vis:big('👑'), say:'crown'},
+   {t:'c', q:"___um", o:['cr','dr','pl','fr'], a:1, vis:big('🥁'), say:'drum'},
+   {t:'c', q:"___ane", o:['cr','dr','pl','fr'], a:2, vis:big('✈️'), say:'plane'},
+   {t:'c', q:"___uit", o:['cr','dr','pl','fr'], a:3, vis:big('🍎'), say:'fruit'},
+   {t:'c', q:"___ant", o:['cr','dr','pl','fr'], a:2, vis:big('🪴'), say:'plant'},
+   {t:'l', w:'frown', o:[['dog','🐶'],['frown','☹️'],['log','🪵']], ask:'اختاري الكلمة اللي أولها blend'},
+   {t:'l', w:'draw', o:[['draw','✏️'],['think','🤔'],['sink','🚰']], ask:'اختاري الكلمة اللي أولها blend'},
+   {t:'s', q:"الكلمة دي في أنهي مجموعة؟", buckets:['fr','dr','pl'], items:[['fruit',0],['drum',1],['plant',2],['frog',0],['draw',1],['play',2],['dress',1],['plane',2]], speak:true}
+  ]},
+ ppb: {en:"The /p/ and /b/ Sounds", ar:"صوت p وصوت b", sound:true,
+  slides:[
+   {h:"صوت /p/", b:"اقفلي شفايفك وانفخي هوا بقوة من غير صوت. جربي تحطي ورقة قدام بقك وقولي <b class='en'>pear</b>: الورقة هتتحرك!",
+    ex:["pear","pin","pan"], vis:picRow([['pear','🍐','p'],['pin','📌','p'],['pan','🍳','p'],['pond','🏞️','p']])},
+   {h:"صوت /b/", b:"اقفلي شفايفك برضه بس <b>استخدمي صوتك</b>، ورقبتك هتتهز. زي <b class='en'>bear</b>.",
+    ex:["bear","bin","bat"], vis:picRow([['bear','🐻','b'],['bin','🗑️','b'],['bat','🦇','b'],['beak','🐦','b']])}
+  ],
+  qs:[
+   {t:'l', w:'pear', o:[['bear','🐻'],['pear','🍐']]},
+   {t:'l', w:'bin', o:[['pin','📌'],['bin','🗑️']]},
+   {t:'l', w:'pan', o:[['pan','🍳'],['ban','🚫']]},
+   {t:'l', w:'bat', o:[['pat','🖐️'],['bat','🦇']]},
+   {t:'c', q:"___ond", o:['p','b'], a:0, vis:big('🏞️'), say:'pond'},
+   {t:'c', q:"___eak", o:['p','b'], a:1, vis:big('🐦'), say:'beak'},
+   {t:'c', q:"The ducks swim in the ___.", o:['pond','bond'], a:0},
+   {t:'c', q:"We throw our trash in the ___.", o:['pin','bin'], a:1},
+   {t:'s', q:"/p/ ولا /b/؟", buckets:['/p/','/b/'], items:[['pond',0],['bat',1],['pan',0],['bin',1],['pear',0],['bear',1]], speak:true}
+  ]},
+ pme: {en:"Magic E", ar:"الـ e السحرية", sound:true,
+  slides:[
+   {h:"الـ e السحرية", b:"لما تيجي <b class='en'>e</b> ساكتة في آخر الكلمة بعد حرف واحد، بتخلّي الحرف المتحرك اللي قبلها <b>يتنطق طويل</b>، والـ e نفسها مش بتتنطق.",
+    ex:["rope","slide","cube"], vis:picRow([['rope','🪢','e'],['slide','🛝','e'],['cube','🧊','e'],['stone','🪨','e'],['face','🙂','e'],['nine','9️⃣','e']])},
+   {h:"شوفي السحر", b:"<b class='en'>kit</b> بقت <b class='en'>kite</b>، و<b class='en'>cub</b> بقت <b class='en'>cube</b>. الـ e غيّرت الصوت والمعنى!",
+    ex:["kit, kite","cub, cube","hat, hate"]}
+  ],
+  qs:[
+   {t:'m', pairs:[['cub','cube','🧊'],['kit','kite','🪁'],['pin','pine','🌲'],['not','note','📝'],['tap','tape','📼']]},
+   {t:'l', w:'cube', o:[['cub','🐻'],['cube','🧊']]},
+   {t:'l', w:'kite', o:[['kit','🧰'],['kite','🪁']]},
+   {t:'c', q:"I play on the ___ in the park.", o:['slid','slide'], a:1},
+   {t:'c', q:"My house has a very big ___.", o:['gate','gat'], a:0},
+   {t:'c', q:"My sister can play the ___.", o:['flut','flute'], a:1}
+  ]}
+});
+LESSONS.u1l3.p = 'pv'; LESSONS.u2l3.p = 'pfv'; LESSONS.u3l3.p = 'pbl'; LESSONS.u4l3.p = 'ppb'; LESSONS.u5l3.p = 'pme';
+
+/* ============ WRITING STUDIO (one per unit) ============ */
+const todayStr = () => { try{ return new Date().toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'}); }catch(e){ return 'Today'; } };
+const WRITING = {
+ routine: {en:"My Daily Routine", ar:"روتيني اليومي", type:"Sequence words", target:40,
+  model:{title:"My Healthy Life", text:["Every day, I follow the same routine. First, I wake up early at 6:00 a.m. and brush my teeth. I wash my face and get dressed for school.","Next, I have a healthy breakfast, including milk and fruit. Then, I go to school, where I study and play with my friends.","After that, I do my homework and then play sports for one hour. Finally, I go to bed at 9:00 p.m. because sleeping early keeps me healthy."]},
+  parts:[
+   {t:'c', q:"___, I wake up early.", o:['First','Finally','After that'], a:0},
+   {t:'c', q:"___, I go to bed at 9:00 p.m.", o:['Next','Finally','First'], a:1},
+   {t:'c', q:"Sequence words show the ___ of actions.", o:['order','color','size'], a:0}
+  ],
+  check:['First','Next','Then','After that','Finally'],
+  steps:[
+   {h:"العنوان", s:"My Daily Routine", title:true},
+   {h:"الأول", s:"First, I wake up at {time} and {morning}.", v:{time:['6:00 a.m.','6:30 a.m.','7:00 a.m.'], morning:['brush my teeth','wash my face','get dressed']}},
+   {h:"وبعدين", s:"Next, I have {food} for breakfast.", v:{food:['eggs and bread','milk and fruit','cheese and bread']}},
+   {h:"ثم", s:"Then, I go to school, where I {school}.", v:{school:['study and play with my friends','read books and draw','learn English and math']}},
+   {h:"بعد كده", s:"After that, I {after} and play {sport}.", v:{after:['do my homework','help my mother','read a story'], sport:['football','basketball','with my cat']}},
+   {h:"في الآخر", s:"Finally, I go to bed at {bed} because sleeping early keeps me {adj}.", v:{bed:['8:30 p.m.','9:00 p.m.','9:30 p.m.'], adj:['healthy','strong']}}
+  ]},
+ diary: {en:"A Diary Entry", ar:"اليوميات", type:"Diary", target:40,
+  model:{title:"Dear diary", text:["March 15, 2025","Dear diary,","Today, Grandpa told me amazing stories about our community's history. Fifty years ago, our neighborhood was very different! Where our big supermarket stands now, there was a beautiful old market with wooden stalls.","The tall buildings weren't here then. Instead, there were small houses with beautiful gardens. It makes me proud to know our community has such a rich history.","Yours truly,","Hana"]},
+  parts:[
+   {t:'c', q:"\"March 15, 2025\" is the ___.", o:['date','greeting','closing'], a:0},
+   {t:'c', q:"\"Dear diary,\" is the ___.", o:['date','greeting','closing'], a:1},
+   {t:'c', q:"\"Yours truly, Hana\" is the ___.", o:['details','greeting','closing'], a:2}
+  ],
+  check:['{DATE}','diary,','Yours truly'],
+  steps:[
+   {h:"التاريخ", s:"{DATE}", auto:true},
+   {h:"التحية", s:"{greet}", v:{greet:['Dear diary,','Hello diary,']}},
+   {h:"مين حكالك؟", s:"Today, {who} told me amazing stories about our {place}.", v:{who:['Grandpa','Grandma','my dad','my teacher'], place:['neighborhood','school','city']}},
+   {h:"زمان كان فيه إيه؟", s:"Many years ago, there was {past} where {now} is now.", v:{past:['an old market with wooden stalls','a small train station','a beautiful garden'], now:['our big supermarket','our park','my school']}},
+   {h:"الناس كانوا عاملين إزاي؟", s:"Everyone knew their neighbors, and children played {how}.", v:{how:['safely in the streets','in the gardens','together every day']}},
+   {h:"حاسة بإيه؟", s:"It makes me {feel} to know our community has such a rich history.", v:{feel:['proud','happy']}},
+   {h:"الختام", s:"Yours truly, {NAME}", auto:true}
+  ]},
+ report: {en:"A Research Report", ar:"تقرير عن حيوان", type:"Report", target:40,
+  model:{title:"Endangered Animals", text:["Many animals around the world are in danger of disappearing forever. These animals are called endangered species.","The Red Sea Dugong is an endangered animal in Egypt. These gentle sea animals eat sea grass. They are in danger because of pollution and fishing nets.","To help these animals, we need to protect their homes, stop pollution, and create safe areas.","If we don't act now, these amazing animals could disappear forever."]},
+  parts:[
+   {t:'c', q:"\"Endangered Animals\" is the ___.", o:['title','example','solution'], a:0},
+   {t:'c', q:"\"To help these animals, stop pollution.\" is a ___.", o:['title','solution','introduction'], a:1},
+   {t:'c', q:"\"The Red Sea Dugong is an endangered animal.\" is an ___.", o:['example','title','conclusion'], a:0}
+  ],
+  check:['Endangered','because','we need to','forever'],
+  steps:[
+   {h:"العنوان", s:"Endangered Animals: The {animal}", title:true, v:{animal:['Arabian Leopard','Sea Turtle','Panda','Red Sea Dugong']}},
+   {h:"المقدمة", s:"Many animals are in danger of disappearing forever.", auto:true},
+   {h:"حقائق", s:"The {animal} lives in {home}. It eats {eats}.", v:{home:{by:'animal', map:{'Arabian Leopard':['the mountains'], 'Sea Turtle':['the sea'], 'Panda':['forests'], 'Red Sea Dugong':['the Red Sea']}}, eats:{by:'animal', map:{'Arabian Leopard':['meat','small animals'], 'Sea Turtle':['sea grass','jellyfish'], 'Panda':['plants','bamboo'], 'Red Sea Dugong':['sea grass']}}}},
+   {h:"السبب", s:"It is in danger because of {danger}.", v:{danger:['pollution','fishing nets','hunting','people building houses in its habitat']}},
+   {h:"الحل", s:"To help it, we need to {sol}.", v:{sol:['protect its home','stop pollution','create safe areas','teach people about it']}},
+   {h:"الخاتمة", s:"If we don't act now, the {animal} could disappear forever.", auto:true}
+  ]},
+ blog: {en:"A Blog Post", ar:"بوست مدونة عن مكان في مصر", type:"Blog", target:40,
+  model:{title:"A Visit to St. Catherine Mountain", text:["By Tarek · March 15, 2024","Many tourists visit St. Catherine Mountain in South Sinai, Egypt. They wake up early to climb, and wear warm clothes because it's cold.","Along the way, they see colorful rocks and small plants, and some take pictures. At the top, they visit the old monastery and learn about its history.","St. Catherine is a popular place for nature, adventure, and fun with friends and family."]},
+  parts:[
+   {t:'c', q:"The ___ tells readers what the blog post is about.", o:['title','date',"writer's name"], a:0},
+   {t:'c', q:"The ___ shows who wrote the blog post.", o:['title','date',"writer's name"], a:2},
+   {t:'c', q:"\"colorful\" and \"popular\" are ___ words.", o:['descriptive','sequence','question'], a:0}
+  ],
+  check:['A Visit to','By ','{DATE}'],
+  steps:[
+   {h:"العنوان", s:"A Visit to {place}", title:true, v:{place:['the Pyramids','Siwa Oasis','the Nile River','Khan Al-Khalili','Cairo Tower']}},
+   {h:"الكاتبة والتاريخ", s:"By {NAME} · {DATE}", auto:true},
+   {h:"فين المكان؟", s:"{place} is in {city}, Egypt. Many tourists visit it every year.", v:{city:{by:'place', map:{'the Pyramids':['Giza'], 'Siwa Oasis':['the Western Desert'], 'the Nile River':['Cairo','Aswan','Luxor'], 'Khan Al-Khalili':['Old Cairo'], 'Cairo Tower':['Cairo']}}}},
+   {h:"بيلبسوا إيه؟", s:"Visitors wear {wear} because it is {weather}.", v:{wear:['light clothes','hats and sunglasses','warm clothes'], weather:['hot and sunny','very sunny','cold at night']}},
+   {h:"بيشوفوا إيه؟", s:"They can see {see}, and they {doing}.", v:{see:['amazing old buildings','beautiful palm trees','the river and the boats','colorful gifts'], doing:['take pictures','ride camels','buy gifts','learn about history']}},
+   {h:"الختام", s:"It is a {adj} place for fun with friends and family.", v:{adj:['popular','wonderful','beautiful']}}
+  ]},
+ nonfiction: {en:"A Non-Fiction Text", ar:"نص حقيقي عن وظيفة", type:"Non-fiction", target:40,
+  model:{title:"Heroes Who Fight Fires", text:["My neighbor, Omar, is a firefighter at our local fire station. He wears a thick protective uniform with bright yellow stripes and a heavy helmet to keep him safe.","Every day at the station, he checks his equipment and keeps the big red fire truck ready. He uses special tools like water hoses and ladders.","The work is dangerous, but he's proud to be a firefighter because he likes helping others."]},
+  parts:[
+   {t:'c', q:"Non-fiction writing is ___.", o:['true','made up','a dream'], a:0},
+   {t:'c', q:"\"thick\" and \"big red\" are ___.", o:['adjectives','dates','names'], a:0},
+   {t:'c', q:"\"My neighbor, Omar, is a firefighter.\" is the ___ sentence.", o:['introductory','closing'], a:0}
+  ],
+  check:['My ','wears','Every day','proud'], titleT:"A Real Hero: My {who}",
+  steps:[
+   {h:"الضمير", s:"{P}", pick:true, v:{P:['He','She']}},
+   {h:"المقدمة", s:"My {who}, {person}, is {job}.", v:{who:{by:'P', map:{He:['neighbor','uncle','father'], She:['neighbor','aunt','mother']}}, person:{by:'P', map:{He:['Omar','Ali','Karim'], She:['Sara','Hoda','Mona']}}, job:['a doctor at the hospital','a nurse at the hospital','a teacher at a big school','a firefighter at the fire station','an engineer at a big company']}},
+   {h:"بيلبس إيه؟", s:"{P} wears {wearing} at work.", v:{wearing:{by:'job', map:{'a doctor at the hospital':['a white coat'], 'a nurse at the hospital':['a white uniform'], 'a teacher at a big school':['nice clothes','a smart jacket'], 'a firefighter at the fire station':['a heavy helmet','a thick protective uniform'], 'an engineer at a big company':['a yellow helmet','a blue cap']}}}},
+   {h:"كل يوم", s:"Every day, {p} {daily}.", v:{daily:{by:'job', map:{'a doctor at the hospital':['checks sick people','helps patients feel better'], 'a nurse at the hospital':['takes care of patients','helps the doctors'], 'a teacher at a big school':['teaches children','reads stories to students'], 'a firefighter at the fire station':['fights fires and saves people','checks the big red fire truck'], 'an engineer at a big company':['designs big buildings','checks new buildings']}}}},
+   {h:"الأدوات", s:"{P} uses {tools}.", v:{tools:{by:'job', map:{'a doctor at the hospital':['special tools','a stethoscope'], 'a nurse at the hospital':['special tools','medicine'], 'a teacher at a big school':['books and pens','a computer'], 'a firefighter at the fire station':['water hoses and ladders','oxygen tanks'], 'an engineer at a big company':['a computer','special tools']}}}},
+   {h:"الختام", s:"The work is hard, but {p} is proud to help people and make a difference.", auto:true}
+  ]}
+};
+LESSONS.u1l4.w = 'routine'; LESSONS.u2l4.w = 'diary'; LESSONS.u3l4.w = 'report'; LESSONS.u4l4.w = 'blog'; LESSONS.u5l4.w = 'nonfiction';
+
+function writeRun(wid, back){
+  setTop(true);
+  const W = WRITING[wid];
+  const tokLine = s => s.split(' ').map(w => `<button class="wtok" data-say="${esc(w.replace(/[^A-Za-z':0-9.]/g,''))}">${esc(w)}</button>`).join(' ');
+  function model(){
+    screenEl.innerHTML = `<section class="stage">
+      <div class="g-head"><h2>ورشة الكتابة <span class="en" style="font-size:20px;color:var(--ink-soft)">${W.en}</span></h2>
+        <p class="ask">الأول اقري الموضوع ده من كتابك. دوسي على أي كلمة تسمعيها.</p></div>
+      <div class="storybox sticker paper">
+        <h3 class="en paper-title">${W.model.title}</h3>
+        <div class="story en" lang="en">${W.model.text.map(l => `<p>${tokLine(l)}</p>`).join('')}</div>
+        <div class="row" style="justify-content:center">${sayBtn(W.model.text.join(' '), 'اسمعي الموضوع كله')}</div>
+      </div>
+      <button class="btn primary" id="go">قريته! يلا نتعلم أجزاءه</button>
+    </section>`;
+    $('#go').onclick = parts;
+  }
+  function parts(){
+    const results = []; let i = 0;
+    (function next(){
+      if(i >= W.parts.length) return builder();
+      const head = gameHead('أجزاء الموضوع', W.type, 'اختاري الإجابة الصح', i, W.parts.length, results);
+      choose(W.parts[i], head, ok => { results[i] = ok; if(ok) addStars(1); setTimeout(() => { i++; next(); }, 1500); });
+    })();
+  }
+  function builder(){
+    const vars = {NAME: S.name || 'Mishmish', DATE: todayStr()};
+    const lines = []; let si = 0;
+    const fill = s => s.replace(/\{(\w+)\}/g, (m, k) => k === 'p' ? (vars.P || 'he').toLowerCase() : (vars[k] != null ? vars[k] : `<span class="slot-q">...</span>`));
+    function step(){
+      if(si >= W.steps.length) return final();
+      const st = W.steps[si];
+      const need = Object.keys(st.v || {}).filter(k => vars[k] == null);
+      if(st.auto || (!need.length && !st.pick)){ lines[si] = fill(st.s); si++; return step(); }
+      let picks = {};
+      const optsFor = k => { const x = st.v[k]; return Array.isArray(x) ? x : (x.map[vars[x.by]] || Object.values(x.map).flat()); };
+      function render(){
+        const tmp = {...vars, ...picks};
+        const preview = st.s.replace(/\{(\w+)\}/g, (m, k) => k === 'p' ? (tmp.P || '...').toLowerCase() : (tmp[k] != null ? `<b class="hl">${esc(tmp[k])}</b>` : `<span class="slot-q">...</span>`));
+        const done = need.every(k => picks[k] != null);
+        screenEl.innerHTML = `<section class="stage">
+          <div class="g-head"><h2>اكتبي مع مشمش <span class="en" style="font-size:20px;color:var(--ink-soft)">${W.en}</span></h2>
+            <p class="ask">${st.h}: اختاري من الكلمات وكوّني الجملة</p>
+            <div class="dots">${W.steps.map((_,k) => `<i class="${k < si ? 'done' : k === si ? 'now' : ''}"></i>`).join('')}</div></div>
+          <div class="draft sticker paper" dir="ltr">${lines.filter(Boolean).map(l => `<p class="en">${l}</p>`).join('')}<p class="en now-line">${preview}</p></div>
+          ${need.map(k => `<div class="slot-row"><div class="chips" dir="ltr">${optsFor(k).map(c => `<button class="chip ${picks[k] === c ? 'on' : ''}" data-slot="${k}" data-val="${esc(c)}" aria-pressed="${picks[k] === c}"><span class="en" style="color:inherit;font-size:18px">${esc(c)}</span></button>`).join('')}</div></div>`).join('')}
+          <div class="row" style="justify-content:center"><button class="btn primary" id="ok" ${done ? '' : 'disabled'}>${si < W.steps.length - 1 ? 'الجملة اللي بعدها' : 'خلّصت!'}</button></div>
+        </section>`;
+        screenEl.querySelectorAll('[data-slot]').forEach(b => b.onclick = () => { picks[b.dataset.slot] = b.dataset.val; say(b.dataset.val); render(); });
+        $('#ok').onclick = () => { Object.assign(vars, picks); lines[si] = st.pick ? '' : fill(st.s); if(!st.pick) say(lines[si].replace(/<[^>]+>/g,'')); si++; step(); };
+      }
+      render();
+    }
+    step();
+    function final(){
+      const title = W.steps[0].title ? lines[0] : W.titleT ? fill(W.titleT) : W.en;
+      const body = lines.filter((l, k) => l && !(W.steps[0].title && k === 0));
+      const text = body.join(' ').replace(/<[^>]+>/g, '');
+      const words = text.split(/\s+/).filter(x => /[A-Za-z0-9]/.test(x)).length;
+      const checks = W.check.map(c => { const cc = c.replace('{DATE}', vars.DATE); return [c.replace('{DATE}', 'the date'), text.includes(cc) || title.includes(cc)]; });
+      screenEl.innerHTML = `<section class="stage">
+        <div class="g-head"><h2>موضوعك جاهز! <span class="en" style="font-size:20px;color:var(--ink-soft)">Well done</span></h2>
+          <p class="ask">اقريه بصوت عالي، وبعدين اسمعي مشمش وهي بتقراه</p></div>
+        <div class="storybox sticker paper" dir="ltr">
+          <h3 class="en paper-title">${esc(title)}</h3>
+          <div class="story en">${body.map(l => `<p>${l}</p>`).join('')}</div>
+        </div>
+        <div class="wcheck sticker">
+          <span class="pill ${words >= W.target ? 'ok' : ''}">${words} كلمة ${words >= W.target ? '✔' : `· الامتحان بيطلب ${W.target}`}</span>
+          ${checks.map(([c, ok]) => `<span class="pill ${ok ? 'ok' : ''}">${ok ? '✔' : '○'} <span class="en">${esc(c)}</span></span>`).join('')}
+        </div>
+        <div class="row" style="justify-content:center">
+          ${sayBtn(title + '. ' + text, 'اسمعي موضوعك')}
+          <button class="btn primary" id="saveW">احفظيه في كتاباتي</button>
+          <button class="btn" id="again">اكتبي تاني</button>
+        </div>
+      </section>`;
+      $('#again').onclick = () => writeRun(wid, back);
+      $('#saveW').onclick = () => {
+        const first = !S.wDone[wid];
+        S.writings.unshift({wid, title, text, date: vars.DATE}); S.writings = S.writings.slice(0, 20); save('writings');
+        S.wDone[wid] = true; save('wDone');
+        addStars(first ? 5 : 2); meow(); burst($('.paper'));
+        $('#saveW').disabled = true; $('#saveW').textContent = `اتحفظ! (+${first ? 5 : 2} ⭐)`;
+        setTimeout(back, 1800);
+      };
+    }
+  }
+  model();
+}
+
 /* ---------- tile icons ---------- */
 const ICONS = {
   listen:`<svg viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="38" fill="#159E8F" stroke="#2B2233" stroke-width="3"/><path d="M20 35v14h10l12 10V25L30 35z" fill="#fff" stroke="#2B2233" stroke-width="3" stroke-linejoin="round"/><path d="M50 33a12 12 0 0 1 0 18M56 26a21 21 0 0 1 0 32" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>`,
@@ -1211,6 +1517,10 @@ function home(keep){
           : '<p class="muted">لسه مفيش. أول ما تلعب، الكلمات اللي بتغلط فيها هتظهر هنا.</p>'}
       </div>
       <div>
+        <h4>كتاباتها</h4>
+        ${S.writings.length ? `<div class="writings">${S.writings.map(w => `<details class="wr"><summary><span class="en">${esc(w.title)}</span> · <small>${esc(w.date)}</small></summary><p class="en" dir="ltr">${esc(w.text)}</p></details>`).join('')}</div>` : '<p class="muted">لسه مفيش. المواضيع اللي بتكتبها في ورشة الكتابة بتتحفظ هنا علشان تراجعوها معاها.</p>'}
+      </div>
+      <div>
         <h4>نصايح صغيرة</h4>
         <ul>
           <li>ربع ساعة كل يوم أحسن من ساعتين مرة في الأسبوع.</li>
@@ -1237,7 +1547,7 @@ function home(keep){
   $('#resetBtn').onclick = () => {
     $('#resetRow').innerHTML = '<span>متأكدين؟ النجوم والرسومات هتتمسح.</span><button class="btn" id="yesReset" style="background:var(--bad-l)">أيوه امسح</button><button class="btn" id="noReset">لأ</button>';
     $('#noReset').onclick = () => home(true);
-    $('#yesReset').onclick = () => { Object.assign(S, {stars:0, owned:[], equip:{}, wl:{}, gDone:{}, vDone:{}, gallery:[], tricky:{}, mish:{...DEFAULT_MISH}, readWords:[], famDone:{}, storyDone:{}}); ['stars','owned','equip','wl','gDone','vDone','gallery','tricky','mish','readWords','famDone','storyDone'].forEach(save); renderStars(); home(true); };
+    $('#yesReset').onclick = () => { Object.assign(S, {stars:0, owned:[], equip:{}, wl:{}, gDone:{}, vDone:{}, writings:[], wDone:{}, gallery:[], tricky:{}, mish:{...DEFAULT_MISH}, readWords:[], famDone:{}, storyDone:{}}); ['stars','owned','equip','wl','gDone','vDone','writings','wDone','gallery','tricky','mish','readWords','famDone','storyDone'].forEach(save); renderStars(); home(true); };
   };
 }
 
@@ -1671,7 +1981,7 @@ function unitScreen(uid){
       return `<button class="lesson-card" data-lesson="${l.id}">
         <span class="l-num">${u.id === 'st' ? '📖' : i + 1}</span>
         <span class="l-body"><span class="en l-title">${l.en}</span><span class="l-ar">${l.ar}</span>
-        <span class="chips-row"><span class="mini-chip">🌱 ${p}/${l.words.length}</span>${l.g ? `<span class="mini-chip g ${S.gDone[l.g] ? 'done' : ''}">${S.gDone[l.g] ? '✔ ' : '📐 '}${GRAMMAR[l.g].ar}</span>` : ''}${l.verbs.length ? `<span class="mini-chip">${S.vDone[l.id] ? '✔ ' : ''}${l.verbs.length} أفعال</span>` : ''}</span></span>
+        <span class="chips-row"><span class="mini-chip">🌱 ${p}/${l.words.length}</span>${l.g ? `<span class="mini-chip g ${S.gDone[l.g] ? 'done' : ''}">${S.gDone[l.g] ? '✔ ' : '📐 '}${GRAMMAR[l.g].ar}</span>` : ''}${l.p ? `<span class="mini-chip s ${S.gDone[l.p] ? 'done' : ''}">${S.gDone[l.p] ? '✔ ' : '🔊 '}نطق</span>` : ''}${l.w ? `<span class="mini-chip w ${S.wDone[l.w] ? 'done' : ''}">${S.wDone[l.w] ? '✔ ' : '✍️ '}كتابة</span>` : ''}${l.verbs.length ? `<span class="mini-chip">${S.vDone[l.id] ? '✔ ' : ''}${l.verbs.length} أفعال</span>` : ''}</span></span>
       </button>`;
     }).join('')}</div>
   </section>`;
@@ -1697,6 +2007,8 @@ function lessonScreen(lid){
       ${fresh.length ? `<button class="act-card a-learn" id="aLearn"><span class="a-ico">🌱</span><b>ازرعي كلمات جديدة</b><small>${Math.min(6, fresh.length)} كلمات · اتعرّفي، طابقي، افتكري</small></button>` : `<div class="act-card a-done"><span class="a-ico">🌳</span><b>زرعتي كل كلمات الدرس!</b><small>كمّلي سقي في الحديقة</small></div>`}
       ${grown.length ? `<button class="act-card a-water" id="aWater"><span class="a-ico">💧</span><b>اسقي كلمات الدرس</b><small>راجعي ${Math.min(12, grown.length)} كلمة</small></button>` : ''}
       ${l.g ? `<button class="act-card a-gram ${S.gDone[l.g] ? 'is-done' : ''}" id="aGram"><span class="a-ico">📐</span><b>قاعدة: ${GRAMMAR[l.g].ar}</b><small class="en">${GRAMMAR[l.g].en}${S.gDone[l.g] ? ' ✔' : ''}</small></button>` : ''}
+      ${l.p ? `<button class="act-card a-sound ${S.gDone[l.p] ? 'is-done' : ''}" id="aSound"><span class="a-ico">🔊</span><b>معمل الأصوات</b><small>${GRAMMAR[l.p].ar}${S.gDone[l.p] ? ' ✔' : ''}</small></button>` : ''}
+      ${l.w ? `<button class="act-card a-write ${S.wDone[l.w] ? 'is-done' : ''}" id="aWrite"><span class="a-ico">✍️</span><b>ورشة الكتابة</b><small>${WRITING[l.w].ar}${S.wDone[l.w] ? ' ✔' : ''}</small></button>` : ''}
       ${l.verbs.length ? `<button class="act-card a-verb" id="aVerb"><span class="a-ico">⏪</span><b>تحدي الأفعال</b><small>ماضي ${l.verbs.length} أفعال${S.vDone[l.id] ? ' ✔' : ''}</small></button>` : ''}
     </div>
     ${impKeys.length ? `<h3 class="sec-title">الكلمات المهمة <span class="en">Important</span></h3><div class="wgrid">${impKeys.map(tile).join('')}</div>` : ''}
@@ -1713,6 +2025,8 @@ function lessonScreen(lid){
   if($('#aWater')) $('#aWater').onclick = () => { roundStars = 0; review(shuffle(grown).slice(0, 12), pool, back, 'ركن الدرس'); };
   if($('#aGram')) $('#aGram').onclick = () => { roundStars = 0; grammarRun(l.g, back); };
   if($('#aVerb')) $('#aVerb').onclick = () => { roundStars = 0; verbQuiz(l, back); };
+  if($('#aSound')) $('#aSound').onclick = () => { roundStars = 0; grammarRun(l.p, back); };
+  if($('#aWrite')) $('#aWrite').onclick = () => { roundStars = 0; writeRun(l.w, back); };
 }
 
 /* ---------- learn: meet → match → recall ---------- */
@@ -1942,11 +2256,13 @@ function grammarRun(gid, back){
         return finish(() => grammarRun(gid, back), `جاوبتي ${results.filter(Boolean).length} من ${qs.length} صح من أول مرة`, back, 'ارجعي للدرس');
       }
       const q = qs[i];
-      const head = gameHead(G.ar, G.en, q.sub || (q.t === 'b' ? 'رتّبي الكلمات وكوّني الجملة' : q.t === 's' ? q.q : q.t === 'o' ? q.q : 'اختاري الإجابة الصح'), i, qs.length, results);
+      const head = gameHead(G.ar, G.en, q.sub || (q.t === 'b' ? 'رتّبي الكلمات وكوّني الجملة' : q.t === 's' || q.t === 'o' ? q.q : q.t === 'l' ? 'اسمعي واختاري' : q.t === 'm' ? 'الـ e السحرية' : 'اختاري الإجابة الصح'), i, qs.length, results);
       const done = ok => { results[i] = ok; if(ok) addStars(1); setTimeout(() => { i++; next(); }, 1700); };
       if(q.t === 'c') choose(q, head, done);
       else if(q.t === 'b') build(q, head, done);
       else if(q.t === 's') sort(q, head, done);
+      else if(q.t === 'l') listenQ(q, head, done);
+      else if(q.t === 'm') magicQ(q, head, done);
       else order(q, head, done);
     }
     next();
@@ -1958,7 +2274,7 @@ function choose(q, head, done){
   if(q.shuf) idx = shuffle(idx);
   const full = (q.say || (q.q.includes('___') ? q.q.replace('___', q.o[q.a]) : q.o[q.a])).replace(/[^\x20-\x7E]/g, '').replace(/\(\s*\)/g, '').trim();
   screenEl.innerHTML = `<section class="stage">${head}
-    <div class="qcard sticker gq">${q.vis && !q.pics ? q.vis : ''}<p class="gsent en" lang="en">${esc(q.q).replace('___', '<span class="blank">?</span>')}</p>${q.pics ? sayBtn(q.say) : ''}</div>
+    <div class="qcard sticker gq">${q.vis && !q.pics ? q.vis : ''}<p class="gsent en" lang="en">${esc(q.q).replace('___', '<span class="blank">?</span>')}</p>${q.say ? sayBtn(q.say) : ''}</div>
     <div class="opts ${q.pics ? 'opts3 picopts' : 'words n' + idx.length}">${idx.map(k => `<button class="opt ${q.pics ? 'pico' : 'wopt en'}" data-k="${k}">${q.pics ? q.o[k] : esc(q.o[k])}</button>`).join('')}</div>
     <div class="feedback" id="fb" aria-live="polite"></div></section>`;
   let tries = 0, over = false;
@@ -2008,12 +2324,13 @@ function sort(q, head, done){
     if(j >= items.length) return done(miss === 0);
     const [label, b] = items[j];
     screenEl.innerHTML = `<section class="stage">${head}
-      <div class="sort-item sticker en" lang="en">${esc(label)}</div>
+      <div class="sort-item sticker en" lang="en">${esc(label)}${q.speak ? ' ' + sayBtn(label, '') : ''}</div>
       <div class="buckets">${q.buckets.map((bk,k) => `<button class="bucket en" data-b="${k}">${esc(bk)}<small>${items.slice(0, j).filter(x => x[1] === k).map(x => esc(x[0])).join(' · ')}</small></button>`).join('')}</div>
       <div class="feedback" id="fb" aria-live="polite"></div></section>`;
+    if(q.speak) setTimeout(() => say(label, .75), 250);
     screenEl.querySelectorAll('.bucket').forEach(bt => bt.onclick = () => {
-      if(+bt.dataset.b === b){ sfxGood(); say(`${label} ${q.buckets[b]}`); j++; render(); }
-      else { miss++; sfxBad(); bt.classList.remove('wrong'); void bt.offsetWidth; bt.classList.add('wrong'); $('#fb').className = 'feedback bad'; $('#fb').textContent = 'فكّري: هو مفرد ولا جمع؟'; }
+      if(+bt.dataset.b === b){ sfxGood(); if(!q.speak) say(`${label} ${q.buckets[b]}`); j++; render(); }
+      else { miss++; sfxBad(); bt.classList.remove('wrong'); void bt.offsetWidth; bt.classList.add('wrong'); $('#fb').className = 'feedback bad'; $('#fb').textContent = q.speak ? 'اسمعي الكلمة تاني وفكّري' : 'فكّري: هو مفرد ولا جمع؟'; }
     });
   }
   render();
@@ -2031,6 +2348,47 @@ function order(q, head, done){
       if(k === picked.length){ picked.push(k); sfxGood(); say(`${SEQ[k]}, ${q.steps[k][1]}`); render(); if(picked.length === q.steps.length){ burst($('.seq')); done(miss === 0); } }
       else { miss++; sfxBad(); b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); $('#fb').className = 'feedback bad'; $('#fb').textContent = 'مشمش بتعمل إيه الأول؟ فكّري في صباحك انتي'; }
     });
+  }
+  render();
+}
+
+function listenQ(q, head, done){
+  const opts = shuffle(q.o);
+  screenEl.innerHTML = `<section class="stage">${head}
+    <div class="qcard sticker"><button class="speaker" id="spk" aria-label="اسمعي تاني">${SPK}</button><span class="muted">${q.ask || 'اسمعي كويس واختاري الكلمة اللي سمعتيها'}</span></div>
+    <div class="opts opts${opts.length === 3 ? 3 : 2} lopts">${opts.map(([w, e]) => `<button class="opt lopt" data-w="${esc(w)}"><span class="emo">${e}</span><span class="en">${esc(w)}</span></button>`).join('')}</div>
+    <div class="feedback" id="fb" aria-live="polite"></div></section>`;
+  $('#spk').onclick = () => say(q.w, .7);
+  setTimeout(() => say(q.w, .7), 300);
+  let tries = 0, over = false;
+  screenEl.querySelectorAll('.lopt').forEach(b => b.onclick = () => {
+    if(over) return;
+    if(b.dataset.w === q.w){ over = true; b.classList.add('right'); sfxGood(); burst(b); say(q.w); $('#fb').className = 'feedback good'; $('#fb').textContent = rand(['ودنك حلوة!','برافو!','صح كده!']); done(tries === 0); }
+    else { tries++; b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); sfxBad(); say(b.dataset.w + '. Listen again. ' + q.w, .75); $('#fb').className = 'feedback bad'; $('#fb').innerHTML = `دي <span class="en">${esc(b.dataset.w)}</span>. اسمعي تاني`; if(tries >= 2) screenEl.querySelector(`.lopt[data-w="${CSS.escape(q.w)}"]`).classList.add('hint'); }
+  });
+}
+function magicQ(q, head, done){
+  let j = 0;
+  function render(){
+    if(j >= q.pairs.length) return done(true);
+    const [a, b, e] = q.pairs[j];
+    screenEl.innerHTML = `<section class="stage">${head}
+      <div class="magic sticker" dir="ltr">
+        <span class="mword en" id="mw">${a}</span>
+        <button class="magic-e" id="me" aria-label="add magic e">🪄 <span class="en">e</span></button>
+      </div>
+      <p class="muted">اسمعي الكلمة، وبعدين دوسي على العصاية علشان تضيفي الـ e السحرية</p>
+      <div class="row" style="justify-content:center">${sayBtn(a)}</div>
+      <div class="feedback" id="fb" aria-live="polite"></div></section>`;
+    setTimeout(() => say(a, .7), 300);
+    $('#me').onclick = () => {
+      $('#me').disabled = true;
+      $('#mw').innerHTML = `<span>${b.slice(0, -1)}<b class="hl">e</b></span><span class="emo">${e}</span>`;
+      $('#mw').classList.add('grew'); sfxGood(); burst($('#mw'));
+      say(`${a}... ${b}!`, .7);
+      $('#fb').className = 'feedback good'; $('#fb').innerHTML = `<span class="en">${a} → ${b}</span><span>الصوت بقى طويل!</span>`;
+      setTimeout(() => { j++; render(); }, 2200);
+    };
   }
   render();
 }

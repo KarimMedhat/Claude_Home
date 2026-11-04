@@ -201,7 +201,44 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 @keyframes bounce{50%{transform:translateY(-10px)}}
 .hero-cat .cat{animation:bounce 3s ease-in-out infinite}
 
+/* reading corner */
+.t-read{background:var(--tangerine-l);grid-column:1/-1}
+.hub{display:grid;gap:12px}
+.hub .g-head{justify-items:start;text-align:start}
+.hub .sec-title{margin:22px 0 0}
+.hub > .muted{margin:0;max-width:65ch}
+.read-count{display:flex;align-items:center;gap:14px;padding:14px 18px;font-size:19px;background:var(--sun-l)}
+.read-count svg{width:56px;height:56px;flex:none}
+.read-count b{font-size:30px;font-variant-numeric:tabular-nums}
+.fams{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.fam,.story-card{border:3px solid var(--ink);border-radius:18px;background:var(--card);padding:12px;display:grid;justify-items:center;gap:2px;transition:transform .1s}
+.fam:hover,.story-card:hover{transform:translateY(-3px)}
+.fam .rimebig{font-size:34px;font-weight:700;color:var(--grape);line-height:1.2}
+.fam .emos{font-size:24px;letter-spacing:2px}
+.fam small,.story-card small{font-size:14px;color:var(--ink-soft);font-weight:700}
+.fam.next{background:var(--tangerine-l);box-shadow:4px 4px 0 var(--ink)}
+.fam.done,.story-card.done{background:var(--good-l)}
+.fam.done small,.story-card.done small{color:var(--good)}
+.stories{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.story-card .emos{font-size:40px;letter-spacing:4px}
+.story-card .en{font-size:20px;font-weight:700}
+.bigword .onset{color:var(--ink)}
+.bigword .rime{color:var(--grape);text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:8px}
+.opts.opts3{grid-template-columns:repeat(3,minmax(0,1fr));max-width:620px}
+.opt .txt{font-size:clamp(22px,4vw,34px);font-weight:700}
+.storybox{padding:20px 26px;display:grid;gap:12px;width:100%;max-width:760px}
+.storybox .scene{font-size:56px;letter-spacing:8px;text-align:center;line-height:1.2}
+.story{text-align:left}
+.story p{margin:0;font-size:30px;line-height:1.65}
+.wtok{border:0;background:none;padding:0 3px;border-radius:8px;font:inherit;color:inherit;text-decoration:underline dotted var(--ink-soft) 2px;text-underline-offset:7px}
+.wtok:hover{background:var(--sun-l)}
+.qa{display:grid;gap:16px;justify-items:center;width:100%;scroll-margin-top:90px}
+.qtext{font-size:32px;font-weight:700;margin:0}
+
 @media (max-width:760px){
+  .opts.opts3{max-width:100%;gap:10px}
+  .story p{font-size:24px}
+  .storybox{padding:16px}
   body{font-size:17px}
   .hero{grid-template-columns:1fr;justify-items:center}
   .hero-cat{width:200px}
@@ -256,7 +293,10 @@ const S = {
   tricky: store.get('tricky', {}),
   mish: store.get('mish', DEFAULT_MISH),
   name: store.get('name', ''),
-  sound: store.get('sound', true)
+  sound: store.get('sound', true),
+  readWords: store.get('readWords', []),
+  famDone: store.get('famDone', {}),
+  storyDone: store.get('storyDone', {})
 };
 const save = k => store.set(k, S[k]);
 
@@ -297,6 +337,60 @@ const PARTS = {
   nose:{en:'nose',ar:'المناخير'}, tail:{en:'tail',ar:'الديل'}, paws:{en:'paws',ar:'الرجلين'}, bow:{en:'bow',ar:'الفيونكة'}, ball:{en:'ball',ar:'الكورة'}
 };
 const PRAISE = ['Great job!','Super!','Well done!','Amazing!','You got it!','Excellent!'];
+
+/* ---------- reading: word families (easy -> harder) ---------- */
+const FAM_RAW = [
+  ['at',[['cat','قطة','🐱'],['hat','برنيطة','👒'],['bat','خفاش','🦇'],['rat','فار','🐀']]],
+  ['an',[['man','راجل','👨'],['van','عربية فان','🚐'],['pan','طاسة','🍳'],['can','علبة','🥫']]],
+  ['og',[['dog','كلب','🐶'],['frog','ضفدعة','🐸'],['log','جذع شجرة','🪵']]],
+  ['ug',[['bug','حشرة','🐛'],['mug','مج','☕'],['hug','حضن','🤗']]],
+  ['en',[['hen','فرخة','🐔'],['pen','قلم','🖊️'],['ten','عشرة','🔟']]],
+  ['ox',[['box','صندوق','📦'],['fox','تعلب','🦊'],['ox','تور','🐂']]],
+  ['ed',[['bed','سرير','🛏️'],['red','أحمر','🔴'],['sled','زحليقة','🛷']]],
+  ['ing',[['ring','خاتم','💍'],['king','ملك','🤴'],['sing','بيغني','🎤']]],
+  ['ee',[['bee','نحلة','🐝'],['tree','شجرة','🌳'],['three','تلاتة','3️⃣']]],
+  ['ake',[['cake','كيكة','🍰'],['snake','تعبان','🐍'],['lake','بحيرة','🏞️']]],
+  ['ook',[['book','كتاب','📕'],['cook','طباخ','🧑‍🍳'],['look','بيبص','👀']]],
+  ['ain',[['rain','مطر','🌧️'],['train','قطر','🚆'],['chain','سلسلة','⛓️']]],
+  ['oon',[['moon','قمر','🌙'],['spoon','معلقة','🥄'],['balloon','بالونة','🎈']]]
+];
+const FAMILIES = FAM_RAW.map(([id, ws]) => ({id, words: ws.map(([en, ar, e]) => ({en, ar, e}))}));
+
+/* ---------- reading: Mishmish stories ---------- */
+const STORIES = [
+  {title:'Mishmish and the Hat', scene:'🐱👒',
+   lines:['I am Mishmish.','I am a cat.','I have a red hat.','I like my hat!'],
+   qs:[{q:'What is Mishmish?', o:[{e:'🐶',en:'dog'},{e:'🐱',en:'cat'},{e:'🐟',en:'fish'}], a:1},
+       {q:'What color is the hat?', o:[{sw:'#3A7BE8',en:'blue'},{sw:'#3DBB5C',en:'green'},{sw:'#E8433A',en:'red'}], a:2}]},
+  {title:'The Big Cake', scene:'🐱🍰',
+   lines:['Mishmish has a big cake.','The cake is pink.','Mishmish and Mom eat the cake.','Yum, yum!'],
+   qs:[{q:'What does Mishmish have?', o:[{e:'🍰',en:'cake'},{e:'🍎',en:'apple'},{e:'🥚',en:'egg'}], a:0},
+       {q:'What color is the cake?', o:[{sw:'#FFD23F',en:'yellow'},{sw:'#FF8FC2',en:'pink'},{sw:'#8B5A3C',en:'brown'}], a:1}]},
+  {title:'In the Rain', scene:'🌧️🐸',
+   lines:['It is a day of rain.','Mishmish has a blue coat.','She can see a frog.','The frog can hop!'],
+   qs:[{q:'What color is the coat?', o:[{sw:'#E8433A',en:'red'},{sw:'#3A7BE8',en:'blue'},{sw:'#3DBB5C',en:'green'}], a:1},
+       {q:'What can she see?', o:[{e:'🐝',en:'bee'},{e:'🦊',en:'fox'},{e:'🐸',en:'frog'}], a:2}]},
+  {title:'Mishmish Paints', scene:'🖌️🌳☀️',
+   lines:['Mishmish has a brush.','She paints a tree.','The tree is green.','She paints a sun.','The sun is yellow.'],
+   qs:[{q:'What is green?', o:[{e:'☀️',en:'sun'},{e:'🌳',en:'tree'},{e:'🍰',en:'cake'}], a:1},
+       {q:'What color is the sun?', o:[{sw:'#FFD23F',en:'yellow'},{sw:'#9B5DE5',en:'purple'},{sw:'#2B2233',en:'black'}], a:0}]},
+  {title:'At School', scene:'🎒📕🖊️',
+   lines:['Mishmish goes to school.','She has a bag and a book.','Her pen is in the bag.','She can read the book.'],
+   qs:[{q:'Where is the pen?', o:[{e:'📦',en:'box'},{e:'🛏️',en:'bed'},{e:'🎒',en:'bag'}], a:2},
+       {q:'What can she read?', o:[{e:'📕',en:'book'},{e:'🌳',en:'tree'},{e:'⚽',en:'ball'}], a:0}]},
+  {title:'Good Night', scene:'🌙🛏️',
+   lines:['It is night.','The moon is in the sky.','Mishmish is in bed.','Good night, Mishmish!'],
+   qs:[{q:'What is in the sky?', o:[{e:'🚗',en:'car'},{e:'🌙',en:'moon'},{e:'🐝',en:'bee'}], a:1},
+       {q:'Where is Mishmish?', o:[{e:'🚆',en:'train'},{e:'🌳',en:'tree'},{e:'🛏️',en:'bed'}], a:2}]},
+  {title:'The Bee', scene:'🐝🌳',
+   lines:['A bee is in the tree.','Mishmish can see the bee.','The bee is yellow and black.','Buzz, buzz!'],
+   qs:[{q:'Where is the bee?', o:[{e:'🌳',en:'tree'},{e:'📦',en:'box'},{e:'🛏️',en:'bed'}], a:0},
+       {q:'What can Mishmish see?', o:[{e:'🦊',en:'fox'},{e:'🐔',en:'hen'},{e:'🐝',en:'bee'}], a:2}]},
+  {title:'My Family', scene:'👩👨👶',
+   lines:['This is my family.','I have a mom and a dad.','I have a baby brother.','We are happy!'],
+   qs:[{q:'Mishmish has a baby ...', o:[{en:'sister'},{en:'brother'},{en:'dog'}], a:1},
+       {q:'Are they happy?', o:[{en:'Yes'},{en:'No'}], a:0}]}
+];
 
 /* ---------- helpers ---------- */
 const $ = (s, r=document) => r.querySelector(s);
@@ -439,6 +533,7 @@ const ICONS = {
   color:`<svg viewBox="0 0 84 84" aria-hidden="true"><path d="M42 6C20 6 5 22 5 41c0 18 14 33 30 33 6 0 8-4 6-9-2-6 2-10 8-10h10c10 0 20-6 20-20C79 18 63 6 42 6z" fill="#fff" stroke="#2B2233" stroke-width="3"/><circle cx="24" cy="38" r="7" fill="#E8433A" stroke="#2B2233" stroke-width="2.5"/><circle cx="32" cy="21" r="7" fill="#FFD23F" stroke="#2B2233" stroke-width="2.5"/><circle cx="52" cy="19" r="7" fill="#3A7BE8" stroke="#2B2233" stroke-width="2.5"/><circle cx="65" cy="34" r="7" fill="#3DBB5C" stroke="#2B2233" stroke-width="2.5"/></svg>`,
   memory:`<svg viewBox="0 0 84 84" aria-hidden="true"><rect x="8" y="14" width="40" height="54" rx="8" fill="#7A4FD6" stroke="#2B2233" stroke-width="3" transform="rotate(-10 28 41)"/><rect x="36" y="16" width="40" height="54" rx="8" fill="#fff" stroke="#2B2233" stroke-width="3" transform="rotate(8 56 43)"/><text x="56" y="54" font-family="Andika,Arial" font-weight="700" font-size="30" text-anchor="middle" fill="#2B2233" transform="rotate(8 56 43)">?</text></svg>`
 };
+ICONS.read = `<svg viewBox="0 0 84 84" aria-hidden="true"><path d="M42 22C32 14 18 13 6 16v50c12-3 26-2 36 6 10-8 24-9 36-6V16c-12-3-26-2-36 6z" fill="#fff" stroke="#2B2233" stroke-width="3" stroke-linejoin="round"/><path d="M42 22v50" stroke="#2B2233" stroke-width="3"/><path d="M14 30h18M14 40h18M14 50h14M52 30h18M52 40h18M52 50h12" stroke="#FF8A3D" stroke-width="4" stroke-linecap="round"/></svg>`;
 const PAW = `<svg viewBox="0 0 40 40" aria-hidden="true" fill="rgba(255,255,255,.9)"><ellipse cx="20" cy="27" rx="10" ry="8"/><circle cx="9" cy="16" r="4.5"/><circle cx="16" cy="9" r="4.5"/><circle cx="24" cy="9" r="4.5"/><circle cx="31" cy="16" r="4.5"/></svg>`;
 
 /* ---------- top bar ---------- */
@@ -477,6 +572,7 @@ function home(keep){
 
   <h2 class="sec-title">اختاري لعبة <span class="en">Let's play</span></h2>
   <div class="tiles">
+    <button class="tile t-read" data-game="read">${ICONS.read}<div><h3>ركن القراءة</h3><span class="en">Reading Corner</span><p>اتعلمي تقري كلمات جديدة واقري قصص قصيرة عن مشمش${S.readWords.length ? ` · قريتي ${S.readWords.length} كلمة لحد دلوقتي` : ''}</p></div></button>
     <button class="tile t-listen" data-game="listen">${ICONS.listen}<div><h3>اسمعي واختاري</h3><span class="en">Listen &amp; Find</span><p>اسمعي الكلمة أو اقريها واختاري الصورة الصح</p></div></button>
     <button class="tile t-spell" data-game="spell">${ICONS.spell}<div><h3>رتّبي الحروف</h3><span class="en">Spell it</span><p>كوّني الكلمة من الحروف المتلخبطة</p></div></button>
     <button class="tile t-color" data-game="color">${ICONS.color}<div><h3>لوّني مشمش</h3><span class="en">Color Mishmish</span><p>اقري الجملة ولوّني بالإنجليزي، وبعدين ارسمي براحتك</p></div></button>
@@ -543,7 +639,7 @@ function home(keep){
   $('#resetBtn').onclick = () => {
     $('#resetRow').innerHTML = '<span>متأكدين؟ النجوم والرسومات هتتمسح.</span><button class="btn" id="yesReset" style="background:var(--bad-l)">أيوه امسح</button><button class="btn" id="noReset">لأ</button>';
     $('#noReset').onclick = () => home(true);
-    $('#yesReset').onclick = () => { Object.assign(S, {stars:0, wear:{}, gallery:[], tricky:{}, mish:{...DEFAULT_MISH}}); ['stars','wear','gallery','tricky','mish'].forEach(save); renderStars(); home(true); };
+    $('#yesReset').onclick = () => { Object.assign(S, {stars:0, wear:{}, gallery:[], tricky:{}, mish:{...DEFAULT_MISH}, readWords:[], famDone:{}, storyDone:{}}); ['stars','wear','gallery','tricky','mish','readWords','famDone','storyDone'].forEach(save); renderStars(); home(true); };
   };
 }
 
@@ -799,9 +895,138 @@ function gameMemory(){
   });
 }
 
+/* ============ READING CORNER ============ */
+function readingHub(){
+  setTop(true);
+  const next = FAMILIES.find(f => !S.famDone[f.id]);
+  const n = S.readWords.length;
+  screenEl.innerHTML = `<section class="hub">
+    <div class="g-head"><h2>ركن القراءة <span class="en" style="font-size:20px;color:var(--ink-soft)">Reading Corner</span></h2>
+      <p class="ask">اقري كلمات جديدة لوحدك، وبعدين اقري قصص مشمش.</p></div>
+    <div class="read-count sticker">${ICONS.read}<div><b>${n}</b> ${n === 1 ? 'كلمة' : 'كلمة جديدة'} قريتيها لوحدك<br><span class="muted">كل كلمة تقريها صح من أول مرة بتتحفظ هنا</span></div></div>
+
+    <h3 class="sec-title">عائلات الكلمات <span class="en">Word Families</span></h3>
+    <p class="muted">الكلمات اللي في عيلة واحدة آخرها زي بعض. لو عرفتي تقري <b class="en">at</b> هتعرفي تقري <b class="en">cat, hat, bat</b>. ركّزي على أول حرف!</p>
+    <div class="fams">${FAMILIES.map(f => {
+      const done = S.famDone[f.id];
+      return `<button class="fam ${done ? 'done' : ''} ${f === next ? 'next' : ''}" data-fam="${f.id}">
+        <span class="rimebig en">-${f.id}</span><span class="emos" aria-hidden="true">${f.words.map(w => w.e).join('')}</span>
+        <small>${done ? '✔ خلصتيها' : f === next ? 'ابدأي من هنا' : `${f.words.length} كلمات`}</small></button>`;
+    }).join('')}</div>
+
+    <h3 class="sec-title">قصص مشمش <span class="en">Mishmish Stories</span></h3>
+    <div class="stories">${STORIES.map((s,i) => `<button class="story-card ${S.storyDone[i] ? 'done' : ''}" data-story="${i}">
+      <span class="emos" aria-hidden="true">${s.scene}</span><span class="en">${s.title}</span>
+      <small>${S.storyDone[i] ? '✔ قريتيها' : `قصة ${i+1}`}</small></button>`).join('')}</div>
+
+    ${n ? `<h3 class="sec-title">كلماتي <span class="en">My words</span></h3>
+      <div class="chips">${S.readWords.map(w => `<button class="chip" data-say="${esc(w)}"><span class="en" style="color:var(--ink);font-size:18px">${esc(w)}</span></button>`).join('')}</div>` : ''}
+  </section>`;
+  screenEl.querySelectorAll('[data-fam]').forEach(b => b.onclick = () => { roundStars = 0; gameFamily(b.dataset.fam); });
+  screenEl.querySelectorAll('[data-story]').forEach(b => b.onclick = () => { roundStars = 0; gameStory(+b.dataset.story); });
+}
+
+function learnWord(en){ if(!S.readWords.includes(en)){ S.readWords.push(en); save('readWords'); } }
+
+function gameFamily(fid){
+  setTop(true);
+  const f = FAMILIES.find(x => x.id === fid);
+  const qs = shuffle(f.words), results = []; let i = 0;
+  const split = w => `<span class="onset">${w.en.slice(0, w.en.length - f.id.length)}</span><span class="rime">${f.id}</span>`;
+  screenEl.innerHTML = `<section class="stage">
+    <div class="g-head"><h2>عيلة <span class="en">-${f.id}</span></h2>
+      <p class="ask">كل كلمات العيلة دي آخرها <b class="en">${f.id}</b>. اقري أول حرف وهتعرفي الكلمة كلها!</p></div>
+    <div class="qcard sticker"><p class="bigword"><span class="rime">${f.id}</span></p>${sayBtn(f.id)}</div>
+    <button class="btn primary" id="go">يلا نقرا!</button>
+  </section>`;
+  setTimeout(() => say(f.id, .7), 300);
+  $('#go').onclick = q;
+  function q(){
+    if(i >= qs.length){
+      const first = !S.famDone[f.id];
+      S.famDone[f.id] = true; save('famDone'); if(first) addStars(2);
+      return finish(() => gameFamily(fid), `قريتي ${results.filter(Boolean).length} من ${qs.length} كلمات صح من أول مرة`, readingHub, 'ركن القراءة');
+    }
+    const w = qs[i]; let tries = 0, done = false;
+    const opts = shuffle(f.words);
+    screenEl.innerHTML = `<section class="stage">
+      ${gameHead(`عيلة <span class="en">-${f.id}</span>`, 'Read it', 'اقري الكلمة لوحدك واختاري صورتها', i, qs.length, results)}
+      <div class="qcard sticker"><p class="bigword" lang="en">${split(w)}</p><div id="helpSay"></div></div>
+      <div class="opts ${opts.length === 3 ? 'opts3' : ''}">${opts.map((o,k) => `<button class="opt" data-k="${k}" aria-label="${o.ar}">${pic(o)}</button>`).join('')}</div>
+      <div class="feedback" id="fb" aria-live="polite"></div>
+    </section>`;
+    screenEl.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+      if(done) return;
+      const o = opts[+b.dataset.k], fb = $('#fb');
+      if(o.en === w.en){
+        done = true; b.classList.add('right'); sfxGood(); burst(b);
+        results[i] = tries === 0; if(tries === 0){ addStars(1); learnWord(w.en); }
+        say(`${w.en}! ${rand(PRAISE)}`);
+        const on = w.en.slice(0, w.en.length - f.id.length);
+        fb.className = 'feedback good';
+        fb.innerHTML = `<span class="en">${on ? on + ' + ' : ''}${f.id} = ${w.en}</span><span>${w.ar} · قوليها بصوت عالي!</span>`;
+        setTimeout(() => { i++; q(); }, 2100);
+      } else {
+        tries++; b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); sfxBad(); markTricky(w);
+        fb.className = 'feedback bad';
+        fb.innerHTML = `<span>دي <span class="en">${o.en}</span>. بصي على أول حرف تاني!</span>`;
+        say(`This is ${o.en}.`);
+        $('#helpSay').innerHTML = sayBtn(w.en, 'محتاجة مساعدة؟ اسمعي');
+        if(tries >= 2) screenEl.querySelector(`.opt[data-k="${opts.indexOf(w)}"]`).classList.add('hint');
+      }
+    });
+  }
+}
+
+function gameStory(idx){
+  setTop(true);
+  const st = STORIES[idx]; let qi = 0, firstTry = 0;
+  const tok = s => s.split(' ').map(w => `<button class="wtok" data-say="${esc(w.replace(/[^A-Za-z']/g,''))}">${esc(w)}</button>`).join(' ');
+  const optHTML = o => o.sw ? `<span class="sw" style="--c:${o.sw}"></span>` : o.e ? `<span class="emo" aria-hidden="true">${o.e}</span>` : `<span class="txt en">${o.en}</span>`;
+  screenEl.innerHTML = `<section class="stage">
+    <div class="g-head"><h2 class="en">${st.title}</h2><p class="ask">اقري القصة لوحدك. لو فيه كلمة صعبة دوسي عليها تسمعيها.</p></div>
+    <div class="storybox sticker">
+      <div class="scene" aria-hidden="true">${st.scene}</div>
+      <div class="story en" lang="en">${st.lines.map(l => `<p>${tok(l)}</p>`).join('')}</div>
+      <div class="row" style="justify-content:center">${sayBtn(st.lines.join(' '), 'اسمعي القصة كلها')}</div>
+    </div>
+    <div id="qa" class="qa"><button class="btn primary" id="startQ">قريتها! يلا نجاوب</button></div>
+    <div class="feedback" id="fb" aria-live="polite"></div>
+  </section>`;
+  $('#startQ').onclick = q;
+  function q(){
+    const fb = $('#fb'); fb.className = 'feedback'; fb.innerHTML = '';
+    if(qi >= st.qs.length){
+      const first = !S.storyDone[idx];
+      S.storyDone[idx] = true; save('storyDone'); if(first) addStars(2);
+      return finish(() => gameStory(idx), `جاوبتي ${firstTry} من ${st.qs.length} أسئلة صح من أول مرة`, readingHub, 'ركن القراءة');
+    }
+    const Q = st.qs[qi]; let tries = 0, done = false;
+    $('#qa').innerHTML = `<div class="qcard sticker"><span class="muted">سؤال ${qi+1} من ${st.qs.length}</span><p class="qtext en" lang="en">${tok(Q.q)}</p>${sayBtn(Q.q, 'اسمعي السؤال')}</div>
+      <div class="opts opts3">${Q.o.map((o,k) => `<button class="opt" data-k="${k}" aria-label="${o.en}">${optHTML(o)}</button>`).join('')}</div>`;
+    $('#qa').scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
+    $('#qa').querySelectorAll('.opt').forEach(b => b.onclick = () => {
+      if(done) return;
+      const k = +b.dataset.k;
+      if(k === Q.a){
+        done = true; b.classList.add('right'); sfxGood(); burst(b);
+        if(tries === 0){ firstTry++; addStars(1); }
+        say(`${Q.o[k].en}! ${rand(PRAISE)}`);
+        fb.className = 'feedback good'; fb.innerHTML = `<span class="en">${Q.o[k].en}</span><span>${rand(['برافو!','شاطرة!','صح كده!'])}</span>`;
+        qi++; setTimeout(q, 1700);
+      } else {
+        tries++; b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); sfxBad();
+        fb.className = 'feedback bad'; fb.textContent = 'ارجعي اقري القصة تاني وجربي 👀';
+        if(tries >= 2) $('#qa').querySelector(`.opt[data-k="${Q.a}"]`).classList.add('hint');
+      }
+    });
+  }
+}
+
 /* ============ FINISH ============ */
-const GAMES = {listen:gameListen, spell:gameSpell, color:gameColor, memory:gameMemory};
-function finish(game, msg){
+const GAMES = {listen:gameListen, spell:gameSpell, color:gameColor, memory:gameMemory, read:readingHub};
+function finish(game, msg, back, backLabel='الرئيسية'){
+  const again = typeof game === 'function' ? game : GAMES[game];
   setTop(true);
   meow(); setTimeout(() => say(`Great job${S.name ? ', ' + S.name : ''}! You are a star!`), 500);
   screenEl.innerHTML = `<section class="done-wrap">
@@ -811,12 +1036,12 @@ function finish(game, msg){
     <p class="pill stars" style="font-size:22px">كسبتي ⭐ ${roundStars} في الجولة دي</p>
     <div class="row" style="justify-content:center;margin-top:8px">
       <button class="btn primary" id="again">العبي تاني</button>
-      <button class="btn" id="goHome">الرئيسية</button>
+      <button class="btn" id="goHome">${backLabel}</button>
     </div>
   </section>`;
   burst($('.done-wrap svg'));
-  $('#again').onclick = () => { roundStars = 0; GAMES[game](); };
-  $('#goHome').onclick = () => home();
+  $('#again').onclick = () => { roundStars = 0; again(); };
+  $('#goHome').onclick = () => (back ? back() : home());
 }
 
 /* ---------- boot ---------- */

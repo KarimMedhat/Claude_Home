@@ -336,7 +336,7 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 .wtile small{font-size:14px;color:var(--ink-soft)}
 .wtile.noimg{justify-items:start;text-align:start;padding:8px 12px}
 .wtile.thirsty{border-color:var(--teal);background:var(--teal-l)}
-.wstage{position:absolute;top:4px;inset-inline-start:6px;font-size:16px}
+.wstage{position:absolute;top:2px;inset-inline-start:4px;width:26px}
 .vtable{display:grid;overflow:hidden;padding:0}
 .vrow{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:8px;padding:8px 16px;border:0;border-top:2px solid var(--dot);background:none;text-align:left;font-family:var(--learn);font-size:19px}
 .vrow:hover{background:var(--grape-l)}
@@ -357,9 +357,53 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 .opts.words.n3{grid-template-columns:repeat(3,minmax(0,1fr));max-width:820px}
 .opt.wopt{aspect-ratio:auto;min-height:72px;padding:12px 16px;font-size:22px;font-weight:700;line-height:1.3}
 .opt.wopt.en{font-size:26px}
-.water-card{position:relative}
-.plant{font-size:46px;line-height:1}
-.plant.grew{animation:pop .6s}
+.water-card{position:relative;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:18px;padding:14px 24px}
+.wc-plant{display:grid;justify-items:center;gap:4px}
+.wc-stage{font-weight:800;font-size:15px;border:2px solid var(--ink);border-radius:99px;background:var(--good-l);padding:0 10px}
+.wc-q{display:grid;justify-items:center;gap:8px}
+/* pots & plants */
+.pot{display:block;width:100%;height:auto;overflow:visible}
+.pot .pl{transform-origin:60px 97px;transition:transform .5s,filter .5s}
+.pot:not(.dry) .pl{animation:sway 3.2s ease-in-out infinite}
+.pot.dry .pl{transform:rotate(-16deg) scaleY(.93);filter:saturate(.3) sepia(.35)}
+.pot.grew .pl{animation:growUp .8s cubic-bezier(.3,1.6,.5,1)}
+.pot.sprout .pl{animation:growUp .7s cubic-bezier(.3,1.6,.5,1)}
+.pot.wilt .pl{animation:wilt .8s ease-out}
+@keyframes sway{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+@keyframes growUp{0%{transform:scale(.35,.2)}100%{transform:none}}
+@keyframes wilt{0%{transform:none;filter:none}100%{transform:rotate(-16deg) scaleY(.93);filter:saturate(.3) sepia(.35)}}
+.wscene{position:relative;width:150px;padding:34px 46px 0 0}
+.wscene .wpot{display:block;width:104px}
+.wscene .can{position:absolute;top:0;right:0;width:74px;transform-origin:30% 60%;transition:transform .35s}
+.wscene .can svg{width:100%;height:auto;display:block}
+.wscene .drops{position:absolute;top:40px;left:46px;width:44px;height:70px;pointer-events:none}
+.drops i{position:absolute;top:0;width:7px;height:10px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#3FA9E0;border:1.5px solid #1F6F9A;opacity:0}
+.drops i:nth-child(1){left:2px}.drops i:nth-child(2){left:12px;animation-delay:.12s!important}.drops i:nth-child(3){left:22px;animation-delay:.24s!important}
+.drops i:nth-child(4){left:7px;animation-delay:.36s!important}.drops i:nth-child(5){left:17px;animation-delay:.48s!important}.drops i:nth-child(6){left:28px;animation-delay:.6s!important}
+.wscene.pour .can{transform:translate(-10px,6px) rotate(-38deg)}
+.wscene.pour .drops i,.bp-can .drops i{animation:drip .45s ease-in 2 both}
+.bp-can{position:absolute;top:-4px;right:-10px;width:52px;transform-origin:30% 60%;animation:canTip 1.2s ease forwards;z-index:2}
+.bp-can svg{width:100%;height:auto;display:block}
+.bp-can .drops{position:absolute;top:22px;left:-4px;width:30px;height:46px}
+@keyframes canTip{0%{opacity:0;transform:translateY(-8px)}15%{opacity:1;transform:none}30%,80%{opacity:1;transform:rotate(-38deg)}100%{opacity:0;transform:rotate(-10deg)}}
+@keyframes drip{0%{opacity:0;transform:translateY(0)}15%{opacity:1}100%{opacity:.9;transform:translateY(60px)}}
+/* planting bed in learn sessions */
+.bed{display:grid;grid-template-columns:repeat(var(--n),minmax(0,104px));gap:10px;justify-content:center;width:100%;padding:10px 12px 4px;border:3px solid var(--ink);border-radius:var(--r);background:linear-gradient(#DDF3FF 0 55%,#9ED36A 55% 100%)}
+.bed-pot{position:relative;display:grid;justify-items:center;gap:2px}
+.bed-pot small{font-weight:700;font-size:15px;min-height:1.2em;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bed-pot.now .pot{filter:drop-shadow(0 0 6px #FFD23F)}
+.bed-pot.now::before{content:'⬇';position:absolute;top:-6px;font-size:18px;animation:bob 1s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(5px)}}
+.seed-drop{position:absolute;top:-18px;left:50%;font-size:22px;animation:seedFall .55s ease-in forwards}
+@keyframes seedFall{0%{transform:translate(-50%,-20px) rotate(0)}100%{transform:translate(-50%,46px) rotate(200deg);opacity:.6}}
+/* garden */
+.grow-path{display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.gp-step{display:grid;justify-items:center;width:74px;font-size:14px;line-height:1.2}
+.gp-step .pot{width:52px}
+.gp-step small{color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.gp-arrow{font-style:normal;font-size:14px;opacity:.7}
+.p-status{font-style:normal;font-size:12px;font-weight:700;color:var(--ink-soft)}
+.plant-tile.thirsty .p-status{color:#1F6F9A}
 .garden-head{padding:18px 20px;display:grid;gap:12px;background:var(--good-l)}
 .garden-head h2{margin:0;font-size:30px}
 .garden-head h2 .en{font-size:18px;color:var(--ink-soft)}
@@ -367,13 +411,13 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 .stage-count{display:flex;flex-wrap:wrap;gap:10px}
 .stage-count span{display:flex;align-items:center;gap:6px;border:2px solid var(--ink);border-radius:99px;background:var(--card);padding:2px 12px;font-weight:800;font-variant-numeric:tabular-nums}
 .stage-count b{font-size:22px}
-.plot{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;padding:16px;border:3px solid var(--ink);border-radius:var(--r);background:#E9D6B8;background-image:radial-gradient(rgba(139,90,60,.25) 2px,transparent 2.5px);background-size:18px 18px}
+.plot{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;padding:16px;border:3px solid var(--ink);border-radius:var(--r);background:linear-gradient(#D7F0FF,#EAF8FF 120px,#A6D96F 120px);background-attachment:local}
 .plant-tile{display:grid;justify-items:center;padding:8px;border:2px solid var(--ink);border-radius:14px;background:var(--card)}
-.p-ico{position:relative;font-size:38px;line-height:1.1}
+.p-ico{position:relative;width:70px}
 .p-ico i{position:absolute;top:-6px;inset-inline-end:-18px;font-style:normal;font-size:20px;animation:pulse 1.4s infinite;border-radius:50%}
 .plant-tile .en{font-weight:700;font-size:17px}
 .plant-tile small{font-size:13px;color:var(--ink-soft)}
-.plant-tile.thirsty{background:var(--teal-l)}
+.plant-tile.thirsty{background:#FFF4D6}
 .teach{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;align-items:start;width:100%;max-width:860px;text-align:start}
 .teach-cat svg{width:100%;height:auto}
 .teach-card{padding:18px 22px;display:grid;gap:10px;position:relative}
@@ -682,8 +726,17 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 .p-ico.k-rug svg{width:96px;height:auto}
 .p-ico.k-wall svg,.p-ico.k-floor svg,.p-ico.k-catbed svg{max-height:96px}
 .deal-shelf{grid-template-columns:repeat(auto-fill,minmax(108px,1fr))}
+@media (max-width:480px){
+  .topbar-in{gap:6px}
+  .topbar .icon-btn{padding:4px 9px;font-size:14px;white-space:nowrap}
+  .topbar .pill.stars{padding:4px 10px;white-space:nowrap}
+  .brand{font-size:18px}.brand svg{width:32px;height:32px}
+}
 @media (max-width:760px){
   .levels{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .water-card{grid-template-columns:1fr;gap:6px}
+  .wscene{width:130px}.wscene .wpot{width:88px}.wscene .can{width:62px}
+  .bed{gap:2px;padding:8px 6px 2px}.bed-pot small{font-size:11px}
   .room-door{grid-template-columns:1fr}
   .rd-text{font-size:24px}
   .room-top h2{font-size:26px}
@@ -1437,8 +1490,70 @@ const dueWords = () => Object.keys(S.wl).filter(isDue);
 function grow(k, ok){
   const w = S.wl[k] || {lv:0, due:0};
   if(ok){ w.lv = Math.min(5, w.lv + 1); w.due = Date.now() + GAP[w.lv] * DAY - 3600e3; }
-  else { w.lv = 1; w.due = Date.now() + 6 * 3600e3; }
+  else { w.lv = Math.max(1, w.lv - 1); w.due = Date.now() + 6 * 3600e3; }
   S.wl[k] = w; save('wl');
+}
+const STAGE_EN = ['seed','sprout','plant','flower','sunflower','tree'];
+const dueIn = k => { const d = Math.ceil((S.wl[k].due - Date.now()) / DAY); return d <= 1 ? 'تعطش بكرة' : d === 2 ? 'تعطش بعد يومين' : `تعطش بعد ${d} أيام`; };
+
+/* ---------- garden art: pot, plant stages, watering can ---------- */
+const GI = '#2B2233';
+const leaf = (d, c='#5DBB63') => `<path d="${d}" fill="${c}" stroke="${GI}" stroke-width="2.5" stroke-linejoin="round"/>`;
+const stem = (d, w=4) => `<path d="${d}" fill="none" stroke="${GI}" stroke-width="${w + 3}" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#4FA457" stroke-width="${w}" stroke-linecap="round"/>`;
+function plantArt(lv){
+  if(lv < 0) return '';
+  if(lv === 0) return `<path d="M46 97 Q60 82 74 97 Z" fill="#6B4228" stroke="${GI}" stroke-width="2.5"/><ellipse cx="60" cy="90" rx="5" ry="3.6" fill="#D9A15B" stroke="${GI}" stroke-width="2"/>`;
+  if(lv === 1) return stem('M60 97 Q61 88 60 78') + leaf('M60 82 Q47 68 38 76 Q48 88 60 82Z') + leaf('M60 80 Q72 64 83 71 Q73 85 60 80Z', '#7BCF6F');
+  if(lv === 2) return stem('M60 97 C57 82 63 68 60 50') + leaf('M59 86 Q42 76 32 84 Q44 96 59 86Z') + leaf('M61 80 Q78 68 88 75 Q77 89 61 80Z', '#7BCF6F')
+    + leaf('M60 66 Q46 56 40 62 Q48 72 60 66Z', '#7BCF6F') + leaf('M60 60 Q72 48 80 54 Q72 66 60 60Z') + leaf('M60 52 Q54 40 60 34 Q66 40 60 52Z', '#7BCF6F');
+  if(lv === 3) return stem('M60 97 C58 80 62 62 60 44') + leaf('M59 90 Q36 70 34 54 Q50 64 59 84Z') + leaf('M61 86 Q82 68 88 52 Q72 62 61 80Z', '#7BCF6F')
+    + `<path d="M46 44 Q43 25 51 19 L55 30 L60 16 L65 30 L69 19 Q77 25 74 44 Q60 54 46 44Z" fill="#FF7BAC" stroke="${GI}" stroke-width="2.5" stroke-linejoin="round"/><path d="M60 22 L60 44" stroke="#E2558A" stroke-width="2.5"/>`;
+  if(lv === 4){
+    const pet = Array.from({length:12}, (_,i) => `<ellipse cx="60" cy="18" rx="5.5" ry="11" fill="#FFD23F" stroke="${GI}" stroke-width="2" transform="rotate(${i*30} 60 34)"/>`).join('');
+    return stem('M60 97 C57 78 63 60 60 40', 5) + leaf('M59 82 Q34 74 28 58 Q48 60 59 76Z') + leaf('M61 70 Q86 62 92 46 Q72 48 61 64Z', '#7BCF6F')
+      + pet + `<circle cx="60" cy="34" r="11" fill="#8A5A3A" stroke="${GI}" stroke-width="2.5"/><circle cx="56" cy="32" r="1.6" fill="${GI}"/><circle cx="64" cy="32" r="1.6" fill="${GI}"/><path d="M56 37 Q60 40 64 37" fill="none" stroke="${GI}" stroke-width="1.8" stroke-linecap="round"/>`;
+  }
+  return `<path d="M54 97 L56 60 Q48 52 44 54 M66 97 L64 60 Q72 52 76 54" fill="#9A6A44" stroke="${GI}" stroke-width="2.5" stroke-linejoin="round"/><path d="M54 97 L56 58 L64 58 L66 97Z" fill="#9A6A44" stroke="${GI}" stroke-width="2.5" stroke-linejoin="round"/>
+    <g fill="#4FAE5A" stroke="${GI}" stroke-width="2.5"><circle cx="38" cy="48" r="18"/><circle cx="82" cy="48" r="18"/><circle cx="60" cy="30" r="24"/><circle cx="48" cy="56" r="14"/><circle cx="72" cy="56" r="14"/></g>
+    <path d="M44 42 Q60 22 78 40" fill="none" stroke="#7BCF6F" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+    <g fill="#F2545B" stroke="${GI}" stroke-width="2"><circle cx="44" cy="44" r="5"/><circle cx="70" cy="28" r="5"/><circle cx="78" cy="54" r="5"/><circle cx="56" cy="52" r="5"/></g>`;
+}
+function potSVG(lv, o={}){
+  const soil = o.dry ? '#C9A27A' : o.wet ? '#4A2E1C' : '#7A5034';
+  return `<svg class="pot ${o.cls || ''} ${o.dry ? 'dry' : ''}" viewBox="0 0 120 150" aria-hidden="true">
+    <path d="M24 104 L96 104 L88 146 L32 146 Z" fill="#E07A4F" stroke="${GI}" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M30 112 L90 112" stroke="#C9653D" stroke-width="3"/>
+    <rect x="17" y="92" width="86" height="14" rx="5" fill="#F08D5E" stroke="${GI}" stroke-width="3"/>
+    <ellipse cx="60" cy="96" rx="38" ry="4.5" fill="${soil}"/>
+    ${o.dry ? `<path d="M40 96 l5 -2 l3 2 M70 95 l4 2 l4 -2" stroke="#8A6A4A" stroke-width="1.5" fill="none"/>` : ''}
+    <g class="pl">${plantArt(lv)}</g>
+    ${o.label ? `<text x="60" y="134" text-anchor="middle" font-family="Andika,sans-serif" font-weight="700" font-size="${o.label.length > 9 ? 12 : 16}" fill="#FFFFFF" stroke="${GI}" stroke-width="3" paint-order="stroke">${esc(o.label)}</text>` : ''}
+  </svg>`;
+}
+const CAN_SVG = `<svg viewBox="0 0 110 80" aria-hidden="true"><path d="M30 34 L6 12" stroke="${GI}" stroke-width="10" stroke-linecap="round"/><path d="M30 34 L6 12" stroke="#3FB8C9" stroke-width="5" stroke-linecap="round"/>
+  <rect x="0" y="4" width="14" height="12" rx="3" fill="#3FB8C9" stroke="${GI}" stroke-width="2.5" transform="rotate(-42 7 10)"/>
+  <path d="M72 30 Q98 26 96 50 Q94 64 80 64" fill="none" stroke="${GI}" stroke-width="5"/>
+  <rect x="26" y="26" width="54" height="46" rx="10" fill="#3FB8C9" stroke="${GI}" stroke-width="3"/><path d="M34 36 L72 36" stroke="#A8E6EE" stroke-width="4" stroke-linecap="round"/></svg>`;
+function sfxWater(){
+  const c = actx(); if(!c) return;
+  const t = c.currentTime, len = Math.floor(c.sampleRate * .9), buf = c.createBuffer(1, len, c.sampleRate), d = buf.getChannelData(0);
+  for(let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+  const src = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+  src.buffer = buf; f.type = 'bandpass'; f.frequency.value = 1500; f.Q.value = .9;
+  g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.1, t + .12); g.gain.exponentialRampToValueAtTime(.0001, t + .85);
+  src.connect(f).connect(g).connect(c.destination); src.start(t);
+  [.2, .42, .66].forEach((x, i) => tone(1100 + i * 260, x, .07, 'sine', .05));
+}
+const sfxGrow = () => [523, 659, 784, 1047].forEach((f, i) => tone(f, .05 + i * .08, .2, 'triangle', .1));
+const sfxPlop = () => { tone(240, 0, .12, 'sine', .14); tone(180, .06, .14, 'sine', .1); };
+/* a pot with a watering can above it; pour() waters it */
+function waterScene(lv, o={}){
+  return `<div class="wscene ${o.cls || ''}"><span class="wpot">${potSVG(lv, o)}</span><span class="can">${CAN_SVG}</span><span class="drops">${'<i></i>'.repeat(6)}</span></div>`;
+}
+function pour(scene, after){
+  if(!scene) return after && after();
+  scene.classList.remove('pour'); void scene.offsetWidth; scene.classList.add('pour'); sfxWater();
+  setTimeout(() => after && after(), reduce ? 200 : 950);
 }
 const wordPic = w => w.e ? `<span class="emo" aria-hidden="true">${w.e}</span>` : `<span class="wpic-ar">${w.ar}</span>`;
 function distract(k, n, field, pool){
@@ -2841,7 +2956,7 @@ function lessonScreen(lid){
   const tile = k => { const w = WORDS[k], lv = lvl(k);
     return `<button class="wtile ${w.e ? '' : 'noimg'} ${isDue(k) ? 'thirsty' : ''}" data-say="${esc(w.en)}">
       ${w.e ? `<span class="emo" aria-hidden="true">${w.e}</span>` : ''}<span class="en">${w.en}</span><small>${w.ar}</small>
-      <span class="wstage" title="${STAGE_AR[lv]}">${S.wl[k] ? STAGE[lv] : ''}${isDue(k) ? '💧' : ''}</span></button>`; };
+      <span class="wstage" title="${STAGE_AR[lv]}">${S.wl[k] ? potSVG(lv, {dry:isDue(k)}) : ''}</span></button>`; };
   const impKeys = l.imp ? l.imp.split(';').filter(Boolean).map(s => s.split('|')[0].trim()) : [];
   const extKeys = l.words.filter(k => !impKeys.includes(k));
   screenEl.innerHTML = `<section class="hub" style="--uc:${u.c};--ucl:${u.cl}">
@@ -2860,7 +2975,7 @@ function lessonScreen(lid){
     ${l.verbs.length ? `<h3 class="sec-title">الأفعال <span class="en">Verbs</span></h3>
       <div class="vtable sticker" dir="ltr"><div class="vrow vh"><span>Verb</span><span>Past</span><span dir="rtl">المعنى</span></div>
       ${l.verbs.map(v => `<button class="vrow" data-say="${esc(v.b)}, ${esc(v.p)}"><span>${v.b}</span><span><b>${v.p}</b></span><span dir="rtl">${v.ar}</span></button>`).join('')}</div>` : ''}
-    <p class="muted">دوسي على أي كلمة تسمعيها. ${STAGE.slice(1).map((s,i) => `${s} ${STAGE_AR[i+1]}`).join(' ← ')}</p>
+    <p class="muted">دوسي على أي كلمة تسمعيها. الزرعة اللي في الركن بتوريكي الكلمة كبرت لحد فين: ${STAGE_AR.slice(1).join(' ← ')}</p>
   </section>`;
   bindCrumbs();
   const back = () => lessonScreen(lid);
@@ -2877,30 +2992,43 @@ function lessonScreen(lid){
 function learnSession(keys, pool, back){
   setTop(true);
   let i = 0;
+  const bedSt = keys.map(() => -1), bedWet = keys.map(() => false);
+  const bed = (cur=-1, hideLabels=false) => `<div class="bed" style="--n:${keys.length}">${keys.map((k, j) =>
+    `<span class="bed-pot ${j === cur ? 'now' : ''}" data-bed="${j}">${potSVG(bedSt[j], {wet:bedWet[j]})}<small lang="en">${bedSt[j] >= 0 && !hideLabels ? WORDS[k].en : '&nbsp;'}</small></span>`).join('')}</div>`;
+  const potAt = j => screenEl.querySelector(`[data-bed="${j}"]`);
+  function setPot(j, cls){ const el = potAt(j); if(!el) return; el.querySelector('svg').outerHTML = potSVG(bedSt[j], {wet:bedWet[j], cls}); }
   function meet(){
     if(i >= keys.length) return match();
     const w = WORDS[keys[i]];
     screenEl.innerHTML = `<section class="stage">
-      <div class="g-head"><h2>اتعرّفي على الكلمة <span class="en" style="font-size:20px;color:var(--ink-soft)">Meet</span></h2>
-        <p class="ask">اسمعي الكلمة وقوليها بصوت عالي ٣ مرات</p>
-        <div class="dots">${keys.map((_,k) => `<i class="${k < i ? 'done' : k === i ? 'now' : ''}"></i>`).join('')}</div></div>
+      <div class="g-head"><h2>ازرعي الكلمة <span class="en" style="font-size:20px;color:var(--ink-soft)">Plant</span></h2>
+        <p class="ask">اسمعي الكلمة وقوليها بصوت عالي ٣ مرات، وبعدين ازرعي بذرتها 🌰</p></div>
+      ${bed(i)}
       <div class="flash sticker">
         ${w.e ? `<span class="emo big" aria-hidden="true">${w.e}</span>` : ''}
         <p class="bigword" lang="en">${w.en}</p>
         <p class="flash-ar">${w.ar}</p>
         ${sayBtn(w.en)}
       </div>
-      <button class="btn primary" id="nx">${i < keys.length - 1 ? 'الكلمة اللي بعدها' : 'يلا نطابق!'}</button>
+      <button class="btn primary" id="nx">🌰 ازرعي <span class="en">${w.en}</span></button>
     </section>`;
     setTimeout(() => say(w.en, .75), 250);
-    $('#nx').onclick = () => { i++; meet(); };
+    let busy = false;
+    $('#nx').onclick = () => {
+      if(busy) return; busy = true;
+      const pot = potAt(i), seed = document.createElement('span');
+      seed.className = 'seed-drop'; seed.textContent = '🌰'; pot.appendChild(seed);
+      setTimeout(() => { bedSt[i] = 0; setPot(i, 'grew'); seed.remove(); sfxPlop(); pot.querySelector('small').textContent = w.en; }, reduce ? 50 : 520);
+      setTimeout(() => { i++; meet(); }, reduce ? 300 : 1100);
+    };
   }
   function match(){
     let selEn = null, left = keys.length;
     const ar = shuffle(keys), en = shuffle(keys);
     screenEl.innerHTML = `<section class="stage">
-      <div class="g-head"><h2>طابقي <span class="en" style="font-size:20px;color:var(--ink-soft)">Match</span></h2>
-        <p class="ask">دوسي على الكلمة الإنجليزي وبعدين على معناها</p></div>
+      <div class="g-head"><h2>اسقي البذور <span class="en" style="font-size:20px;color:var(--ink-soft)">Water</span></h2>
+        <p class="ask">دوسي على الكلمة الإنجليزي وبعدين على معناها. كل ما تطابقي صح، بذرتها بتشرب مية 💧</p></div>
+      ${bed()}
       <div class="match">
         <div class="mcol" dir="ltr">${en.map(k => `<button class="mbtn en" data-en="${esc(k)}">${WORDS[k].en}</button>`).join('')}</div>
         <div class="mcol">${ar.map(k => `<button class="mbtn" data-ar="${esc(k)}">${WORDS[k].ar}</button>`).join('')}</div>
@@ -2917,8 +3045,12 @@ function learnSession(keys, pool, back){
       if(!selEn){ $('#fb').className = 'feedback'; $('#fb').textContent = 'اختاري الكلمة الإنجليزي الأول'; return; }
       const eb = screenEl.querySelector(`[data-en="${CSS.escape(selEn)}"]`);
       if(b.dataset.ar === selEn){
-        b.classList.add('ok'); eb.classList.add('ok'); eb.classList.remove('sel'); sfxGood(); selEn = null; left--;
-        if(!left){ burst($('.match')); setTimeout(recall, 900); }
+        b.classList.add('ok'); eb.classList.add('ok'); eb.classList.remove('sel'); sfxGood(); left--;
+        const j = keys.indexOf(selEn); selEn = null;
+        const pt = potAt(j), can = document.createElement('span');
+        can.className = 'bp-can'; can.innerHTML = CAN_SVG + '<span class="drops">' + '<i></i>'.repeat(4) + '</span>'; pt.appendChild(can); sfxWater();
+        setTimeout(() => { bedWet[j] = true; setPot(j, 'grew'); }, reduce ? 50 : 700); setTimeout(() => can.remove(), 1250);
+        if(!left){ setTimeout(recall, 1300); }
       } else { b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); sfxBad(); }
     });
   }
@@ -2929,14 +3061,15 @@ function learnSession(keys, pool, back){
       if(!queue.length){
         keys.forEach(k => { if(!S.wl[k]) grow(k, true); });
         addStars(keys.length);
-        return finish(() => learnSession(keys, pool, back), `زرعتي ${keys.length} كلمات جديدة في الحديقة 🌱`, back, 'ارجعي للدرس');
+        return finish(() => learnSession(keys, pool, back), `زرعتي ${keys.length} كلمات جديدة في حديقتك وطلعت نبتات 🌱 بكرة هتعطش، ارجعي اسقيها عشان تكبر وتبقى شجرة 🌳`, back, 'ارجعي للدرس');
       }
       const k = queue[0], w = WORDS[k];
       const opts = shuffle([k, ...distract(k, 3, 'en', pool)]);
       let tries = 0, done = false;
       screenEl.innerHTML = `<section class="stage">
-        <div class="g-head"><h2>افتكري <span class="en" style="font-size:20px;color:var(--ink-soft)">Remember</span></h2>
-          <p class="ask">إيه الكلمة الإنجليزي اللي معناها كده؟</p></div>
+        <div class="g-head"><h2>طلّعي النبتة <span class="en" style="font-size:20px;color:var(--ink-soft)">Grow</span></h2>
+          <p class="ask">إيه الكلمة الإنجليزي اللي معناها كده؟ كل كلمة تفتكريها بتطلع نبتة 🌱</p></div>
+        ${bed(keys.indexOf(k), true)}
         <div class="qcard sticker">${w.e ? `<span class="emo big" aria-hidden="true">${w.e}</span>` : ''}<p class="flash-ar">${w.ar}</p></div>
         <div class="opts words">${opts.map(o => `<button class="opt wopt en" data-k="${esc(o)}">${WORDS[o].en}</button>`).join('')}</div>
         <div class="feedback" id="fb" aria-live="polite"></div>
@@ -2945,6 +3078,7 @@ function learnSession(keys, pool, back){
         if(done) return;
         if(b.dataset.k === k){
           done = true; b.classList.add('right'); sfxGood(); say(w.en); queue.shift(); n++;
+          const j = keys.indexOf(k); bedSt[j] = 1; setPot(j, 'sprout'); setTimeout(sfxGrow, 150);
           $('#fb').className = 'feedback good'; $('#fb').innerHTML = `<span class="en">${w.en}</span><span>${w.ar}</span>`;
           setTimeout(q, 1300);
         } else {
@@ -2968,36 +3102,46 @@ function review(keys, pool, back, backLabel){
   function q(){
     if(!queue.length){
       const ok = Object.values(results).filter(Boolean).length;
-      return finish(() => review(shuffle(keys), pool, back, backLabel), `سقيتي ${keys.length} كلمات، و${ok} منهم كبروا 🌷`, back, backLabel === 'garden' ? 'الحديقة' : 'ارجعي للدرس');
+      return finish(() => review(shuffle(keys), pool, back, backLabel), `سقيتي ${keys.length} زرعات، و${ok} منهم كبروا 🌷${ok < keys.length ? ' واللي ذبلوا هنسقيهم تاني قريب' : ''}`, back, backLabel === 'garden' ? 'الحديقة' : 'ارجعي للدرس');
     }
     const k = queue.shift(), w = WORDS[k];
     const enToAr = Math.random() < .5;
     const opts = shuffle([k, ...distract(k, 3, enToAr ? 'ar' : 'en', pool)]);
     let done = false;
     screenEl.innerHTML = `<section class="stage">
-      <div class="g-head"><h2>اسقي الكلمة <span class="en" style="font-size:20px;color:var(--ink-soft)">Water</span></h2>
-        <p class="ask">${enToAr ? 'معنى الكلمة دي إيه؟' : 'إيه الكلمة الإنجليزي؟'}</p>
+      <div class="g-head"><h2>اسقي الزرعة <span class="en" style="font-size:20px;color:var(--ink-soft)">Water</span></h2>
+        <p class="ask">${isDue(k) ? 'الزرعة دي عطشانة! ' : ''}جاوبي صح عشان تسقيها وتكبر · ${enToAr ? 'معنى الكلمة دي إيه؟' : 'إيه الكلمة الإنجليزي؟'}</p>
         <div class="dots">${keys.map((_,j) => `<i class="${j < n ? 'done' : j === n ? 'now' : ''}"></i>`).join('')}</div></div>
-      <div class="qcard sticker water-card"><span class="plant" id="plant">${STAGE[lvl(k)]}</span>
-        ${enToAr ? `<p class="bigword" lang="en">${w.en}</p>${sayBtn(w.en)}` : `${w.e ? `<span class="emo big" aria-hidden="true">${w.e}</span>` : ''}<p class="flash-ar">${w.ar}</p>`}</div>
+      <div class="qcard sticker water-card">
+        <div class="wc-plant">${waterScene(lvl(k), {dry:isDue(k)})}<span class="wc-stage" id="wcStage">${STAGE_AR[lvl(k)]}</span></div>
+        <div class="wc-q">${enToAr ? `<p class="bigword" lang="en">${w.en}</p>${sayBtn(w.en)}` : `${w.e ? `<span class="emo big" aria-hidden="true">${w.e}</span>` : ''}<p class="flash-ar">${w.ar}</p>`}</div></div>
       <div class="opts words">${opts.map(o => `<button class="opt wopt ${enToAr ? '' : 'en'}" data-k="${esc(o)}">${enToAr ? WORDS[o].ar : WORDS[o].en}</button>`).join('')}</div>
       <div class="feedback" id="fb" aria-live="polite"></div>
     </section>`;
     if(enToAr) setTimeout(() => say(w.en, .8), 250);
     screenEl.querySelectorAll('.wopt').forEach(b => b.onclick = () => {
       if(done) return; done = true; n++;
-      const ok = b.dataset.k === k;
+      const ok = b.dataset.k === k, from = lvl(k);
       results[k] = ok; grow(k, ok);
-      if(ok){ b.classList.add('right'); sfxGood(); addStars(1); $('#plant').textContent = STAGE[lvl(k)]; $('#plant').classList.add('grew'); burst($('#plant')); }
-      else {
+      const to = lvl(k), scene = screenEl.querySelector('.wscene'), wp = scene.querySelector('.wpot');
+      $('#fb').className = `feedback ${ok ? 'good' : 'bad'}`;
+      if(ok){
+        b.classList.add('right'); sfxGood(); addStars(1);
+        $('#fb').innerHTML = `<span class="en">${w.en}</span><span>${w.ar} · 💧 بتشرب...</span>`;
+        pour(scene, () => {
+          wp.innerHTML = potSVG(to, {wet:true, cls:'grew'}); sfxGrow(); burst(wp);
+          $('#wcStage').textContent = to > from ? `${STAGE_AR[from]} ← ${STAGE_AR[to]}` : STAGE_AR[to];
+          $('#fb').innerHTML = `<span class="en">${w.en}</span><span>${w.ar} · ${to > from ? `كبرت وبقت ${STAGE_AR[to]}! 🎉` : 'شجرة كبيرة ومبسوطة! 🌳'}</span>`;
+        });
+      } else {
         b.classList.add('wrong'); sfxBad(); markTricky(w);
         screenEl.querySelector(`.wopt[data-k="${CSS.escape(k)}"]`).classList.add('right');
-        $('#plant').textContent = STAGE[1];
+        wp.innerHTML = potSVG(to, {dry:true, cls:'wilt'});
+        $('#wcStage').textContent = to < from ? `${STAGE_AR[from]} ← ${STAGE_AR[to]}` : STAGE_AR[to];
+        $('#fb').innerHTML = `<span class="en">${w.en}</span><span>${w.ar} · الزرعة ذبلت شوية 🥀 هنرجع نسقيها تاني قريب</span>`;
       }
       say(w.en);
-      $('#fb').className = `feedback ${ok ? 'good' : 'bad'}`;
-      $('#fb').innerHTML = `<span class="en">${w.en}</span><span>${w.ar}${ok ? ` · كبرت وبقت ${STAGE_AR[lvl(k)]}` : ' · هنرجعلها تاني قريب'}</span>`;
-      setTimeout(q, ok ? 1500 : 2300);
+      setTimeout(q, ok ? 2300 : 2600);
     });
   }
   q();
@@ -3012,11 +3156,11 @@ function garden(){
     ${crumbs([['منهج المدرسة','book'], ['حديقة الكلمات']])}
     <div class="garden-head sticker">
       <div><h2>حديقة الكلمات <span class="en">Word Garden</span></h2>
-      <p>كل كلمة بتبدأ ${STAGE[1]} نبتة. كل ما تسقيها صح في معادها بتكبر لحد ما تبقى ${STAGE[5]} شجرة. الكلمة العطشانة عليها 💧</p></div>
-      <div class="stage-count">${STAGE.slice(1).map((s,i) => `<span><b>${s}</b>${counts[i+1]}</span>`).join('')}</div>
+      <p>كل كلمة بتزرعيها بتطلع نبتة. بعد يوم بتعطش وتدبل 💧، ولو سقيتيها (جاوبتي عليها صح) بتكبر خطوة، لحد ما تبقى شجرة فيها تفاح. كل ما تكبر، بتعطش بعد مدة أطول.</p></div>
+      <div class="grow-path">${[1,2,3,4,5].map(i => `<span class="gp-step">${potSVG(i)}<b>${STAGE_AR[i]}</b><small>${counts[i]} كلمة</small></span>`).join('<i class="gp-arrow" aria-hidden="true">💧←</i>')}</div>
       ${due.length ? `<button class="btn primary" id="waterAll">💧 اسقي ${Math.min(15, due.length)} كلمة عطشانة</button>` : keys.length ? '<p class="muted">مفيش كلمات عطشانة دلوقتي. ارجعي بكرة تسقي!</p>' : ''}
     </div>
-    ${keys.length ? `<div class="plot">${keys.map(k => `<button class="plant-tile ${isDue(k) ? 'thirsty' : ''}" data-say="${esc(k)}"><span class="p-ico">${STAGE[lvl(k)]}${isDue(k) ? '<i>💧</i>' : ''}</span><span class="en">${k}</span><small>${WORDS[k] ? WORDS[k].ar : ''}</small></button>`).join('')}</div>`
+    ${keys.length ? `<div class="plot">${keys.map(k => `<button class="plant-tile ${isDue(k) ? 'thirsty' : ''}" data-say="${esc(k)}"><span class="p-ico">${potSVG(lvl(k), {dry:isDue(k)})}${isDue(k) ? '<i>💧</i>' : ''}</span><span class="en">${k}</span><small>${WORDS[k] ? WORDS[k].ar : ''}</small><em class="p-status">${isDue(k) ? 'عطشانة!' : dueIn(k)}</em></button>`).join('')}</div>`
       : '<p class="empty">الحديقة لسه فاضية. ادخلي أي درس من منهج المدرسة ودوسي «ازرعي كلمات جديدة».</p>'}
   </section>`;
   bindCrumbs();

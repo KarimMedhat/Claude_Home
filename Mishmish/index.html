@@ -1013,7 +1013,86 @@ const S = {
   pDone: store.get('pDone', {}),
   wDone: store.get('wDone', {})
 };
-const save = k => store.set(k, S[k]);
+const save = k => { store.set(k, S[k]); progStamp(k); };
+/* ---------- whole-game progress synced across devices (artifact db doc progress/farha) ----------
+   Every save(k) stamps the key's time. Copies merge per key: lists of things done or owned are united,
+   scores keep the best, everything else keeps the newest copy. A reset wins over older data everywhere. */
+const PROG_KEYS = ['stars','owned','equip','gallery','tricky','mish','room','treats','pet','day','name','readWords','famDone','storyDone','wl','gDone','vDone','writings','exams','pDone','wDone'];
+const PROG_META = Object.assign({ts:{}, resetTs:0, joined:false}, store.get('sync_meta', {}));
+let progDoc = null, progTimer = null, progWriting = false, progDirty = false, progState = 'wait';
+function progStamp(k){ if(PROG_KEYS.includes(k)){ PROG_META.ts[k] = Date.now(); store.set('sync_meta', PROG_META); progSchedule(); } }
+function progSchedule(){ clearTimeout(progTimer); progTimer = setTimeout(progPush, 1500); }
+const progBody = () => { const data = {}; PROG_KEYS.forEach(k => { if(S[k] !== undefined) data[k] = S[k]; }); return JSON.parse(JSON.stringify({data, ts:PROG_META.ts, resetTs:PROG_META.resetTs})); };
+function progPush(){
+  clearTimeout(progTimer);
+  if(!progDoc) return;
+  if(progWriting){ progDirty = true; return; }
+  progWriting = true;
+  progDoc.set(progBody()).then(() => { progState = 'ok'; progPaint(); })
+    .catch(e => { if(e && (e.code === 'invalid_argument' || e.code === 'revoked' || e.code === 'not_granted')){ progDoc = null; progState = 'local'; progPaint(); } })
+    .finally(() => { progWriting = false; if(progDirty){ progDirty = false; progPush(); } });
+}
+function progPaint(){
+  const el = $('#progSync'); if(!el) return;
+  el.textContent = progState === 'ok' ? '☁️ اللعبة كلها محفوظة على كل الأجهزة' : progState === 'wait' ? '☁️ بنوصل اللعبة بكل الأجهزة...' : '📱 اللعبة محفوظة على الجهاز ده بس دلوقتي';
+  el.className = 'bank-sync ' + progState;
+}
+const pIsObj = v => v && typeof v === 'object' && !Array.isArray(v);
+function progMergeKey(k, a, b, ta, tb, joining){
+  if(a == null) return b; if(b == null) return a;
+  if(k === 'owned' || k === 'readWords') return [...new Set([...b, ...a])];
+  if(['gDone','vDone','wDone','famDone','storyDone'].includes(k) && pIsObj(a) && pIsObj(b)){ const o = {...b}; Object.keys(a).forEach(x => { if(a[x]) o[x] = a[x]; }); return o; }
+  if(['exams','pDone','tricky'].includes(k) && pIsObj(a) && pIsObj(b)){ const o = {...b}; Object.keys(a).forEach(x => { o[x] = Math.max(+a[x] || 0, +o[x] || 0); }); return o; }
+  if(k === 'wl' && pIsObj(a) && pIsObj(b)){ const o = {...b}; Object.keys(a).forEach(x => { if(!o[x] || (a[x].due || 0) > (o[x].due || 0)) o[x] = a[x]; }); return o; }
+  if(k === 'writings' && Array.isArray(a) && Array.isArray(b)){ const seen = new Set(), out = []; [...a, ...b].forEach(w => { const id = JSON.stringify([w.wid, w.title, w.text]); if(!seen.has(id)){ seen.add(id); out.push(w); } }); return out.slice(0, 20); }
+  if(k === 'stars' && joining) return Math.max(+a || 0, +b || 0);
+  if(joining) return b;                      /* a device joining for the first time takes the cloud copy */
+  if((ta || 0) !== (tb || 0)) return (ta || 0) > (tb || 0) ? a : b;
+  if(k === 'stars') return Math.max(+a || 0, +b || 0);
+  return b;
+}
+function progApply(remote){
+  let changed = false;
+  if(!remote || !remote.data){ PROG_META.joined = true; store.set('sync_meta', PROG_META); return {changed, push:true}; }
+  const joining = !PROG_META.joined;
+  const rts = remote.ts || {}, rReset = remote.resetTs || 0;
+  if(rReset > PROG_META.resetTs){            /* another device reset the game: take its copy as it is */
+    PROG_KEYS.forEach(k => { if(k in remote.data){ S[k] = remote.data[k]; store.set(k, S[k]); } });
+    PROG_META.ts = {...rts}; PROG_META.resetTs = rReset; PROG_META.joined = true; store.set('sync_meta', PROG_META);
+    return {changed:true, push:false};
+  }
+  if(PROG_META.resetTs > rReset){ PROG_META.joined = true; store.set('sync_meta', PROG_META); return {changed, push:true}; }
+  PROG_KEYS.forEach(k => {
+    const m = progMergeKey(k, S[k], remote.data[k], PROG_META.ts[k], rts[k], joining && (k in remote.data));
+    if(canon(m) !== canon(S[k])){ S[k] = m; store.set(k, m); changed = true; }
+    PROG_META.ts[k] = Math.max(PROG_META.ts[k] || 0, rts[k] || 0);
+  });
+  PROG_META.joined = true;
+  store.set('sync_meta', PROG_META);
+  const push = PROG_KEYS.some(k => canon(S[k]) !== canon(remote.data[k]));
+  return {changed, push};
+}
+(async () => {
+  await Promise.resolve();                  /* run after the rest of the script has loaded */
+  let db = null;
+  try{ db = window.claude && window.claude.use ? await window.claude.use('db') : null; }catch(e){ db = null; }
+  if(!db){ progState = 'local'; progPaint(); return; }
+  progDoc = db.doc('progress/farha');
+  const timer = setTimeout(() => { if(progState === 'wait'){ progState = 'local'; progPaint(); } }, 10000);
+  progDoc.onSnapshot(snap => {
+    if(snap.metadata && (snap.metadata.fromCache || snap.metadata.hasPendingWrites)) return;
+    clearTimeout(timer);
+    const {changed, push} = progApply(snap.exists ? snap.data() : null);
+    progState = 'ok'; progPaint();
+    if(push) progPush();
+    if(changed){
+      renderStars();
+      if(screenEl.querySelector('.hero')) home(true);           /* only repaint the home screen; never interrupt a game */
+    }
+  }, () => { clearTimeout(timer); progDoc = null; progState = 'local'; progPaint(); });
+  addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden' && progTimer) progPush(); });
+})();
+
 
 /* ---------- words (grade 4 themes) ---------- */
 const COLORS = [
@@ -2754,6 +2833,7 @@ function home(keep){
         ${S.writings.length ? `<div class="writings">${S.writings.map(w => `<details class="wr"><summary><span class="en">${esc(w.title)}</span> · <small>${esc(w.date)}</small></summary><p class="en" dir="ltr">${esc(w.text)}</p></details>`).join('')}</div>` : '<p class="muted">لسه مفيش. المواضيع اللي بتكتبها في ورشة الكتابة بتتحفظ هنا علشان تراجعوها معاها.</p>'}
       </div>
       <div>
+        <p id="progSync" class="bank-sync"></p>
         <h4>نصايح صغيرة</h4>
         <ul>
           <li>ربع ساعة كل يوم أحسن من ساعتين مرة في الأسبوع.</li>
@@ -2778,13 +2858,14 @@ function home(keep){
   $('#examDoor').onclick = () => { actx(); examHall(); };
   $('#bankDoor').onclick = () => { actx(); bankScreen(); };
   $('#nbDoor').onclick = () => { actx(); notesScreen(); };
+  progPaint();
   screenEl.querySelectorAll('[data-gset]').forEach(b => b.onclick = () => { S.mish = {...S.gallery[+b.dataset.gset]}; save('mish'); meow(); toast('مشمش بقت بالألوان بتاعتك!'); home(true); });
   screenEl.querySelectorAll('[data-gdel]').forEach(b => b.onclick = () => { S.gallery.splice(+b.dataset.gdel, 1); save('gallery'); home(true); });
   $('#kidName').onchange = e => { S.name = e.target.value.trim().replace(/[^A-Za-z \-]/g,'').slice(0,20); save('name'); };
   $('#resetBtn').onclick = () => {
     $('#resetRow').innerHTML = '<span>متأكدين؟ النجوم والرسومات هتتمسح.</span><button class="btn" id="yesReset" style="background:var(--bad-l)">أيوه امسح</button><button class="btn" id="noReset">لأ</button>';
     $('#noReset').onclick = () => home(true);
-    $('#yesReset').onclick = () => { Object.assign(S, {stars:0, owned:[], equip:{}, wl:{}, gDone:{}, vDone:{}, writings:[], wDone:{}, exams:{}, pDone:{}, gallery:[], tricky:{}, mish:{...DEFAULT_MISH}, readWords:[], famDone:{}, storyDone:{}}); ['stars','owned','equip','wl','gDone','vDone','writings','wDone','exams','pDone','gallery','tricky','mish','readWords','famDone','storyDone'].forEach(save); S.room = null; S.treats = null; S.pet = null; S.day = null; initRoom(); ['room','treats','pet','day'].forEach(save); renderStars(); home(true); };
+    $('#yesReset').onclick = () => { PROG_META.resetTs = Date.now(); Object.assign(S, {stars:0, owned:[], equip:{}, wl:{}, gDone:{}, vDone:{}, writings:[], wDone:{}, exams:{}, pDone:{}, gallery:[], tricky:{}, mish:{...DEFAULT_MISH}, readWords:[], famDone:{}, storyDone:{}}); ['stars','owned','equip','wl','gDone','vDone','writings','wDone','exams','pDone','gallery','tricky','mish','readWords','famDone','storyDone'].forEach(save); S.room = null; S.treats = null; S.pet = null; S.day = null; initRoom(); ['room','treats','pet','day'].forEach(save); progPush(); renderStars(); home(true); };
   };
 }
 

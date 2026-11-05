@@ -1584,12 +1584,20 @@ BOOK.forEach(u => u.lessons.forEach(l => {
   l.words = [...new Set([...parse(l.imp, true), ...parse(l.ext, false)])];
   l.verbs = l.v ? l.v.split(';').map(s => { const [b, p, ar] = s.split('|'); return {b, p, ar}; }) : [];
 }));
+/* pictures for every curriculum word that had none (concrete ones, then symbols for abstract words).
+   They show on word cards and tests; the picture-choice games keep the hand-picked set. */
+const EMO_CONCRETE = "ears|👂;tongue|👅;nose|👃;classroom|🏫;flowers|💐;butterflies|🦋;smoke|💨;fire|🔥;brush|🪥;wash|🧼;exercise|🏃‍♀️;breakfast|🥞;vitamins|💊;shower|🚿;pocket|👖;sister|👧;clothes|👗;streets|🛣️;people|👨‍👩‍👧‍👦;decorations|🎊;harvest|🌾;crafts|🧶;festivals|🎪;pottery|🏺;weave|🧵;carpets|🧶;wooden|🪵;fresh|🥬;gardens|🌳;buildings|🏢;train|🚆;photos|📷;air|🌬️;forest|🌲;animals|🦁;hunt|🏹;climbing|🧗;cage|🦜;pets|🐶;tank|🐠;sick|🤒;camel|🐪;treasures|💎;gifts|🎁;bazaar|🛍️;teachers|👩‍🏫;students|🧑‍🎓;friends|👭;restaurants|🍽️;books|📚;doctors|👨‍⚕️;nurses|👩‍⚕️;letters|✉️;packages|📦;stores|🏪;mountain|⛰️;climb|🧗‍♀️;plants|🌱;oasis|🌴;dates|🌴;sweet|🍬;costumes|🎭;coat|🧥;uniform|👮;patients|🤕;fires|🔥;cartoons|📺;village|🏡;gift|🎁;heart|❤️;hammered|🔨;hose|🧯;heroes|🦸;neighbor|🏘️;fire station|🚒;equipment|🧰;alarm|🚨;team|👥;tools|🛠️;tour guide|🧭;tourists|📸;pictures|🖼️;guide|🧭;smiles|😊;stories|📖;wildlife|🦓;question|❓;answer|💬;homework|📝;study|📖;hour|⏰;moment|⏱️;owner|🧑;owners|🧑‍🤝‍🧑;visitor|🚶;voices|🗣️;laughing|😂;loud|📢;warm|☀️;thick|🧱;safe|🦺;protect|🛡️;protective|⛑️;dangerous|⚠️;danger|⚠️;ran away|🏃;repair|🔧;save|🛟;check|🩺;health|💪;design|✏️;designs|🎨;create|🎨;share|🤝;celebrate|🥳;talk|🗣️;discuss|💬;dirty|🧹;rest|🛋️;retire|👴;wise|🦉;clever|💡;brave|🦁;kind|🤗;kindness|💗;gentle|🕊️;delicious|😋;beautiful|🌸;wonderful|🤩;amazing|🤩;exciting|🎢;great|👍;nice|🙂;bright|☀️;colorful|🌈;sound|🔊;world|🌍;China|🏯;billion|💰;million|💵;thousand|🔢;hundred|💯;ten|🔟;largest|🐘;large|🐘;grand|🏛️;history|📜;modern|🏙️;region|🗺️;area|🗺️;places|📍;spaces|📐;habitats|🏞️;species|🐾;endangered|🐼;facts|📋;Arabian|🐆;title|🏷️;program|📅;jobs|💼;characters|🧸;shows|🎬;marks|✅;borrow|📚;wait|⏳;daytime|🌞;early|🌅;adventure|🎒;enjoy|😄;popular|⭐;natural|🍃;local|📍;skilled|🧑‍🔧;admire|😍;request|🙏;fit|👌;shock|😱;regret|😞;sorry|😔;mistakes|❌;trick|🃏;pretend|🎭;replied|💬;dear|💌;disappearing|🫥;forever|♾️;remain|🏠;reason|💡;stop|🛑;near|📏;connected|🔗;stay|🏠;stay safe|🦺;understand|💡;senses|👁️;energy|⚡;mind|🧠;sharp|✏️;habits|✅;daily|📅;routine|🔁;problems|😟;solutions|💡;solve|🧩;community|🏘️;traditions|🕌;special|🌟;events|🎉;rich|💰;safely|🦺;challenges|🧗;attention|👀;live|🏠;move|🚶‍♀️;everyone|👨‍👩‍👧‍👦;together|🤝;better|📈;less|📉;different|🔀;difference|🔀;things|🧺;need|🙋;inside|📥;outside|📤;face|😐;populations|👥;reached|🎯";
+const EMO_ABSTRACT = "follows|👣;during|⏳;enough|✋;through|🚪;suddenly|⚡;others|👥;important|❗;including|➕;because|💡;first|1️⃣;next|⏭️;then|➡️;after that|🔜;finally|🏁;sometimes|🔄;both|✌️;especially|⭐;instead|🔁;second|2️⃣;third|3️⃣;usually|🗓️;sure|👍;once|1️⃣;anymore|🚫;before|⏪;still|⏸️;some|🔹;another|➕;really|💯;nothing|🚫;kindly|🤲;carelessly|🙈;ready|✅";
+[[EMO_CONCRETE, false], [EMO_ABSTRACT, true]].forEach(([str, abs]) => str.split(';').forEach(p => {
+  const [k, e] = p.split('|'); const w = WORDS[k];
+  if(w && !w.e && e){ w.e = e; w.abs = true; }  /* card pictures only: picture games keep the hand-picked set */
+}));
 const ALL_VERBS = [];
 BOOK.forEach(u => u.lessons.forEach(l => l.verbs.forEach(v => { if(!ALL_VERBS.some(x => x.b === v.b)) ALL_VERBS.push(v); })));
 const unitWordsWithPics = uid => {
   const seen = new Set(), out = [];
   BOOK.find(u => u.id === uid).lessons.forEach(l => l.words.forEach(k => {
-    const w = WORDS[k]; if(w.e && !seen.has(w.e) && !seen.has(k)){ seen.add(w.e); seen.add(k); out.push(w); }
+    const w = WORDS[k]; if(w.e && !w.abs && !seen.has(w.e) && !seen.has(k)){ seen.add(w.e); seen.add(k); out.push(w); }
   }));
   return out;
 };

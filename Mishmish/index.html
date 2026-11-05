@@ -894,6 +894,13 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
 .talk-chips{justify-content:center;flex-wrap:wrap}
 .talk-chips .chip{display:grid;line-height:1.2;padding:6px 12px}
 .talk-chips .chip small{font-size:12px;color:var(--ink-soft)}
+.fit-pair{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:4px}
+.fit-pair svg{width:100%;height:auto}
+.fit-pair svg:last-child{transform:scale(.85);transform-origin:50% 100%}
+.friend-intro{margin:0;font-weight:700;color:#B0306A}
+.rfriend{width:9.5cqw}
+.rfriend.jump svg{animation:jumpc .5s ease-out 1}
+.k-friend svg{width:100%;height:auto}
 .bank-sync{font-size:13px;font-weight:700;color:var(--ink-soft)}
 .bank-sync.ok{color:#1E8E4E}
 .bank-win{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;padding:12px 18px;background:#FFF1C7;font-size:19px;margin:0}
@@ -1033,6 +1040,7 @@ const DEV = (() => { let d = store.get('device_id', ''); if(!d){ d = Date.now().
 S.starLedger = store.get('starLedger', null) || {base: S.stars || 0, dev: {}};
 const ledgerStars = L => Math.max(0, (L.base || 0) + Object.values(L.dev || {}).reduce((t, x) => t + (x.e || 0) - (x.s || 0), 0));
 const myLedger = () => (S.starLedger.dev[DEV] = S.starLedger.dev[DEV] || {e: 0, s: 0});
+S.stars = ledgerStars(S.starLedger);
 function ledgerMerge(a, b){
   const o = {base: Math.max(a.base || 0, b.base || 0), dev: {}};
   new Set([...Object.keys(a.dev || {}), ...Object.keys(b.dev || {})]).forEach(id => {
@@ -1649,6 +1657,36 @@ DEPTS.push(
   {id:'catcorner', ar:'ركن مشمش', en:"Mishmish's Corner", ico:'🧺', wall:'#E3F2FF', floor:'food'},
   {id:'treats', ar:'أكل مشمش', en:"Mishmish's Food", ico:'🍗', wall:'#FFF0D6', floor:'food'}
 );
+/* ---------- Mishmish's friends: other cats Farha can adopt with lots of stars ---------- */
+const FRIEND = (id, en, ar, price, fills, look, intro, introAr) => ({id, dept:'friends', slot:'friend', kind:'friend', en, ar, price, fills, look, intro, introAr, isNew:true});
+const FRIENDS = [
+  FRIEND('fr_bobo', 'Bobo', 'بوبو', 300,
+    {tail:'#F7F2EA', body:'#F7F2EA', paws:'#FFFFFF', ball:'#FFD23F', ears:'#E8A25C', head:'#F7F2EA', eyes:'#3DBB5C', nose:'#FF8FC2', bow:'#3A7BE8'},
+    {pattern:'spots'}, "Hi! I'm Bobo. I'm a little kitten. I love to play!", 'بوبو قطة صغيرة بتحب اللعب'),
+  FRIEND('fr_luna', 'Luna', 'لونا', 400,
+    {tail:'#9AA3B5', body:'#9AA3B5', paws:'#FFFFFF', ball:'#9B5DE5', ears:'#9AA3B5', head:'#9AA3B5', eyes:'#4FA8F0', nose:'#FF8FC2', bow:'#9B5DE5'},
+    {}, "Hi! I'm Luna. I like to sleep in the sun.", 'لونا بتحب تنام في الشمس'),
+  FRIEND('fr_coco', 'Coco', 'كوكو', 500,
+    {tail:'#8A5A3A', body:'#8A5A3A', paws:'#F3D9B8', ball:'#FF8A3D', ears:'#8A5A3A', head:'#8A5A3A', eyes:'#FFD23F', nose:'#2B2233', bow:'#FF8A3D'},
+    {pattern:'stripes'}, "Hi! I'm Coco. I love chocolate cake!", 'كوكو بتحب كيكة الشوكولاتة'),
+  FRIEND('fr_snowy', 'Snowy', 'سنوي', 650,
+    {tail:'#FFFFFF', body:'#FFFFFF', paws:'#FFFFFF', ball:'#4FA8F0', ears:'#FFFFFF', head:'#FFFFFF', eyes:'#4FA8F0', nose:'#FF8FC2', bow:'#4FA8F0'},
+    {}, "Hi! I'm Snowy. I am white like snow.", 'سنوي بيضا زي التلج'),
+  FRIEND('fr_sunny', 'Sunny', 'صني', 800,
+    {tail:'#FFC93C', body:'#FFC93C', paws:'#FFFFFF', ball:'#E8433A', ears:'#FFC93C', head:'#FFC93C', eyes:'#3DBB5C', nose:'#E8433A', bow:'#E8433A'},
+    {pattern:'stripes'}, "Hi! I'm Sunny. I am brave and fast!", 'صني شجاعة وسريعة'),
+  FRIEND('fr_shadow', 'Shadow', 'شادو', 1000,
+    {tail:'#3A3446', body:'#3A3446', paws:'#3A3446', ball:'#FFD23F', ears:'#3A3446', head:'#3A3446', eyes:'#FFD23F', nose:'#FF8FC2', bow:'#FFD23F'},
+    {}, "Hi! I'm Shadow. I can see in the dark!", 'شادو بتشوف في الضلمة'),
+  FRIEND('fr_lulu', 'Princess Lulu', 'الأميرة لولو', 1500,
+    {tail:'#F5C6E8', body:'#F5C6E8', paws:'#FFFFFF', ball:'#FFD23F', ears:'#F5C6E8', head:'#F5C6E8', eyes:'#9B5DE5', nose:'#F2558F', bow:'#F2558F'},
+    {hat:'crown', pattern:'heartsfur'}, "Hello! I'm Princess Lulu. I live in a castle!", 'الأميرة لولو عايشة في قصر')
+];
+ITEMS.push(...FRIENDS);
+DEPTS.unshift({id:'friends', ar:'أصحاب مشمش', en:"Mishmish's Friends", ico:'🐾', wall:'#FFE6F2', floor:'cat'});
+const isFriend = it => it && it.kind === 'friend';
+const friendSVG = (it, cls = '') => catSVG(it.fills, it.look || {}, cls);
+const myFriends = () => FRIENDS.filter(f => S.owned.includes(f.id));
 const isRoomThing = it => it.slot === 'room';
 const isPlaceable = it => isRoomThing(it) && !['treat','wallpaper','flooring'].includes(it.kind);
 
@@ -1704,6 +1742,7 @@ function catSVG(fills={}, look={}, cls=''){
 function itemThumb(item){
   if(item.e) return `<span class="emo-thumb" aria-hidden="true">${item.e}</span>`;
   if(item.slot === 'room'){ if(item.bg) return `<span class="swatch" style="background:${esc(item.bg)}"></span>`; return `<svg viewBox="${item.vb}" aria-hidden="true"><g stroke="#2B2233" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">${item.svg()}</g></svg>`; }
+  if(item.slot === 'friend') return friendSVG(item);
   if(item.slot === 'fur') return catSVG(DEFAULT_MISH, {fur:item.id});
   if(item.slot === 'pattern') return catSVG(DEFAULT_MISH, {pattern:item.id});
   if(item.slot === 'bg') return `<svg viewBox="0 0 300 330" aria-hidden="true">${item.draw()}</svg>`;
@@ -4066,6 +4105,7 @@ const AWNING = `<svg class="awning" viewBox="0 0 400 38" preserveAspectRatio="no
 const PLURAL = new Set(['r_books','r_lights','r_bunting','r_balloons','w_hearts','w_flowers','w_dots','w_bricks','w_stripes','f_tiles','w_clouds','glasses','sunglasses','hearts','stripes','spots','heartsfur','coolshades','goggles','beads','booksE','bouquet','scissorsE','bgbubbles','bgbutterfly','bghearts','bgballoons']);
 const NO_ART = new Set(['t_food','t_milk','t_cheese','t_icecream','t_cake','t_chicken','f_marble','f_grass','w_stars','space','candy','milkE','bgsnow','bgautumn','bgsea','bgcandy','bgmusic','bgpaint','furgray','furwhite','furblack','furpink','furlav','furgold','fursky','furmint','furbrown','furcream','bgflowers','bgstars']);
 function itemLine(it, withPrice){
+  if(isFriend(it)) return withPrice ? `This is ${it.en}! ${it.en} costs ${priceOf(it)} stars.` : it.intro;
   const pl = PLURAL.has(it.id);
   const name = pl || NO_ART.has(it.id) ? it.en : (/^[aeiou]/.test(it.en) ? 'an ' : 'a ') + it.en;
   const head = (pl ? `They're ${name}!` : `It's ${name}!`);
@@ -4218,6 +4258,10 @@ function renderRoomArea(){
   $('#roomWrap').innerHTML = roomScene();
   const room = $('#room');
   room.insertAdjacentHTML('beforeend', mishHTML(mishSt.x, mishSt.y, 10 + Math.round(mishSt.y * 2), true));
+  myFriends().forEach((f, k) => {
+    const st = friendSt[f.id] || (friendSt[f.id] = {x: clampX(20 + ((k * 23 + 37) % 66)), y: 80 + (k * 7) % 17});
+    room.insertAdjacentHTML('beforeend', `<div class="rmish rfriend" data-friend="${f.id}" style="left:${st.x}%;top:${st.y}%;z-index:${10 + Math.round(st.y * 2)}"><div class="flip">${friendSVG(f)}</div><div class="bubble-r" hidden></div></div>`);
+  });
   room.classList.toggle('editing', editMode);
   room.addEventListener('pointerdown', onDown);
   room.addEventListener('click', onRoomClick);
@@ -4278,6 +4322,28 @@ function playWith(pl, quiet){
     if(!quiet){ say("Let's play!"); meow(); if(Date.now() - S.pet.playedAt > 15 * 60e3){ S.pet.playedAt = Date.now(); addJoy(1); } }
   });
 }
+const friendSt = {};
+function friendBubble(id, text, ms = 3000){
+  const n = $(`#room [data-friend="${id}"]`); if(!n) return;
+  const b = n.querySelector('.bubble-r'); b.textContent = text; b.hidden = false;
+  clearTimeout(friendSt[id].bt); friendSt[id].bt = setTimeout(() => { b.hidden = true; }, ms);
+}
+function friendWalk(id, x, y, cb){
+  const n = $(`#room [data-friend="${id}"]`), st = friendSt[id]; if(!n || !st) return;
+  const t = Math.round(Math.max(300, Math.min(2600, Math.hypot(x - st.x, (y - st.y) * .6) * 50)));
+  if(Math.abs(x - st.x) > .5) n.classList.toggle('left', x < st.x);
+  n.classList.add('walking'); n.style.transition = `left ${t}ms linear, top ${t}ms linear`;
+  n.style.left = x + '%'; n.style.top = y + '%'; n.style.zIndex = 10 + Math.round(y * 2);
+  st.x = x; st.y = y;
+  setTimeout(() => { n.classList.remove('walking'); if(cb) cb(); }, t + 40);
+}
+function friendTap(id){
+  const f = ITEM_BY_ID[id], n = $(`#room [data-friend="${id}"]`); if(!f || !n) return;
+  tone(1100, 0, .12, 'sine', .08); meow();
+  n.classList.remove('jump'); void n.offsetWidth; n.classList.add('jump'); setTimeout(() => n.classList.remove('jump'), 600);
+  const line = rand([f.intro, `I love you, ${kidName()}!`, `Mishmish is my best friend!`, `Let's play, ${kidName()}!`]);
+  friendBubble(id, line); setTimeout(() => say(line), 300);
+}
 function mishTap(){
   if(mishSt.mode === 'sleep'){ wake(); say('Good morning!'); return; }
   meow(); mishAnim('jump', 600);
@@ -4301,7 +4367,9 @@ function feed(tid){
 }
 function idleTick(){
   if(!$('#room')){ clearInterval(roomTimer); roomTimer = null; stopListening(); return; }
-  if(editMode || findSt || Date.now() < mishSt.busy + 2500 || document.hidden) return;
+  if(editMode || findSt || document.hidden) return;
+  myFriends().forEach(f => { if(Math.random() < .5 && friendSt[f.id]) friendWalk(f.id, clampX(6 + Math.random() * 88), 76 + Math.random() * 21); });
+  if(Date.now() < mishSt.busy + 2500) return;
   const r = Math.random(), beds = placed('catbed'), toys = placed('cattoy');
   if(mishSt.mode === 'sleep'){ if(r < .25) wake(); return; }
   if(S.pet.hearts <= 1 && r < .4) return bubble(rand(["I'm hungry!","Feed me, please!"]));
@@ -4373,6 +4441,10 @@ function talkCommand(raw, dry){
   const beds = placed('catbed'), toys = placed('cattoy');
   const reply = (line, ar) => { bubble(line, 3200); setTimeout(() => say(line), 300); const h = $('#talkHeard'); if(h && ar) h.insertAdjacentHTML('beforeend', `<br><small>✔ مشمش فهمتك: ${ar}</small>`); };
   let act = null;
+  /* a friend cat by name: she comes to the middle and says hello */
+  const fname = myFriends().find(f => t.includes(' ' + f.en.toLowerCase().replace('princess ', '') + ' ') || t.includes(f.ar.replace('الأميرة ', '')));
+  if(fname && !dry){ friendWalk(fname.id, 60, 92, () => { friendBubble(fname.id, `Hi! I'm ${fname.en}!`); say(`Hi! I'm ${fname.en}!`); }); const h = $('#talkHeard'); if(h) h.insertAdjacentHTML('beforeend', `<br><small>✔ ${fname.ar} سمعتك وجت!</small>`); return true; }
+  if(fname) return true;
   /* an item in the room by its English (or Arabic) name */
   const target = S.room.items.map(p => [p, ITEM_BY_ID[p.id]]).filter(([p, it]) => it && it.kind !== 'wallpaper' && it.kind !== 'flooring')
     .find(([p, it]) => t.includes(' ' + it.en.toLowerCase() + ' ') || (it.ar && t.includes(it.ar.split(' ')[0])));
@@ -4479,6 +4551,7 @@ function windowTap(){
 function onRoomClick(e){
   if(editMode){ const rm = e.target.closest('[data-rm]'); if(rm) removePlaced(rm.dataset.rm); return; }
   if(e.target.closest('#rmish')) return mishTap();
+  const fr = e.target.closest('[data-friend]'); if(fr) return friendTap(fr.dataset.friend);
   if(e.target.closest('#rwin')) return windowTap();
   const n = e.target.closest('.ritem'); if(n) return itemTap(n);
   const r = $('#room').getBoundingClientRect(), x = (e.clientX - r.left) / r.width * 100, y = (e.clientY - r.top) / r.height * 100;
@@ -4589,7 +4662,7 @@ function mulberry(a){ return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Mat
 const DEALS = (() => {
   const d = new Date(), r = mulberry(d.getFullYear() * 500 + d.getMonth() * 40 + d.getDate()), out = [];
   const pick = (pool, n) => { let g = 0; while(n > 0 && g++ < 500){ const id = pool[Math.floor(r() * pool.length)].id; if(!out.includes(id)){ out.push(id); n--; } } };
-  pick(ITEMS.filter(i => !isRoomThing(i) && i.price >= 12), 3);
+  pick(ITEMS.filter(i => !isRoomThing(i) && !isFriend(i) && i.price >= 12), 3);
   pick(ITEMS.filter(i => isRoomThing(i) && i.kind !== 'treat' && i.price >= 12), 3);
   pick(ITEMS.filter(i => i.kind === 'treat'), 1);
   return new Set(out);
@@ -4605,6 +4678,7 @@ function ownState(it){
   if(it.kind === 'treat') return {own:false, count:S.treats[it.id] || 0};
   const own = S.owned.includes(it.id);
   if(!own) return {own:false};
+  if(isFriend(it)) return {own, on:true, label:'في الأوضة 🏠'};
   if(it.kind === 'wallpaper' || it.kind === 'flooring'){ const on = S.room[it.kind === 'wallpaper' ? 'wall' : 'floor'] === it.id; return {own, on, label: on ? 'متركّبة' : 'عندك ✓'}; }
   if(isRoomThing(it)){ const on = S.room.items.some(p => p.id === it.id); return {own, on, label: on ? 'في الأوضة' : 'في الدولاب'}; }
   const on = S.equip[it.slot] === it.id; return {own, on, label: on ? 'لابساه' : 'عندك ✓'};
@@ -4681,6 +4755,7 @@ function renderFit(anim){
   $('#fitLabel').innerHTML = roomy ? `شوفيها في أوضتك · <span class="en">Your room</span>` : `غرفة القياس · <span class="en">Fitting room</span>`;
   $('#fitting').classList.toggle('roomy', !!roomy);
   if(roomy) $('#fitCat').innerHTML = roomScene({mini:true, preview:it});
+  else if(isFriend(it)){ $('#fitLabel').innerHTML = `مشمش وصاحبتها الجديدة · <span class="en">New friend</span>`; $('#fitCat').innerHTML = `<div class="fit-pair">${catSVG(S.mish, S.equip)}${friendSVG(it, anim ? 'tryon' : '')}</div>`; }
   else {
     const look = {...S.equip}; if(it && !isRoomThing(it)) look[it.slot] = it.id;
     $('#fitCat').innerHTML = catSVG(S.mish, look, anim ? 'tryon' : '') + (it && it.kind === 'treat' ? `<span class="fit-treat" aria-hidden="true">${it.e}</span>` : '');
@@ -4691,18 +4766,22 @@ function renderFit(anim){
   let act = '';
   if(it.kind === 'treat') act = (canBuy ? `<button class="btn primary" id="act">اشتري بـ ⭐ ${p}</button>` : '') + (s.count ? `<button class="btn" id="toRoom">أكّليها لمشمش 🍽️</button>` : '');
   else if(!s.own) act = canBuy ? `<button class="btn primary" id="act">اشتري بـ ⭐ ${p}</button>` : '';
+  else if(isFriend(it)) act = '<button class="btn primary" id="toRoom">روحي الأوضة تلعبي معاها 🚪</button>';
   else if(isRoomThing(it)) act = s.on ? '<button class="btn primary" id="toRoom">روحي الأوضة 🚪</button>' : `<button class="btn primary" id="act">${it.kind === 'wallpaper' || it.kind === 'flooring' ? 'ركّبيها في الأوضة' : 'حطيها في الأوضة'}</button>`;
   else act = s.on ? '<button class="btn" id="act">اقلعيه</button>' : '<button class="btn primary" id="act">البسيه</button>';
   if(!s.own && !canBuy) act += `<p class="need">محتاجة <b>${p - S.stars}</b> نجمة كمان</p><button class="btn soft" id="earn">📘 يلا نذاكر ونجمع نجوم</button>`;
   info.innerHTML = `<div class="fit-name"><span class="en">${esc(it.en)}</span>${sayBtn(itemLine(it, !s.own), 'اسمعي')}</div>
     <p class="muted">${it.ar}${s.own ? '' : ` · ${DEALS.has(it.id) ? `<s>${it.price}</s> ` : ''}⭐ ${p}`}${s.count ? ` · عندك ${s.count}` : ''}</p>
+    ${isFriend(it) ? `<p class="friend-intro">🐾 ${it.introAr}${s.own ? '' : '. لو اشتريتيها هتعيش مع مشمش في أوضتك وتلعب معاها!'}</p>` : ''}
     <div class="row" style="justify-content:center">${act}</div>
-    ${!s.on && !isRoomThing(it) ? '<button class="linkish" id="cancel">رجّعي مشمش زي ما كانت</button>' : ''}`;
+    ${!s.on && !isRoomThing(it) && !isFriend(it) ? '<button class="linkish" id="cancel">رجّعي مشمش زي ما كانت</button>' : ''}`;
   const actB = $('#act');
   if(actB) actB.onclick = () => {
     const buying = !s.own;
     if(buying){ starsChange(-p); renderStars(true); $('#wallet').textContent = S.stars; sfxCash(); burst($('#fitCat')); }
-    if(it.kind === 'treat'){
+    if(isFriend(it)){
+      if(buying){ S.owned.push(it.id); save('owned'); meow(); setTimeout(meow, 500); say(`${it.intro} Thank you for adopting me!`); toast(`🐾 ${it.ar} جت تعيش مع مشمش في أوضتك!`); }
+    } else if(it.kind === 'treat'){
       S.treats[it.id] = (S.treats[it.id] || 0) + 1; save('treats');
       say(`You bought ${it.en}! Mishmish says thank you!`); toast(`🛍️ اشتريتي ${it.ar}! روحي الأوضة وأكّلي مشمش`);
     } else if(isRoomThing(it)){

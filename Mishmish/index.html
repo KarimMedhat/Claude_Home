@@ -3989,13 +3989,20 @@ async function sayAr(text, id, btn){
         u.onend = off; u.onerror = off;
         try{ speechSynthesis.resume(); }catch(e){}
         setTimeout(() => { if(run === arRun) speechSynthesis.speak(u); }, 90);
-        if(!arVoice){ arWarned = true; }
+        if(!arVoice){ arWarned = true; noArVoice(id); }
         return;
       }catch(e){}
     }
   }
-  off();
-  if(!arWarned){ arWarned = true; toast('الصوت العربي مش متاح على الجهاز ده. اقري الشرح مكتوب 👀'); }
+  off(); noArVoice(id);
+}
+/* no recording yet and no Arabic voice on this device: say why, once per lesson */
+const arWarnedFor = {};
+function noArVoice(id){
+  const lk = id ? id.replace(/_.*/, '') : 'q';
+  if(arWarnedFor[lk] || /^g/.test(id || '')) return;
+  arWarnedFor[lk] = true;
+  toast(id ? 'صوت مشمش للدرس ده لسه بيتسجل، وهيشتغل قريب 🎙️ اقري الشرح مكتوب لحد كده.' : 'الجهاز ده مفيهوش صوت عربي للأسئلة، اقريها مكتوبة 👀');
 }
 const sayArBtn = (text, id, label = 'اسمعي الشرح') => `<button class="say say-ar" data-sayar="${esc(text)}" ${id ? `data-arid="${id}"` : ''}>${SPK}<span>${label}</span></button>`;
 document.addEventListener('click', e => {

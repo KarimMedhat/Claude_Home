@@ -3949,7 +3949,8 @@ const AR_ORD = ['', 'الأول', 'التاني', 'التالت', 'الرابع'
    1) recorded Egyptian narration (voice_ar/<chapter>.json: id -> MP3 base64), played through Web Audio;
    2) otherwise the device's own Arabic voice (Egyptian first); 3) otherwise text only. */
 const AR_CLIPS = {}, AR_LOADING = {}, AR_BUF = {};
-const arChunk = c => AR_LOADING[c] || (AR_LOADING[c] = fetch('voice_ar/' + c + '.json').then(r => r.ok ? r.json() : {}).then(d => { Object.assign(AR_CLIPS, d); }).catch(() => { delete AR_LOADING[c]; }));
+const AR_VER = 2;   /* bump when the recordings change so phones don't keep an old copy */
+const arChunk = c => AR_LOADING[c] || (AR_LOADING[c] = fetch('voice_ar/' + c + '.json?v=' + AR_VER).then(r => r.ok ? r.json() : {}).then(d => { Object.assign(AR_CLIPS, d); }).catch(() => { delete AR_LOADING[c]; }));
 let arVoice = null;
 function pickArVoice(){
   if(!hasTTS) return;

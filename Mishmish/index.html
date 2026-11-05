@@ -1216,7 +1216,7 @@ const sayBtn = (text, label='اسمعي') => `<button class="say" data-say="${es
 
 /* ---------- speech ---------- */
 let voice = null;
-const hasTTS = 'speechSynthesis' in window;
+const hasTTS = !!window.speechSynthesis && typeof window.SpeechSynthesisUtterance !== 'undefined';
 function pickVoice(){
   if(!hasTTS) return;
   const vs = speechSynthesis.getVoices().filter(v => /^en[-_]/i.test(v.lang));
@@ -1224,9 +1224,51 @@ function pickVoice(){
   voice = vs.find(v => pref.some(p => v.name.includes(p))) || vs.find(v => /en[-_]US/i.test(v.lang)) || vs[0] || null;
 }
 if(hasTTS){ pickVoice(); try{ speechSynthesis.onvoiceschanged = pickVoice; }catch(e){} }
-let ttsWarned = false;
+/* Recorded voice for devices with no built-in English speech (the Claude app on Android has none):
+   every English word of the game is a small MP3 clip in voice/v_<letter>.json, played through Web Audio. */
+let useClips = !hasTTS;
+if(hasTTS) setTimeout(() => { try{ if(!speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang)).length) useClips = true; }catch(e){ useClips = true; } }, 1500);
+const VOICE = {}, VOICE_LOADING = {};
+const voiceChunk = l => VOICE_LOADING[l] || (VOICE_LOADING[l] = fetch('voice/v_' + l + '.json').then(r => r.ok ? r.json() : {}).then(d => { Object.assign(VOICE, d); }).catch(() => {}));
+const NUM_W = 'zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen'.split(' ');
+const TENS_W = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+function numWords(n){
+  if(n < 20) return NUM_W[n];
+  if(n < 100) return TENS_W[Math.floor(n / 10)] + (n % 10 ? ' ' + NUM_W[n % 10] : '');
+  if(n < 1000) return NUM_W[Math.floor(n / 100)] + ' hundred' + (n % 100 ? ' ' + numWords(n % 100) : '');
+  if(n < 1e6) return numWords(Math.floor(n / 1000)) + ' thousand' + (n % 1000 ? ' ' + numWords(n % 1000) : '');
+  return numWords(Math.floor(n / 1e6)) + ' million' + (n % 1e6 ? ' ' + numWords(n % 1e6) : '');
+}
+let clipRun = 0, clipSrcs = [];
+async function sayClips(text){
+  const run = ++clipRun;
+  clipSrcs.forEach(x => { try{ x.stop(); }catch(e){} }); clipSrcs = [];
+  const c = actx(); if(!c) return;
+  const t = String(text).replace(/[’‘]/g, "'").replace(/(\d+):(\d\d)/g, (m, h, mm) => numWords(+h) + (+mm ? ' ' + (+mm < 10 ? 'oh ' : '') + numWords(+mm) : " o'clock"))
+    .replace(/\d[\d,]*/g, m => numWords(+m.replace(/,/g, '')) || m).toLowerCase();
+  const words = t.match(/[a-z][a-z']*/g) || [];
+  await Promise.all([...new Set(words.map(w => w[0]))].map(voiceChunk));
+  if(run !== clipRun) return;
+  const bufs = [];
+  for(const w of words){
+    const b64 = VOICE[w] || VOICE[w.replace(/'s$/, '')] || VOICE[w.replace(/'/g, '')];
+    if(!b64) continue;
+    try{
+      const bin = atob(b64), arr = new Uint8Array(bin.length);
+      for(let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+      bufs.push(await c.decodeAudioData(arr.buffer));
+    }catch(e){}
+    if(run !== clipRun) return;
+  }
+  if(!bufs.length){ if(!words.length) return; if(!sayClips.warned){ sayClips.warned = true; toast('الصوت محتاج إنترنت أول مرة. اتأكدي إن النت شغال وجربي تاني.'); } return; }
+  let at = c.currentTime + .05;
+  bufs.forEach(buf => { const src = c.createBufferSource(); src.buffer = buf; src.connect(c.destination); src.start(at); clipSrcs.push(src); at += buf.duration + .04; });
+}
+function stopSpeech(){ clipRun++; clipSrcs.forEach(x => { try{ x.stop(); }catch(e){} }); clipSrcs = []; if(hasTTS) try{ speechSynthesis.cancel(); }catch(e){} }
 function say(text, rate=0.82){
-  if(!hasTTS || !S.sound) return;
+  if(!S.sound) return;
+  if(useClips) return void sayClips(text);
+  if(!hasTTS) return;
   try{
     const go = () => {
       const u = new SpeechSynthesisUtterance(text);
@@ -1236,7 +1278,6 @@ function say(text, rate=0.82){
     };
     /* cancel() followed at once by speak() drops the new sentence on many phones: leave a short gap */
     if(speechSynthesis.speaking || speechSynthesis.pending){ speechSynthesis.cancel(); setTimeout(go, 90); } else go();
-    if(!ttsWarned){ ttsWarned = true; setTimeout(() => { if(!speechSynthesis.getVoices().length) toast('النطق مش شغال هنا. افتحوا اللعبة من متصفح الموبايل (Chrome أو Safari) علشان تسمعي الكلمات.'); }, 2500); }
   }catch(e){}
 }
 
@@ -2773,10 +2814,10 @@ const PAW = `<svg viewBox="0 0 40 40" aria-hidden="true" fill="rgba(255,255,255,
 /* ---------- top bar ---------- */
 $('#brand').innerHTML = `${catSVG(DEFAULT_MISH)}<div>مشمش<small>English Studio</small></div>`;
 $('#brand svg').setAttribute('viewBox','40 20 220 190');
-$('#homeBtn').onclick = () => { if(hasTTS) speechSynthesis.cancel(); home(); };
+$('#homeBtn').onclick = () => { stopSpeech(); home(); };
 $('#stars').onclick = () => { actx(); mall(); };
 function renderSound(){ const b = $('#soundBtn'); b.textContent = S.sound ? '🔊' : '🔇'; b.setAttribute('aria-pressed', String(S.sound)); }
-$('#soundBtn').onclick = () => { S.sound = !S.sound; save('sound'); renderSound(); if(!S.sound && hasTTS) speechSynthesis.cancel(); };
+$('#soundBtn').onclick = () => { S.sound = !S.sound; save('sound'); renderSound(); if(!S.sound) stopSpeech(); };
 function setTop(inGame, keep){ $('#homeBtn').hidden = !inGame; if(!keep) window.scrollTo(0,0); }
 
 document.addEventListener('click', e => {

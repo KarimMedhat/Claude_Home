@@ -1165,7 +1165,8 @@ const TOPICS = [
   {id:'clothes',en:'Clothes',ar:'الهدوم'},{id:'body',en:'My Body',ar:'جسمي'},{id:'nature',en:'Weather',ar:'الجو والطبيعة'},
   {id:'u1',en:'Unit 1',ar:'الوحدة ١',book:1},{id:'u2',en:'Unit 2',ar:'الوحدة ٢',book:1},{id:'u3',en:'Unit 3',ar:'الوحدة ٣',book:1},{id:'u4',en:'Unit 4',ar:'الوحدة ٤',book:1},{id:'u5',en:'Unit 5',ar:'الوحدة ٥',book:1}
 ];
-const topicWords = () => S.topic === 'all' ? VOCAB : /^u\d$/.test(S.topic) ? unitWordsWithPics(S.topic) : VOCAB.filter(w => w.t === S.topic);
+/* the five home games use Farha's school-book words: the whole book, or one unit */
+const topicWords = () => S.topic !== 'all' && BOOK.some(u => u.id === S.topic) ? unitWordsWithPics(S.topic) : bookWordsWithPics();
 
 const PARTS = {
   head:{en:'head',ar:'الراس'}, body:{en:'body',ar:'الجسم'}, ears:{en:'ears',ar:'الودان'}, eyes:{en:'eyes',ar:'العينين'},
@@ -1879,6 +1880,8 @@ const EMO_ABSTRACT = "follows|👣;during|⏳;enough|✋;through|🚪;suddenly|�
 }));
 const ALL_VERBS = [];
 BOOK.forEach(u => u.lessons.forEach(l => l.verbs.forEach(v => { if(!ALL_VERBS.some(x => x.b === v.b)) ALL_VERBS.push(v); })));
+const bookWordsWithPics = () => { const seen = new Set(); return BOOK.flatMap(u => unitWordsWithPics(u.id)).filter(w => !seen.has(w.e) && seen.add(w.e)); };
+const GAME_TOPICS = () => [{id:'all', en:'My School Book', ar:'كل المنهج'}, ...BOOK.map(u => ({id:u.id, en:u.id === 'st' ? 'The Story' : `Unit ${u.n}`, ar:u.id === 'st' ? 'القصة' : `الوحدة ${u.n}`}))];
 const unitWordsWithPics = uid => {
   const seen = new Set(), out = [];
   BOOK.find(u => u.id === uid).lessons.forEach(l => l.words.forEach(k => {
@@ -2949,7 +2952,7 @@ function home(keep){
 
   <h2 class="sec-title">اختاري الموضوع <span class="en">Choose a topic</span></h2>
   <div class="chips" id="chips">
-    ${TOPICS.map(t => `<button class="chip ${t.book ? 'chip-book' : ''}" data-topic="${t.id}" aria-pressed="${S.topic===t.id}">${t.book ? '📘 ' : ''}${t.ar} <span class="en">${t.en}</span></button>`).join('')}
+    ${GAME_TOPICS().map(t => `<button class="chip chip-book" data-topic="${t.id}" aria-pressed="${(GAME_TOPICS().some(x => x.id === S.topic) ? S.topic : 'all') === t.id}">📘 ${t.ar} <span class="en">${t.en}</span></button>`).join('')}
   </div>
 
   <h2 class="sec-title">اختاري لعبة <span class="en">Let's play</span></h2>
@@ -3001,7 +3004,7 @@ function home(keep){
   screenEl.querySelectorAll('[data-topic]').forEach(b => b.onclick = () => {
     S.topic = b.dataset.topic; save('topic');
     screenEl.querySelectorAll('[data-topic]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-    const t = TOPICS.find(t => t.id === S.topic); say(t.en);
+    const t = GAME_TOPICS().find(t => t.id === S.topic); if(t) say(t.en);
   });
   screenEl.querySelectorAll('[data-game]').forEach(b => b.onclick = () => { actx(); roundStars = 0; GAMES[b.dataset.game](); });
   $('#mallDoor').onclick = () => { actx(); mall(); };
@@ -3028,20 +3031,20 @@ function gameHead(title, en, ask, i, n, results){
 }
 
 /* ============ LISTEN & FIND ============ */
-function gameListen(){
+function gameListen(o = {}){
   setTop(true);
-  const pool = topicWords();
+  const pool = o.pool || topicWords();
   const qs = shuffle(pool).slice(0, Math.min(8, pool.length));
   const results = []; let i = 0;
   function q(){
-    if(i >= qs.length) return finish('listen', `جاوبتي صح من أول مرة ${results.filter(Boolean).length} من ${qs.length}`);
-    const w = qs[i], mode = i % 2 === 0 ? 'listen' : 'read';
+    if(i >= qs.length) return o.pool ? finish(() => gameListen(o), `قريتي ${results.filter(Boolean).length} من ${qs.length} كلمات صح من أول مرة`, o.back, o.backLabel) : finish('listen', `جاوبتي صح من أول مرة ${results.filter(Boolean).length} من ${qs.length}`);
+    const w = qs[i], mode = o.readOnly ? 'read' : i % 2 === 0 ? 'listen' : 'read';
     let tries = 0, done = false;
     const same = shuffle(pool.filter(x => x.en !== w.en && x.e !== w.e));
-    const others = same.length >= 3 ? same : shuffle(VOCAB.filter(x => x.en !== w.en));
+    const others = same.length >= 3 ? same : shuffle(bookWordsWithPics().filter(x => x.en !== w.en && x.e !== w.e));
     const opts = shuffle([w, ...others.slice(0,3)]);
     screenEl.innerHTML = `<section class="stage">
-      ${gameHead('اسمعي واختاري','Listen & Find', mode==='listen' ? 'اسمعي الكلمة واختاري الصورة الصح' : 'اقري الكلمة واختاري الصورة الصح', i, qs.length, results)}
+      ${o.readOnly ? gameHead('اقري كلمات المنهج', o.title || 'Read it', 'اقري الكلمة واختاري الصورة الصح', i, qs.length, results) : gameHead('اسمعي واختاري','Listen & Find', mode==='listen' ? 'اسمعي الكلمة واختاري الصورة الصح' : 'اقري الكلمة واختاري الصورة الصح', i, qs.length, results)}
       <div class="qcard sticker">${mode === 'listen'
         ? `<button class="speaker" id="spk" aria-label="اسمعي الكلمة تاني">${SPK}</button><span class="muted">دوسي عشان تسمعي تاني</span>`
         : `<p class="bigword" lang="en">${w.en}</p>${sayBtn(w.en, 'مش متأكدة؟ اسمعي')}`}</div>
@@ -3055,7 +3058,7 @@ function gameListen(){
       const o = opts[+b.dataset.k], fb = $('#fb');
       if(o.en === w.en){
         done = true; b.classList.add('right'); sfxGood(); burst(b);
-        results[i] = tries === 0; if(tries === 0) addStars(1);
+        results[i] = tries === 0; if(tries === 0){ addStars(1); if(o.readOnly) learnWord(w.en); }
         say(`${w.en}! ${rand(PRAISE)}`);
         fb.className = 'feedback good'; fb.innerHTML = `<span class="en">${w.en}</span><span>= ${w.ar}</span>`;
         setTimeout(() => { i++; q(); }, 2500);
@@ -3074,9 +3077,9 @@ function gameListen(){
 /* ============ SPELL IT ============ */
 function gameSpell(){
   setTop(true);
-  const ok = w => /^[a-z]{3,6}$/.test(w.en);
+  const ok = w => /^[a-z]{3,7}$/.test(w.en);
   let pool = topicWords().filter(ok);
-  if(pool.length < 4) pool = VOCAB.filter(ok);
+  if(pool.length < 4) pool = bookWordsWithPics().filter(ok);
   const words = shuffle(pool).slice(0, 6), results = []; let i = 0;
   function round(){
     if(i >= words.length) return finish('spell', `كتبتي ${results.filter(Boolean).length} كلمات من غير مساعدة`);
@@ -3148,7 +3151,8 @@ function gameSpell(){
 function gameColor(){
   setTop(true);
   const palette = COLORS;
-  const partIds = shuffle(Object.keys(PARTS)).slice(0, 6);
+  /* ears, eyes and nose are Unit 1 words (The Five Senses), so they are always in */
+  const partIds = shuffle(['ears', 'eyes', 'nose', ...shuffle(Object.keys(PARTS).filter(k => !['ears','eyes','nose'].includes(k))).slice(0, 3)]);
   const cols = shuffle(palette.filter(c => c.en !== 'white'));
   const steps = partIds.map((p,k) => ({part:p, color:cols[k % cols.length]}));
   const fills = {};
@@ -3243,7 +3247,7 @@ function gameColor(){
 /* ============ MEMORY ============ */
 function gameMemory(){
   setTop(true);
-  let pool = topicWords(); if(pool.length < 6) pool = VOCAB;
+  let pool = topicWords(); if(pool.length < 6) pool = bookWordsWithPics();
   const ws = shuffle(pool).slice(0, 6);
   const cards = shuffle(ws.flatMap(w => [{w, type:'word'}, {w, type:'pic'}]));
   let first = null, lock = false, moves = 0, pairs = 0;
@@ -3283,6 +3287,13 @@ function readingHub(){
       <p class="ask">اقري كلمات جديدة لوحدك، وبعدين اقري قصص مشمش.</p></div>
     <div class="read-count sticker">${ICONS.read}<div><b>${n}</b> ${n === 1 ? 'كلمة' : 'كلمة جديدة'} قريتيها لوحدك<br><span class="muted">كل كلمة تقريها صح من أول مرة بتتحفظ هنا</span></div></div>
 
+    <h3 class="sec-title">اقري كلمات المنهج <span class="en">My School Book Words</span></h3>
+    <p class="muted">اقري الكلمة لوحدك واختاري صورتها. الكلمات من كتاب المدرسة بتاعك.</p>
+    <div class="fams">${BOOK.map(u => { const ws = unitWordsWithPics(u.id), got = ws.filter(w => S.readWords.includes(w.en)).length;
+      return `<button class="fam ${got === ws.length ? 'done' : ''}" data-bookread="${u.id}" style="border-color:${u.c}">
+        <span class="rimebig">${u.id === 'st' ? 'القصة' : `الوحدة ${u.n}`}</span><span class="emos" aria-hidden="true">${ws.slice(0, 4).map(w => w.e).join('')}</span>
+        <small>${got ? `قريتي ${got} من ${ws.length}` : `${ws.length} كلمة`}</small></button>`; }).join('')}</div>
+
     <h3 class="sec-title">عائلات الكلمات <span class="en">Word Families</span></h3>
     <p class="muted">الكلمات اللي في عيلة واحدة آخرها زي بعض. لو عرفتي تقري <b class="en">at</b> هتعرفي تقري <b class="en">cat, hat, bat</b>. ركّزي على أول حرف!</p>
     <div class="fams">${FAMILIES.map(f => {
@@ -3301,6 +3312,8 @@ function readingHub(){
       <div class="chips">${S.readWords.map(w => `<button class="chip" data-say="${esc(w)}"><span class="en" style="color:var(--ink);font-size:18px">${esc(w)}</span></button>`).join('')}</div>` : ''}
   </section>`;
   screenEl.querySelectorAll('[data-fam]').forEach(b => b.onclick = () => { roundStars = 0; gameFamily(b.dataset.fam); });
+  screenEl.querySelectorAll('[data-bookread]').forEach(b => b.onclick = () => { roundStars = 0; const u = BOOK.find(x => x.id === b.dataset.bookread);
+    gameListen({pool: unitWordsWithPics(u.id), readOnly: true, title: u.id === 'st' ? 'The Story' : `Unit ${u.n}`, back: readingHub, backLabel: 'ركن القراءة'}); });
   screenEl.querySelectorAll('[data-story]').forEach(b => b.onclick = () => { roundStars = 0; gameStory(+b.dataset.story); });
 }
 

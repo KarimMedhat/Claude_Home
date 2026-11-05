@@ -1226,10 +1226,14 @@ function pickVoice(){
 if(hasTTS){ pickVoice(); try{ speechSynthesis.onvoiceschanged = pickVoice; }catch(e){} }
 /* Recorded voice for devices with no built-in English speech (the Claude app on Android has none):
    every English word of the game is a small MP3 clip in voice/v_<letter>.json, played through Web Audio. */
-let useClips = !hasTTS;
-if(hasTTS) setTimeout(() => { try{ if(!speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang)).length) useClips = true; }catch(e){ useClips = true; } }, 1500);
-const VOICE = {}, VOICE_LOADING = {};
-const voiceChunk = l => VOICE_LOADING[l] || (VOICE_LOADING[l] = fetch('voice/v_' + l + '.json').then(r => r.ok ? r.json() : {}).then(d => { Object.assign(VOICE, d); }).catch(() => {}));
+const VOICE = {}, VOICE_LOADING = {}, VOICE_BUF = {};
+const voiceChunk = l => VOICE_LOADING[l] || (VOICE_LOADING[l] = fetch('voice/v_' + l + '.json').then(r => r.ok ? r.json() : {}).then(d => { Object.assign(VOICE, d); }).catch(() => { delete VOICE_LOADING[l]; }));
+/* load every recording in the background, most used letters first, so answers are spoken without waiting */
+async function prefetchVoice(){ for(const l of 'tsbcpmafwdhlrgeinoyukvjqzx') await voiceChunk(l); }
+let useClips = false;
+function startClips(){ if(useClips) return; useClips = true; prefetchVoice(); }
+if(!hasTTS) setTimeout(startClips, 0);
+else setTimeout(() => { try{ if(!speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang)).length) startClips(); }catch(e){ startClips(); } }, 1500);
 const NUM_W = 'zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen'.split(' ');
 const TENS_W = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
 function numWords(n){
@@ -1251,13 +1255,16 @@ async function sayClips(text){
   if(run !== clipRun) return;
   const bufs = [];
   for(const w of words){
-    const b64 = VOICE[w] || VOICE[w.replace(/'s$/, '')] || VOICE[w.replace(/'/g, '')];
-    if(!b64) continue;
-    try{
-      const bin = atob(b64), arr = new Uint8Array(bin.length);
-      for(let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
-      bufs.push(await c.decodeAudioData(arr.buffer));
-    }catch(e){}
+    const key = [w, w.replace(/'s$/, ''), w.replace(/'/g, '')].find(k => VOICE[k]);
+    if(!key) continue;
+    if(!VOICE_BUF[key]){
+      try{
+        const bin = atob(VOICE[key]), arr = new Uint8Array(bin.length);
+        for(let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+        VOICE_BUF[key] = await c.decodeAudioData(arr.buffer);
+      }catch(e){ continue; }
+    }
+    bufs.push(VOICE_BUF[key]);
     if(run !== clipRun) return;
   }
   if(!bufs.length){ if(!words.length) return; if(!sayClips.warned){ sayClips.warned = true; toast('الصوت محتاج إنترنت أول مرة. اتأكدي إن النت شغال وجربي تاني.'); } return; }
@@ -3268,7 +3275,7 @@ function gameFamily(fid){
     const opts = shuffle(f.words);
     screenEl.innerHTML = `<section class="stage">
       ${gameHead(`عيلة <span class="en">-${f.id}</span>`, 'Read it', 'اقري الكلمة لوحدك واختاري صورتها', i, qs.length, results)}
-      <div class="qcard sticker"><p class="bigword" lang="en">${split(w)}</p><div id="helpSay"></div></div>
+      <div class="qcard sticker"><p class="bigword" lang="en">${split(w)}</p><div id="helpSay">${sayBtn(w.en)}</div></div>
       <div class="opts ${opts.length === 3 ? 'opts3' : ''}">${opts.map((o,k) => `<button class="opt" data-k="${k}" aria-label="${o.ar}">${pic(o)}</button>`).join('')}</div>
       <div class="feedback" id="fb" aria-live="polite"></div>
     </section>`;

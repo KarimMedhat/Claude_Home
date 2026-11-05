@@ -584,7 +584,8 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 .stamp.on{color:#FFFFFF;background:var(--good)}
 
 /* farha's room */
-.room-page{display:grid;gap:14px}
+.room-page{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
+.room-bar .row{flex-wrap:wrap}
 .room-top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
 .room-top h2{margin:0;font-size:32px;line-height:1.2}
 .room-top h2 .en{font-size:18px;color:var(--ink-soft)}
@@ -881,6 +882,18 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
 .tw-odd{margin:2px 0;font-size:14px}
 .tw-odd .en{color:#C2410C;text-decoration:underline wavy}
 @media (max-width:760px){.tw-grid{grid-template-columns:1fr}.tw-side{position:static}}
+.talk-in{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding:14px 18px;background:#FFF6D6}
+.talk-top{display:flex;justify-content:space-between;align-items:center;font-size:18px}
+.talk-mic{justify-content:center}
+.mic-big{font-size:21px;padding:12px 26px}
+.mic-big.listening{background:#FF5C7A;color:#fff;animation:pulse 1.2s infinite}
+.talk-heard{margin:0;text-align:center;font-size:17px;min-height:1.5em}
+.talk-heard small{color:#1E8E4E;font-weight:700}
+.talk-type{display:flex;gap:8px}
+.talk-type input{flex:1;min-width:0;padding:10px 14px;border:3px solid var(--ink);border-radius:14px;font-family:var(--learn);font-size:19px}
+.talk-chips{justify-content:center;flex-wrap:wrap}
+.talk-chips .chip{display:grid;line-height:1.2;padding:6px 12px}
+.talk-chips .chip small{font-size:12px;color:var(--ink-soft)}
 .bank-sync{font-size:13px;font-weight:700;color:var(--ink-soft)}
 .bank-sync.ok{color:#1E8E4E}
 .bank-win{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;padding:12px 18px;background:#FFF1C7;font-size:19px;margin:0}
@@ -4182,11 +4195,13 @@ function roomScreen(){
     <div class="room-bar">
       <div class="treats" id="treats"></div>
       <div class="row">
+        <button class="btn primary mic-btn" id="micBtn">🎤 كلّمي مشمش</button>
         <button class="btn soft" id="findBtn">🔎 دوّري مع مشمش</button>
         <button class="btn" id="editBtn">🪄 رتّبي الأوضة</button>
         <button class="btn primary" id="toMall2">🛍️ المول</button>
       </div>
     </div>
+    <div class="talk" id="talk" hidden></div>
     <div class="find-info" id="findInfo" hidden></div>
     <div id="storage" hidden></div>
     <div class="mission sticker" id="mission"></div>
@@ -4195,6 +4210,7 @@ function roomScreen(){
   $('#editBtn').onclick = () => setEdit(!editMode);
   $('#toMall2').onclick = () => mall('room');
   $('#findBtn').onclick = startFind;
+  $('#micBtn').onclick = () => { if($('#talk').hidden) talkPanel(); else { stopListening(); $('#talk').hidden = true; } };
   clearInterval(roomTimer); roomTimer = setInterval(idleTick, 6000);
   setTimeout(() => { if(S.pet.hearts <= 1){ bubble("I'm hungry!"); say("I'm hungry! Please feed me."); } else { const t = `Hi, ${kidName()}! Welcome to your room!`; bubble(t); say(t); } }, 700);
 }
@@ -4284,7 +4300,7 @@ function feed(tid){
   });
 }
 function idleTick(){
-  if(!$('#room')){ clearInterval(roomTimer); roomTimer = null; return; }
+  if(!$('#room')){ clearInterval(roomTimer); roomTimer = null; stopListening(); return; }
   if(editMode || findSt || Date.now() < mishSt.busy + 2500 || document.hidden) return;
   const r = Math.random(), beds = placed('catbed'), toys = placed('cattoy');
   if(mishSt.mode === 'sleep'){ if(r < .25) wake(); return; }
@@ -4293,6 +4309,103 @@ function idleTick(){
   else if(r < .6 && beds.length) goSleep(rand(beds));
   else if(r < .75 && toys.length) playWith(rand(toys), true);
   else bubble(rand(IDLE_LINES));
+}
+
+/* ---------- talk to Mishmish: voice (where the browser allows the mic) or typed commands ---------- */
+const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+let talkLang = 'en-US', talkRec = null;
+const TALK_CHIPS = [
+  ['Go to your bed', 'روحي سريرك'], ['Come here', 'تعالي هنا'], ['Eat your food', 'كلي أكلك'], ['Dance', 'ارقصي'],
+  ['Jump', 'نطي'], ['Play with your toy', 'العبي'], ['Wake up', 'اصحي'], ['I love you', 'بحبك']
+];
+function talkPanel(){
+  const el = $('#talk'); if(!el) return;
+  const near = S.room.items.map(p => ITEM_BY_ID[p.id]).filter(it => it && !/^(c_|t_)/.test(it.id) && it.kind !== 'wallpaper' && it.kind !== 'flooring').slice(0, 3);
+  el.hidden = false;
+  el.innerHTML = `<div class="talk-in sticker">
+    <div class="talk-top"><b>🎤 كلّمي مشمش بالإنجليزي</b><button class="linkish" id="talkClose">قفل ✕</button></div>
+    <div class="row talk-mic">
+      ${SpeechRec ? `<button class="btn primary mic-big" id="micGo">🎤 دوسي واتكلمي</button>
+        <button class="chip" id="talkLang" aria-pressed="${talkLang === 'ar-EG'}">${talkLang === 'en-US' ? '🇬🇧 English' : '🇪🇬 عربي'}</button>` : ''}
+    </div>
+    <p class="talk-heard" id="talkHeard">${SpeechRec ? 'دوسي على المايك وقولي لمشمش تعمل حاجة، زي <span class="en">"Go to your bed"</span>' : 'اكتبي لمشمش بالإنجليزي هي تعمل إيه، أو دوسي على جملة من تحت.'}</p>
+    <form class="talk-type" id="talkForm" dir="ltr"><input id="talkInput" lang="en" autocomplete="off" placeholder="Type: Go to your bed" maxlength="80"><button class="btn" type="submit">Send ➤</button></form>
+    <div class="chips talk-chips" dir="ltr">${TALK_CHIPS.concat(near.map(it => [`Go to the ${it.en}`, `روحي عند ${it.ar}`])).map(([en, ar]) => `<button class="chip" data-cmd="${esc(en)}" title="${esc(ar)}"><span class="en">${esc(en)}</span><small>${esc(ar)}</small></button>`).join('')}</div>
+  </div>`;
+  $('#talkClose').onclick = () => { stopListening(); el.hidden = true; };
+  $('#talkForm').onsubmit = e => { e.preventDefault(); const v = $('#talkInput').value.trim(); if(v){ heard(v, true); $('#talkInput').value = ''; } };
+  el.querySelectorAll('[data-cmd]').forEach(b => b.onclick = () => { say(b.dataset.cmd); heard(b.dataset.cmd, true); });
+  if($('#micGo')) $('#micGo').onclick = listen;
+  if($('#talkLang')) $('#talkLang').onclick = () => { talkLang = talkLang === 'en-US' ? 'ar-EG' : 'en-US'; talkPanel(); };
+}
+function stopListening(){ if(talkRec){ try{ talkRec.abort(); }catch(e){} talkRec = null; } const b = $('#micGo'); if(b){ b.classList.remove('listening'); b.textContent = '🎤 دوسي واتكلمي'; } }
+function listen(){
+  if(talkRec) return stopListening();
+  const h = $('#talkHeard');
+  let r;
+  try{ r = new SpeechRec(); }catch(e){ h.textContent = 'المايك مش شغال هنا. اكتبي الجملة بدل كده 👇'; return; }
+  talkRec = r; r.lang = talkLang; r.interimResults = true; r.maxAlternatives = 3; r.continuous = false;
+  const b = $('#micGo'); b.classList.add('listening'); b.textContent = '👂 بسمعك... اتكلمي';
+  let got = false;
+  r.onresult = e => {
+    const res = e.results[e.results.length - 1];
+    const alts = [...res].map(a => a.transcript);
+    h.innerHTML = `سمعتك بتقولي: <b class="en" dir="auto">"${esc(alts[0])}"</b>`;
+    if(res.isFinal){ got = true; talkCommand(alts.find(a => talkCommand(a, true)) || alts[0]); }
+  };
+  r.onerror = e => {
+    const blocked = /not-allowed|service-not-allowed|audio-capture/.test(e.error);
+    h.textContent = blocked ? 'المايك مقفول هنا (التطبيق أو المتصفح مش سامح بيه). اكتبي الجملة بالإنجليزي بدل كده 👇' : e.error === 'no-speech' ? 'مسمعتش حاجة. قربي من الموبايل وجربي تاني.' : 'حصلت مشكلة في المايك. جربي تاني أو اكتبي الجملة 👇';
+    if(blocked && $('#micGo')){ $('#micGo').disabled = true; }
+  };
+  r.onend = () => { talkRec = null; const bb = $('#micGo'); if(bb){ bb.classList.remove('listening'); if(!bb.disabled) bb.textContent = '🎤 دوسي واتكلمي'; } };
+  try{ r.start(); }catch(e){ stopListening(); }
+}
+function heard(text, typed){
+  const h = $('#talkHeard'); if(h) h.innerHTML = `${typed ? 'كتبتي' : 'قولتي'}: <b class="en" dir="auto">"${esc(text)}"</b>`;
+  talkCommand(text);
+}
+/* understand a command in English (or simple Egyptian Arabic); returns true when it was understood. With dry, only tests. */
+function talkCommand(raw, dry){
+  if(!$('#room') || editMode || findSt) return false;
+  const t = ' ' + String(raw).toLowerCase().replace(/[^a-z؀-ۿ' ]+/g, ' ').replace(/\s+/g, ' ') + ' ';
+  const has = (...ws) => ws.some(w => t.includes(w));
+  const beds = placed('catbed'), toys = placed('cattoy');
+  const reply = (line, ar) => { bubble(line, 3200); setTimeout(() => say(line), 300); const h = $('#talkHeard'); if(h && ar) h.insertAdjacentHTML('beforeend', `<br><small>✔ مشمش فهمتك: ${ar}</small>`); };
+  let act = null;
+  /* an item in the room by its English (or Arabic) name */
+  const target = S.room.items.map(p => [p, ITEM_BY_ID[p.id]]).filter(([p, it]) => it && it.kind !== 'wallpaper' && it.kind !== 'flooring')
+    .find(([p, it]) => t.includes(' ' + it.en.toLowerCase() + ' ') || (it.ar && t.includes(it.ar.split(' ')[0])));
+  if(has(' bed', ' room', ' box', ' basket', ' house', ' sleep', ' nap', 'اوضت', 'أوضت', 'سرير', 'نامي', 'نام ', 'كرتون')) act = () => {
+    if(!beds.length) return reply("I don't have a bed! Buy me one from the mall.", 'مشمش معندهاش سرير، اشتريلها واحد من المول');
+    goSleep(beds[0]); reply("OK! I'm going to my bed. Good night!", 'راحت سريرها تنام');
+  };
+  else if(has('wake', 'good morning', 'اصحي', 'صباح')) act = () => { wake(); reply('Good morning! I am awake!', 'صحيت'); };
+  else if(has('come', 'here', 'تعالي', 'تعال', 'هنا')) act = () => walkTo(50, 93, () => { mishAnim('jump', 600); reply("I'm here!", 'جت لحد عندك'); });
+  else if(has(' eat', 'food', 'hungry', 'dinner', 'lunch', 'breakfast', 'كلي', 'كل ', 'أكل', 'اكل', 'جعان')) act = () => {
+    const tid = Object.keys(S.treats).find(k => S.treats[k] > 0);
+    if(!tid) return reply("I have no food! Please buy me some.", 'الأكل خلص، اشتريلها من المول');
+    feed(tid); const h = $('#talkHeard'); if(h) h.insertAdjacentHTML('beforeend', '<br><small>✔ مشمش فهمتك: راحت تاكل</small>');
+  };
+  else if(has('dance', 'ارقص')) act = () => { playTune(rand(TUNES), .2); mishAnim('dancing', 3200); reply("Look! I'm dancing!", 'بترقص'); };
+  else if(has('jump', 'hop', 'نط')) act = () => { mishAnim('jump', 1100); setTimeout(() => mishAnim('jump', 1100), 600); reply('Jump, jump!', 'بتنط'); };
+  else if(has('play', 'ball', 'toy', 'العب')) act = () => {
+    if(!toys.length) return reply("I don't have a toy! Can we buy one?", 'معندهاش لعبة، اشتريلها من المول');
+    playWith(rand(toys)); const h = $('#talkHeard'); if(h) h.insertAdjacentHTML('beforeend', '<br><small>✔ مشمش فهمتك: بتلعب</small>');
+  };
+  else if(target) act = () => {
+    const [p, it] = target;
+    walkTo(clampX(p.x - it.size / 2 - 4), Math.max(74, Math.min(97, p.y)), () => { floatLabel(p, it); reply(`This is the ${it.en}!`, `راحت عند ${it.ar}`); });
+  };
+  else if(has('left', 'شمال')) act = () => walkTo(clampX(mishSt.x - 25), mishSt.y, () => reply('I went left!', 'راحت شمال'));
+  else if(has('right', 'يمين')) act = () => walkTo(clampX(mishSt.x + 25), mishSt.y, () => reply('I went right!', 'راحت يمين'));
+  else if(has('love', 'بحبك')) act = () => { mishAnim('jump', 600); meow(); floatAt(mishSt.x, mishSt.y - 22, '💖', 'fnote big'); reply(`I love you too, ${kidName()}!`, 'بتحبك هي كمان'); if(Date.now() - S.pet.pettedAt > 20 * 60e3){ S.pet.pettedAt = Date.now(); addJoy(1); } };
+  else if(has('hello', ' hi ', 'hey', 'اهلا', 'أهلا', 'ازيك', 'هاي')) act = () => { meow(); reply(`Hello, ${kidName()}! How are you?`, 'بتسلم عليكي'); };
+  else if(has('sit', 'stop', 'stay', 'اقعدي', 'استني')) act = () => { reply('OK, I will stay here.', 'هتفضل مكانها'); };
+  if(dry) return !!act;
+  if(!act){ bubble('Meow? I don\'t understand.', 2600); say("Meow? I don't understand."); const h = $('#talkHeard'); if(h) h.insertAdjacentHTML('beforeend', '<br><small>مشمش مفهمتش. جربي جملة من اللي تحت 👇</small>'); return false; }
+  act();
+  return true;
 }
 
 /* item effects */

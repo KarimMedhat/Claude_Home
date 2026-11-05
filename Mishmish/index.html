@@ -731,14 +731,14 @@ main{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-le
 .bank-door + .room-door{margin-top:18px}
 .bank-door:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
 .bank-door .bdp{width:96px;flex:none}
-.bank-door .bdp svg,.pig-wrap svg,.mini-pig svg{width:100%;height:auto;display:block}
+.bank-door .bdp svg,.box-wrap svg,.mini-box svg{width:100%;height:auto;display:block}
 .bank-door .bd-text{flex:1;min-width:200px}
 .bank-door .bd-text b{font-size:26px}
 .bank-door .bd-text small{display:block;font-size:15px;color:var(--ink-soft);margin-top:4px}
 .bank-door .bd-money{font-size:30px;font-weight:800;border:3px solid var(--ink);border-radius:99px;background:var(--card);padding:2px 16px;font-variant-numeric:tabular-nums}
 .bank-head{display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center;padding:18px 22px;background:#FFF1C7}
-.pig-wrap{width:100%}
-.pig-wrap.big{width:200px}
+.box-wrap{width:100%}
+.box-wrap.big{width:200px}
 .bank-info{display:grid;gap:10px}
 .bank-info h2{margin:0;font-size:30px}
 .bank-info h2 .en{font-size:18px;color:var(--ink-soft)}
@@ -780,10 +780,10 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
 .bl-row small{color:var(--ink-soft);font-size:13px}
 /* spelling test */
 .st-top{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap}
-.mini-pig{display:inline-flex;align-items:center;gap:6px;border:3px solid var(--ink);border-radius:99px;background:#FFF1C7;padding:2px 14px 2px 6px}
-.mini-pig svg{width:44px}
-.mini-pig b{font-size:20px;font-variant-numeric:tabular-nums}
-.mini-pig b::after{content:' جنيه';font-size:14px}
+.mini-box{display:inline-flex;align-items:center;gap:6px;border:3px solid var(--ink);border-radius:99px;background:#FFF1C7;padding:2px 14px 2px 6px}
+.mini-box svg{width:44px}
+.mini-box b{font-size:20px;font-variant-numeric:tabular-nums}
+.mini-box b::after{content:' جنيه';font-size:14px}
 .st-prog{font-weight:700;color:var(--ink-soft)}
 .st-card{position:relative;padding:14px 28px}
 .st-badge{position:absolute;top:-14px;inset-inline-end:-10px;border:2px solid var(--ink);border-radius:99px;background:#FFD23F;padding:0 10px;font-size:14px;font-weight:800;transform:rotate(6deg)}
@@ -827,10 +827,12 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
 .read-line .spk,.read-prev .spk{color:var(--grape, #7B4FD6)}
 .rw{cursor:pointer;border-radius:6px}
 .rw:hover{background:var(--sun-l)}
+.bank-sync{font-size:13px;font-weight:700;color:var(--ink-soft)}
+.bank-sync.ok{color:#1E8E4E}
 .bank-win{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;padding:12px 18px;background:#FFF1C7;font-size:19px;margin:0}
 @media (max-width:760px){
   .bank-head{grid-template-columns:1fr;justify-items:center;text-align:center}
-  .bank-head .pig-wrap{width:150px}
+  .bank-head .box-wrap{width:150px}
   .bank-info{justify-items:center}
   .coin-pile{justify-content:center}
   .slot{width:34px;height:46px;font-size:24px}
@@ -2521,7 +2523,7 @@ function home(keep){
   </section>
 
   <button class="bank-door" id="bankDoor">
-    <span class="bdp">${pigSVG()}</span>
+    <span class="bdp">${boxSVG()}</span>
     <span class="bd-text"><b>حصالة ${KID_AR}</b> <span class="en">My Money Box</span>
       <small>احفظي كلمات المنهج واقري القطع، واجمعي فلوس بجد في حصالتك! ${S.bank.words > 1 ? `فاضل ${S.bank.words - S.bank.pending} كلمة على الـ ${money(S.bank.amount)} جنيه الجاية.` : ''}</small></span>
     <span class="bd-money">🪙 ${money(S.bank.balance)} جنيه</span>
@@ -4276,9 +4278,86 @@ function renderFit(anim){
 
 /* ============ FINISH ============ */
 const GAMES = {listen:gameListen, spell:gameSpell, color:gameColor, memory:gameMemory, read:readingHub};
-/* ---------- Farha's money box: real pocket money for words, passages and exams ---------- */
-const BANK_DEF = {earned:{}, paid:{}, pending:0, balance:0, total:0, out:0, log:[], words:10, amount:5, perPassage:1, min:10, pin:''};
-S.bank = Object.assign({}, BANK_DEF, store.get('bank', {}));
+/* ---------- Farha's money box: real pocket money for curriculum words and reading passages ----------
+   The ledger (earned words, paid passages, every deposit/withdrawal) is the source of truth; balance and
+   progress are derived from it. It is kept in the artifact's shared db so every device sees the same box,
+   with localStorage as an offline copy. Copies from two devices merge by union, so nothing is lost. */
+const BANK_KEEP = ['earned', 'paid', 'log', 'words', 'amount', 'perPassage', 'min', 'pin', 'setTs'];
+const BANK_DEF = {earned:{}, paid:{}, log:[], words:10, amount:5, perPassage:1, min:10, pin:'', setTs:0};
+const bankId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+function bankNorm(o){
+  const B = Object.assign({}, BANK_DEF, o || {});
+  B.earned = Object.assign({}, B.earned); B.paid = Object.assign({}, B.paid);
+  B.log = (Array.isArray(B.log) ? B.log : []).map(e => {
+    const x = Object.assign({}, e);
+    if(!x.id) x.id = String(x.ts || 0) + ':' + x.t + ':' + x.amt;
+    if(x.t === 'in' && x.n == null && /كلمة/.test(x.why || '')){ const m = String(x.why).match(/^(\d+)/); x.n = m ? +m[1] : 1; }
+    return x;
+  });
+  return B;
+}
+function bankDerive(B){
+  let tin = 0, tout = 0, used = 0;
+  B.log.forEach(e => { if(e.t === 'in'){ tin += e.amt; used += e.n || 0; } else tout += e.amt; });
+  B.total = Math.round(tin * 100) / 100; B.out = Math.round(tout * 100) / 100;
+  B.balance = Math.round((tin - tout) * 100) / 100;
+  B.pending = Math.max(0, Object.keys(B.earned).length - used);
+  B.log.sort((a, b) => (b.ts - a.ts) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  return B;
+}
+function bankMerge(a, b){
+  const m = bankNorm(a), r = bankNorm(b);
+  Object.keys(r.earned).forEach(k => { if(!m.earned[k] || r.earned[k] < m.earned[k]) m.earned[k] = r.earned[k]; });
+  Object.keys(r.paid).forEach(k => { if(!m.paid[k]) m.paid[k] = r.paid[k]; });
+  const ids = new Set(m.log.map(e => e.id)); r.log.forEach(e => { if(!ids.has(e.id)) m.log.push(e); });
+  if((r.setTs || 0) > (m.setTs || 0)) ['words', 'amount', 'perPassage', 'min', 'pin', 'setTs'].forEach(k => m[k] = r[k]);
+  return m;
+}
+const bankPlain = B => { const o = {}; BANK_KEEP.forEach(k => o[k] = B[k]); return o; };
+const canon = v => Array.isArray(v) ? '[' + v.map(canon).join(',') + ']' : v && typeof v === 'object' ? '{' + Object.keys(v).sort().map(k => JSON.stringify(k) + ':' + canon(v[k])).join(',') + '}' : JSON.stringify(v);
+const bankCanon = o => canon(bankPlain(bankDerive(bankNorm(o))));
+S.bank = bankDerive(bankNorm(store.get('bank', null)));
+/* cloud sync state: 'local' (no db on this view), 'wait', 'ok', 'off' */
+let bankDoc = null, bankSync = 'wait', bankWriting = false, bankDirty = false;
+function bankSave(){
+  store.set('bank', bankPlain(S.bank));
+  if(!bankDoc) return;
+  if(bankWriting){ bankDirty = true; return; }
+  bankWriting = true;
+  bankDoc.set(JSON.parse(JSON.stringify(bankPlain(S.bank)))).then(() => { if(bankSync !== 'ok'){ bankSync = 'ok'; bankStatusPaint(); } })
+    .catch(e => { if(e && (e.code === 'invalid_argument' || e.code === 'revoked' || e.code === 'not_granted')){ bankDoc = null; bankSync = 'local'; bankStatusPaint(); } })
+    .finally(() => { bankWriting = false; if(bankDirty){ bankDirty = false; bankSave(); } });
+}
+function bankStatusPaint(){
+  const el = $('#bankSync'); if(!el) return;
+  el.textContent = bankSync === 'ok' ? '☁️ الحصالة محفوظة على كل الأجهزة' : bankSync === 'wait' ? '☁️ بنوصل الحصالة بكل الأجهزة...' : '📱 الحصالة محفوظة على الجهاز ده بس دلوقتي';
+  el.className = 'bank-sync ' + bankSync;
+}
+(async () => {
+  let db = null;
+  try{ db = window.claude && window.claude.use ? await window.claude.use('db') : null; }catch(e){ db = null; }
+  if(!db){ bankSync = 'local'; bankStatusPaint(); return; }
+  bankDoc = db.doc('bank/farha');
+  const timer = setTimeout(() => { if(bankSync === 'wait'){ bankSync = 'local'; bankStatusPaint(); } }, 10000);
+  bankDoc.onSnapshot(snap => {
+    if(snap.metadata && snap.metadata.fromCache) return;
+    clearTimeout(timer);
+    const remote = snap.exists ? snap.data() : null;
+    const before = bankCanon(S.bank);
+    if(remote) S.bank = bankDerive(bankMerge(S.bank, remote));
+    const after = bankCanon(S.bank);
+    bankSync = 'ok';
+    store.set('bank', bankPlain(S.bank));
+    if(!remote || bankCanon(remote) !== after) bankSave();
+    bankStatusPaint();
+    if(after !== before) bankRefresh();
+  }, () => { clearTimeout(timer); bankDoc = null; bankSync = 'local'; bankStatusPaint(); });
+})();
+/* repaint whatever bank view is open after data arrives from another device */
+function bankRefresh(){
+  if(screenEl.querySelector('.bank')) bankScreen(true);
+  else if($('#bankDoor')) home(true);
+}
 const money = n => String(Math.round(n * 100) / 100);
 const bk = w => w.en.toLowerCase();
 const BANK_OK = s => /^[a-z]+( [a-z]+)*$/i.test(s) && s.length <= 16;
@@ -4292,35 +4371,43 @@ const BANK_PACKS = (() => {
 })();
 const sfxCoin = () => { tone(1568, 0, .08, 'square', .05); tone(2093, .07, .3, 'square', .045); };
 const sfxMoney = () => [0, .09, .18, .27, .36].forEach((t, i) => tone(1400 + i * 180, t, .12, 'square', .04));
-function bankLog(t, amt, why){ S.bank.log.unshift({t, amt, why, ts:Date.now()}); S.bank.log = S.bank.log.slice(0, 80); }
-function bankAdd(amt, why){
-  const B = S.bank; B.balance += amt; B.total += amt; bankLog('in', amt, why); save('bank');
+function bankLog(t, amt, why, n){ S.bank.log.unshift({id:bankId(), t, amt, why, ts:Date.now(), ...(n ? {n} : {})}); }
+function bankAdd(amt, why, n){ bankLog('in', amt, why, n); bankDerive(S.bank); bankSave(); }
+/* pay out every full group of new words */
+function bankPayWords(label){
+  const B = S.bank; let paid = 0;
+  while(B.words > 0 && B.amount > 0 && B.pending >= B.words){
+    bankLog('in', B.amount, B.words === 1 ? 'كلمة جديدة: ' + label : B.words + ' كلمة جديدة', B.words);
+    paid += B.amount; bankDerive(B);
+  }
+  return paid;
 }
 /* a word spelled right with no help: counts toward the next payout. Returns money paid now (0 if none). */
 function bankWord(w){
   const B = S.bank, k = bk(w);
   if(B.earned[k]) return 0;
-  B.earned[k] = Date.now(); B.pending++;
-  let paid = 0;
-  while(B.words > 0 && B.pending >= B.words){ B.pending -= B.words; paid += B.amount; bankAdd(B.amount, `${B.words === 1 ? 'كلمة جديدة: ' + w.en : B.words + ' كلمة جديدة'}`); }
-  save('bank');
+  B.earned[k] = Date.now(); bankDerive(B);
+  const paid = bankPayWords(w.en);
+  bankSave();
   return paid;
 }
-function pigSVG(){
-  return `<svg viewBox="0 0 200 160" aria-hidden="true">
-    <ellipse cx="100" cy="150" rx="70" ry="7" fill="#2B2233" opacity=".12"/>
+function boxSVG(){
+  return `<svg viewBox="0 0 200 170" aria-hidden="true">
+    <ellipse cx="100" cy="160" rx="64" ry="7" fill="#2B2233" opacity=".12"/>
     <g stroke="#2B2233" stroke-width="4" stroke-linejoin="round">
-      <rect x="52" y="118" width="20" height="28" rx="8" fill="#F98DB9"/><rect x="128" y="118" width="20" height="28" rx="8" fill="#F98DB9"/>
-      <path d="M150 92 q22 -6 18 -22 q-3 -10 -12 -4" fill="none" stroke-linecap="round"/>
-      <ellipse cx="100" cy="88" rx="66" ry="52" fill="#FFA8CB"/>
-      <path d="M58 46 L50 18 L82 38 Z" fill="#F98DB9"/>
-      <ellipse cx="42" cy="92" rx="18" ry="15" fill="#F98DB9"/>
+      <path d="M100 30 C150 30 172 70 170 104 C168 140 140 156 100 156 C60 156 32 140 30 104 C28 70 50 30 100 30 Z" fill="#E58B57"/>
+      <path d="M84 34 C84 20 92 12 100 12 C108 12 116 20 116 34" fill="#D77A47"/>
+      <circle cx="100" cy="11" r="7" fill="#D77A47"/>
     </g>
-    <circle cx="36" cy="92" r="3.5" fill="#2B2233"/><circle cx="48" cy="92" r="3.5" fill="#2B2233"/>
-    <circle cx="70" cy="70" r="5" fill="#2B2233"/><circle cx="72" cy="68" r="1.6" fill="#FFFFFF"/>
-    <ellipse cx="84" cy="96" rx="9" ry="5" fill="#FF7BAC" opacity=".6"/>
-    <rect x="86" y="38" width="34" height="8" rx="4" fill="#2B2233"/>
-    <path d="M96 60 q20 -12 40 0" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity=".55"/>
+    <path d="M40 78 Q100 92 160 78" fill="none" stroke="#B5582D" stroke-width="4" stroke-linecap="round"/>
+    <path d="M36 124 Q100 140 164 124" fill="none" stroke="#B5582D" stroke-width="4" stroke-linecap="round"/>
+    <g fill="#FFD9A8"><circle cx="58" cy="85" r="3"/><circle cx="78" cy="89" r="3"/><circle cx="122" cy="89" r="3"/><circle cx="142" cy="85" r="3"/></g>
+    <rect x="80" y="44" width="40" height="8" rx="4" fill="#2B2233"/>
+    <circle cx="82" cy="106" r="5" fill="#2B2233"/><circle cx="118" cy="106" r="5" fill="#2B2233"/>
+    <circle cx="84" cy="104" r="1.6" fill="#FFFFFF"/><circle cx="120" cy="104" r="1.6" fill="#FFFFFF"/>
+    <path d="M90 116 Q100 124 110 116" fill="none" stroke="#2B2233" stroke-width="3.5" stroke-linecap="round"/>
+    <ellipse cx="70" cy="116" rx="8" ry="5" fill="#FF8A8A" opacity=".55"/><ellipse cx="130" cy="116" rx="8" ry="5" fill="#FF8A8A" opacity=".55"/>
+    <path d="M58 56 Q70 44 86 42" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity=".45"/>
   </svg>`;
 }
 const coinSVG = (label, cls='') => `<span class="coin ${cls}"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="#FFD23F" stroke="#2B2233" stroke-width="3"/><circle cx="20" cy="20" r="11.5" fill="none" stroke="#E0A800" stroke-width="2"/></svg><b>${label}</b></span>`;
@@ -4332,8 +4419,8 @@ function coinPile(){
 }
 function flyCoin(fromEl, label){
   if(reduce || !fromEl) return;
-  const pig = $('#miniPig') || $('#pig'); if(!pig) return;
-  const a = fromEl.getBoundingClientRect(), b = pig.getBoundingClientRect();
+  const box = $('#miniBox') || $('#moneyBox'); if(!box) return;
+  const a = fromEl.getBoundingClientRect(), b = box.getBoundingClientRect();
   const c = document.createElement('div'); c.className = 'fly-coin'; c.innerHTML = coinSVG(label);
   c.style.left = (a.left + a.width / 2 - 20) + 'px'; c.style.top = (a.top + a.height / 2 - 20) + 'px';
   c.style.setProperty('--fx', (b.left + b.width / 2 - a.left - a.width / 2) + 'px');
@@ -4342,14 +4429,14 @@ function flyCoin(fromEl, label){
 }
 const bankRule = () => { const B = S.bank; return B.words === 1 ? `كل كلمة جديدة تكتبيها صح = <b>${money(B.amount)} جنيه</b>` : `كل <b>${B.words}</b> كلمة جديدة تكتبيها صح = <b>${money(B.amount)} جنيه</b>`; };
 
-function bankScreen(){
-  setTop(true);
+function bankScreen(keep){
+  setTop(true, keep === true);
   const B = S.bank, learned = Object.keys(B.earned).length, canOut = B.balance > 0 && B.balance >= B.min;
   const groups = [...new Set(BANK_PACKS.map(p => p.grp))];
   const passDone = Object.keys(B.paid).filter(k => k.startsWith('p:')).length;
   screenEl.innerHTML = `<section class="hub bank">
     <div class="bank-head sticker">
-      <div class="pig-wrap" id="pig">${pigSVG()}</div>
+      <div class="box-wrap" id="moneyBox">${boxSVG()}</div>
       <div class="bank-info">
         <h2>حصالة ${KID_AR} <span class="en">My Money Box</span></h2>
         <p class="bank-bal"><b>${money(B.balance)}</b> جنيه</p>
@@ -4361,6 +4448,7 @@ function bankScreen(){
           <button class="btn" id="parentBtn">⚙️ لبابا وماما</button>
         </div>
         ${canOut ? '' : `<small class="muted">تقدري تسحبي لما يبقى في الحصالة ${money(B.min)} جنيه أو أكتر</small>`}
+        <small id="bankSync"></small>
       </div>
     </div>
 
@@ -4384,6 +4472,7 @@ function bankScreen(){
   screenEl.querySelectorAll('[data-pack]').forEach(b => b.onclick = () => packScreen(b.dataset.pack));
   if($('#ewPass')) $('#ewPass').onclick = readHub;
   if($('#ewWords')) $('#ewWords').onclick = () => $('#market').scrollIntoView({behavior:'smooth'});
+  bankStatusPaint();
   $('#withdraw').onclick = withdrawFlow;
   $('#parentBtn').onclick = () => askPin(parentSettings);
 }
@@ -4425,7 +4514,7 @@ function spellTest(words, back, forMoney){
       <div class="g-head"><h2>اكتبي الكلمة بالإنجليزي <span class="en" style="font-size:20px;color:var(--ink-soft)">Write it</span></h2>
         <div class="dots">${words.map((_, j) => `<i class="${j < i ? 'done' : j === i ? 'now' : ''}"></i>`).join('')}</div></div>
       <div class="st-top">
-        <span class="mini-pig" id="miniPig">${pigSVG()}<b>${money(S.bank.balance)}</b></span>
+        <span class="mini-box" id="miniBox">${boxSVG()}<b>${money(S.bank.balance)}</b></span>
         ${forMoney && S.bank.words > 1 ? `<small class="st-prog">🪙 ${S.bank.pending}/${S.bank.words} كلمة للـ ${money(S.bank.amount)} جنيه الجاية</small>` : forMoney ? '' : '<small class="st-prog">تدريب (من غير فلوس)</small>'}
       </div>
       <div class="qcard sticker st-card">${w.e ? `<span class="emo big" aria-hidden="true">${w.e}</span>` : ''}<p class="flash-ar">${esc(w.ar)}</p>
@@ -4468,8 +4557,8 @@ function spellTest(words, back, forMoney){
         $('#fb').className = 'feedback good';
         $('#fb').innerHTML = counted ? (paid ? `<span>برافو! نزل <b>${money(paid)} جنيه</b> في الحصالة! 🎉</span>` : `<span>برافو! الكلمة اتحسبت 🪙 · فاضل ${S.bank.words - S.bank.pending} كلمة وينزل ${money(S.bank.amount)} جنيه</span>`)
           : `<span class="en">${esc(w.en)}</span><span>صح! ${helped && forMoney ? '(استخدمتي مساعدة، جربيها تاني بعدين عشان تتحسب)' : ''}</span>`;
-        if(paid) burst($('#miniPig'));
-        setTimeout(() => { $('#miniPig b').textContent = money(S.bank.balance); }, 700);
+        if(paid) burst($('#miniBox'));
+        setTimeout(() => { $('#miniBox b').textContent = money(S.bank.balance); }, 700);
         setTimeout(() => { i++; q(); }, paid ? 2600 : 1800);
       } else {
         tries++; sfxBad();
@@ -4507,17 +4596,17 @@ function spellTest(words, back, forMoney){
     stop();
     const B = S.bank;
     screenEl.innerHTML = `<section class="done-wrap">
-      <div class="pig-wrap big" id="pig">${pigSVG()}</div>
+      <div class="box-wrap big" id="moneyBox">${boxSVG()}</div>
       <h2 lang="en" dir="ltr">${gotWords === words.length ? 'Amazing!' : 'Good job!'}</h2>
       <p>كتبتي ${gotWords} من ${words.length} كلمة صح.</p>
       ${forMoney ? `<p class="pill stars" style="font-size:22px">${earnedNow ? `كسبتي ${money(earnedNow)} جنيه في الجولة دي! 🎉` : `في حصالتك ${money(B.balance)} جنيه`}</p>
         ${B.words > 1 ? `<p>فاضل <b>${B.words - B.pending}</b> كلمة جديدة وينزل ${money(B.amount)} جنيه كمان 🪙</p>` : ''}` : ''}
       <div class="row" style="justify-content:center;margin-top:8px">
         <button class="btn primary" id="again">${forMoney ? 'كلمات تانية' : 'تدريب تاني'}</button>
-        <button class="btn" id="toBank">الحصالة 🐷</button>
+        <button class="btn" id="toBank">الحصالة 💰</button>
       </div>
     </section>`;
-    if(earnedNow){ sfxMoney(); burst($('#pig')); }
+    if(earnedNow){ sfxMoney(); burst($('#moneyBox')); }
     $('#again').onclick = back;
     $('#toBank').onclick = bankScreen;
   }
@@ -4558,7 +4647,7 @@ function readPassage(pid){
       <div class="g-head"><h2 class="en">${esc(P.title)}</h2>
         <p class="ask">اقري الجملة بصوت عالي. لو في كلمة صعبة دوسي عليها تسمعيها.</p>
         <div class="dots">${lines.map((_, j) => `<i class="${j < i ? 'done' : j === i ? 'now' : ''}"></i>`).join('')}</div></div>
-      <div class="st-top"><span class="mini-pig" id="miniPig">${pigSVG()}<b>${money(B.balance)}</b></span>
+      <div class="st-top"><span class="mini-box" id="miniBox">${boxSVG()}<b>${money(B.balance)}</b></span>
         <small class="st-prog">${already ? 'قريتيها قبل كده (تدريب)' : `🪙 القطعة دي عليها ${money(B.perPassage)} جنيه`}</small></div>
       <div class="read-prev en" dir="ltr">${lines.slice(Math.max(0, i - 2), i).map(l => `<p>${fmtLine(l)}</p>`).join('')}</div>
       <div class="read-line sticker en" dir="ltr" lang="en">${fmtLine(t)}</div>
@@ -4579,20 +4668,21 @@ function readPassage(pid){
   }
   function done(){
     let paid = 0;
-    if(!already && B.perPassage > 0){ B.paid[key] = Date.now(); bankAdd(B.perPassage, `قطعة: ${P.title}`); paid = B.perPassage; }
+    const B = S.bank;
+    if(!already && !B.paid[key] && B.perPassage > 0){ B.paid[key] = Date.now(); paid = B.perPassage; bankAdd(paid, `قطعة: ${P.title}`); }
     addStars(2);
     screenEl.innerHTML = `<section class="done-wrap">
-      <div class="pig-wrap big" id="pig">${pigSVG()}</div>
+      <div class="box-wrap big" id="moneyBox">${boxSVG()}</div>
       <h2 lang="en" dir="ltr">Great reading!</h2>
       <p>قريتي القطعة كلها: <span class="en">${esc(P.title)}</span></p>
       ${paid ? `<p class="pill stars" style="font-size:22px">نزل ${money(paid)} جنيه في حصالتك! 🎉</p>` : '<p>القطعة دي خدتي فلوسها قبل كده. اقري قطعة جديدة عشان تكسبي أكتر!</p>'}
       <p>في حصالتك دلوقتي <b>${money(B.balance)} جنيه</b></p>
       <div class="row" style="justify-content:center;margin-top:8px">
         <button class="btn primary" id="more">قطعة تانية 📖</button>
-        <button class="btn" id="toBank">الحصالة 🐷</button>
+        <button class="btn" id="toBank">الحصالة 💰</button>
       </div>
     </section>`;
-    if(paid){ sfxMoney(); burst($('#pig')); meow(); }
+    if(paid){ sfxMoney(); burst($('#moneyBox')); meow(); }
     $('#more').onclick = readHub; $('#toBank').onclick = bankScreen;
   }
   draw();
@@ -4627,9 +4717,9 @@ function askPin(onOk, note='', forceSet=false){
       if(setting && !first){ first = pin; pin = ''; dots(); m.querySelector('#pinNote').textContent = 'اكتبوا نفس الرقم تاني للتأكيد.'; return; }
       if(setting){
         if(pin !== first){ first = ''; pin = ''; dots(); m.querySelector('#pinNote').textContent = 'الرقمين مش زي بعض. ابدأوا من الأول.'; sfxBad(); return; }
-        B.pin = pin; save('bank'); m.remove(); return onOk();
+        S.bank.pin = pin; S.bank.setTs = Date.now(); bankSave(); m.remove(); return onOk();
       }
-      if(pin === B.pin){ m.remove(); onOk(); }
+      if(pin === S.bank.pin){ m.remove(); onOk(); }
       else { pin = ''; dots(); sfxBad(); m.querySelector('#pinNote').textContent = 'الرقم غلط. جربوا تاني.'; m.querySelector('.bk-box').classList.remove('shake'); void m.offsetWidth; m.querySelector('.bk-box').classList.add('shake'); }
     }, 150);
   };
@@ -4645,8 +4735,9 @@ function withdrawFlow(){
   m.querySelectorAll('[data-amt]').forEach(b => b.onclick = () => {
     const amt = +b.dataset.amt; m.remove();
     askPin(() => {
-      B.balance = Math.max(0, Math.round((B.balance - amt) * 100) / 100); B.out += amt; bankLog('out', amt, 'سحبتي من الحصالة'); save('bank');
-      sfxMoney(); bankScreen(); burst($('#pig'));
+      if(amt > S.bank.balance + 1e-9){ toast('المبلغ ده أكتر من اللي في الحصالة'); return bankScreen(); }
+      bankLog('out', amt, 'سحبتي من الحصالة'); bankDerive(S.bank); bankSave();
+      sfxMoney(); bankScreen(); burst($('#moneyBox'));
       toast(`مبروك! سحبتي ${money(amt)} جنيه 💸`);
     }, `فرحة عاوزة تسحب ${money(amt)} جنيه. ادّوها الفلوس واكتبوا الرقم السري للتأكيد.`);
   });
@@ -4661,13 +4752,14 @@ function parentSettings(){
     ${num('psPassage', 'كل قطعة تقراها', B.perPassage, .25, 'جنيه')}
     ${num('psMin', 'أقل مبلغ للسحب', B.min, 1, 'جنيه')}
     <div class="row" style="justify-content:center"><button class="btn primary" id="psSave">حفظ</button><button class="btn" id="psPin">تغيير الرقم السري</button><button class="btn" id="psClose">قفل</button></div>
-    <p class="muted">المبالغ دي بتتحفظ على الجهاز ده بس.</p>`);
+    <p class="muted">${bankSync === 'ok' ? 'الإعدادات والحصالة محفوظين على كل الأجهزة.' : 'لسه الحصالة مش متوصلة بكل الأجهزة، فالإعدادات محفوظة على الجهاز ده بس.'}</p>`);
   const v = (id, d) => { const n = parseFloat(m.querySelector('#' + id).value); return isFinite(n) && n >= 0 ? n : d; };
   m.querySelector('#psSave').onclick = () => {
+    const B = S.bank;
     B.words = Math.max(1, Math.round(v('psWords', B.words))); B.amount = v('psAmount', B.amount);
     B.perPassage = v('psPassage', B.perPassage); B.min = v('psMin', B.min);
-    while(B.amount > 0 && B.pending >= B.words){ B.pending -= B.words; bankAdd(B.amount, `${B.words} كلمة جديدة`); }
-    save('bank'); m.remove(); bankScreen(); toast('اتحفظت الإعدادات ✔');
+    B.setTs = Date.now(); bankDerive(B); bankPayWords('');
+    bankSave(); m.remove(); bankScreen(); toast('اتحفظت الإعدادات ✔');
   };
   m.querySelector('#psPin').onclick = () => { m.remove(); askPin(() => toast('اتغيّر الرقم السري ✔'), 'اختاروا رقم سري جديد من ٤ أرقام.', true); };
   m.querySelector('#psClose').onclick = () => m.remove();

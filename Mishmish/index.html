@@ -1049,6 +1049,154 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
   .sci-qt{font-size:20px}
 }
 @media (max-width:760px){.sci .teach-cat{width:76px}}
+/* science adventure */
+[hidden]{display:none !important}
+.map-head{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;align-items:center;padding:16px 20px;background:#D8F5E6}
+.mh-cat{position:relative}
+.mh-cat svg{width:100%;height:auto;display:block}
+.mh-goggles{position:absolute;top:30%;left:50%;transform:translateX(-50%);font-size:44px}
+.mh-txt h2{margin:0;font-size:30px}
+.mh-txt p{margin:4px 0 8px}
+.mh-txt small{font-size:14px;color:var(--ink-soft)}
+.sea{position:relative;display:grid;gap:4px;margin-top:18px;padding:22px 14px 30px;border:3px solid var(--ink);border-radius:var(--r);
+  background:#7CC8F0;background-image:radial-gradient(circle at 20% 30%,rgba(255,255,255,.35) 2px,transparent 3px),radial-gradient(circle at 70% 60%,rgba(255,255,255,.3) 2px,transparent 3px);background-size:60px 50px,80px 70px}
+.sea::before{content:"";position:absolute;top:40px;bottom:40px;left:50%;border-left:5px dashed rgba(255,255,255,.85);transform:translateX(-50%)}
+.isle{position:relative;display:flex;align-items:center;gap:12px;width:min(78%,440px);border:0;background:none;padding:6px;text-align:start}
+.isle.l{justify-self:start}.isle.r{justify-self:end;flex-direction:row-reverse;text-align:end}
+.isle-land{position:relative;flex:none;width:112px;height:96px;display:grid;place-items:center;border:3px solid var(--ink);border-radius:48% 52% 45% 55%/55% 45% 55% 45%;
+  background:radial-gradient(ellipse at 50% 42%,var(--ic) 0 52%,#F4D58A 53% 100%);box-shadow:4px 5px 0 rgba(43,34,51,.5);transition:transform .15s}
+.isle:hover .isle-land{transform:translateY(-4px) rotate(-3deg)}
+.isle-ico{font-size:44px;line-height:1;filter:drop-shadow(0 2px 0 rgba(0,0,0,.2))}
+.isle-n{position:absolute;bottom:-10px;inset-inline-start:-6px;width:34px;height:34px;display:grid;place-items:center;border:3px solid var(--ink);border-radius:50%;background:#fff;font-weight:800}
+.isle-flag{position:absolute;top:-22px;inset-inline-end:-6px;font-size:30px}
+.isle-boat{position:absolute;bottom:-12px;inset-inline-end:-30px;font-size:34px;animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(4deg)}}
+.isle-txt{display:grid;gap:3px;min-width:0;padding:8px 12px;border:3px solid var(--ink);border-radius:16px;background:#fff;box-shadow:3px 3px 0 var(--ink)}
+.isle-txt b{font-size:18px;line-height:1.3}
+.isle-txt small{font-size:13px;color:var(--ink-soft)}
+.isle-txt .bar{height:9px}
+.isle.cur .isle-land{animation:glow 1.6s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 7px rgba(255,255,255,.75),4px 5px 0 rgba(43,34,51,.5)}}
+.isle.won .isle-txt{background:#FFF6CC}
+.isle-head{display:flex;gap:14px;align-items:center;padding:14px 18px;background:var(--ucl)}
+.ih-ico{font-size:58px;line-height:1}
+.isle-head h2{margin:0;font-size:27px}.isle-head p{margin:2px 0 0;color:var(--ink-soft)}
+.trail{display:grid;gap:14px;margin-top:6px}
+.stop{padding:14px 16px;display:grid;gap:10px}
+.stop.done{background:#F1FFF5}
+.stop-head{display:flex;align-items:center;gap:10px}
+.stop-head b{flex:1;font-size:20px;line-height:1.3}
+.stop-head .pill{font-size:14px;padding:2px 10px}
+.stop-btns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.st{position:relative;display:grid;justify-items:center;gap:2px;padding:10px 6px;border:3px solid var(--ink);border-radius:16px;background:var(--ucl);font-weight:800;font-size:16px;box-shadow:3px 3px 0 var(--ink);transition:transform .1s}
+.st:hover{transform:translateY(-2px)}
+.st-ico{font-size:32px;line-height:1.1}
+.st.ok{background:var(--good-l)}
+.st-ok{position:absolute;top:-10px;inset-inline-end:-8px;width:26px;height:26px;display:grid;place-items:center;border:2px solid var(--ink);border-radius:50%;background:var(--good);color:#fff;font-style:normal;font-size:14px}
+.boss-card{display:flex;align-items:center;gap:14px;padding:14px 18px;text-align:start;background:#2F2547;color:#fff}
+.boss-card small{display:block;color:#E6DCFF;font-size:14px}
+.boss-card b{font-size:20px}
+.boss-card .boss-m{font-size:52px;animation:bob 1.8s ease-in-out infinite}
+.boss-card.won{background:#3D8B5A}
+.boss{display:grid;grid-template-columns:auto minmax(0,1fr) 70px;gap:12px;align-items:center;width:min(760px,100%);padding:8px 14px;border:3px solid var(--ink);border-radius:16px;background:#2F2547}
+.boss .boss-m{font-size:50px;line-height:1}
+.boss .boss-m.hit{animation:shake .4s}
+.boss-hp{height:16px;background:#fff}
+.boss-hp i{background:#E5484D;transition:width .4s}
+.boss-cat svg{width:100%;height:auto;display:block}
+/* games */
+.game-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.gp{display:grid;gap:4px;justify-items:start;text-align:start;padding:14px 16px;transition:transform .12s}
+.gp:hover{transform:translate(-2px,-2px) rotate(-.5deg)}
+.gp-ico{font-size:40px;line-height:1.1}.gp b{font-size:20px}.gp small{font-size:14px;color:var(--ink-soft)}
+.hearts{letter-spacing:2px}
+.sky{position:relative;width:min(760px,100%);height:330px;border:3px solid var(--ink);border-radius:var(--r);overflow:hidden;background:linear-gradient(#BEE6FF,#EAF7FF)}
+.sky-ground{position:absolute;inset:auto 0 0;height:22px;background:#7CC36E;border-top:3px solid var(--ink)}
+.drop{position:absolute;top:-70px;width:calc(100% / var(--n, 4) - 12px);inset-inline-start:calc(var(--lane) * 100% / var(--n, 4) + 6px);min-height:58px;padding:6px 8px;border:3px solid var(--ink);border-radius:20px;background:#fff;font-weight:800;font-size:16px;line-height:1.35;box-shadow:3px 3px 0 var(--ink);
+  animation:fall 9s linear var(--dl) forwards}
+.sky.n2 .drop{--n:2}.sky.n3 .drop{--n:3}.sky.n4 .drop{--n:4}
+@keyframes fall{to{top:calc(100% - 82px)}}
+.drop.caught{background:var(--good-l);border-color:var(--good);animation-play-state:paused;transform:scale(1.1)}
+.drop.miss{background:var(--bad-l);opacity:.5}
+.drop.show{background:var(--good-l);border-color:var(--good)}
+.track{position:relative;width:min(760px,100%);padding:10px 10px;background:repeating-linear-gradient(90deg,#5A5A66 0 30px,#64646F 30px 60px);display:grid;gap:6px}
+.lane{position:relative;height:58px;border-bottom:3px dashed #fff}
+.lane:last-child{border-bottom:0}
+.racer{position:absolute;top:2px;inset-inline-start:0;display:grid;justify-items:center;font-size:38px;line-height:1;transition:inset-inline-start .6s cubic-bezier(.3,1.4,.6,1)}
+.racer small{font-size:11px;color:#fff;font-weight:800}
+.racer.zoom{filter:drop-shadow(-8px 0 0 rgba(255,255,255,.6))}
+.racer.spin{animation:shake .5s}
+.finish{position:absolute;inset-inline-end:6px;top:50%;transform:translateY(-50%);font-size:34px}
+.rq{display:grid;gap:14px;justify-items:center;width:100%}
+.swipe-wrap{width:min(520px,100%);min-height:220px;display:grid}
+.swipe-card{display:grid;align-content:center;gap:10px;min-height:220px;padding:22px;font-size:22px;font-weight:700;line-height:1.7;text-align:center;touch-action:none;cursor:grab;user-select:none;background:#FFFDF2}
+.swipe-card p{margin:0}
+.swipe-card.lean-yes{background:var(--good-l)}.swipe-card.lean-no{background:var(--bad-l)}
+.sw-yes{background:var(--good-l)}.sw-no{background:var(--bad-l)}
+.mt-terms{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.mt-term{border:3px solid var(--ink);border-radius:99px;background:var(--sun-l);padding:8px 16px;font-weight:800;font-size:18px;box-shadow:3px 3px 0 var(--ink)}
+.mt-term.picked{background:var(--sun);transform:translateY(-3px)}
+.mt-term.ok{background:var(--good-l);opacity:.6;box-shadow:none}
+.mt-defs{display:grid;gap:10px;width:min(760px,100%)}
+.mt-def{display:grid;gap:4px;text-align:start;padding:12px 16px;font-size:17px;line-height:1.6}
+.mt-def.ok{background:var(--good-l);border-color:var(--good)}
+.mt-def.wrong{background:var(--bad-l);animation:shake .4s}
+.mt-tag{font-weight:800;color:#1E8E4E;font-size:15px}
+.mt-tag:empty{display:none}
+/* lab */
+.lab-head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:14px 18px;background:#E6F4FF}
+.lab-head > div{flex:1;min-width:220px}
+.lh-ico{font-size:46px}
+.lab-head h2{margin:0;font-size:26px}.lab-head p{margin:2px 0 0;line-height:1.7}
+.lab{padding:14px;display:grid;gap:12px;justify-items:center}
+.lab-svg{width:100%;max-width:640px;height:auto;display:block;border:3px solid var(--ink);border-radius:16px;background:#fff;touch-action:manipulation}
+.lab-svg.tap .spot,.lab-svg.tap .crit,.lab-svg.tap .leafbtn,.lab-svg.tap .eggs,.lab-svg.tap .act,.lab-svg.tap .zone,.lab-svg.tap .fruit,.lab-svg.tap .lf,.lab-svg.tap .pz,.lab-svg.tap .mir{cursor:pointer}
+.lens-svg{touch-action:none;cursor:none}
+.spot .lift{transition:transform .5s}
+.spot.open .lift{transform:translate(0,-34px) rotate(-8deg);opacity:.55}
+.spot.open:has(.hid[opacity="1"]) .lift{opacity:.35}
+.fly{animation:bob 1.4s ease-in-out infinite}
+.lab-msg{margin:0;min-height:1.6em;font-weight:800;font-size:18px;text-align:center;line-height:1.6}
+.lab-q{margin:0;font-weight:800;font-size:19px;text-align:center}
+.lab-score{font-weight:800;font-size:17px}
+.lab-slider{display:grid;gap:4px;width:min(520px,100%);font-weight:800;text-align:center}
+.lab-slider input{width:100%;accent-color:var(--grape);height:34px}
+.lab-ctl{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.lab-bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;width:100%}
+.lab-bin{display:grid;gap:4px;justify-items:center;align-content:start;min-height:120px;padding:10px;border:3px dashed var(--ink);border-radius:18px;background:var(--bc)}
+.bin-ico{font-size:30px}.lab-bin b{font-size:18px}
+.bin-it{font-size:28px}
+.sci-item.ok{background:var(--good-l);opacity:.7}
+.lab-table{border-collapse:collapse;min-width:240px;font-weight:700}
+.lab-table th,.lab-table td{border:2px solid var(--ink);padding:4px 14px;text-align:center}
+.lab-table th{background:var(--ucl)}
+.lab-table tbody:empty::after{content:"لسه مفيش نتايج";display:block;padding:6px;color:var(--ink-soft)}
+.lab-quiz{display:grid;gap:8px;padding:12px;border:3px solid var(--ink);border-radius:16px;background:var(--grape-l);width:min(560px,100%)}
+.lab-found{padding:14px 18px;background:#FFF6CC;display:grid;gap:6px}
+.lab-found b{font-size:21px}.lab-found p{margin:0;font-size:18px;line-height:1.8}
+.snd-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:100%}
+.snd{display:grid;gap:6px;justify-items:center;padding:10px;font-size:16px}
+.snd svg{width:100%;height:auto}
+.snd.shake-on .vib-r{animation:vibr .9s ease-out}
+.snd.shake-on .vib-t{animation:vibt 1.6s ease-out;transform-origin:80px 12px}
+.snd.shake-on .rice{animation:rice .5s ease-out 2}
+@keyframes vibr{0%,100%{transform:none}10%{transform:rotate(-7deg)}20%{transform:rotate(6deg)}30%{transform:rotate(-5deg)}40%{transform:rotate(4deg)}50%{transform:rotate(-3deg)}60%{transform:rotate(2deg)}70%{transform:rotate(-1deg)}}
+.vib-r{transform-origin:40px 65px}
+@keyframes vibt{0%,100%{transform:none}10%,30%,50%,70%{transform:translateX(-2px)}20%,40%,60%,80%{transform:translateX(2px)}}
+@keyframes rice{50%{transform:translateY(-16px)}}
+@media (max-width:760px){
+  .map-head{grid-template-columns:90px minmax(0,1fr);padding:12px}
+  .mh-txt h2{font-size:23px}.mh-txt p{font-size:15px}
+  .mh-goggles{font-size:28px}
+  .isle{width:94%}
+  .isle-land{width:84px;height:74px}.isle-ico{font-size:34px}
+  .isle-txt b{font-size:16px}
+  .stop-btns{gap:6px}.st{font-size:14px;padding:8px 2px}.st-ico{font-size:26px}
+  .sky{height:300px}.drop{font-size:14px;padding:4px 5px}
+  .snd-row{grid-template-columns:1fr 1fr}
+  .swipe-card{font-size:19px}
+  .boss{grid-template-columns:auto minmax(0,1fr) 50px}
+}
 </style>
 
 <div dir="rtl" lang="ar">
@@ -3941,7 +4089,6 @@ const SCI_LESSON = {};
 SCI.forEach(C => C.lessons.forEach((L, i) => { L.ch = C; L.n = i + 1; SCI_LESSON[L.id] = L; }));
 const sciGet = k => S.sci[k] || 0;
 function sciSet(k, v){ if(v > (S.sci[k] || 0)){ S.sci[k] = v; save('sci'); return true; } return false; }
-const sciLessonPct = L => Math.round(((sciGet('s_' + L.id) ? 1 : 0) + (sciGet('t_' + L.id) ? 1 : 0) + Math.min(1, sciGet('q_' + L.id) / 80)) / 3 * 100);
 const sciChapterPct = C => Math.round((C.lessons.reduce((t, L) => t + sciLessonPct(L), 0) + Math.min(100, sciGet('x_' + C.id) / .8)) / (C.lessons.length + 1));
 const AR_ORD = ['', 'الأول', 'التاني', 'التالت', 'الرابع', 'الخامس', 'السادس', 'السابع', 'التامن'];
 
@@ -3949,7 +4096,7 @@ const AR_ORD = ['', 'الأول', 'التاني', 'التالت', 'الرابع'
    1) recorded Egyptian narration (voice_ar/<chapter>.json: id -> MP3 base64), played through Web Audio;
    2) otherwise the device's own Arabic voice (Egyptian first); 3) otherwise text only. */
 const AR_CLIPS = {}, AR_LOADING = {}, AR_BUF = {};
-const AR_VER = 2;   /* bump when the recordings change so phones don't keep an old copy */
+const AR_VER = 3;   /* bump when the recordings change so phones don't keep an old copy */
 const arChunk = c => AR_LOADING[c] || (AR_LOADING[c] = fetch('voice_ar/' + c + '.json?v=' + AR_VER).then(r => r.ok ? r.json() : {}).then(d => { Object.assign(AR_CLIPS, d); }).catch(() => { delete AR_LOADING[c]; }));
 let arVoice = null;
 function pickArVoice(){
@@ -4003,7 +4150,7 @@ function noArVoice(id){
   const lk = id ? id.replace(/_.*/, '') : 'q';
   if(arWarnedFor[lk] || /^g/.test(id || '')) return;
   arWarnedFor[lk] = true;
-  toast(id ? 'صوت مشمش للدرس ده لسه بيتسجل، وهيشتغل قريب 🎙️ اقري الشرح مكتوب لحد كده.' : 'الجهاز ده مفيهوش صوت عربي للأسئلة، اقريها مكتوبة 👀');
+  toast(id ? '🎙️ صوت مشمش للجزء ده لسه بيتسجل، اقريه مكتوب لحد كده' : 'الجهاز ده مفيهوش صوت عربي للأسئلة، اقريها مكتوبة 👀');
 }
 const sayArBtn = (text, id, label = 'اسمعي الشرح') => `<button class="say say-ar" data-sayar="${esc(text)}" ${id ? `data-arid="${id}"` : ''}>${SPK}<span>${label}</span></button>`;
 document.addEventListener('click', e => {
@@ -4025,68 +4172,6 @@ function bindSciCrumbs(){
     const g = b.dataset.scigo;
     if(g === 'world') scienceWorld(); else if(SCI.some(C => C.id === g)) sciChapter(g); else if(SCI_LESSON[g]) sciLesson(g);
   });
-}
-function scienceWorld(keep){
-  curWorld = 'sci'; stopAr();
-  setTop(true, keep === true);
-  const total = Math.round(SCI.reduce((t, C) => t + sciChapterPct(C), 0) / SCI.length);
-  screenEl.innerHTML = `<section class="world-page sci" style="--wc:#2BA36B;--wl:#D8F5E6">
-    <div class="world-head sticker"><span class="w-ico" aria-hidden="true">🔬</span><div><h2>عالم العلوم</h2>
-      <p>كتاب العلوم للصف الرابع، الترم الأول. مشمش هتشرحلك كل درس بالمصري، وبعدين نراجع المصطلحات ونحل أسئلة زي الامتحان.</p>
-      <span class="bar sci-bar"><i style="width:${total}%"></i></span><small class="muted">خلصتي ${total}% من المنهج</small></div></div>
-    <h2 class="sec-title">مفاهيم الكتاب <span>٨ مفاهيم</span></h2>
-    <div class="units">${SCI.map(C => { const p = sciChapterPct(C); return `
-      <button class="unit-card" data-sch="${C.id}" style="--uc:${C.c};--ucl:${C.cl}">
-        <span class="u-badge sci-badge">${C.ico}</span>
-        <span class="u-body"><span class="u-title">${C.title}</span><span class="u-ar">المفهوم ${C.n} · ${C.lessons.length === 1 ? 'درس واحد' : C.lessons.length === 2 ? 'درسين' : C.lessons.length + ' دروس'}</span>
-          <span class="bar"><i style="width:${p}%"></i></span><small>${p >= 100 ? '🏆 خلصتيه كله!' : p ? `خلصتي ${p}%` : 'لسه مبدأتيش'}${sciGet('x_' + C.id) ? ` · الامتحان ${sciGet('x_' + C.id)}%` : ''}</small></span>
-      </button>`; }).join('')}</div>
-  </section>`;
-  screenEl.querySelectorAll('[data-sch]').forEach(b => b.onclick = () => { actx(); sciChapter(b.dataset.sch); });
-}
-function sciChapter(cid){
-  setTop(true); stopAr();
-  const C = SCI.find(x => x.id === cid);
-  arChunk(C.id);
-  const chip = (on, txt) => `<span class="mini-chip ${on ? 'done' : ''}">${on ? '✔ ' : ''}${txt}</span>`;
-  screenEl.innerHTML = `<section class="hub sci" style="--uc:${C.c};--ucl:${C.cl}">
-    ${sciCrumbs([['عالم العلوم', 'world'], [C.title]])}
-    <div class="unit-head"><span class="u-badge sci-badge">${C.ico}</span><div><h2>${C.title}</h2><p>المفهوم ${C.n} · ${sciChapterPct(C)}% خلصتيه</p></div></div>
-    <div class="lessons">${C.lessons.map(L => `
-      <button class="lesson-card" data-sles="${L.id}">
-        <span class="l-num">${L.n}</span>
-        <span class="l-body"><span class="l-title">${L.title}</span><span class="l-ar">الدرس ${AR_ORD[L.n] || L.n} · ${L.slides.length} شرايح شرح · ${L.qs.length} سؤال</span>
-          <span class="chips-row">${chip(sciGet('s_' + L.id), '📺 الشرح')}${chip(sciGet('t_' + L.id), '🗂️ المصطلحات')}${chip(sciGet('q_' + L.id) >= 80, '✍️ الأسئلة' + (sciGet('q_' + L.id) ? ' ' + sciGet('q_' + L.id) + '%' : ''))}</span></span>
-      </button>`).join('')}
-      <button class="lesson-card sci-exam" data-sexam="${C.id}">
-        <span class="l-num">📝</span>
-        <span class="l-body"><span class="l-title">امتحان المفهوم كله</span><span class="l-ar">${C.exam.length ? 'أسئلة امتحان من الكتاب' : 'أسئلة متنوعة من كل الدروس'}، والدرجة بتطلع على طول</span>
-          <span class="chips-row">${chip(sciGet('x_' + C.id) >= 80, sciGet('x_' + C.id) ? 'أحسن درجة ' + sciGet('x_' + C.id) + '%' : 'لسه محلتيهوش')}</span></span>
-      </button>
-    </div>
-  </section>`;
-  bindSciCrumbs();
-  screenEl.querySelectorAll('[data-sles]').forEach(b => b.onclick = () => sciLesson(b.dataset.sles));
-  screenEl.querySelector('[data-sexam]').onclick = () => sciExam(C.id);
-}
-function sciLesson(lid){
-  setTop(true); stopAr();
-  const L = SCI_LESSON[lid], C = L.ch;
-  arChunk(C.id);
-  const q = sciGet('q_' + L.id);
-  screenEl.innerHTML = `<section class="hub sci" style="--uc:${C.c};--ucl:${C.cl}">
-    ${sciCrumbs([['عالم العلوم', 'world'], [C.title, C.id], ['الدرس ' + AR_ORD[L.n]]])}
-    <div class="unit-head"><span class="u-badge sci-badge">${L.ico}</span><div><h2>${L.title}</h2><p>${C.title} · الدرس ${AR_ORD[L.n]}</p></div></div>
-    <div class="actions">
-      <button class="act-card a-learn ${sciGet('s_' + L.id) ? 'is-done' : ''}" id="sGo"><span class="a-ico">📺</span><b>١. الشرح مع مشمش</b><small>${L.slides.length} شرايح بالصوت والصور${sciGet('s_' + L.id) ? ' · ✔ اتفرجتي عليه' : ' · ⭐ ٣ نجوم'}</small></button>
-      <button class="act-card a-gram ${sciGet('t_' + L.id) ? 'is-done' : ''}" id="tGo"><span class="a-ico">🗂️</span><b>٢. كروت المصطلحات</b><small>${L.terms.length} مصطلحات تحفظيها${sciGet('t_' + L.id) ? ' · ✔ خلصتيها' : ' · ⭐ نجمتين'}</small></button>
-      <button class="act-card a-water ${q >= 80 ? 'is-done' : ''}" id="qGo"><span class="a-ico">✍️</span><b>٣. اختبري نفسك</b><small>${L.qs.length} سؤال زي الكتاب${q ? ` · أحسن درجة ${q}%` : ' · ⭐ نجمة لكل إجابة صح'}</small></button>
-    </div>
-  </section>`;
-  bindSciCrumbs();
-  $('#sGo').onclick = () => sciSlides(L.id);
-  $('#tGo').onclick = () => sciTerms(L.id);
-  $('#qGo').onclick = () => sciQuiz(L.id);
 }
 
 /* ---------- explanation slides ---------- */
@@ -4144,7 +4229,7 @@ function sciSlides(lid, start = 0){
       if(si < L.slides.length - 1){ si++; render(); return; }
       const first = sciSet('s_' + L.id, 1);
       if(first) addStars(3);
-      sciDone(`خلصتي شرح «${L.title}»${first ? ' وكسبتي ٣ نجوم ⭐' : ''}. يلا نحفظ المصطلحات!`, [['🗂️ المصطلحات', () => sciTerms(L.id)], ['✍️ اختبري نفسك', () => sciQuiz(L.id)], ['ارجعي للدرس', () => sciLesson(L.id)]]);
+      sciDone(`خلصتي قصة «${L.title}»${first ? ' وكسبتي ٣ نجوم ⭐' : ''}. يلا على المعمل نجرّب بإيدينا!`, [['🧪 روحي المعمل', () => sciLab(L.id)], ['🎮 العبي', () => sciPlay(L.id)], ['ارجعي للجزيرة', () => sciLesson(L.id)]]);
     };
   }
   render();
@@ -4195,7 +4280,7 @@ function sciTerms(lid){
     stopAr();
     if(!deck.length){
       const first = sciSet('t_' + L.id, 1); if(first) addStars(2);
-      return sciDone(`حفظتي مصطلحات «${L.title}»${first ? ' وكسبتي نجمتين ⭐' : ''}.`, [['✍️ اختبري نفسك', () => sciQuiz(L.id)], ['🔁 تاني', () => sciTerms(L.id)], ['ارجعي للدرس', () => sciLesson(L.id)]]);
+      return sciDone(`حفظتي مصطلحات «${L.title}»${first ? ' وكسبتي نجمتين ⭐' : ''}.`, [['🎮 لعبة تانية', () => sciPlay(L.id)], ['🔁 تاني', () => sciTerms(L.id)], ['ارجعي للجزيرة', () => sciLesson(L.id)]]);
     }
     const k = deck[0], [term, def] = L.terms[k];
     flipped = false;
@@ -4227,12 +4312,12 @@ function sciTerms(lid){
 /* ---------- quizzes ---------- */
 function sciQuiz(lid){
   const L = SCI_LESSON[lid];
-  sciRunQs(shuffle(L.qs), {title: L.title, key: 'q_' + L.id, ch: L.ch, again: () => sciQuiz(lid), back: () => sciLesson(lid), backLabel: 'ارجعي للدرس'});
+  sciRunQs(shuffle(L.qs), {title: L.title, key: 'q_' + L.id, ch: L.ch, again: () => sciQuiz(lid), back: () => sciPlay(lid), backLabel: '🎮 لعبة تانية'});
 }
 function sciExam(cid){
   const C = SCI.find(x => x.id === cid);
   const pool = C.exam.length ? C.exam : C.lessons.flatMap(L => L.qs);
-  sciRunQs(shuffle(pool).slice(0, 15), {title: 'امتحان: ' + C.title, key: 'x_' + C.id, ch: C, exam: true, again: () => sciExam(cid), back: () => sciChapter(cid), backLabel: 'ارجعي للمفهوم'});
+  sciRunQs(shuffle(pool).slice(0, 15), {title: '👾 غول النسيان', key: 'x_' + C.id, ch: C, exam: true, boss: true, again: () => sciExam(cid), back: () => sciChapter(cid), backLabel: 'ارجعي للجزيرة'});
 }
 function sciRunQs(qs, o){
   setTop(true); stopAr();
@@ -4244,7 +4329,7 @@ function sciRunQs(qs, o){
       const right = results.filter(Boolean).length, pct = Math.round(right / qs.length * 100);
       const best = sciSet(o.key, pct);
       if(o.exam && pct >= 90 && best) addStars(5);
-      return sciDone(`جاوبتي ${right} من ${qs.length} صح · درجتك ${pct}%${best && sciGet(o.key) === pct ? ' (أحسن درجة ليكي!)' : ''}${o.exam && pct >= 90 && best ? ' · ومعاهم ٥ نجوم هدية 🏆' : ''}`,
+      return sciDone(`${o.boss ? (pct >= 60 ? '😵 هزمتي غول النسيان! ' : '👾 الغول هرب المرة دي! ') : ''}جاوبتي ${right} من ${qs.length} صح · درجتك ${pct}%${best && sciGet(o.key) === pct ? ' (أحسن درجة ليكي!)' : ''}${o.exam && pct >= 90 && best ? ' · ومعاهم ٥ نجوم هدية 🏆' : ''}`,
         [['🔁 حلي تاني', o.again], [o.backLabel, o.back]], pct);
     }
     const q = qs[i], tf = q.tf !== undefined;
@@ -4253,6 +4338,7 @@ function sciRunQs(qs, o){
     const label = k => tf ? (k === 0 ? '✔ صح' : '✘ خطأ') : q.o[k];
     screenEl.innerHTML = `<section class="stage sci" style="--uc:${C.c};--ucl:${C.cl}">
       ${gameHead(o.title, '', tf ? 'صح ولا خطأ؟' : 'اختاري الإجابة الصح', i, qs.length, results)}
+      ${o.boss ? `<div class="boss"><span class="boss-m" id="bossM">👾</span><span class="bar boss-hp"><i style="width:${100 - results.filter(Boolean).length / qs.length * 100}%"></i></span><span class="boss-cat">${sciCat()}</span></div>` : ''}
       <div class="qcard sticker sci-q">
         <p class="sci-qt">${q.q}</p>
         ${sayArBtn(q.q + (tf ? '' : '. ' + idx.map(k => q.o[k]).join('، ')), '', 'اسمعي السؤال')}
@@ -4267,8 +4353,8 @@ function sciRunQs(qs, o){
       const k = +b.dataset.k, ok = k === answer;
       screenEl.querySelectorAll('.sci-opts .opt').forEach(x => { x.disabled = true; if(+x.dataset.k === answer) x.classList.add('right'); });
       results[i] = ok;
-      if(ok){ b.classList.add('right'); sfxGood(); addStars(1); burst(b); }
-      else { b.classList.add('wrong'); sfxBad(); }
+      if(ok){ b.classList.add('right'); sfxGood(); addStars(1); burst(b); if(o.boss){ const m = $('#bossM'); m.classList.add('hit'); screenEl.querySelector('.boss-hp i').style.width = (100 - results.filter(Boolean).length / qs.length * 100) + '%'; burst(m); } }
+      else { b.classList.add('wrong'); sfxBad(); if(o.boss){ const m = $('#bossM'); m.textContent = '😝'; } }
       cheerAr(ok);
       screenEl.querySelector('.sci-fb').innerHTML = ok ? '✔ إجابة صح!' : `✘ الإجابة الصح: <b>${label(answer)}</b>`;
       $('#qNext').hidden = false;
@@ -4291,6 +4377,1012 @@ function sciDone(msg, btns, pct){
   if(good) burst($('.done-wrap svg'));
   screenEl.querySelectorAll('[data-dn]').forEach(b => b.onclick = () => btns[+b.dataset.dn][1]());
 }
+
+/* ---------- Science adventure: islands map, lesson stations (story, lab, games), island boss ---------- */
+/* progress keys: s_<lesson> story seen, lab_<lesson> experiment done, g_<lesson> a game won, x_<chapter> boss best % */
+const sciLessonPct = L => Math.round(((sciGet('s_' + L.id) ? 1 : 0) + (sciGet('lab_' + L.id) ? 1 : 0) + (sciGet('g_' + L.id) || sciGet('q_' + L.id) >= 60 ? 1 : 0)) / 3 * 100);
+const sciCat = (cls = '') => catSVG(S.mish, (() => { const x = {...S.equip}; delete x.bg; return x; })(), cls);
+
+function scienceWorld(keep){
+  curWorld = 'sci'; stopAr();
+  setTop(true, keep === true);
+  const total = Math.round(SCI.reduce((t, C) => t + sciChapterPct(C), 0) / SCI.length);
+  const cur = SCI.find(C => sciChapterPct(C) < 100) || SCI[SCI.length - 1];
+  const won = SCI.filter(C => sciChapterPct(C) >= 100).length;
+  screenEl.innerHTML = `<section class="world-page sci">
+    <div class="map-head sticker">
+      <div class="mh-cat">${sciCat()}<span class="mh-goggles" aria-hidden="true">🥽</span></div>
+      <div class="mh-txt"><h2>رحلة مشمش العالِمة</h2>
+        <p>تمن جزر، كل جزيرة مفهوم من كتاب العلوم. في كل جزيرة: قصة مع مشمش، وتجربة في المعمل، وألعاب، وفي الآخر غول لازم تهزميه!</p>
+        <span class="bar"><i style="width:${total}%"></i></span>
+        <small>${won ? `🚩 كسبتي ${won === 1 ? 'جزيرة واحدة' : won === 2 ? 'جزيرتين' : won + ' جزر'}` : '⛵ يلا نبدأ الرحلة'} · خلصتي ${total}% من المنهج</small></div>
+    </div>
+    <div class="sea">
+      ${SCI.map((C, i) => { const p = sciChapterPct(C), isCur = C === cur; return `
+      <button class="isle ${i % 2 ? 'r' : 'l'} ${isCur ? 'cur' : ''} ${p >= 100 ? 'won' : ''}" data-sch="${C.id}" style="--ic:${C.c};--icl:${C.cl}">
+        <span class="isle-land"><span class="isle-ico">${C.ico}</span><span class="isle-n">${C.n}</span>
+          ${p >= 100 ? '<span class="isle-flag" aria-hidden="true">🚩</span>' : ''}${isCur ? '<span class="isle-boat" aria-hidden="true">⛵</span>' : ''}</span>
+        <span class="isle-txt"><b>${C.title}</b><small>${p >= 100 ? '🏆 الجزيرة بقت بتاعتك!' : p ? `اكتشفتي ${p}%` : isCur ? 'الجزيرة الجاية!' : 'لسه مستكشفتهاش'}</small>
+          <span class="bar"><i style="width:${p}%"></i></span></span>
+      </button>`; }).join('')}
+    </div>
+  </section>`;
+  screenEl.querySelectorAll('[data-sch]').forEach(b => b.onclick = () => { actx(); sciChapter(b.dataset.sch); });
+}
+function sciLesson(lid){ sciChapter(SCI_LESSON[lid].ch.id, lid); }
+function sciChapter(cid, focus){
+  setTop(true); stopAr();
+  const C = SCI.find(x => x.id === cid);
+  arChunk(C.id);
+  const st = (on, lid, kind, ico, txt) => `<button class="st ${on ? 'ok' : ''}" data-st="${kind}" data-l="${lid}"><span class="st-ico">${ico}</span><span>${txt}</span>${on ? '<i class="st-ok">✔</i>' : ''}</button>`;
+  const x = sciGet('x_' + C.id);
+  screenEl.innerHTML = `<section class="hub sci" style="--uc:${C.c};--ucl:${C.cl}">
+    ${sciCrumbs([['خريطة الرحلة', 'world'], [C.title]])}
+    <div class="isle-head sticker"><span class="ih-ico">${C.ico}</span><div><h2>جزيرة ${C.title}</h2><p>الجزيرة ${C.n} · اكتشفتي ${sciChapterPct(C)}% · ${C.lessons.length === 1 ? 'محطة واحدة' : C.lessons.length === 2 ? 'محطتين' : C.lessons.length + ' محطات'} وغول في الآخر</p></div></div>
+    <div class="trail">${C.lessons.map(L => `
+      <div class="stop sticker ${sciLessonPct(L) >= 100 ? 'done' : ''}" data-stop="${L.id}">
+        <div class="stop-head"><span class="l-num">${L.n}</span><b>${L.title}</b><span class="pill">${sciLessonPct(L)}%</span></div>
+        <div class="stop-btns">
+          ${st(sciGet('s_' + L.id), L.id, 'story', '🎬', 'قصة مشمش')}
+          ${st(sciGet('lab_' + L.id), L.id, 'lab', '🧪', 'المعمل')}
+          ${st(sciGet('g_' + L.id), L.id, 'play', '🎮', 'العبي')}
+        </div>
+      </div>`).join('')}
+      <button class="boss-card sticker ${x >= 60 ? 'won' : ''}" id="bossGo">
+        <span class="boss-m" aria-hidden="true">${x >= 60 ? '😵' : '👾'}</span>
+        <span><b>تحدي الجزيرة: غول النسيان</b><small>${x >= 60 ? `هزمتيه! أحسن درجة ${x}%` : 'جاوبي صح وارمي عليه نجوم لحد ما يتهزم. أسئلة زي الامتحان من كل الجزيرة.'}</small></span>
+      </button>
+    </div>
+  </section>`;
+  bindSciCrumbs();
+  screenEl.querySelectorAll('[data-st]').forEach(b => b.onclick = () => { actx(); const l = b.dataset.l; ({story: () => sciSlides(l), lab: () => sciLab(l), play: () => sciPlay(l)})[b.dataset.st](); });
+  $('#bossGo').onclick = () => sciExam(C.id);
+  if(focus){ const el = screenEl.querySelector(`[data-stop="${focus}"]`); if(el) setTimeout(() => el.scrollIntoView({block:'center'}), 50); }
+}
+
+/* ---------- games ---------- */
+function sciPool(L){
+  const mc = L.qs.filter(q => q.tf === undefined).map(q => ({q: q.q, o: q.o, a: q.a}));
+  const tf = L.qs.filter(q => q.tf !== undefined).map(q => ({q: q.q, tf: q.tf}));
+  const chTerms = L.ch.lessons.flatMap(x => x.terms);
+  L.terms.forEach(([t, d]) => {
+    const others = shuffle(chTerms.filter(x => x[0] !== t && x[1] !== d)).slice(0, 2);
+    if(others.length) mc.push({q: `«${t}» معناها إيه؟`, o: [d, ...others.map(x => x[1])], a: 0});
+    tf.push({q: `${t}: ${d}`, tf: true});
+    if(others[0]) tf.push({q: `${t}: ${others[0][1]}`, tf: false});
+  });
+  return {mc, tf};
+}
+const SCI_GAMES = [
+  {id:'catch', ico:'🫧', t:'اصطادي الإجابة', d:'الإجابات بتنزل من السما، اصطادي الصح قبل ما توقع!', c:'#DCEBFF'},
+  {id:'race', ico:'🏎️', t:'سباق مشمش والسلحفاة', d:'كل إجابة صح عربية مشمش تتقدم. اسبقي السلحفاة!', c:'#FFE1CC'},
+  {id:'swipe', ico:'⚡', t:'صح ولا غلط بسرعة', d:'جملة ورا جملة، اعملي أطول سلسلة إجابات صح 🔥', c:'#FFF0BF'},
+  {id:'match', ico:'🔗', t:'وصّلي المصطلح', d:'وصّلي كل مصطلح بمعناه بأسرع وقت', c:'#D8F5E6'},
+  {id:'cards', ico:'🗂️', t:'كروت المصطلحات', d:'اقلبي الكارت واحفظي التعريف', c:'#E6DCFF'},
+  {id:'school', ico:'📝', t:'أسئلة زي الامتحان', d:'أسئلة الكتاب بشكل امتحان المدرسة', c:'#FFFFFF'}
+];
+function sciPlay(lid){
+  setTop(true); stopAr();
+  const L = SCI_LESSON[lid], C = L.ch;
+  screenEl.innerHTML = `<section class="hub sci" style="--uc:${C.c};--ucl:${C.cl}">
+    ${sciCrumbs([['خريطة الرحلة', 'world'], [C.title, C.id], [L.title]])}
+    <div class="g-head"><h2>🎮 اختاري لعبة</h2><p class="ask">${L.title}</p></div>
+    <div class="game-pick">${SCI_GAMES.map(g => `<button class="gp sticker" data-gm="${g.id}" style="background:${g.c}"><span class="gp-ico">${g.ico}</span><b>${g.t}</b><small>${g.d}</small></button>`).join('')}</div>
+  </section>`;
+  bindSciCrumbs();
+  screenEl.querySelectorAll('[data-gm]').forEach(b => b.onclick = () => { actx(); roundStars = 0; ({catch: gCatch, race: gRace, swipe: gSwipe, match: gMatch, cards: sciTerms, school: sciQuiz})[b.dataset.gm](lid); });
+}
+function gameWon(lid, pct, msg, again){
+  const first = pct >= 60 && sciSet('g_' + lid, 1);
+  if(first) addStars(2);
+  sciDone(msg + (first ? ' · ومعاهم نجمتين هدية ⭐' : ''), [['🔁 العبي تاني', again], ['🎮 لعبة تانية', () => sciPlay(lid)], ['ارجعي للجزيرة', () => sciLesson(lid)]], pct);
+}
+const hearts = n => '❤️'.repeat(Math.max(0, n)) + '🤍'.repeat(Math.max(0, 3 - n));
+
+/* catch: answers fall in lanes; tap the right one before it lands */
+function gCatch(lid){
+  setTop(true); stopAr();
+  const L = SCI_LESSON[lid], C = L.ch, P = sciPool(L);
+  const fits = q => q.o.every(o => o.length <= 26);
+  let qs = shuffle([...P.mc.filter(fits), ...P.tf]).slice(0, 8);
+  let i = 0, life = 3, right = 0;
+  function round(){
+    stopAr();
+    if(i >= qs.length || life <= 0){
+      const pct = Math.round(right / qs.length * 100);
+      return gameWon(lid, pct, life <= 0 ? `خلصت القلوب! اصطدتي ${right} إجابة صح.` : `اصطدتي ${right} من ${qs.length} إجابة صح!`, () => gCatch(lid));
+    }
+    const q = qs[i], tf = q.tf !== undefined;
+    const opts = tf ? [['✔ صح', q.tf], ['✘ خطأ', !q.tf]] : shuffle([[q.o[q.a], true], ...shuffle(q.o.filter((_, k) => k !== q.a)).slice(0, 2).map(o => [o, false])]);
+    screenEl.innerHTML = `<section class="stage sci" style="--uc:${C.c};--ucl:${C.cl}">
+      <div class="g-head"><h2>🫧 اصطادي الإجابة</h2><p class="ask"><span class="hearts">${hearts(life)}</span> · سؤال ${i + 1} من ${qs.length}</p></div>
+      <div class="qcard sticker sci-q"><p class="sci-qt">${q.q}</p></div>
+      <div class="sky n${opts.length}">${opts.map(([t, ok], k) => `<button class="drop" data-ok="${ok ? 1 : 0}" style="--lane:${k};--dl:${(k * .45 + Math.random() * .5).toFixed(2)}s">${t}</button>`).join('')}<div class="sky-ground"></div></div>
+    </section>`;
+    sayAr(q.q, '');
+    let over = false;
+    const end = ok => { if(over) return; over = true; screenEl.querySelectorAll('.drop').forEach(d => d.style.animationPlayState = 'paused'); i++; setTimeout(round, ok ? 900 : 1600); };
+    screenEl.querySelectorAll('.drop').forEach(d => {
+      d.onclick = () => {
+        if(over) return;
+        if(d.dataset.ok === '1'){ right++; d.classList.add('caught'); sfxGood(); addStars(1); burst(d); cheerAr(true); end(true); }
+        else { d.classList.add('miss'); sfxBad(); life--; screenEl.querySelector('.hearts').textContent = hearts(life); d.disabled = true; if(life <= 0){ screenEl.querySelector('.drop[data-ok="1"]').classList.add('show'); end(false); } }
+      };
+      d.addEventListener('animationend', () => {
+        if(over || d.dataset.ok !== '1') return;
+        life--; sfxBad(); d.classList.add('show'); screenEl.querySelector('.hearts').textContent = hearts(life); toast('الإجابة الصح وقعت! 💦'); end(false);
+      });
+    });
+  }
+  round();
+}
+
+/* race: every right answer drives Mishmish forward; the turtle moves on its own */
+function gRace(lid){
+  setTop(true); stopAr();
+  const L = SCI_LESSON[lid], C = L.ch, P = sciPool(L);
+  const qs = shuffle([...P.mc, ...P.tf]);
+  const GOAL = 7, TURTLE_SEC = 150;
+  let me = 0, t0 = Date.now(), i = 0, timer = null, over = false;
+  screenEl.innerHTML = `<section class="stage sci" style="--uc:${C.c};--ucl:${C.cl}">
+    <div class="g-head"><h2>🏎️ سباق مشمش والسلحفاة</h2><p class="ask">جاوبي ${GOAL} إجابات صح قبل ما السلحفاة توصل لخط النهاية!</p></div>
+    <div class="track sticker">
+      <div class="lane"><span class="racer me" id="rMe">🏎️<small>مشمش</small></span></div>
+      <div class="lane"><span class="racer tt" id="rTt">🐢<small>توتو</small></span></div>
+      <span class="finish" aria-hidden="true">🏁</span>
+    </div>
+    <div id="rq" class="rq"></div>
+  </section>`;
+  const pos = (el, f) => { el.style.insetInlineStart = `calc(${(f * 86).toFixed(1)}% )`; };
+  const stop = () => { over = true; clearInterval(timer); };
+  timer = setInterval(() => {
+    if(!document.contains($('#rTt'))){ clearInterval(timer); return; }
+    const f = Math.min(1, (Date.now() - t0) / 1000 / TURTLE_SEC); pos($('#rTt'), f);
+    if(f >= 1 && !over){ stop(); setTimeout(() => gameWon(lid, Math.round(me / GOAL * 100), `السلحفاة وصلت الأول! إنتي جاوبتي ${me} صح. جربي تاني وهتسبقيها 💪`, () => gRace(lid)), 600); }
+  }, 250);
+  function ask(){
+    if(over) return;
+    const q = qs[i++ % qs.length], tf = q.tf !== undefined;
+    const idx = tf ? [0, 1] : shuffle(q.o.map((_, k) => k)), ans = tf ? (q.tf ? 0 : 1) : q.a;
+    $('#rq').innerHTML = `<div class="qcard sticker sci-q"><p class="sci-qt">${q.q}</p></div>
+      <div class="opts words ${idx.length === 2 ? 'n2' : ''} sci-opts">${idx.map(k => `<button class="opt wopt" data-k="${k}">${tf ? (k === 0 ? '✔ صح' : '✘ خطأ') : q.o[k]}</button>`).join('')}</div>`;
+    sayAr(q.q, '');
+    $('#rq').querySelectorAll('.opt').forEach(b => b.onclick = () => {
+      if(over) return;
+      const ok = +b.dataset.k === ans;
+      $('#rq').querySelectorAll('.opt').forEach(x => { x.disabled = true; if(+x.dataset.k === ans) x.classList.add('right'); });
+      if(ok){ me++; sfxGood(); addStars(1); pos($('#rMe'), me / GOAL); $('#rMe').classList.add('zoom'); setTimeout(() => $('#rMe') && $('#rMe').classList.remove('zoom'), 500); }
+      else { b.classList.add('wrong'); sfxBad(); $('#rMe').classList.add('spin'); setTimeout(() => $('#rMe') && $('#rMe').classList.remove('spin'), 700); }
+      cheerAr(ok);
+      if(me >= GOAL){ stop(); burst($('#rMe')); setTimeout(() => gameWon(lid, 100, `كسبتي السباق! 🏆 مشمش وصلت قبل السلحفاة.`, () => gRace(lid)), 900); return; }
+      setTimeout(ask, ok ? 1100 : 2000);
+    });
+  }
+  ask();
+}
+
+/* swipe: true/false statements, keep the streak going */
+function gSwipe(lid){
+  setTop(true); stopAr();
+  const L = SCI_LESSON[lid], C = L.ch, P = sciPool(L);
+  const deck = shuffle(P.tf).slice(0, 12);
+  let i = 0, streak = 0, best = 0, right = 0;
+  function card(){
+    stopAr();
+    if(i >= deck.length){ const pct = Math.round(right / deck.length * 100); return gameWon(lid, pct, `جاوبتي ${right} من ${deck.length} صح · أطول سلسلة 🔥 ${best}`, () => gSwipe(lid)); }
+    const q = deck[i];
+    screenEl.innerHTML = `<section class="stage sci" style="--uc:${C.c};--ucl:${C.cl}">
+      <div class="g-head"><h2>⚡ صح ولا غلط؟</h2><p class="ask">كارت ${i + 1} من ${deck.length} · السلسلة 🔥 ${streak}</p></div>
+      <div class="swipe-wrap"><div class="swipe-card sticker" id="sw"><p>${q.q}</p><small class="muted">اسحبي الكارت يمين لو صح ✔ وشمال لو غلط ✘</small></div></div>
+      <div class="row" style="justify-content:center;gap:24px"><button class="btn sw-no" id="swNo">✘ غلط</button><button class="btn sw-yes" id="swYes">✔ صح</button></div>
+      <p class="sci-fb" aria-live="polite"></p>
+    </section>`;
+    sayAr(q.q, '');
+    const el = $('#sw'); let x0 = null, dx = 0, done = false;
+    const answer = says => {
+      if(done) return; done = true;
+      const ok = says === q.tf;
+      el.style.transition = 'transform .35s, opacity .35s'; el.style.transform = `translateX(${says ? 140 : -140}%) rotate(${says ? 18 : -18}deg)`; el.style.opacity = '0';
+      if(ok){ right++; streak++; best = Math.max(best, streak); sfxGood(); addStars(1); if(streak > 0 && streak % 5 === 0){ addStars(2); toast(`سلسلة ${streak} 🔥 نجمتين زيادة!`); } }
+      else { streak = 0; sfxBad(); }
+      cheerAr(ok);
+      screenEl.querySelector('.sci-fb').innerHTML = ok ? '✔ صح!' : `✘ لأ، الجملة دي <b>${q.tf ? 'صح' : 'غلط'}</b>`;
+      i++; setTimeout(card, ok ? 1000 : 2200);
+    };
+    $('#swYes').onclick = () => answer(true); $('#swNo').onclick = () => answer(false);
+    el.addEventListener('pointerdown', e => { x0 = e.clientX; el.setPointerCapture(e.pointerId); el.style.transition = 'none'; });
+    el.addEventListener('pointermove', e => { if(x0 === null || done) return; dx = e.clientX - x0; el.style.transform = `translateX(${dx}px) rotate(${dx / 14}deg)`; el.classList.toggle('lean-yes', dx > 40); el.classList.toggle('lean-no', dx < -40); });
+    el.addEventListener('pointerup', () => { if(x0 === null) return; x0 = null; if(Math.abs(dx) > 90) answer(dx > 0); else { el.style.transition = 'transform .2s'; el.style.transform = ''; el.classList.remove('lean-yes', 'lean-no'); } dx = 0; });
+  }
+  card();
+}
+
+/* match: tap a term, then its meaning */
+function gMatch(lid){
+  setTop(true); stopAr();
+  const L = SCI_LESSON[lid], C = L.ch;
+  let terms = [...L.terms];
+  if(terms.length < 3) terms = terms.concat(shuffle(C.lessons.filter(x => x !== L).flatMap(x => x.terms)).slice(0, 3 - terms.length));
+  terms = shuffle(terms).slice(0, 4);
+  const t0 = Date.now(); let pick = null, left = terms.length, miss = 0;
+  screenEl.innerHTML = `<section class="stage sci" style="--uc:${C.c};--ucl:${C.cl}">
+    <div class="g-head"><h2>🔗 وصّلي المصطلح</h2><p class="ask">دوسي على المصطلح، وبعدين على معناه</p></div>
+    <div class="mt-terms">${shuffle(terms.map((t, k) => k)).map(k => `<button class="mt-term" data-k="${k}">${terms[k][0]}</button>`).join('')}</div>
+    <div class="mt-defs">${shuffle(terms.map((t, k) => k)).map(k => `<button class="mt-def sticker" data-k="${k}"><span class="mt-tag"></span>${terms[k][1]}</button>`).join('')}</div>
+  </section>`;
+  const ts = screenEl.querySelectorAll('.mt-term');
+  ts.forEach(b => b.onclick = () => { if(b.disabled) return; ts.forEach(x => x.classList.remove('picked')); pick = b; b.classList.add('picked'); sfxTick(); sayAr(terms[+b.dataset.k][0], ''); });
+  screenEl.querySelectorAll('.mt-def').forEach(d => d.onclick = () => {
+    if(d.classList.contains('ok')) return;
+    if(!pick){ toast('اختاري مصطلح الأول 👆'); return; }
+    if(pick.dataset.k === d.dataset.k){
+      d.classList.add('ok'); d.querySelector('.mt-tag').textContent = '✔ ' + terms[+d.dataset.k][0];
+      pick.classList.remove('picked'); pick.classList.add('ok'); pick.disabled = true; pick = null; sfxGood(); addStars(1);
+      if(--left === 0){ const sec = Math.round((Date.now() - t0) / 1000); cheerAr(true); setTimeout(() => gameWon(lid, miss <= 2 ? 100 : 70, `وصّلتي كل المصطلحات في ${sec} ثانية${miss ? ` وغلطتي ${miss === 1 ? 'مرة واحدة' : miss === 2 ? 'مرتين' : miss + ' مرات'}` : ' من غير ولا غلطة!'}`, () => gMatch(lid)), 700); }
+    } else { miss++; sfxBad(); d.classList.add('wrong'); setTimeout(() => d.classList.remove('wrong'), 450); }
+  });
+}
+
+/* ---------- Mishmish's lab: one hands-on experiment per lesson ---------- */
+/* LAB[lesson] = {t: title, goal: what to do, found: what we discovered, run(host, api)}; api.done() marks the discovery */
+const LAB = {};
+function sciLab(lid){
+  setTop(true); stopAr();
+  const L = SCI_LESSON[lid], C = L.ch, X = LAB[lid];
+  arChunk(C.id);
+  screenEl.innerHTML = `<section class="hub sci lab-page" style="--uc:${C.c};--ucl:${C.cl}">
+    ${sciCrumbs([['خريطة الرحلة', 'world'], [C.title, C.id], ['المعمل']])}
+    <div class="lab-head sticker"><span class="lh-ico" aria-hidden="true">🧪</span><div><h2>${X.t}</h2><p>${X.goal}</p></div>${sayArBtn(X.goal, lid + '_lab0', 'اسمعي')}</div>
+    <div class="lab sticker" id="labHost"></div>
+    <div class="lab-found sticker" id="labFound" hidden><b>💡 اكتشفتي!</b><p>${X.found}</p>${sayArBtn(X.found, lid + '_lab1', 'اسمعي')}</div>
+    <div class="row" style="justify-content:center"><button class="btn" id="labBack">ارجعي للجزيرة</button><button class="btn primary" id="labNext" ${sciGet('lab_' + lid) ? '' : 'hidden'}>🎮 يلا نلعب</button></div>
+  </section>`;
+  bindSciCrumbs();
+  $('#labBack').onclick = () => sciLesson(lid);
+  $('#labNext').onclick = () => sciPlay(lid);
+  setTimeout(() => { const b = screenEl.querySelector('.lab-head .say-ar'); if(b && document.contains(b)) sayAr(X.goal, lid + '_lab0', b); }, 400);
+  let found = false;
+  const host = $('#labHost');
+  X.run(host, {
+    done(){
+      if(found || !document.contains(host)) return; found = true;
+      const f = $('#labFound'); f.hidden = false; $('#labNext').hidden = false;
+      const first = sciSet('lab_' + lid, 1); if(first) addStars(3);
+      sfxGood(); burst(f); setTimeout(() => { f.scrollIntoView({block:'nearest', behavior:'smooth'}); sayAr(X.found, lid + '_lab1', f.querySelector('.say-ar')); }, 700);
+      if(first) toast('تجربة ناجحة! ٣ نجوم ⭐');
+    },
+    say(t){ const m = host.querySelector('.lab-msg'); if(m) m.innerHTML = t; },
+    good: sfxGood, bad: sfxBad
+  });
+}
+/* helpers */
+const labMsg = (t = '') => `<p class="lab-msg" aria-live="polite">${t}</p>`;
+const svgPt = (svg, e) => { const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); };
+const emo = (x, y, e, s = 26, extra = '') => `<text x="${x}" y="${y}" font-size="${s}" text-anchor="middle" dominant-baseline="central" ${extra}>${e}</text>`;
+const SKY = (h = 150, c = '#CFEFFF') => `<rect width="400" height="${h}" fill="${c}"/>`;
+const choiceRow = (name, opts, cur) => `<div class="lab-ctl" role="group">${opts.map(([v, t]) => `<button class="chip" data-${name}="${v}" aria-pressed="${v === cur}">${t}</button>`).join('')}</div>`;
+function pickTap(host, sel, attr, onPick){ host.querySelectorAll(sel).forEach(b => b.onclick = () => { host.querySelectorAll(sel).forEach(x => x.setAttribute('aria-pressed', String(x === b))); onPick(b.getAttribute(attr)); }); }
+/* generic "tap the card, then the place" sorter used by several experiments */
+function labSorter(host, api, rounds, finalMsg){
+  let r = 0;
+  function show(){
+    const R = rounds[r]; let pick = null, left = R.items.length;
+    host.innerHTML = `<p class="lab-q">${R.q}</p>
+      <div class="sci-pool">${shuffle(R.items.map((_, k) => k)).map(k => `<button class="sci-item" data-it="${k}"><span class="emo">${R.items[k][0]}</span>${R.items[k][1]}</button>`).join('')}</div>
+      <div class="lab-bins n${R.groups.length}">${R.groups.map((g, gi) => `<button class="lab-bin" data-g="${gi}" style="--bc:${g[2] || 'var(--ucl)'}"><span class="bin-ico">${g[0]}</span><b>${g[1]}</b><span class="sci-in"></span></button>`).join('')}</div>
+      ${labMsg(rounds.length > 1 ? `جولة ${r + 1} من ${rounds.length}` : '')}`;
+    const items = host.querySelectorAll('.sci-item');
+    items.forEach(b => b.onclick = () => { items.forEach(x => x.classList.remove('picked')); pick = b; b.classList.add('picked'); sfxTick(); });
+    host.querySelectorAll('.lab-bin').forEach(g => g.onclick = () => {
+      if(!pick){ toast('اختاري كارت الأول 👆'); return; }
+      const it = R.items[+pick.dataset.it];
+      if(it[2] === +g.dataset.g){
+        api.good(); g.querySelector('.sci-in').insertAdjacentHTML('beforeend', `<span class="bin-it">${it[0]}</span>`);
+        pick.remove(); pick = null;
+        if(--left === 0){ if(++r < rounds.length){ api.say('👏 برافو! الجولة اللي بعدها...'); setTimeout(show, 1100); } else { api.say(finalMsg || '👏 برافو!'); api.done(); } }
+      } else { api.bad(); api.say(it[3] || 'لأ، فكّري تاني 🤔'); pick.classList.add('wrong'); const p = pick; setTimeout(() => p.classList.remove('wrong'), 450); }
+    });
+  }
+  show();
+}
+/* tap the steps in the right order; each step can draw something */
+function labSteps(host, api, steps, scene){
+  let at = 0;
+  host.innerHTML = `<svg class="lab-svg" viewBox="0 0 400 230">${scene(0)}</svg>
+    <div class="sci-pool">${shuffle(steps.map((_, k) => k)).map(k => `<button class="sci-item" data-st="${k}"><span class="emo">${steps[k][0]}</span>${steps[k][1]}</button>`).join('')}</div>${labMsg('رتّبي الخطوات: دوسي على الخطوة الأولى')}`;
+  host.querySelectorAll('[data-st]').forEach(b => b.onclick = () => {
+    if(+b.dataset.st === at){
+      at++; api.good(); b.classList.add('ok'); b.disabled = true;
+      host.querySelector('svg').innerHTML = scene(at);
+      api.say(at < steps.length ? `✔ ${steps[at - 1][1]}... وبعدين؟` : '🎉 كده عملناها صح!');
+      if(at === steps.length) api.done();
+    } else { api.bad(); b.classList.add('wrong'); setTimeout(() => b.classList.remove('wrong'), 450); api.say(`لأ، الخطوة دي مش دلوقتي. فكّري: إيه اللي بنعمله ${at === 0 ? 'الأول' : 'بعد ' + steps[at - 1][1]}؟`); }
+  });
+}
+
+/* ===== island 1 ===== */
+LAB.c1l1 = {t:'صيد الكائنات الحية', goal:'دوّري في فناء المدرسة! ارفعي الحجارة ودوسي على الحشايش والشجر، ولاقي الكائنات الحية المستخبية.',
+  found:'الكائنات الحية بتعيش في أماكن مناسبة ليها: تحت الحجارة الرطبة والضليلة، وجنب الحشايش والزهور والشجر. المكان ده اسمه الموطن.',
+  run(host, api){
+    const spots = [
+      {x:78, y:200, kind:'rock', e:'🐜', n:'نملة', w:'تحت الحجر البارد الرطب'},
+      {x:300, y:206, kind:'rock', e:'🪱', n:'دودة', w:'تحت الحجر في التربة الرطبة'},
+      {x:190, y:178, kind:'grass', e:'🦗', n:'جرادة', w:'وسط الحشايش'},
+      {x:352, y:150, kind:'flower', e:'🐝', n:'نحلة', w:'على الزهور'},
+      {x:48, y:62, kind:'tree', e:'🐦', n:'عصفورة', w:'فوق الشجرة'},
+      {x:240, y:212, kind:'thing', e:'🥤', n:'كوباية', w:''}
+    ];
+    let got = 0; const need = spots.filter(s => s.kind !== 'thing').length;
+    const art = s => s.kind === 'rock' ? `<g class="lift"><ellipse cx="${s.x}" cy="${s.y}" rx="34" ry="18" fill="#9A9AA6" stroke="#2B2233" stroke-width="3"/><ellipse cx="${s.x - 8}" cy="${s.y - 6}" rx="10" ry="4" fill="#B9B9C4"/></g>`
+      : s.kind === 'grass' ? `<g class="lift">${[-18, -6, 6, 18].map(d => `<path d="M${s.x + d} ${s.y + 14} q${d / 3} -30 ${d / 2 + 4} -42" stroke="#2E8B3E" stroke-width="7" fill="none" stroke-linecap="round"/>`).join('')}</g>`
+      : s.kind === 'flower' ? `<g class="lift">${[0, 72, 144, 216, 288].map(a => `<circle cx="${s.x + 13 * Math.cos(a * Math.PI / 180)}" cy="${s.y + 13 * Math.sin(a * Math.PI / 180)}" r="9" fill="#F2558F" stroke="#2B2233" stroke-width="2"/>`).join('')}<circle cx="${s.x}" cy="${s.y}" r="8" fill="#F5B700" stroke="#2B2233" stroke-width="2"/></g>`
+      : s.kind === 'tree' ? `<g class="lift"><circle cx="${s.x}" cy="${s.y}" r="38" fill="#3FA34D" stroke="#2B2233" stroke-width="3"/><circle cx="${s.x + 30}" cy="${s.y + 14}" r="26" fill="#3FA34D" stroke="#2B2233" stroke-width="3"/></g>`
+      : emo(s.x, s.y, s.e, 30);
+    host.innerHTML = `<svg class="lab-svg tap" viewBox="0 0 400 250">${SKY(140)}<circle cx="350" cy="40" r="22" fill="#F5B700"/>
+      <rect y="140" width="400" height="110" fill="#9BD67A"/><rect x="40" y="70" width="16" height="90" fill="#8B5A2B" stroke="#2B2233" stroke-width="3"/>
+      <path d="M330 168 v-10" stroke="#2E8B3E" stroke-width="5"/>
+      ${spots.map((s, k) => `<g class="spot" data-k="${k}" tabindex="0" role="button"><g class="hid" opacity="0">${s.kind === 'thing' ? '' : emo(s.x, s.y + (s.kind === 'tree' ? 6 : 0), s.e, 26)}</g>${art(s)}</g>`).join('')}
+    </svg><div class="lab-score">🔎 لقيتي <b id="gotN">٠</b> من ${need} كائنات</div>${labMsg('دوسي على أي حاجة في الصورة')}`;
+    host.querySelectorAll('.spot').forEach(g => g.onclick = () => {
+      const s = spots[+g.dataset.k];
+      if(g.classList.contains('open')) return;
+      if(s.kind === 'thing'){ api.bad(); api.say('دي كوباية بلاستيك 🥤، شيء غير حي: مابتتغذاش ولا بتتنفس ولا بتكبر.'); g.classList.add('open'); return; }
+      g.classList.add('open'); g.querySelector('.hid').setAttribute('opacity', '1');
+      got++; $('#gotN').textContent = got; api.good();
+      api.say(`لقيتي ${s.n} ${s.e} ${s.w}!`);
+      if(got === need) setTimeout(() => api.done(), 600);
+    });
+  }};
+
+LAB.c1l2 = {t:'العدسة المكبّرة', goal:'حركي العدسة على ورقة الشجر، ودوّري على ٣ حاجات صغيرة جدًا مش باينة بالعين.',
+  found:'العدسة المكبرة بتكبّر الأجسام الصغيرة، فبنشوف تفاصيل دقيقة ماكناش بنشوفها بعينينا. وممنوع نبص بيها على الشمس!',
+  run(host, api){
+    const T = [[150, 112, '🐞', 'دعسوقة صغيرة'], [252, 86, '🐜', 'نملة صغيرة'], [205, 160, '💧', 'نقطة ندى']];
+    const seen = new Set();
+    host.innerHTML = `<svg class="lab-svg lens-svg" viewBox="0 0 400 240" id="lsvg"><defs><clipPath id="lensClip"><circle id="lc" cx="200" cy="120" r="46"/></clipPath></defs>
+      <g id="lscene"><rect width="400" height="240" fill="#EAF7E1"/>
+        <path d="M60 200 C 90 60, 300 20, 350 60 C 330 160, 200 230, 60 200 Z" fill="#55B65F" stroke="#2B2233" stroke-width="3"/>
+        <path d="M70 196 C 160 150, 260 90, 340 64" stroke="#2E7D32" stroke-width="3" fill="none"/>
+        ${[[130, 160], [180, 128], [230, 100], [280, 78]].map(([x, y]) => `<path d="M${x} ${y} l-24 -26 M${x} ${y} l20 30" stroke="#2E7D32" stroke-width="2" fill="none"/>`).join('')}
+        ${T.map(([x, y, e]) => emo(x, y, e, 7)).join('')}</g>
+      <g clip-path="url(#lensClip)"><rect width="400" height="240" fill="#fff"/><use href="#lscene" id="luse"/></g>
+      <g id="lring" pointer-events="none"><circle cx="200" cy="120" r="46" fill="none" stroke="#2B2233" stroke-width="6"/><line x1="232" y1="152" x2="270" y2="196" stroke="#8B5A2B" stroke-width="12" stroke-linecap="round"/></g>
+    </svg><div class="lab-score">🔍 لقيتي <b id="gotN">٠</b> من ٣</div>${labMsg('اسحبي العدسة بصباعك على الورقة')}`;
+    const svg = $('#lsvg'), Z = 3;
+    const move = (x, y) => {
+      $('#lc').setAttribute('cx', x); $('#lc').setAttribute('cy', y);
+      $('#luse').setAttribute('transform', `translate(${x} ${y}) scale(${Z}) translate(${-x} ${-y})`);
+      $('#lring').setAttribute('transform', `translate(${x - 200} ${y - 120})`);
+      T.forEach(([tx, ty, e, n], k) => { if(!seen.has(k) && Math.hypot(tx - x, ty - y) < 16){ seen.add(k); api.good(); $('#gotN').textContent = seen.size; api.say(`شفتي ${n} ${e}! من غير العدسة ماكانتش باينة.`); if(seen.size === T.length) setTimeout(api.done, 700); } });
+    };
+    move(200, 120);
+    let drag = false;
+    svg.addEventListener('pointerdown', e => { drag = true; svg.setPointerCapture(e.pointerId); const p = svgPt(svg, e); move(p.x, p.y); });
+    svg.addEventListener('pointermove', e => { if(!drag && e.pointerType !== 'mouse') return; const p = svgPt(svg, e); move(Math.max(0, Math.min(400, p.x)), Math.max(0, Math.min(240, p.y))); });
+    svg.addEventListener('pointerup', () => { drag = false; });
+  }};
+
+LAB.c1l3 = {t:'آلة التصنيف', goal:'العلماء بيصنّفوا الكائنات الحية لمجموعات. حطي كل كائن في المجموعة بتاعته: باللون، وبعدين بالحجم، وبعدين بالموطن.',
+  found:'نقدر نصنّف الكائنات الحية حسب اللون أو الشكل أو الحجم أو الموطن. والعلم ده اسمه علم التصنيف.',
+  run(host, api){
+    labSorter(host, api, [
+      {q:'🎨 الجولة الأولى: صنّفي حسب اللون', groups:[['🔴', 'أحمر', '#FFE0DD'], ['🟢', 'أخضر', '#D8F5E6'], ['🟡', 'أصفر', '#FFF0BF']],
+        items:[['🐞', 'دعسوقة', 0], ['🌹', 'وردة', 0], ['🐸', 'ضفدع', 1], ['🌵', 'صبار', 1], ['🐤', 'كتكوت', 2], ['🌻', 'دوار الشمس', 2]]},
+      {q:'📏 الجولة التانية: صنّفي حسب الحجم', groups:[['🐘', 'كبير'], ['🐜', 'صغير']],
+        items:[['🐘', 'فيل', 0], ['🦒', 'زرافة', 0], ['🐪', 'جمل', 0], ['🐜', 'نملة', 1], ['🐝', 'نحلة', 1], ['🐞', 'دعسوقة', 1]]},
+      {q:'🏠 الجولة التالتة: صنّفي حسب الموطن', groups:[['🌊', 'تعيش في المية', '#DCEBFF'], ['🏜️', 'تعيش على اليابسة', '#FDF0D5']],
+        items:[['🐟', 'سمكة', 0], ['🐙', 'أخطبوط', 0], ['🐬', 'دولفين', 0], ['🐪', 'جمل', 1], ['🐄', 'بقرة', 1], ['🦊', 'ثعلب', 1]]}
+    ], '👏 صنّفتي كل الكائنات زي العلماء!');
+  }};
+
+LAB.c1l4 = {t:'كل كائن في بيته', goal:'ساعدي كل كائن يروح الموطن المناسب ليه: ضفاف نهر النيل ولا الصحرا؟',
+  found:'كل كائن حي بيعيش في الموطن المناسب ليه. الكائنات اللي على ضفاف النيل محتاجة مية كتير، والكائنات الصحراوية متكيّفة إنها تعيش بمية قليلة وحر شديد.',
+  run(host, api){
+    labSorter(host, api, [{q:'دوسي على الكائن، وبعدين على بيته', groups:[['🌊', 'ضفاف نهر النيل', '#D8F0FF'], ['🏜️', 'الصحراء', '#FDF0D5']],
+      items:[['🐸', 'ضفدع', 0, 'الضفدع محتاج مية علشان جلده يفضل مبلول، مايقدرش يعيش في الصحرا!'], ['🐊', 'تمساح', 0, 'التمساح بيعيش في المية وجنبها'], ['🐟', 'سمكة', 0, 'السمكة مابتعيشش من غير مية!'], ['🌾', 'نبات البردي', 0, 'البردي بينمو جنب مية النيل'],
+        ['🐪', 'جمل', 1, 'الجمل متكيّف على الصحرا وبيستحمل العطش'], ['🦎', 'سحلية', 1, 'السحلية بتحب الحر والرمل'], ['🌵', 'صبار', 1, 'الصبار بيخزّن المية جواه علشان يعيش في الصحرا'], ['🦂', 'عقرب', 1, 'العقرب بيعيش في الصحرا تحت الحجارة']]}],
+      '👏 كل كائن رجع بيته!');
+  }};
+
+LAB.c1l5 = {t:'يوم في الصحرا', goal:'الشمس حامية! ساعدي اليربوع والفنك يستخبوا في الجحر وقت الحر، وبعدين حركي الوقت لليل.',
+  found:'الكائنات الصحراوية بتستخبى في جحورها تحت الأرض في الحر وبتطلع بالليل وهو بارد تدوّر على أكلها. والفنك ودانه كبيرة بتساعده يطلّع الحرارة من جسمه.',
+  run(host, api){
+    let hour = 13, hid = new Set(), ears = false, night = false;
+    const draw = () => {
+      const dark = hour >= 19 || hour < 6;
+      const sx = 40 + (Math.min(18, Math.max(6, hour)) - 6) / 12 * 320, sy = 110 - Math.sin((Math.min(18, Math.max(6, hour)) - 6) / 12 * Math.PI) * 85;
+      const temp = dark ? 18 : hour >= 11 && hour <= 16 ? 45 : 32;
+      const out = k => !hid.has(k);
+      host.querySelector('svg').innerHTML = `<rect width="400" height="150" fill="${dark ? '#1E2A55' : '#FFE8A8'}"/>
+        ${dark ? `${emo(330, 40, '🌙', 34)}${[[60, 30], [140, 55], [220, 25], [280, 70]].map(([x, y]) => emo(x, y, '✨', 12)).join('')}` : `<circle cx="${sx}" cy="${sy}" r="24" fill="#F5A300" stroke="#2B2233" stroke-width="3"/>`}
+        <path d="M0 150 Q100 120 200 150 T400 145 V250 H0Z" fill="#E9C07A" stroke="#2B2233" stroke-width="3"/>
+        <ellipse cx="110" cy="205" rx="30" ry="12" fill="#5A3E1B"/><ellipse cx="290" cy="205" rx="30" ry="12" fill="#5A3E1B"/>
+        <g class="crit" data-k="0">${out(0) ? emo(110, 172, dark ? '🐭' : '🐭', 34) + (!dark ? emo(132, 150, '🥵', 18) : '') : emo(110, 205, '💤', 16)}</g>
+        <g class="crit" data-k="1">${out(1) ? emo(290, 168, '🦊', 40) + (!dark ? emo(318, 146, '🥵', 18) : '') : emo(290, 205, '💤', 16)}</g>
+        ${dark && out(0) ? emo(150, 185, '🦗', 18) : ''}
+        <text x="12" y="24" font-size="15" font-weight="800" fill="${dark ? '#fff' : '#2B2233'}">🌡️ ${temp}°</text>`;
+      host.querySelectorAll('.crit').forEach(g => g.onclick = () => tapCrit(+g.dataset.k));
+    };
+    const tapCrit = k => {
+      const dark = hour >= 19 || hour < 6;
+      if(!dark){ if(!hid.has(k)){ hid.add(k); api.good(); api.say(hid.size === 2 ? '✔ الاتنين في الجحر بعيد عن الحر! دلوقتي حركي الوقت لليل 🌙' : '✔ استخبى في الجحر تحت الأرض. والتاني؟'); } }
+      else if(k === 1 && !ears){ ears = true; api.good(); api.say('🦊 شوفي ودان الفنك الكبيرة! بتساعده يطلّع الحرارة من جسمه ويسمع الحشرات من بعيد.'); if(night) setTimeout(api.done, 900); }
+      draw();
+    };
+    host.innerHTML = `<svg class="lab-svg tap" viewBox="0 0 400 250"></svg>
+      <label class="lab-slider">🕐 الساعة: <b id="hr">١ الضهر</b><input type="range" min="6" max="23" step="1" value="13" id="hour"></label>${labMsg('الشمس حامية جدًا! دوسي على اليربوع 🐭 والفنك 🦊 علشان يدخلوا الجحر')}`;
+    const fmt = h => h === 12 ? '١٢ الضهر' : h < 12 ? `${h} الصبح` : h < 18 ? `${h - 12} العصر` : `${h - 12} بالليل`;
+    $('#hour').oninput = e => {
+      hour = +e.target.value; $('#hr').textContent = fmt(hour);
+      if(hour >= 19){
+        if(hid.size < 2){ api.say('استني! الأول خبّي الحيوانات من حر الضهر 🥵'); hour = 13; e.target.value = 13; $('#hr').textContent = fmt(13); }
+        else if(!night){ night = true; hid.clear(); api.good(); api.say('🌙 الجو برد بالليل، فاليربوع والفنك طلعوا يدوّروا على أكل! دوسي على الفنك 🦊'); if(ears) setTimeout(api.done, 900); }
+      }
+      draw();
+    };
+    draw();
+  }};
+
+/* ===== island 2 ===== */
+LAB.c2l1 = {t:'من بيضة ليرقة', goal:'فقّسي البيض، وبعدين أكّلي اليرقة ورق شجر وشوفيها بتكبر وبتنسلخ.',
+  found:'الحشرة بتبدأ حياتها بيضة، وبتفقس يرقة. اليرقة بتاكل كتير وبتكبر، ولما جلدها يضيق عليها بتغيّره، وده اسمه الانسلاخ.',
+  run(host, api){
+    let stage = 0, bites = 0, molts = 0, size = 3;
+    const draw = () => {
+      const seg = n => Array.from({length:n}, (_, k) => `<circle cx="${130 + k * 17}" cy="${150 + (k % 2 ? -3 : 3)}" r="${9 + n / 2}" fill="#7BC043" stroke="#2B2233" stroke-width="2.5"/>`).join('');
+      host.querySelector('svg').innerHTML = `${SKY(250, '#F1FBEA')}<path d="M20 190 C120 140, 300 140, 390 190 C300 230, 120 235, 20 190Z" fill="#55B65F" stroke="#2B2233" stroke-width="3"/>
+        ${stage === 0 ? `<g class="eggs">${[[170, 175], [190, 170], [210, 176], [230, 170]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="7" ry="9" fill="#FFF7D6" stroke="#2B2233" stroke-width="2"/>`).join('')}</g>`
+          : `${molts ? Array.from({length:molts}, (_, k) => emo(60 + k * 30, 205, '🫥', 16)).join('') : ''}<g>${seg(size)}<circle cx="${130 + size * 17}" cy="150" r="${11 + size / 2}" fill="#5DA02E" stroke="#2B2233" stroke-width="2.5"/>${emo(130 + size * 17 + 4, 147, '👀', 12)}</g>
+            ${[[320, 80], [350, 120], [280, 60]].map(([x, y], k) => `<g class="leafbtn" data-k="${k}" role="button">${emo(x, y, '🍃', 34)}</g>`).join('')}`}`;
+      host.querySelectorAll('.leafbtn').forEach(b => b.onclick = feed);
+      const eggs = host.querySelector('.eggs'); if(eggs) eggs.onclick = hatch;
+    };
+    const hatch = () => { stage = 1; api.good(); api.say('🥚➡️🐛 البيض فقس وطلعت يرقة صغيرة! أكّليها ورق 🍃'); draw(); };
+    const feed = () => {
+      bites++; api.good(); size = Math.min(9, size + 1);
+      if(bites % 3 === 0){ molts++; api.say(`✨ انسلاخ ${molts === 1 ? 'أول' : 'تاني'}! اليرقة كبرت وجلدها القديم ضاق عليها فغيّرته.`); if(molts === 2) setTimeout(api.done, 800); }
+      else api.say(`😋 اليرقة بتاكل... ${3 - bites % 3 === 1 ? 'لقمة كمان' : 'كمان لقمتين'} وهتنسلخ`);
+      draw();
+    };
+    host.innerHTML = `<svg class="lab-svg tap" viewBox="0 0 400 250"></svg>${labMsg('دوسي على البيض 🥚')}`;
+    draw();
+  }};
+
+LAB.c2l2 = {t:'سر الشرنقة', goal:'اليرقة جاهزة! خليها تعمل شرنقة، وعدّي الأيام لحد ما الفراشة تطلع، وبعدين رتّبي دورة الحياة.',
+  found:'اليرقة بتتحول لشرنقة ساكنة من بره، لكن جواها تغييرات كتير، وبعدين بتطلع منها الحشرة البالغة. دورة الحياة: بيضة ← يرقة ← شرنقة ← حشرة بالغة.',
+  run(host, api){
+    let day = -1;
+    const draw = () => {
+      host.querySelector('svg').innerHTML = `${SKY(250, '#F5F0FF')}<path d="M40 40 H360" stroke="#8B5A2B" stroke-width="10" stroke-linecap="round"/>
+        ${day < 0 ? `<g class="act">${[0, 1, 2, 3, 4, 5].map(k => `<circle cx="${200 + (k % 2 ? 4 : -4)}" cy="${60 + k * 16}" r="10" fill="#7BC043" stroke="#2B2233" stroke-width="2.5"/>`).join('')}</g>`
+          : day < 5 ? `<g class="act"><path d="M200 46 C 240 70, 236 150, 200 175 C 164 150, 160 70, 200 46Z" fill="${['#9CCB5E', '#A9C46A', '#B9B56E', '#C6A66A', '#D29A68'][day]}" stroke="#2B2233" stroke-width="3"/>${day > 2 ? '<path d="M200 80 l-8 30 l14 20" stroke="#2B2233" stroke-width="2" fill="none"/>' : ''}</g>${emo(300, 120, '📅', 30)}<text x="300" y="160" text-anchor="middle" font-size="16" font-weight="800">يوم ${day + 1}</text>`
+          : `<path d="M200 46 C 236 70, 232 150, 200 175 C 168 150, 164 70, 200 46Z" fill="#D7CBB8" stroke="#2B2233" stroke-width="2" opacity=".6"/><g class="fly">${emo(200, 120, '🦋', 90)}</g>`}`;
+      const a = host.querySelector('.act'); if(a) a.onclick = tap;
+    };
+    const tap = () => {
+      day++; api.good();
+      if(day === 0) api.say('اليرقة علّقت نفسها وعملت شرنقة. شكلها ساكنة... بس جواها شغل كتير! دوسي عليها علشان تعدّي الأيام 📅');
+      else if(day < 5) api.say(`يوم ${day + 1}: جوه الشرنقة جسم اليرقة بيتغير... ${day === 4 ? 'خلاص قربت!' : 'كمّلي'}`);
+      else { api.say('🦋 الفراشة خرجت من الشرنقة! جناحاتها كانت مكرمشة وبتفردها دلوقتي.'); setTimeout(order, 1600); }
+      draw();
+    };
+    const order = () => {
+      const st = [['🥚', 'بيضة'], ['🐛', 'يرقة'], ['🫘', 'شرنقة'], ['🦋', 'حشرة بالغة']]; let at = 0;
+      host.insertAdjacentHTML('beforeend', `<p class="lab-q">رتّبي دورة حياة الفراشة: دوسي على المراحل بالترتيب</p><ol class="sci-ordered" id="cyc"></ol><div class="sci-pool" id="cycPool">${shuffle([0, 1, 2, 3]).map(k => `<button class="sci-item" data-c="${k}"><span class="emo">${st[k][0]}</span>${st[k][1]}</button>`).join('')}</div>`);
+      host.querySelectorAll('[data-c]').forEach(b => b.onclick = () => { if(+b.dataset.c === at){ api.good(); $('#cyc').insertAdjacentHTML('beforeend', `<li>${st[at][0]} ${st[at][1]}</li>`); b.remove(); if(++at === 4) api.done(); } else { api.bad(); b.classList.add('wrong'); setTimeout(() => b.classList.remove('wrong'), 450); } });
+    };
+    host.innerHTML = `<svg class="lab-svg tap" viewBox="0 0 400 250"></svg>${labMsg('دوسي على اليرقة 🐛')}`;
+    draw();
+  }};
+
+LAB.c2l3 = {t:'ركّبي حشرة', goal:'ركّبي جسم الفراشة: اختاري الجزء وحطيه في مكانه الصح في الجسم (الرأس، الصدر، البطن).',
+  found:'جسم الحشرة البالغة ٣ أجزاء: رأس فيه قرنين استشعار وعيون، وصدر فيه ٦ أرجل والأجنحة، وبطن. والعنكبوت مش حشرة لأن جسمه جزئين وعنده ٨ أرجل.',
+  run(host, api){
+    const parts = [['📡', 'قرنا الاستشعار', 0], ['👀', 'العيون', 0], ['🦵', '٦ أرجل', 1], ['🪽', 'الأجنحة', 1]];
+    const placed = new Set(); let pick = null;
+    const draw = () => {
+      host.querySelector('svg').innerHTML = `${SKY(240, '#FFF8EC')}
+        ${placed.has(3) ? `<ellipse cx="160" cy="80" rx="70" ry="48" fill="#FF9F43" stroke="#2B2233" stroke-width="3"/><ellipse cx="240" cy="80" rx="70" ry="48" fill="#FF9F43" stroke="#2B2233" stroke-width="3"/><ellipse cx="165" cy="160" rx="46" ry="34" fill="#FFB86B" stroke="#2B2233" stroke-width="3"/><ellipse cx="235" cy="160" rx="46" ry="34" fill="#FFB86B" stroke="#2B2233" stroke-width="3"/>` : ''}
+        ${placed.has(2) ? [-1, 0, 1].map(k => `<path d="M188 ${125 + k * 14} l-34 ${10 + k * 8} M212 ${125 + k * 14} l34 ${10 + k * 8}" stroke="#2B2233" stroke-width="4" stroke-linecap="round"/>`).join('') : ''}
+        <g class="zone" data-z="0"><circle cx="200" cy="62" r="20" fill="#6B4E9B" stroke="#2B2233" stroke-width="3"/>${!placed.size ? '<text x="200" y="28" text-anchor="middle" font-size="13" font-weight="800">رأس</text>' : ''}</g>
+        <g class="zone" data-z="1"><ellipse cx="200" cy="112" rx="18" ry="30" fill="#7E62B3" stroke="#2B2233" stroke-width="3"/></g>
+        <g class="zone" data-z="2"><ellipse cx="200" cy="190" rx="14" ry="44" fill="#9579C9" stroke="#2B2233" stroke-width="3"/></g>
+        ${placed.has(0) ? '<path d="M192 46 q-14 -26 -26 -30 M208 46 q14 -26 26 -30" stroke="#2B2233" stroke-width="3" fill="none"/><circle cx="166" cy="16" r="4" fill="#2B2233"/><circle cx="234" cy="16" r="4" fill="#2B2233"/>' : ''}
+        ${placed.has(1) ? '<circle cx="191" cy="58" r="6" fill="#fff" stroke="#2B2233" stroke-width="2"/><circle cx="209" cy="58" r="6" fill="#fff" stroke="#2B2233" stroke-width="2"/>' : ''}
+        <text x="330" y="66" font-size="14" font-weight="800">← الرأس</text><text x="330" y="116" font-size="14" font-weight="800">← الصدر</text><text x="330" y="196" font-size="14" font-weight="800">← البطن</text>`;
+      host.querySelectorAll('.zone').forEach(z => z.onclick = () => drop(+z.dataset.z));
+    };
+    const drop = z => {
+      if(pick === null){ toast('اختاري جزء الأول 👇'); return; }
+      const p = parts[pick];
+      if(p[2] === z){ placed.add(pick); api.good(); api.say(`✔ ${p[1]} مكانهم في ${z ? 'الصدر' : 'الرأس'}`); host.querySelector(`[data-p="${pick}"]`).remove(); pick = null; draw(); if(placed.size === 4) spider(); }
+      else { api.bad(); api.say(`لأ، ${p[1]} مش في ${['الرأس', 'الصدر', 'البطن'][z]}. جربي تاني`); }
+    };
+    const spider = () => {
+      host.insertAdjacentHTML('beforeend', `<div class="lab-quiz"><p class="lab-q">🕷️ العنكبوت جسمه جزئين وعنده ٨ أرجل. هو حشرة؟</p><div class="row" style="justify-content:center"><button class="btn" data-sp="1">أيوه حشرة</button><button class="btn" data-sp="0">لأ مش حشرة</button></div></div>`);
+      host.querySelectorAll('[data-sp]').forEach(b => b.onclick = () => { if(b.dataset.sp === '0'){ api.good(); api.say('✔ صح! الحشرة ٣ أجزاء و٦ أرجل، والعنكبوت جزئين و٨ أرجل.'); api.done(); } else { api.bad(); api.say('لأ، عدّي الأرجل: الحشرة ٦ أرجل بس!'); } });
+    };
+    host.innerHTML = `<svg class="lab-svg tap" viewBox="0 0 400 240"></svg><div class="sci-pool">${parts.map(([e, t], k) => `<button class="sci-item" data-p="${k}"><span class="emo">${e}</span>${t}</button>`).join('')}</div>${labMsg('اختاري جزء، وبعدين دوسي على مكانه في الجسم')}`;
+    host.querySelectorAll('[data-p]').forEach(b => b.onclick = () => { host.querySelectorAll('[data-p]').forEach(x => x.classList.remove('picked')); b.classList.add('picked'); pick = +b.dataset.p; sfxTick(); });
+    draw();
+  }};
+
+/* ===== island 3 ===== */
+const POT = (inner = '') => `<path d="M140 150 h120 l-14 70 h-92 z" fill="#D9824B" stroke="#2B2233" stroke-width="3"/><rect x="132" y="140" width="136" height="18" rx="4" fill="#E79A63" stroke="#2B2233" stroke-width="3"/>${inner}`;
+LAB.c3l1 = {t:'ازرعي بذرة', goal:'ازرعي بذرة دوار الشمس: رتّبي خطوات الزراعة صح علشان تنبت.',
+  found:'علشان نزرع بذرة: نحفر حفرة صغيرة، نحط البذرة، نغطيها بالتربة، نسقيها مية، ونحطها في مكان فيه شمس. والبذور محتاجة مية وهوا ودرجة حرارة مناسبة علشان تنبت.',
+  run(host, api){
+    labSteps(host, api, [['⛏️', 'نحفر حفرة صغيرة'], ['🌰', 'نحط البذرة'], ['🟫', 'نغطيها بالتربة'], ['💧', 'نسقيها مية'], ['☀️', 'نحطها في الشمس']], n => `${SKY(230, n >= 5 ? '#FFF6C9' : '#EAF5FF')}${n >= 5 ? '<circle cx="340" cy="45" r="26" fill="#F5B700" stroke="#2B2233" stroke-width="3"/>' : ''}
+      ${POT(`<rect x="146" y="${n >= 3 ? 150 : 152}" width="108" height="10" fill="#6B4423"/>${n >= 1 && n < 3 ? '<ellipse cx="200" cy="155" rx="14" ry="6" fill="#3E2614"/>' : ''}${n === 2 ? '<ellipse cx="200" cy="154" rx="6" ry="4" fill="#C9A26B" stroke="#2B2233" stroke-width="1.5"/>' : ''}`)}
+      ${n === 4 ? [0, 1, 2].map(k => emo(180 + k * 20, 120 + k * 6, '💧', 16)).join('') : ''}
+      ${n >= 5 ? '<path d="M200 150 v-50" stroke="#3FA34D" stroke-width="6"/><ellipse cx="184" cy="100" rx="16" ry="8" fill="#55B65F" stroke="#2B2233" stroke-width="2"/><ellipse cx="216" cy="100" rx="16" ry="8" fill="#55B65F" stroke="#2B2233" stroke-width="2"/>' : ''}`);
+  }};
+
+LAB.c3l2 = {t:'يوميات النبتة', goal:'حركي الأيام وشوفي النبتة بتكبر إزاي. ولما الأوراق تطلع، دوسي على الأوراق البذرية والأوراق الحقيقية.',
+  found:'أول ما البذرة تنبت بتطلع الأوراق البذرية (الفلقتين)، وبعدين تطلع الأوراق الحقيقية اللي شكلها مختلف. والنبات بيطول يوم بعد يوم.',
+  run(host, api){
+    let d = 0; const got = new Set();
+    const draw = () => {
+      const h = d < 3 ? 0 : Math.min(120, (d - 3) * 7);
+      const top = 175 - h;
+      host.querySelector('svg').innerHTML = `${SKY(240, '#F2FBFF')}<rect y="175" width="400" height="65" fill="#8B5A2B"/>
+        <g transform="translate(60 0)"><rect x="0" y="40" width="22" height="136" fill="#fff" stroke="#2B2233" stroke-width="2"/>${[0, 1, 2, 3, 4, 5, 6].map(k => `<line x1="0" x2="10" y1="${175 - k * 20}" y2="${175 - k * 20}" stroke="#2B2233" stroke-width="2"/><text x="30" y="${179 - k * 20}" font-size="11">${k * 2}</text>`).join('')}<text x="-4" y="30" font-size="11">سم</text></g>
+        <ellipse cx="220" cy="${d < 3 ? 190 : 196}" rx="10" ry="7" fill="#C9A26B" stroke="#2B2233" stroke-width="2"/>
+        ${d >= 2 ? '<path d="M220 196 q-6 20 -2 34 M220 196 q8 16 12 30" stroke="#F5F0E0" stroke-width="3" fill="none"/>' : ''}
+        ${h ? `<path d="M220 176 V${top}" stroke="#3FA34D" stroke-width="6"/>
+          ${d < 18 ? `<g class="lf" data-l="seed"><ellipse cx="200" cy="${top + (d >= 9 ? 30 : 4)}" rx="20" ry="11" fill="#7CC36E" stroke="#2B2233" stroke-width="2.5"/><ellipse cx="240" cy="${top + (d >= 9 ? 30 : 4)}" rx="20" ry="11" fill="#7CC36E" stroke="#2B2233" stroke-width="2.5"/></g>` : ''}
+          ${d >= 9 ? `<g class="lf" data-l="true"><path d="M220 ${top} q-40 -6 -48 -30 q30 4 48 30z" fill="#2E9B45" stroke="#2B2233" stroke-width="2.5"/><path d="M220 ${top} q40 -6 48 -30 q-30 4 -48 30z" fill="#2E9B45" stroke="#2B2233" stroke-width="2.5"/>${d >= 14 ? `<path d="M220 ${top + 40} q-40 -6 -50 -28 q30 2 50 28z" fill="#2E9B45" stroke="#2B2233" stroke-width="2.5"/>` : ''}</g>` : ''}` : ''}
+        <text x="380" y="30" text-anchor="end" font-size="15" font-weight="800">📏 الطول: ${(h / 10).toFixed(0)} سم</text>`;
+      host.querySelectorAll('.lf').forEach(g => g.onclick = e => { e.stopPropagation(); tapLeaf(g.dataset.l); });
+    };
+    const tapLeaf = l => {
+      if(got.has(l)) return; got.add(l); api.good();
+      api.say(l === 'seed' ? '✔ دي الأوراق البذرية (الفلقتين): أول أوراق تطلع، شكلها مدوّر وتخينة.' : '✔ دي الأوراق الحقيقية: بتطلع بعد الأوراق البذرية وشكلها مختلف.');
+      if(got.size === 2) setTimeout(api.done, 900);
+    };
+    host.innerHTML = `<svg class="lab-svg tap" viewBox="0 0 400 240"></svg><label class="lab-slider">📅 اليوم: <b id="dd">٠</b><input type="range" min="0" max="20" value="0" id="day"></label>${labMsg('حركي الأيام لقدّام 👉')}`;
+    $('#day').oninput = e => { d = +e.target.value; $('#dd').textContent = d; draw(); if(d >= 9 && got.size < 2) api.say('النبتة طلّعت نوعين أوراق! دوسي على كل نوع'); else if(d >= 3 && d < 9) api.say('البذرة نبتت وطلعت الأوراق البذرية 🌱 كمّلي الأيام'); };
+    draw();
+  }};
+
+LAB.c3l3 = {t:'من زهرة لثمرة', goal:'حركي مراحل النمو: برعم، زهرة، ثمرة، وبعدين اقطعي الثمرة وشوفي جواها إيه.',
+  found:'النبات بيكوّن براعم بتتفتح أزهار، والزهرة بتتحول لثمرة، وجوه الثمرة بذور جديدة. البذور دي لو زرعناها بيطلع نبات جديد، وكده تكمل دورة حياة النبات.',
+  run(host, api){
+    let s = 0, cut = false;
+    const names = ['برعم', 'زهرة متفتحة', 'الأوراق التويجية بتقع', 'ثمرة صغيرة', 'ثمرة ناضجة'];
+    const draw = () => {
+      const X = 200, Y = 90;
+      host.querySelector('svg').innerHTML = `${SKY(240, '#F6FFF2')}<path d="M200 230 V${Y + 20}" stroke="#3FA34D" stroke-width="7"/><path d="M200 180 q-50 -10 -60 -40 q40 6 60 40z M200 200 q50 -10 60 -40 q-40 6 -60 40z" fill="#2E9B45" stroke="#2B2233" stroke-width="2.5"/>
+        ${s === 0 ? `<ellipse cx="${X}" cy="${Y + 6}" rx="14" ry="22" fill="#7CC36E" stroke="#2B2233" stroke-width="3"/>`
+          : s <= 2 ? `${[0, 60, 120, 180, 240, 300].map((a, k) => s === 2 && k % 2 ? '' : `<ellipse cx="${X + 26 * Math.cos(a * Math.PI / 180)}" cy="${Y + 26 * Math.sin(a * Math.PI / 180)}" rx="17" ry="11" transform="rotate(${a} ${X + 26 * Math.cos(a * Math.PI / 180)} ${Y + 26 * Math.sin(a * Math.PI / 180)})" fill="#FFD23F" stroke="#2B2233" stroke-width="2.5"/>`).join('')}<circle cx="${X}" cy="${Y}" r="16" fill="#8B5A2B" stroke="#2B2233" stroke-width="3"/>${s === 2 ? emo(X + 60, Y + 90, '🍂', 20) : ''}`
+          : cut ? `<circle cx="${X}" cy="${Y}" r="38" fill="#FF6B5B" stroke="#2B2233" stroke-width="3"/><circle cx="${X}" cy="${Y}" r="28" fill="#FFB3A7"/>${[0, 45, 90, 135, 180, 225, 270, 315].map(a => `<ellipse cx="${X + 16 * Math.cos(a * Math.PI / 180)}" cy="${Y + 16 * Math.sin(a * Math.PI / 180)}" rx="4" ry="6" fill="#FFF3C4" stroke="#2B2233" stroke-width="1.5"/>`).join('')}`
+          : `<g class="fruit" role="button"><circle cx="${X}" cy="${Y}" r="${s === 3 ? 18 : 38}" fill="${s === 3 ? '#9CCB5E' : '#F0443A'}" stroke="#2B2233" stroke-width="3"/><path d="M${X - 8} ${Y - (s === 3 ? 18 : 38)} l8 8 l8 -8" stroke="#2E9B45" stroke-width="4" fill="none"/></g>${s === 4 ? emo(X + 70, Y, '🔪', 26) : ''}`}
+        <text x="20" y="30" font-size="16" font-weight="800">المرحلة: ${cut ? 'بذور جديدة جوه الثمرة!' : names[s]}</text>`;
+      const f = host.querySelector('.fruit'); if(f) f.onclick = () => { if(s < 4){ api.say('الثمرة لسه صغيرة وخضرا، استني لما تنضج'); return; } cut = true; api.good(); api.say('🔪 قطعنا الثمرة ولقينا جواها بذور جديدة! كل بذرة ممكن تطلّع نبات جديد 🌱'); draw(); setTimeout(api.done, 900); };
+    };
+    host.innerHTML = `<svg class="lab-svg tap" viewBox="0 0 400 240"></svg><label class="lab-slider">🌸 المرحلة<input type="range" min="0" max="4" value="0" id="stg"></label>${labMsg('حركي المراحل 👉')}`;
+    $('#stg').oninput = e => { s = +e.target.value; cut = false; draw(); api.say(s === 4 ? 'الثمرة نضجت! دوسي عليها علشان تقطعيها 🔪' : `دلوقتي: ${names[s]}`); };
+    draw();
+  }};
+
+LAB.c3l4 = {t:'أجزاء النبات', goal:'حطي اسم كل جزء على النبات، وبعدين اسقي النبات وشوفي المية بتمشي فين.',
+  found:'النبات ليه جذور بتمتص المية والأملاح من التربة وبتثبته، وساق بتنقل المية للأوراق وبتشيل النبات، وأوراق بتصنع غذاء النبات.',
+  run(host, api){
+    const P = [['root', 'الجذور', 200, 205], ['stem', 'الساق', 200, 130], ['leaf', 'الأوراق', 150, 95], ['flower', 'الزهرة', 200, 40]];
+    const placed = new Set(); let pick = null, watered = false;
+    const draw = (drop = -1) => {
+      host.querySelector('svg').innerHTML = `${SKY(170, '#F2FBFF')}<rect y="170" width="400" height="80" fill="#8B5A2B"/>
+        <g class="pz" data-z="root"><path d="M200 172 q-20 30 -40 50 M200 172 q0 40 4 70 M200 172 q24 26 44 46 M180 196 l-16 10 M220 200 l16 8" stroke="#F1E3C6" stroke-width="5" fill="none" stroke-linecap="round"/><rect x="150" y="172" width="100" height="70" fill="transparent"/></g>
+        <g class="pz" data-z="stem"><rect x="193" y="58" width="14" height="114" fill="#3FA34D" stroke="#2B2233" stroke-width="2.5"/></g>
+        <g class="pz" data-z="leaf"><path d="M200 120 q-60 -6 -70 -40 q46 4 70 40z M200 140 q60 -6 70 -40 q-46 4 -70 40z" fill="#2E9B45" stroke="#2B2233" stroke-width="2.5"/></g>
+        <g class="pz" data-z="flower">${[0, 72, 144, 216, 288].map(a => `<circle cx="${200 + 16 * Math.cos(a * Math.PI / 180)}" cy="${42 + 16 * Math.sin(a * Math.PI / 180)}" r="11" fill="#F2558F" stroke="#2B2233" stroke-width="2"/>`).join('')}<circle cx="200" cy="42" r="9" fill="#F5B700" stroke="#2B2233" stroke-width="2"/></g>
+        ${P.filter(p => placed.has(p[0])).map(p => `<g><line x1="${p[2]}" y1="${p[3]}" x2="${p[2] > 199 ? 300 : 70}" y2="${p[3]}" stroke="#2B2233" stroke-width="2" stroke-dasharray="4 3"/><rect x="${p[2] > 199 ? 300 : 10}" y="${p[3] - 14}" width="90" height="28" rx="14" fill="#fff" stroke="#2B2233" stroke-width="2.5"/><text x="${p[2] > 199 ? 345 : 55}" y="${p[3] + 5}" text-anchor="middle" font-size="14" font-weight="800">${p[1]}</text></g>`).join('')}
+        ${drop >= 0 ? `<circle cx="${drop < 1 ? 200 : 200}" cy="${230 - drop * 190}" r="7" fill="#2F8BF0" stroke="#2B2233" stroke-width="2"/>` : ''}`;
+      host.querySelectorAll('.pz').forEach(g => g.onclick = () => put(g.dataset.z));
+    };
+    const put = z => {
+      if(!pick){ toast('اختاري اسم الجزء الأول 👇'); return; }
+      if(pick === z){ placed.add(z); api.good(); host.querySelector(`[data-pn="${z}"]`).remove(); pick = null; draw(); if(placed.size === 4){ api.say('✔ كل الأجزاء ليها اسم! دلوقتي اسقي النبات 💧'); host.insertAdjacentHTML('beforeend', '<div class="row" style="justify-content:center"><button class="btn primary" id="water">💧 اسقي النبات</button></div>'); $('#water').onclick = water; } }
+      else { api.bad(); api.say('لأ، ده مش مكانه. بصي كويس على النبات 🌱'); }
+    };
+    const water = () => {
+      if(watered) return; watered = true; let t = 0;
+      api.say('💧 الجذور امتصت المية من التربة، والساق بتطلّعها لفوق...');
+      const iv = setInterval(() => { t += .04; if(!document.contains(host)){ clearInterval(iv); return; } draw(Math.min(1, t)); if(t >= 1){ clearInterval(iv); api.say('🍃 المية وصلت للأوراق! والأوراق بتصنع غذاء النبات.'); api.done(); } }, 60);
+    };
+    host.innerHTML = `<svg class="lab-svg tap" viewBox="0 0 400 250"></svg><div class="sci-pool">${shuffle(P).map(p => `<button class="sci-item" data-pn="${p[0]}">${p[1]}</button>`).join('')}</div>${labMsg('اختاري الاسم، وبعدين دوسي على الجزء بتاعه')}`;
+    host.querySelectorAll('[data-pn]').forEach(b => b.onclick = () => { host.querySelectorAll('[data-pn]').forEach(x => x.classList.remove('picked')); b.classList.add('picked'); pick = b.dataset.pn; sfxTick(); });
+    draw();
+  }};
+
+/* ===== island 4: light ===== */
+LAB.c4l1 = {t:'لعبة المرايات', goal:'وجّهي ضوء الكشاف لحد ما يوصل لمشمش! دوسي على المرايات علشان تلفّيها.',
+  found:'الضوء بيمشي في خطوط مستقيمة، ولما يقابل مراية بينعكس ويغيّر اتجاهه. وده اللي بيخلينا نشوف صورتنا في المراية.',
+  run(host, api){
+    const LV = [
+      {start:[0, 1], dir:'r', target:[4, 3], mirrors:{'2,1':'\\', '2,3':'\\'}},
+      {start:[0, 0], dir:'r', target:[1, 3], mirrors:{'3,0':'\\', '3,2':'/', '1,2':'/'}}
+    ];
+    let lv = 0, M = {};
+    const S = 70, OX = 25, OY = 10;
+    const flip = k => { M[k] = M[k] === '/' ? '\\' : '/'; };
+    const load = () => { M = {...LV[lv].mirrors}; const ks = Object.keys(M); ks.forEach(k => { if(Math.random() < .6) flip(k); }); if(trace().hit) flip(ks[0]); draw(); };
+    const trace = () => {
+      const L = LV[lv]; let [x, y] = L.start, d = L.dir; const pts = [[x, y]], seen = new Set();
+      for(let n = 0; n < 30; n++){
+        const st = {r:[1, 0], l:[-1, 0], u:[0, -1], d:[0, 1]}[d]; x += st[0]; y += st[1];
+        if(x < 0 || y < 0 || x > 5 || y > 3){ pts.push([x, y]); return {pts, hit:false}; }
+        pts.push([x, y]);
+        if(x === L.target[0] && y === L.target[1]) return {pts, hit:true};
+        const m = M[x + ',' + y];
+        if(m){ const key = x + ',' + y + d; if(seen.has(key)) break; seen.add(key); d = m === '/' ? {r:'u', u:'r', l:'d', d:'l'}[d] : {r:'d', d:'r', l:'u', u:'l'}[d]; }
+      }
+      return {pts, hit:false};
+    };
+    const c = ([x, y]) => [OX + x * S + S / 2, OY + y * S + S / 2];
+    const draw = () => {
+      const L = LV[lv], T = trace();
+      host.querySelector('svg').innerHTML = `<rect width="450" height="300" fill="#26304F"/>
+        ${Array.from({length:6 * 4}, (_, k) => `<rect x="${OX + (k % 6) * S}" y="${OY + Math.floor(k / 6) * S}" width="${S}" height="${S}" fill="none" stroke="#3B4770" stroke-width="1"/>`).join('')}
+        <polyline points="${T.pts.map(p => c(p).join(',')).join(' ')}" fill="none" stroke="#FFE35A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity=".95"/>
+        ${emo(...c(L.start), '🔦', 36)}
+        ${emo(...c(L.target), T.hit ? '😻' : '🐱', 42)}
+        ${Object.entries(M).map(([k, m]) => { const [x, y] = k.split(',').map(Number), [cx, cy] = c([x, y]); return `<g class="mir" data-m="${k}" role="button"><rect x="${cx - 30}" y="${cy - 30}" width="60" height="60" fill="transparent"/><line x1="${cx - 22}" y1="${m === '/' ? cy + 22 : cy - 22}" x2="${cx + 22}" y2="${m === '/' ? cy - 22 : cy + 22}" stroke="#BFE8FF" stroke-width="9" stroke-linecap="round"/><line x1="${cx - 22}" y1="${m === '/' ? cy + 22 : cy - 22}" x2="${cx + 22}" y2="${m === '/' ? cy - 22 : cy + 22}" stroke="#2B2233" stroke-width="2"/></g>`; }).join('')}`;
+      host.querySelectorAll('.mir').forEach(g => g.onclick = () => { const k = g.dataset.m; M[k] = M[k] === '/' ? '\\' : '/'; sfxTick(); draw(); });
+      if(T.hit){ api.good(); if(lv === 0){ api.say('😻 الضوء وصل! المراية عكست الضوء وغيرت اتجاهه. يلا المستوى التاني...'); lv = 1; setTimeout(() => { if(document.contains(host)) load(); }, 1500); } else { api.say('🌟 برافو! عكستي الضوء بكذا مراية لحد ما وصل.'); api.done(); host.querySelectorAll('.mir').forEach(g => g.onclick = null); } }
+    };
+    host.innerHTML = `<svg class="lab-svg tap" viewBox="0 0 450 300"></svg>${labMsg('دوسي على المرايات علشان تلفّيها')}`;
+    load();
+  }};
+
+LAB.c4l2 = {t:'تجميع ضوء الشمس', goal:'حركي العدسة المكبرة لفوق ولتحت لحد ما الضوء يتجمع في نقطة صغيرة على الورقة، وجربي ورقة سودا وورقة بيضا.',
+  found:'العدسة المكبرة بتجمّع ضوء الشمس في نقطة صغيرة فتسخن جدًا ممكن تحرق الورقة. والورقة السودا بتتحرق أسرع من البيضا لأنها بتمتص الضوء أكتر. وممنوع نعمل كده من غير الكبار!',
+  run(host, api){
+    let h = 40, black = true, heat = {b:0, w:0}, burnt = {b:false, w:false};
+    const F = 110;
+    const draw = () => {
+      const lensY = 200 - h - 40, r = Math.max(3, Math.abs(h + 40 - F) * .55), k = black ? 'b' : 'w';
+      host.querySelector('svg').innerHTML = `${SKY(250, '#FFF8DC')}<circle cx="200" cy="0" r="34" fill="#F5B700" stroke="#2B2233" stroke-width="3"/>
+        <polygon points="140,0 260,0 ${200 + 60},${lensY} ${200 - 60},${lensY}" fill="#FFE98A" opacity=".55"/>
+        <polygon points="${140},${lensY} ${260},${lensY} ${200 + r},200 ${200 - r},200" fill="#FFE35A" opacity=".55"/>
+        <ellipse cx="200" cy="${lensY}" rx="64" ry="11" fill="#BFE8FF" stroke="#2B2233" stroke-width="3"/><line x1="264" y1="${lensY}" x2="320" y2="${lensY - 30}" stroke="#8B5A2B" stroke-width="10" stroke-linecap="round"/>
+        <rect x="90" y="200" width="220" height="20" fill="${black ? '#2B2233' : '#FFFFFF'}" stroke="#2B2233" stroke-width="3"/>
+        <circle cx="200" cy="200" r="${r}" fill="#FFF7B0" opacity=".9"/>
+        ${burnt[k] ? `${emo(200, 205, '🔥', 34)}${emo(230, 170, '💨', 24)}` : heat[k] > 50 ? emo(225, 180, '💨', 18) : ''}
+        <rect x="20" y="230" width="360" height="12" rx="6" fill="#fff" stroke="#2B2233" stroke-width="2"/><rect x="20" y="230" width="${3.6 * heat[k]}" height="12" rx="6" fill="#FF6B3D"/>
+        <text x="20" y="224" font-size="12" font-weight="800">🌡️ سخونية الورقة ${black ? 'السودا' : 'البيضا'}</text>`;
+    };
+    host.innerHTML = `<svg class="lab-svg" viewBox="0 0 400 250"></svg>
+      <label class="lab-slider">🔍 ارتفاع العدسة<input type="range" min="10" max="150" value="40" id="lh"></label>
+      ${choiceRow('pc', [['b', '⬛ ورقة سودا'], ['w', '⬜ ورقة بيضا']], 'b')}${labMsg('ارفعي العدسة ونزليها لحد ما بقعة الضوء تبقى أصغر ما يمكن')}`;
+    $('#lh').oninput = e => { h = +e.target.value; draw(); };
+    pickTap(host, '[data-pc]', 'data-pc', v => { black = v === 'b'; draw(); });
+    const iv = setInterval(() => {
+      if(!document.contains(host)){ clearInterval(iv); return; }
+      const r = Math.abs(h + 40 - F) * .55, k = black ? 'b' : 'w';
+      if(burnt[k]) return;
+      const gain = r < 6 ? (black ? 6 : 2.2) : r < 15 ? (black ? 1.5 : .5) : -1;
+      heat[k] = Math.max(0, Math.min(100, heat[k] + gain));
+      if(heat[k] >= 100){ burnt[k] = true; api.good(); api.say(black ? '🔥 الورقة السودا ولّعت بسرعة! جربي البيضا' : '🔥 البيضا ولّعت بس خدت وقت أطول بكتير!'); if(burnt.b) setTimeout(api.done, 800); }
+      else if(r < 6 && heat[k] > 5) api.say('✨ الضوء اتجمّع في نقطة صغيرة... الورقة بتسخن!');
+      draw();
+    }, 200);
+    draw();
+  }};
+
+LAB.c4l3 = {t:'صانع الظل', goal:'حركي الكشاف يمين وشمال وشوفي الظل بيروح فين. وبعدين جربي كوباية إزاز بدل الكتاب.',
+  found:'الظل بيتكوّن لما جسم معتم يمنع الضوء. والظل بيبقى في الناحية العكس من مصدر الضوء. والأجسام الشفافة زي الإزاز بتعدّي الضوء فمابتعملش ظل واضح.',
+  run(host, api){
+    let lx = 80, obj = 'book'; const got = new Set();
+    const draw = () => {
+      const ox = 200, top = obj === 'book' ? 120 : 130, gy = 200;
+      const t = (gy - 40) / Math.max(1, gy - top);
+      const tipX = lx + (ox - lx) * t * 1.0;
+      const len = Math.max(-170, Math.min(170, (ox - lx) * ((gy - top) / (top - 40)) ));
+      const sx = ox + len;
+      host.querySelector('svg').innerHTML = `<rect width="400" height="250" fill="#2F3B5C"/><rect y="200" width="400" height="50" fill="#C9B79C"/>
+        <polygon points="${lx},40 ${ox - 20},${top} ${ox + 20},${top}" fill="#FFE98A" opacity=".25"/>
+        ${obj === 'book' ? `<polygon points="${ox - 20},200 ${ox + 20},200 ${sx + (len > 0 ? 20 : -20)},200 ${sx},200" fill="#111"/><path d="M${ox - (len > 0 ? -20 : 20)} 200 L${sx + (len > 0 ? 25 : -25)} 200 L${sx + (len > 0 ? 25 : -25)} 212 L${ox - (len > 0 ? -20 : 20)} 212z" fill="#1A1A1A" opacity=".7"/>` : `<path d="M${ox} 200 L${sx} 200 L${sx} 210 L${ox} 210z" fill="#888" opacity=".18"/>`}
+        ${obj === 'book' ? `<rect x="${ox - 20}" y="${top}" width="40" height="80" fill="#E0533D" stroke="#2B2233" stroke-width="3"/><rect x="${ox - 14}" y="${top + 8}" width="28" height="10" fill="#fff"/>` : `<path d="M${ox - 18} ${top} h36 l-5 70 h-26z" fill="#CFEFFF" opacity=".55" stroke="#2B2233" stroke-width="2.5"/>`}
+        <g class="lamp">${emo(lx, 40, '🔦', 34, `transform="rotate(${lx < ox ? 30 : 150} ${lx} 40)"`)}</g>`;
+    };
+    host.innerHTML = `<svg class="lab-svg" viewBox="0 0 400 250"></svg><label class="lab-slider">🔦 مكان الكشاف<input type="range" min="20" max="380" value="80" id="lx"></label>
+      ${choiceRow('ob', [['book', '📕 كتاب (معتم)'], ['glass', '🥛 كوباية إزاز (شفافة)']], 'book')}${labMsg('حركي الكشاف للناحية التانية')}`;
+    const check = () => {
+      if(obj === 'book'){ const side = lx < 200 ? 'R' : 'L'; if(!got.has(side)){ got.add(side); api.good(); api.say(side === 'R' ? 'الضوء جاي من الشمال، فالظل راح اليمين 👉' : 'الضوء جاي من اليمين، فالظل راح الشمال 👈'); } }
+      else if(!got.has('G')){ got.add('G'); api.good(); api.say('🥛 الكوباية الإزاز شفافة: الضوء بيعدّي منها فمفيش ظل واضح!'); }
+      if(got.size === 3) setTimeout(api.done, 800); else if(got.has('R') && got.has('L') && !got.has('G')) setTimeout(() => api.say('دلوقتي جربي الكوباية الإزاز 🥛'), 1300);
+    };
+    $('#lx').oninput = e => { lx = +e.target.value; draw(); if(Math.abs(lx - 200) > 60) check(); };
+    pickTap(host, '[data-ob]', 'data-ob', v => { obj = v; draw(); check(); });
+    draw();
+  }};
+
+LAB.c4l4 = {t:'الساعة الشمسية', goal:'حركي الوقت من الصبح لحد المغرب، وشوفي ظل العصاية بيتغير إزاي. لاقي إمتى الظل بيبقى أقصر حاجة.',
+  found:'الشمس بتطلع من الشرق وبتغرب في الغرب، فالظل بيتحرك ويتغير طوله خلال اليوم. الظل بيبقى طويل الصبح وبالعصر، وأقصر حاجة وقت الضهر لما الشمس تبقى فوق راسنا.',
+  run(host, api){
+    let h = 7; const seen = new Set();
+    const draw = () => {
+      const a = (h - 6) / 12 * Math.PI, sx = 200 + Math.cos(a) * 170, sy = 190 - Math.sin(a) * 150;
+      const elev = Math.max(.12, Math.sin(a)), len = Math.min(170, 60 / Math.tan(Math.asin(elev)) * .6), dir = sx > 200 ? -1 : 1;
+      const sl = Math.abs(h - 12) < .01 ? 8 : len;
+      host.querySelector('svg').innerHTML = `${SKY(250, h < 8 || h > 16 ? '#FFD9B0' : '#CFEFFF')}<path d="M30 190 A170 150 0 0 1 370 190" fill="none" stroke="#F5B700" stroke-width="2" stroke-dasharray="6 6"/>
+        <circle cx="${sx}" cy="${sy}" r="22" fill="#F5B700" stroke="#2B2233" stroke-width="3"/>
+        <rect y="190" width="400" height="60" fill="#9BD67A"/>
+        <polygon points="196,190 204,190 ${200 + dir * sl},196 ${200 + dir * sl},186" fill="#2B2233" opacity=".7"/>
+        <rect x="196" y="130" width="8" height="60" fill="#8B5A2B" stroke="#2B2233" stroke-width="2"/>
+        <text x="380" y="215" text-anchor="end" font-size="15" font-weight="800">شرق ☀️↑</text><text x="20" y="215" font-size="15" font-weight="800">غرب</text>
+        <text x="200" y="240" text-anchor="middle" font-size="15" font-weight="800">طول الظل: ${(sl / 10).toFixed(0)} سم</text>`;
+    };
+    const fmt = h => h === 12 ? '١٢ الضهر' : h < 12 ? `${h} الصبح` : `${h - 12} العصر`;
+    host.innerHTML = `<svg class="lab-svg" viewBox="0 0 400 250"></svg><label class="lab-slider">🕐 الساعة: <b id="hr">٧ الصبح</b><input type="range" min="6" max="18" value="7" id="hh"></label>${labMsg('حركي الوقت 👉')}`;
+    $('#hh').oninput = e => {
+      h = +e.target.value; $('#hr').textContent = fmt(h); draw();
+      if(h <= 8 && !seen.has('m')){ seen.add('m'); api.say('🌅 الصبح الشمس في الشرق، والظل طويل ورايح ناحية الغرب'); }
+      if(h === 12 && !seen.has('n')){ seen.add('n'); api.good(); api.say('☀️ الضهر! الشمس فوق راسنا، والظل أقصر حاجة.'); }
+      if(h >= 16 && !seen.has('a')){ seen.add('a'); api.say('🌇 العصر الشمس راحت ناحية الغرب، والظل طول تاني ورايح ناحية الشرق'); }
+      if(seen.size === 3) setTimeout(api.done, 900);
+    };
+    draw();
+  }};
+
+LAB.c4l5 = {t:'الترمومتر في الشمس والضل', goal:'قيسي حرارة الأرض في مكان مشمس ومكان في الضل. دوسي على كل مكان علشان تحطي فيه الترمومتر.',
+  found:'الأماكن المشمسة حرارتها أعلى من الأماكن اللي في الضل، لأن الشمس بتدفّي الأرض. وبنقيس الحرارة بالترمومتر، ونحدد الاتجاهات بالبوصلة.',
+  run(host, api){
+    const R = {sun:null, shade:null}; let at = null, t = 20, iv = null;
+    const draw = () => {
+      host.querySelector('svg').innerHTML = `${SKY(130, '#CFEFFF')}<circle cx="60" cy="45" r="26" fill="#F5B700" stroke="#2B2233" stroke-width="3"/>
+        <rect y="130" width="400" height="120" fill="#C9E58F"/>
+        <rect x="250" y="40" width="22" height="100" fill="#8B5A2B" stroke="#2B2233" stroke-width="3"/><circle cx="262" cy="45" r="55" fill="#3FA34D" stroke="#2B2233" stroke-width="3"/>
+        <ellipse cx="262" cy="175" rx="95" ry="30" fill="#2B2233" opacity=".28"/>
+        <g class="spot" data-s="sun" role="button"><circle cx="100" cy="185" r="38" fill="#FFF3B0" stroke="#2B2233" stroke-width="2.5" stroke-dasharray="5 4"/><text x="100" y="236" text-anchor="middle" font-size="13" font-weight="800">مكان مشمس</text></g>
+        <g class="spot" data-s="shade" role="button"><circle cx="262" cy="180" r="38" fill="#7FA36A" stroke="#2B2233" stroke-width="2.5" stroke-dasharray="5 4"/><text x="262" y="236" text-anchor="middle" font-size="13" font-weight="800">مكان في الضل</text></g>
+        ${at ? `<g transform="translate(${at === 'sun' ? 100 : 262} 0)"><rect x="-7" y="110" width="14" height="80" rx="7" fill="#fff" stroke="#2B2233" stroke-width="2.5"/><rect x="-3" y="${186 - (t - 10) * 2}" width="6" height="${(t - 10) * 2}" fill="#E53935"/><circle cx="0" cy="190" r="10" fill="#E53935" stroke="#2B2233" stroke-width="2.5"/><text x="18" y="130" font-size="16" font-weight="800">${Math.round(t)}°</text></g>` : ''}
+        <g transform="translate(350 200)"><circle r="26" fill="#fff" stroke="#2B2233" stroke-width="2.5"/><polygon points="0,-20 6,0 -6,0" fill="#E53935"/><polygon points="0,20 6,0 -6,0" fill="#90A4AE"/><text y="-30" text-anchor="middle" font-size="12" font-weight="800">ش</text></g>`;
+      host.querySelectorAll('.spot').forEach(g => g.onclick = () => place(g.dataset.s));
+    };
+    const place = s => {
+      clearInterval(iv); at = s; t = 20; const goal = s === 'sun' ? 38 : 27;
+      api.say('🌡️ استني الترمومتر لما يثبت...');
+      iv = setInterval(() => {
+        if(!document.contains(host)){ clearInterval(iv); return; }
+        t += (goal - t) * .18; draw();
+        if(Math.abs(goal - t) < .4){ clearInterval(iv); t = goal; R[s] = goal; draw(); api.good();
+          api.say(`${s === 'sun' ? '☀️ في الشمس' : '🌳 في الضل'} الحرارة ${goal}°.${R.sun && R.shade ? '' : ' جربي المكان التاني'}`);
+          if(R.sun && R.shade) ask(); }
+      }, 120);
+    };
+    const ask = () => {
+      if(host.querySelector('.lab-quiz')) return;
+      host.insertAdjacentHTML('beforeend', `<div class="lab-quiz"><p class="lab-q">في الشمس ${R.sun}° وفي الضل ${R.shade}°. فين الأرض أسخن؟</p><div class="row" style="justify-content:center"><button class="btn" data-a="1">☀️ في الشمس</button><button class="btn" data-a="0">🌳 في الضل</button></div></div>`);
+      host.querySelectorAll('[data-a]').forEach(b => b.onclick = () => { if(b.dataset.a === '1'){ api.good(); api.say('✔ صح! الشمس بتسخّن الأرض.'); api.done(); } else { api.bad(); api.say('بصي على الأرقام تاني 🤔'); } });
+    };
+    host.innerHTML = `<svg class="lab-svg tap" viewBox="0 0 400 250"></svg>${labMsg('دوسي على المكان المشمس الأول')}`;
+    draw();
+  }};
+
+/* ===== island 5: sound ===== */
+function pluck(freq, vol = .18, dur = 1.2, type = 'triangle'){
+  const c = actx(); if(!c) return;
+  const o = c.createOscillator(), g = c.createGain(), t = c.currentTime;
+  o.type = type; o.frequency.value = freq;
+  g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + .01); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+  o.connect(g).connect(c.destination); o.start(t); o.stop(t + dur + .05);
+}
+LAB.c5l1 = {t:'إزاي الصوت بيطلع؟', goal:'دوسي على المسطرة والمثلث والطبلة، وبصي كويس: إيه اللي بيحصل لكل حاجة وهي بتعمل صوت؟',
+  found:'الصوت بينتج من اهتزاز الأجسام. المسطرة بتتهز، والمثلث بيتهز، وجلد الطبلة بيتهز فيخلي الرز ينط. ولما الاهتزاز يقف، الصوت بيقف.',
+  run(host, api){
+    const done = new Set();
+    host.innerHTML = `<div class="snd-row">
+      <button class="snd sticker" data-s="ruler"><svg viewBox="0 0 160 110"><rect x="0" y="70" width="80" height="40" fill="#8B5A2B" stroke="#2B2233" stroke-width="3"/><g class="vib-r"><rect x="40" y="60" width="118" height="10" fill="#FFD23F" stroke="#2B2233" stroke-width="2.5"/></g></svg><b>مسطرة على الترابيزة</b></button>
+      <button class="snd sticker" data-s="tri"><svg viewBox="0 0 160 110"><g class="vib-t"><path d="M80 12 L130 100 H30 Z" fill="none" stroke="#9AA6B2" stroke-width="7" stroke-linejoin="round"/></g><line x1="80" y1="0" x2="80" y2="12" stroke="#2B2233" stroke-width="2"/></svg><b>المثلث الموسيقي</b></button>
+      <button class="snd sticker" data-s="drum"><svg viewBox="0 0 160 110"><g class="rice">${[50, 70, 90, 110].map(x => `<ellipse cx="${x}" cy="44" rx="4" ry="2.5" fill="#fff" stroke="#2B2233" stroke-width="1.2"/>`).join('')}</g><ellipse cx="80" cy="52" rx="60" ry="14" fill="#F4E3C1" stroke="#2B2233" stroke-width="3"/><path d="M20 52 v34 a60 14 0 0 0 120 0 v-34" fill="#E0533D" stroke="#2B2233" stroke-width="3"/></svg><b>طبلة عليها رز</b></button>
+    </div>${labMsg('دوسي على أي حاجة علشان تطلع صوت')}`;
+    host.querySelectorAll('.snd').forEach(b => b.onclick = () => {
+      const s = b.dataset.s; b.classList.remove('shake-on'); void b.offsetWidth; b.classList.add('shake-on');
+      if(s === 'ruler'){ pluck(110, .25, .9, 'sawtooth'); api.say('📏 المسطرة بتتهز لفوق ولتحت وبتطلع صوت!'); }
+      if(s === 'tri'){ pluck(1760, .12, 2.2, 'sine'); pluck(2637, .05, 1.6, 'sine'); api.say('🔺 المثلث بيتهز وبيرنّ... حطي إيدك عليه يقف الاهتزاز ويسكت!'); }
+      if(s === 'drum'){ pluck(90, .35, .5, 'sine'); api.say('🥁 جلد الطبلة اتهز وخلى حبات الرز تنط!'); }
+      done.add(s); if(done.size === 3) setTimeout(api.done, 1200);
+    });
+  }};
+
+LAB.c5l2 = {t:'صوت عالي وصوت واطي', goal:'شدي الوتر بقوة مختلفة: شوية صغيرين، وبعدين جامد. شوفي الاهتزاز وسمعي الصوت.',
+  found:'كل ما الاهتزاز يكون أكبر، الصوت يبقى أعلى (شدة الصوت أكبر). ولما الاهتزاز يكون صغير، الصوت بيبقى واطي. يعني شدة الصوت بتعتمد على مقدار الاهتزاز.',
+  run(host, api){
+    let p = 1; const tried = new Set(), amp = [0, 6, 18, 34];
+    const draw = (A = 0, ph = 0) => {
+      const pts = Array.from({length:41}, (_, k) => `${20 + k * 9},${110 + Math.sin(k / 40 * Math.PI) * A * Math.cos(ph)}`).join(' ');
+      host.querySelector('svg').innerHTML = `${SKY(220, '#FFF8EC')}<rect x="8" y="80" width="14" height="60" fill="#8B5A2B"/><rect x="378" y="80" width="14" height="60" fill="#8B5A2B"/>
+        <polyline points="${pts}" fill="none" stroke="#2B2233" stroke-width="4"/>
+        <g transform="translate(150 180)">${[0, 1, 2, 3, 4, 5].map(k => `<rect x="${k * 18}" y="${-k * 5}" width="14" height="${12 + k * 5}" fill="${A / 34 * 6 > k ? '#23A452' : '#E5DCF0'}" stroke="#2B2233" stroke-width="1.5"/>`).join('')}</g><text x="200" y="213" text-anchor="middle" font-size="13" font-weight="800">🔊 شدة الصوت</text>`;
+    };
+    host.innerHTML = `<svg class="lab-svg" viewBox="0 0 400 220"></svg>${choiceRow('pw', [['1', '🤏 شدة خفيفة'], ['2', '✋ متوسطة'], ['3', '💪 شدة قوية']], '1')}
+      <div class="row" style="justify-content:center"><button class="btn primary" id="plk">🎸 سيبي الوتر</button></div>${labMsg('اختاري قوة الشد وسيبي الوتر')}`;
+    pickTap(host, '[data-pw]', 'data-pw', v => { p = +v; });
+    $('#plk').onclick = () => {
+      pluck(196, [0, .03, .12, .35][p], 1.4, 'sawtooth'); tried.add(p);
+      let f = 0; const A = amp[p];
+      const iv = setInterval(() => { f++; if(!document.contains(host) || f > 40){ clearInterval(iv); draw(0); return; } draw(A * Math.exp(-f / 14), f * 1.3); }, 40);
+      api.say(p === 3 ? '💪 اهتزاز كبير ← صوت عالي!' : p === 1 ? '🤏 اهتزاز صغير ← صوت واطي' : 'اهتزاز متوسط ← صوت متوسط');
+      if(tried.has(1) && tried.has(3)) setTimeout(api.done, 1500);
+    };
+    draw();
+  }};
+
+LAB.c5l3 = {t:'تليفون الخيط', goal:'مشمش عايزة تكلّم صاحبتها بتليفون الخيط. جربي والخيط مشدود، وجربي والخيط مرتخي.',
+  found:'الصوت بينتقل خلال الأجسام زي الخيط. لما الخيط يكون مشدود، الاهتزاز بيمشي فيه وبيوصل الصوت كويس. لكن لو الخيط مرتخي، الاهتزاز مابيوصلش.',
+  run(host, api){
+    let tight = true; const tried = new Set();
+    const draw = (dots = -1) => {
+      const path = tight ? 'M95 120 L305 120' : 'M95 120 Q200 205 305 120';
+      host.querySelector('svg').innerHTML = `${SKY(220, '#F0F7FF')}${emo(50, 120, '🐱', 52)}${emo(352, 120, '😺', 52)}
+        <path d="M80 110 l26 -8 v36 l-26 -8z" fill="#FFB0C8" stroke="#2B2233" stroke-width="2.5"/><path d="M320 110 l-26 -8 v36 l26 -8z" fill="#9AD0FF" stroke="#2B2233" stroke-width="2.5"/>
+        <path id="str" d="${path}" fill="none" stroke="#2B2233" stroke-width="3"/>
+        ${dots >= 0 ? [0, 1, 2].map(k => { const f = Math.max(0, Math.min(1, dots - k * .12)); if(!tight && f > .45) return ''; const x = 95 + f * 210, y = tight ? 120 : 120 + 4 * f * (1 - f) * 85 * 1; return `<circle cx="${x}" cy="${y}" r="7" fill="#FF6B3D"/>`; }).join('') : ''}`;
+    };
+    host.innerHTML = `<svg class="lab-svg" viewBox="0 0 400 220"></svg>${choiceRow('tt', [['1', '🧵 خيط مشدود'], ['0', '〰️ خيط مرتخي']], '1')}
+      <div class="row" style="justify-content:center"><button class="btn primary" id="talk">🗣️ اتكلمي في الكوباية</button></div>${labMsg('')}`;
+    pickTap(host, '[data-tt]', 'data-tt', v => { tight = v === '1'; draw(); });
+    $('#talk').onclick = () => {
+      let f = 0; pluck(440, .08, .3, 'square');
+      const iv = setInterval(() => {
+        f += .04; if(!document.contains(host)){ clearInterval(iv); return; } draw(f);
+        if(f >= 1.3){ clearInterval(iv); draw(); tried.add(tight);
+          if(tight){ pluck(523, .1, .3, 'square'); api.good(); api.say('😺 «سامعاكي كويس!» الخيط المشدود نقل الاهتزاز للكوباية التانية.'); }
+          else { api.bad(); api.say('😿 «مش سامعة حاجة!» الخيط المرتخي مانقلش الاهتزاز.'); }
+          if(tried.size === 2) setTimeout(api.done, 1000); }
+      }, 40);
+    };
+    draw();
+  }};
+
+/* ===== islands 6 & 7: cars driven by wind and rubber bands ===== */
+function carLab(host, api, cfg){
+  const res = {}; let busy = false;
+  const draw = (x = 0, fx = '') => {
+    const X = 40 + x * 52;
+    host.querySelector('svg').innerHTML = `${SKY(200, '#EAF5FF')}<rect y="150" width="400" height="50" fill="#BDBDBD"/>
+      ${Array.from({length:7}, (_, k) => `<line x1="${40 + k * 52}" y1="150" x2="${40 + k * 52}" y2="165" stroke="#2B2233" stroke-width="2"/><text x="${40 + k * 52}" y="182" text-anchor="middle" font-size="12" font-weight="800">${k} م</text>`).join('')}
+      ${fx}
+      <g transform="translate(${X} 0)">${cfg.sail(cfg.state)}<rect x="-26" y="118" width="52" height="20" rx="6" fill="#E0533D" stroke="#2B2233" stroke-width="3"/><circle cx="-14" cy="142" r="9" fill="#2B2233"/><circle cx="14" cy="142" r="9" fill="#2B2233"/></g>`;
+  };
+  host.innerHTML = `<svg class="lab-svg" viewBox="0 0 400 200"></svg>${cfg.controls()}
+    <div class="row" style="justify-content:center"><button class="btn primary" id="go">${cfg.goLabel}</button><button class="btn" id="reset">↩️ ارجعي للبداية</button></div>
+    <table class="lab-table"><thead><tr><th>${cfg.colName}</th><th>المسافة</th></tr></thead><tbody id="tb"></tbody></table>${labMsg(cfg.hint)}`;
+  cfg.bind(host, () => draw());
+  $('#reset').onclick = () => { if(!busy) draw(); };
+  $('#go').onclick = () => {
+    if(busy) return; busy = true;
+    const d = cfg.dist(cfg.state), key = cfg.key(cfg.state);
+    let x = 0; cfg.sound && cfg.sound(cfg.state);
+    const iv = setInterval(() => {
+      if(!document.contains(host)){ clearInterval(iv); return; }
+      x = Math.min(d, x + Math.max(.04, (d - x) * .07)); draw(x, cfg.fx ? cfg.fx(cfg.state, x / d) : '');
+      if(d - x < .02){ clearInterval(iv); busy = false; draw(d);
+        res[key] = d; $('#tb').innerHTML = Object.entries(res).map(([k, v]) => `<tr><td>${k}</td><td>${v.toFixed(1)} متر</td></tr>`).join('');
+        api.say(`🚗 العربية مشيت ${d.toFixed(1)} متر`);
+        if(cfg.goal(res)){ api.good(); setTimeout(() => { api.say(cfg.win); api.done(); }, 900); }
+      }
+    }, 40);
+  };
+  draw();
+}
+const SAIL = s => `<line x1="0" y1="118" x2="0" y2="${118 - (s.big ? 80 : 46)}" stroke="#2B2233" stroke-width="3"/><path d="M0 ${118 - (s.big ? 78 : 44)} L${s.big ? -48 : -26} ${112} L0 112z" fill="#FFF" stroke="#2B2233" stroke-width="2.5"/>`;
+const windFx = (s, f) => Array.from({length:s.strong ? 5 : 2}, (_, k) => `<path d="M${10 + ((f * 300 + k * 47) % 60)} ${60 + k * 16} h${s.strong ? 40 : 22}" stroke="#7FB8E8" stroke-width="3" stroke-linecap="round"/>`).join('') + emo(20, 95, '🌀', 30);
+LAB.c6l1 = {t:'عربية الرياح', goal:'شغّلي المروحة مرة على رياح ضعيفة ومرة على رياح قوية، وقيسي العربية مشيت قد إيه.',
+  found:'الرياح قوة بتحرك الأجسام. كل ما الرياح تكون أقوى، القوة على الشراع بتزيد، فالعربية بتتحرك مسافة أكبر.',
+  run(host, api){
+    const st = {strong:false, big:true};
+    carLab(host, api, {state:st, sail:SAIL, fx:windFx, goLabel:'🌀 شغّلي المروحة', colName:'قوة الرياح', hint:'اختاري قوة الرياح وشغّلي المروحة',
+      controls:() => choiceRow('wd', [['0', '🍃 رياح ضعيفة'], ['1', '🌪️ رياح قوية']], '0'),
+      bind:(h, redraw) => pickTap(h, '[data-wd]', 'data-wd', v => { st.strong = v === '1'; redraw(); }),
+      dist:s => s.strong ? 5.2 : 2.3, key:s => s.strong ? 'رياح قوية' : 'رياح ضعيفة',
+      sound:s => pluck(s.strong ? 140 : 90, .06, 1.2, 'sawtooth'),
+      goal:r => Object.keys(r).length === 2, win:'💨 الرياح القوية حركت العربية مسافة أكبر بكتير من الضعيفة!'});
+  }};
+LAB.c6l2 = {t:'شراع صغير وشراع كبير', goal:'خلي المروحة على نفس القوة، وجربي شراع صغير وشراع كبير. أنهي شراع هيخلي العربية تمشي أبعد؟',
+  found:'كل ما الشراع يكون أكبر، الرياح بتأثر عليه بقوة أكبر، فالعربية بتمشي مسافة أطول. يعني المسافة بتعتمد على قوة الرياح وحجم الشراع.',
+  run(host, api){
+    const st = {strong:true, big:false};
+    carLab(host, api, {state:st, sail:SAIL, fx:windFx, goLabel:'🌀 شغّلي المروحة', colName:'حجم الشراع', hint:'اختاري حجم الشراع وشغّلي المروحة',
+      controls:() => choiceRow('sl', [['0', '⛵ شراع صغير'], ['1', '⛵⛵ شراع كبير']], '0'),
+      bind:(h, redraw) => pickTap(h, '[data-sl]', 'data-sl', v => { st.big = v === '1'; redraw(); }),
+      dist:s => s.big ? 5.2 : 2.9, key:s => s.big ? 'شراع كبير' : 'شراع صغير',
+      sound:() => pluck(140, .06, 1.2, 'sawtooth'),
+      goal:r => Object.keys(r).length === 2, win:'⛵ الشراع الكبير مسك رياح أكتر، فالعربية مشيت أبعد!'});
+  }};
+const BAND = s => `<path d="M-26 128 Q${-44 - s.cm * 2} 128 ${-60} ${s.n > 1 ? 122 : 128}" stroke="#F2558F" stroke-width="3" fill="none"/>${s.n > 1 ? `<path d="M-26 132 Q${-44 - s.cm * 2} 134 -60 136" stroke="#7A4FD6" stroke-width="3" fill="none"/>` : ''}`;
+const padFx = s => `<rect x="0" y="112" width="14" height="38" fill="#7A4FD6" stroke="#2B2233" stroke-width="2"/>`;
+LAB.c7l1 = {t:'عربية الأستيك', goal:'شدي الأستيك ٥ سم، وبعدين ١٠، وبعدين ١٥ سم، وسيبي العربية. قارني المسافات.',
+  found:'كل ما نشد الشريط المطاطي أكتر، القوة اللي بيأثر بيها على العربية لما يرجع لشكله الأصلي بتزيد، فالعربية بتتحرك مسافة أكبر.',
+  run(host, api){
+    const st = {cm:5, n:1};
+    carLab(host, api, {state:st, sail:BAND, fx:padFx, goLabel:'🏁 سيبي العربية', colName:'مقدار الشد', hint:'اختاري مقدار الشد وسيبي العربية',
+      controls:() => choiceRow('cm', [['5', '٥ سم'], ['10', '١٠ سم'], ['15', '١٥ سم']], '5'),
+      bind:(h, redraw) => pickTap(h, '[data-cm]', 'data-cm', v => { st.cm = +v; redraw(); }),
+      dist:s => ({5:2.1, 10:4.4, 15:6.0})[s.cm], key:s => s.cm + ' سم',
+      sound:() => pluck(330, .12, .25, 'square'),
+      goal:r => Object.keys(r).length === 3, win:'🎯 شد أكتر ← قوة أكبر ← مسافة أطول!'});
+  }};
+LAB.c7l2 = {t:'أستيك ولا اتنين؟', goal:'شدي الأستيك نفس المسافة (١٠ سم)، وجربي بأستيك واحد وبعدين باتنين.',
+  found:'زيادة عدد الأشرطة المطاطية بتزوّد القوة اللي بتحرك العربية، لأن قوى الأشرطة بتتجمع. فالعربية بأستيكين بتمشي أبعد من أستيك واحد.',
+  run(host, api){
+    const st = {cm:10, n:1};
+    carLab(host, api, {state:st, sail:BAND, fx:padFx, goLabel:'🏁 سيبي العربية', colName:'عدد الأشرطة', hint:'اختاري عدد الأشرطة وسيبي العربية',
+      controls:() => choiceRow('nb', [['1', '🪢 أستيك واحد'], ['2', '🪢🪢 أستيكين']], '1'),
+      bind:(h, redraw) => pickTap(h, '[data-nb]', 'data-nb', v => { st.n = +v; redraw(); }),
+      dist:s => s.n > 1 ? 6.0 : 4.4, key:s => s.n > 1 ? 'شريطين' : 'شريط واحد',
+      sound:() => pluck(330, .12, .25, 'square'),
+      goal:r => Object.keys(r).length === 2, win:'🪢🪢 الأستيكين قوتهم اتجمعت، فالعربية راحت أبعد!'});
+  }};
+
+/* ===== island 8: soil and moving statues ===== */
+LAB.c8l1 = {t:'سباق المية في التربة', goal:'اسكبي نفس كمية المية على رمل الصحرا وعلى طمي النيل، وشوفي المية بتعدي أسرع في أنهي واحدة.',
+  found:'المية بتعدي بسرعة من التربة الرملية لأن حبيباتها كبيرة والفراغات بينها واسعة. وبتعدي ببطء من التربة الطينية لأن حبيباتها صغيرة والفراغات ضيقة، فبتحتفظ بالمية فترة أطول.',
+  run(host, api){
+    let t = 0, iv = null, poured = false;
+    const lvl = (rate) => Math.min(1, t * rate);
+    const draw = () => {
+      const a = lvl(.25), b = lvl(.06);
+      const funnel = (x, soil, col, f) => `<g transform="translate(${x} 0)">
+        <rect x="-45" y="${40 + 30 * f}" width="90" height="${poured ? 30 * (1 - f) : 0}" fill="#5DADEC" opacity=".8"/>
+        <path d="M-50 40 h100 l-30 70 v10 h-40 v-10z" fill="none" stroke="#2B2233" stroke-width="3"/>
+        <path d="M-40 70 h80 l-17 40 h-46z" fill="${col}" stroke="#2B2233" stroke-width="2"/>
+        ${poured && f < 1 ? `<line x1="0" y1="122" x2="0" y2="${190 - 50 * f}" stroke="#5DADEC" stroke-width="${soil === 'sand' ? 5 : 2}" stroke-dasharray="${soil === 'sand' ? '0' : '3 8'}"/>` : ''}
+        <rect x="-32" y="140" width="64" height="70" fill="none" stroke="#2B2233" stroke-width="3"/>
+        <rect x="-30" y="${208 - 55 * f}" width="60" height="${55 * f}" fill="#5DADEC"/>
+        <text x="0" y="234" text-anchor="middle" font-size="14" font-weight="800">${soil === 'sand' ? 'رمل الصحرا' : 'طمي النيل'}</text></g>`;
+      host.querySelector('svg').innerHTML = `${SKY(245, '#FFFDF5')}${funnel(110, 'sand', '#F2C76E', a)}${funnel(290, 'clay', '#6B4423', b)}
+        <text x="200" y="24" text-anchor="middle" font-size="16" font-weight="800">⏱️ ${Math.floor(t)} ثانية</text>`;
+    };
+    host.innerHTML = `<svg class="lab-svg" viewBox="0 0 400 245"></svg><div class="row" style="justify-content:center"><button class="btn primary" id="pour">💧 اسكبي المية</button></div>${labMsg('دوسي «اسكبي المية»')}`;
+    $('#pour').onclick = () => {
+      if(poured) return; poured = true; $('#pour').disabled = true;
+      iv = setInterval(() => {
+        if(!document.contains(host)){ clearInterval(iv); return; }
+        t += .2; draw();
+        if(Math.abs(t - 4) < .1) { api.good(); api.say('🏜️ المية عدّت من الرمل بسرعة! وفي الطمي لسه بتنزل نقطة نقطة...'); }
+        if(t >= 17){ clearInterval(iv); ask(); }
+      }, 100);
+    };
+    const ask = () => {
+      host.insertAdjacentHTML('beforeend', `<div class="lab-quiz"><p class="lab-q">أنهي تربة بتحتفظ بالمية فترة أطول وأحسن للزراعة؟</p><div class="row" style="justify-content:center"><button class="btn" data-a="0">🏜️ الرمل</button><button class="btn" data-a="1">🟫 الطمي</button></div></div>`);
+      host.querySelectorAll('[data-a]').forEach(b => b.onclick = () => { if(b.dataset.a === '1'){ api.good(); api.say('✔ صح! طمي النيل بيحتفظ بالمية والعناصر الغذائية، علشان كده الزراعة أحسن فيه.'); api.done(); } else { api.bad(); api.say('افتكري: المية عدّت من الرمل بسرعة ومافضلتش فيه 🤔'); } });
+    };
+    draw();
+  }};
+
+LAB.c8l2 = {t:'انقلي التمثال زي الفراعنة', goal:'زوّدي عدد العمال، وجربي ترشّي مية على الرمل قدام الزلاجة. هتقدري تحركي التمثال بأقل عدد عمال؟',
+  found:'المصريين القدماء نقلوا التماثيل الضخمة بفكرتين: تجميع القوى (عمال كتير بيشدوا في نفس الاتجاه)، وجعل السطح أكثر انزلاقًا برش المية على الرمل قدام الزلاجة، فالقوة اللازمة بتقل.',
+  run(host, api){
+    let n = 2, wet = false, x = 0, busy = false; const log = new Set();
+    const need = () => wet ? 5 : 8;
+    const draw = (strain = false) => {
+      host.querySelector('svg').innerHTML = `${SKY(150, '#FFE8B0')}<polygon points="300,150 360,60 420,150" fill="#E9C07A" stroke="#2B2233" stroke-width="2"/>
+        <rect y="150" width="400" height="80" fill="${wet ? '#C9A46A' : '#E9C07A'}"/>${wet ? [0, 1, 2, 3].map(k => emo(150 + k * 30 - x * 0, 165, '💧', 14)).join('') : ''}
+        <g transform="translate(${-x} 0)"><rect x="250" y="140" width="110" height="12" fill="#8B5A2B" stroke="#2B2233" stroke-width="2"/>${emo(305, 95, '🗿', 80)}
+          <line x1="250" y1="140" x2="${250 - 18 - n * 18}" y2="130" stroke="#8B5A2B" stroke-width="3"/>
+          ${Array.from({length:n}, (_, k) => emo(232 - k * 18, 128, strain ? '😣' : '🧍', 22)).join('')}</g>
+        <text x="10" y="24" font-size="15" font-weight="800">👷 العمال: ${n} · ${wet ? '💧 رمل مبلول' : '🏜️ رمل ناشف'}</text>`;
+    };
+    host.innerHTML = `<svg class="lab-svg" viewBox="0 0 400 230"></svg>
+      <label class="lab-slider">👷 عدد العمال: <b id="nn">٢</b><input type="range" min="1" max="10" value="2" id="wn"></label>
+      ${choiceRow('wt', [['0', '🏜️ رمل ناشف'], ['1', '💧 رشي مية']], '0')}
+      <div class="row" style="justify-content:center"><button class="btn primary" id="pull">💪 شدّوا!</button></div>${labMsg('اختاري عدد العمال واضغطي «شدّوا»')}`;
+    $('#wn').oninput = e => { n = +e.target.value; $('#nn').textContent = n; x = 0; draw(); };
+    pickTap(host, '[data-wt]', 'data-wt', v => { wet = v === '1'; x = 0; draw(); });
+    $('#pull').onclick = () => {
+      if(busy) return;
+      if(n < need()){ draw(true); api.bad(); api.say(`😣 التمثال مااتحركش! القوة مش كفاية${wet ? '' : '... الرمل الناشف بيصعّب الحركة'}. ${n < 4 ? 'محتاجين عمال أكتر يشدوا مع بعض' : 'جربي ترشّي مية'}.`); setTimeout(() => document.contains(host) && draw(), 900); return; }
+      busy = true; let k = 0;
+      const iv = setInterval(() => { if(!document.contains(host)){ clearInterval(iv); return; } x += 4; k++; draw(); if(k > 25){ clearInterval(iv); busy = false;
+        log.add(wet ? 'wet' : 'dry'); api.good();
+        api.say(wet ? `🎉 التمثال اتحرك بـ ${n} عمال${n <= 6 ? ' بس! المية خلّت الرمل يزحلق والقوة اللازمة قلّت.' : '. جربي بعدد عمال أقل والرمل مبلول!'}` : `🎉 التمثال اتحرك! ${n} عمال جمّعوا قوتهم في نفس الاتجاه. جربي ترشّي مية وشوفي محتاجين كام عامل.`);
+        if(log.has('wet') && n <= 6) setTimeout(api.done, 900); setTimeout(() => { x = 0; document.contains(host) && draw(); }, 1500); } }, 40);
+    };
+    draw();
+  }};
 
 function englishWorld(keep){
   curWorld = 'en';
@@ -6916,7 +8008,7 @@ function arDigit(n){
   const t = n.data;
   if(!/[0-9]/.test(t) || /[A-Za-z]/.test(t)) return;
   const p = n.parentElement; if(!p || p.closest(DIG_SKIP)) return;
-  n.data = t.replace(/[0-9]/g, d => AR_DIG[d]);
+  n.data = t.replace(/[0-9]/g, d => AR_DIG[d]).replace(/%/g, '٪');
 }
 function arDigitsIn(root){ const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); for(let n = w.nextNode(); n; n = w.nextNode()) arDigit(n); }
 new MutationObserver(ms => ms.forEach(m => {

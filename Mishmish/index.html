@@ -827,6 +827,11 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
 .read-line .spk,.read-prev .spk{color:var(--grape, #7B4FD6)}
 .rw{cursor:pointer;border-radius:6px}
 .rw:hover{background:var(--sun-l)}
+.sum-list{display:grid;gap:10px;padding:16px 22px;text-align:start;min-width:min(420px,100%);font-size:19px}
+.sum-list p{margin:0}
+.sum-win{color:#1E8E4E;font-weight:800}
+.sum-next{display:grid;gap:6px;padding-top:10px;border-top:2px dashed #E5DCF0}
+.sum-next .bar{height:14px}.sum-next .bar i{background:#FFC21A}
 .bank-sync{font-size:13px;font-weight:700;color:var(--ink-soft)}
 .bank-sync.ok{color:#1E8E4E}
 .bank-win{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;padding:12px 18px;background:#FFF1C7;font-size:19px;margin:0}
@@ -2533,8 +2538,8 @@ function home(keep){
   <button class="bank-door" id="bankDoor">
     <span class="bdp">${boxSVG()}</span>
     <span class="bd-text"><b>حصالة ${KID_AR}</b> <span class="en">My Money Box</span>
-      <small>احفظي كلمات المنهج واقري القطع، واجمعي فلوس بجد في حصالتك! ${S.bank.words > 1 ? `فاضل ${S.bank.words - S.bank.pending} كلمة على الـ ${money(S.bank.amount)} جنيه الجاية.` : ''}</small></span>
-    <span class="bd-money">🪙 ${money(S.bank.balance)} جنيه</span>
+      <small>احفظي كلمات المنهج واقري القطع، واجمعي فلوس بجد في حصالتك! ${S.bank.words > 1 ? `فاضل ${nWords(S.bank.words - S.bank.pending)} وتكسبي ${money(S.bank.amount)} جنيه.` : ''}</small></span>
+    <span class="bd-money">🪙 ${S.bank.balance > 0 ? money(S.bank.balance) + ' جنيه' : 'لسه فاضية'}</span>
   </button>
 
   <button class="room-door" id="roomDoor">
@@ -2676,7 +2681,7 @@ function gameListen(){
         results[i] = tries === 0; if(tries === 0) addStars(1);
         say(`${w.en}! ${rand(PRAISE)}`);
         fb.className = 'feedback good'; fb.innerHTML = `<span class="en">${w.en}</span><span>= ${w.ar}</span>`;
-        setTimeout(() => { i++; q(); }, 1700);
+        setTimeout(() => { i++; q(); }, 2500);
       } else {
         tries++; b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); sfxBad(); markTricky(w);
         fb.className = 'feedback bad';
@@ -2961,7 +2966,7 @@ function gameFamily(fid){
         const on = w.en.slice(0, w.en.length - f.id.length);
         fb.className = 'feedback good';
         fb.innerHTML = `<span class="en">${on ? on + ' + ' : ''}${f.id} = ${w.en}</span><span>${w.ar} · قوليها بصوت عالي!</span>`;
-        setTimeout(() => { i++; q(); }, 2100);
+        setTimeout(() => { i++; q(); }, 2900);
       } else {
         tries++; b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); sfxBad(); markTricky(w);
         fb.className = 'feedback bad';
@@ -3009,7 +3014,7 @@ function gameStory(idx){
         if(tries === 0){ firstTry++; addStars(1); }
         say(`${Q.o[k].en}! ${rand(PRAISE)}`);
         fb.className = 'feedback good'; fb.innerHTML = `<span class="en">${Q.o[k].en}</span><span>${rand(['برافو!','شاطرة!','صح كده!'])}</span>`;
-        qi++; setTimeout(q, 1700);
+        qi++; setTimeout(q, 2500);
       } else {
         tries++; b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); sfxBad();
         fb.className = 'feedback bad'; fb.textContent = 'ارجعي اقري القصة تاني وجربي 👀';
@@ -3211,7 +3216,7 @@ function learnSession(keys, pool, back){
           done = true; b.classList.add('right'); sfxGood(); say(w.en); queue.shift(); n++;
           const j = keys.indexOf(k); bedSt[j] = 1; setPot(j, 'sprout'); setTimeout(sfxGrow, 150);
           $('#fb').className = 'feedback good'; $('#fb').innerHTML = `<span class="en">${w.en}</span><span>${w.ar}</span>`;
-          setTimeout(q, 1300);
+          setTimeout(q, 2200);
         } else {
           tries++; b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); sfxBad(); markTricky(w);
           if(tries === 1){ queue.push(queue.shift()); queue.unshift(k); }
@@ -3272,7 +3277,7 @@ function review(keys, pool, back, backLabel){
         $('#fb').innerHTML = `<span class="en">${w.en}</span><span>${w.ar} · الزرعة ذبلت شوية 🥀 هنرجع نسقيها تاني قريب</span>`;
       }
       say(w.en);
-      setTimeout(q, ok ? 2300 : 2600);
+      setTimeout(q, ok ? 3000 : 3400);
     });
   }
   q();
@@ -3326,7 +3331,7 @@ function verbQuiz(l, back){
         results[i] = tries === 0; if(!tries) addStars(1);
         say(`${v.b}, ${v.p}`);
         $('#fb').className = 'feedback good'; $('#fb').innerHTML = `<span class="en">${v.b} → ${v.p}</span>`;
-        setTimeout(() => { i++; q(); }, 1500);
+        setTimeout(() => { i++; q(); }, 2300);
       } else {
         tries++; b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); sfxBad();
         $('#fb').className = 'feedback bad'; $('#fb').textContent = 'لأ، فكّري تاني. الفعل ده مش بيمشي على القاعدة!';
@@ -4367,6 +4372,8 @@ function bankRefresh(){
   else if($('#bankDoor')) home(true);
 }
 const money = n => String(Math.round(n * 100) / 100);
+/* Arabic count phrasing: كلمة واحدة، كلمتين، ٣ كلمات، ١١ كلمة */
+const nWords = n => n === 1 ? 'كلمة واحدة' : n === 2 ? 'كلمتين' : n >= 3 && n <= 10 ? `${n} كلمات` : `${n} كلمة`;
 const bk = w => w.en.toLowerCase();
 const BANK_OK = s => /^[a-z]+( [a-z]+)*$/i.test(s) && s.length <= 16;
 const BANK_PACKS = (() => {
@@ -4435,7 +4442,7 @@ function flyCoin(fromEl, label){
   c.style.setProperty('--fy', (b.top + 10 - a.top - a.height / 2) + 'px');
   $('#fx').appendChild(c); setTimeout(() => c.remove(), 950);
 }
-const bankRule = () => { const B = S.bank; return B.words === 1 ? `كل كلمة جديدة تكتبيها صح = <b>${money(B.amount)} جنيه</b>` : `كل <b>${B.words}</b> كلمة جديدة تكتبيها صح = <b>${money(B.amount)} جنيه</b>`; };
+const bankRule = () => { const B = S.bank; return `كل ${B.words === 1 ? 'كلمة جديدة' : `<b>${nWords(B.words)}</b> جداد`} تكتبيها صح = <b>${money(B.amount)} جنيه</b>`; };
 
 function bankScreen(keep){
   setTop(true, keep === true);
@@ -4447,10 +4454,10 @@ function bankScreen(keep){
       <div class="box-wrap" id="moneyBox">${boxSVG()}</div>
       <div class="bank-info">
         <h2>حصالة ${KID_AR} <span class="en">My Money Box</span></h2>
-        <p class="bank-bal"><b>${money(B.balance)}</b> جنيه</p>
+        <p class="bank-bal"><b>${B.balance > 0 ? money(B.balance) : 'صفر'}</b> جنيه</p>
         <div class="coin-pile">${coinPile() || '<small class="muted">الحصالة لسه فاضية. يلا نملاها!</small>'}</div>
         ${B.words > 1 && B.amount > 0 ? `<div class="bank-prog"><span class="bar"><i style="width:${B.pending / B.words * 100}%"></i></span>
-          <small>${B.pending} من ${B.words} كلمة · فاضل <b>${B.words - B.pending}</b> كلمة وينزل ${coinSVG(money(B.amount), 'inline')} في الحصالة</small></div>` : ''}
+          <small>حفظتي ${B.pending} من ${B.words} · فاضل <b>${nWords(B.words - B.pending)}</b> وتكسبي ${money(B.amount)} جنيه</small></div>` : ''}
         <div class="row">
           <button class="btn primary" id="withdraw" ${canOut ? '' : 'disabled'}>💸 اسحبي فلوسك</button>
           <button class="btn" id="parentBtn">⚙️ لبابا وماما</button>
@@ -4462,7 +4469,7 @@ function bankScreen(keep){
 
     <h3 class="sec-title">إزاي تكسبي فلوس؟ <span class="en">How to earn</span></h3>
     <div class="earn-ways">
-      ${B.amount > 0 ? `<button class="earn-card sticker" id="ewWords"><span class="ew-ico">🔤</span><b>احفظي كلمات المنهج</b><small>${bankRule()}. هتشوفي الكلمة بالعربي وتكتبيها بالإنجليزي.</small><span class="pill">حفظتي ${learned} كلمة</span></button>` : ''}
+      ${B.amount > 0 ? `<button class="earn-card sticker" id="ewWords"><span class="ew-ico">🔤</span><b>احفظي كلمات المنهج</b><small>${bankRule()}. هتشوفي الكلمة بالعربي وتكتبيها بالإنجليزي.</small><span class="pill">حفظتي ${learned ? nWords(learned) : 'لسه ولا كلمة'}</span></button>` : ''}
       ${B.perPassage > 0 ? `<button class="earn-card sticker" id="ewPass"><span class="ew-ico">📖</span><b>اقري قطعة</b><small>كل قطعة من الكتاب تقريها للآخر = <b>${money(B.perPassage)} جنيه</b> (مرة واحدة لكل قطعة)</small><span class="pill">قريتي ${passDone} من ${PASSAGES.length} قطعة</span></button>` : ''}
     </div>
 
@@ -4492,18 +4499,18 @@ function packScreen(pid){
   screenEl.innerHTML = `<section class="hub" style="--uc:${P.c};--ucl:${P.cl}">
     <nav class="crumbs"><button id="cBank">حصالة ${KID_AR}</button><span aria-hidden="true">‹</span><span>${P.title}</span></nav>
     <div class="unit-head"><span class="u-badge">🪙</span><div><h2>${P.title} <span class="en" style="font-size:18px">${esc(P.en)}</span></h2>
-      <p>${left.length ? `فاضل ${left.length} كلمة تقدري تكسبي عليهم · ${bankRule()}` : 'كسبتي كل كلمات المجموعة دي! 🎉'}</p></div></div>
+      <p>${left.length ? `فاضل ${nWords(left.length)} تقدري تكسبي عليهم · ${bankRule()}` : 'كسبتي كل كلمات المجموعة دي! 🎉'}</p></div></div>
     <p class="muted">ذاكري الكلمات: دوسي على أي كلمة تسمعيها. لما تحسي إنك حفظتيها، اختبري نفسك.</p>
     <div class="wgrid">${P.words.map(w => `<button class="wtile ${w.e ? '' : 'noimg'} ${B.earned[bk(w)] ? 'earned' : ''}" data-say="${esc(w.en)}">
       ${w.e ? `<span class="emo" aria-hidden="true">${w.e}</span>` : ''}<span class="en">${esc(w.en)}</span><small>${esc(w.ar)}</small>${B.earned[bk(w)] ? '<span class="w-coin">🪙</span>' : ''}</button>`).join('')}</div>
     <div class="row" style="justify-content:center">
-      ${left.length ? `<button class="btn primary" id="test">✏️ اختبري نفسك واكسبي (${Math.min(10, left.length)} كلمات)</button>` : ''}
+      ${left.length ? `<button class="btn primary" id="test">🔒 اختبري نفسك واكسبي (${nWords(Math.min(10, left.length))})</button>` : ''}
       <button class="btn ${left.length ? '' : 'primary'}" id="practice">🔁 تدريب على الكل (من غير فلوس)</button>
     </div>
   </section>`;
   $('#cBank').onclick = bankScreen;
   const back = () => packScreen(pid);
-  if($('#test')) $('#test').onclick = () => { roundStars = 0; spellTest(shuffle(left).slice(0, 10), back, true); };
+  if($('#test')) $('#test').onclick = () => askPin(() => { roundStars = 0; spellTest(shuffle(left).slice(0, 10), back, true); }, 'علشان فرحة تبدأ اختبار الفلوس، بابا أو ماما يكتبوا الرقم السري.');
   $('#practice').onclick = () => { roundStars = 0; spellTest(shuffle(P.words).slice(0, 10), back, false); };
 }
 
@@ -4563,17 +4570,17 @@ function spellTest(words, back, forMoney){
         if(forMoney && !helped && !already){ counted = true; paid = bankWord(w); earnedNow += paid; if(WORDS[w.en] && !S.wl[w.en]) grow(w.en, true); }
         if(counted){ flyCoin($('#slots'), paid ? money(paid) : '🪙'); setTimeout(paid ? sfxMoney : sfxCoin, 500); }
         $('#fb').className = 'feedback good';
-        $('#fb').innerHTML = counted ? (paid ? `<span>برافو! نزل <b>${money(paid)} جنيه</b> في الحصالة! 🎉</span>` : `<span>برافو! الكلمة اتحسبت 🪙 · فاضل ${S.bank.words - S.bank.pending} كلمة وينزل ${money(S.bank.amount)} جنيه</span>`)
+        $('#fb').innerHTML = counted ? (paid ? `<span>برافو! نزل <b>${money(paid)} جنيه</b> في الحصالة! 🎉</span>` : `<span>برافو! الكلمة اتحسبت 🪙 · فاضل ${nWords(S.bank.words - S.bank.pending)} وتكسبي ${money(S.bank.amount)} جنيه</span>`)
           : `<span class="en">${esc(w.en)}</span><span>صح! ${helped && forMoney ? '(استخدمتي مساعدة، جربيها تاني بعدين عشان تتحسب)' : ''}</span>`;
         if(paid) burst($('#miniBox'));
         setTimeout(() => { $('#miniBox b').textContent = money(S.bank.balance); }, 700);
-        setTimeout(() => { i++; q(); }, paid ? 2600 : 1800);
+        setTimeout(() => { i++; q(); }, paid ? 3600 : 2800);
       } else {
         tries++; sfxBad();
         $('#slots').innerHTML = [...target].map((c, j) => c === ' ' ? '<i class="gap"></i>' : `<span class="slot ${typed[j] === c ? 'ok' : 'bad'}">${typed[j] || ''}</span>`).join('');
         if(tries < 2){
           $('#fb').className = 'feedback bad'; $('#fb').textContent = 'قربتي! الحروف الحمرا غلط. صلّحيها وجربي تاني';
-          setTimeout(() => { if(!done){ let keep = ''; for(let j = 0; j < target.length && typed[j] === target[j]; j++) keep += typed[j]; typed = keep; slots(); } }, 1100);
+          setTimeout(() => { if(!done){ let keep = ''; for(let j = 0; j < target.length && typed[j] === target[j]; j++) keep += typed[j]; typed = keep; slots(); } }, 2000);
         } else reveal();
       }
     }
@@ -4581,7 +4588,7 @@ function spellTest(words, back, forMoney){
       done = true; sfxBad(); markTricky(w); say(w.en);
       $('#slots').innerHTML = [...target].map(c => c === ' ' ? '<i class="gap"></i>' : `<span class="slot show">${c}</span>`).join('');
       $('#fb').className = 'feedback bad'; $('#fb').innerHTML = `<span class="en">${esc(w.en)}</span><span>${esc(w.ar)} · ذاكريها كمان شوية وجربي تاني</span>`;
-      setTimeout(() => { i++; q(); }, 2800);
+      setTimeout(() => { i++; q(); }, 3800);
     }
     $('#kb').onclick = e => { const b = e.target.closest('[data-key]'); if(b) press(b.dataset.key); };
     keyHandler = e => {
@@ -4606,9 +4613,14 @@ function spellTest(words, back, forMoney){
     screenEl.innerHTML = `<section class="done-wrap">
       <div class="box-wrap big" id="moneyBox">${boxSVG()}</div>
       <h2 lang="en" dir="ltr">${gotWords === words.length ? 'Amazing!' : 'Good job!'}</h2>
-      <p>كتبتي ${gotWords} من ${words.length} كلمة صح.</p>
-      ${forMoney ? `<p class="pill stars" style="font-size:22px">${earnedNow ? `كسبتي ${money(earnedNow)} جنيه في الجولة دي! 🎉` : `في حصالتك ${money(B.balance)} جنيه`}</p>
-        ${B.words > 1 ? `<p>فاضل <b>${B.words - B.pending}</b> كلمة جديدة وينزل ${money(B.amount)} جنيه كمان 🪙</p>` : ''}` : ''}
+      <div class="sum-list sticker">
+        <p>✔ كتبتي <b>${gotWords}</b> من <b>${words.length}</b> صح</p>
+        ${forMoney ? `${earnedNow ? `<p class="sum-win">🎉 كسبتي <b>${money(earnedNow)} جنيه</b> في الجولة دي!</p>` : ''}
+        <p>💰 في حصالتك دلوقتي: <b>${money(B.balance)} جنيه</b></p>
+        ${B.words > 1 && B.amount > 0 ? `<div class="sum-next"><p>🪙 المكافأة الجاية: حفظتي <b>${B.pending}</b> من <b>${B.words}</b></p>
+          <span class="bar"><i style="width:${B.pending / B.words * 100}%"></i></span>
+          <p>${B.words - B.pending === 1 ? 'كلمة واحدة كمان' : `${nWords(B.words - B.pending)} كمان`} وتاخدي <b>${money(B.amount)} جنيه</b></p></div>` : ''}` : ''}
+      </div>
       <div class="row" style="justify-content:center;margin-top:8px">
         <button class="btn primary" id="again">${forMoney ? 'كلمات تانية' : 'تدريب تاني'}</button>
         <button class="btn" id="toBank">الحصالة 💰</button>
@@ -4636,7 +4648,7 @@ function readHub(){
           <small>${paid ? '🪙 قريتيها وخدتي فلوسها ✔' : `🪙 عليها ${money(B.perPassage)} جنيه`}</small></button>`; }).join('')}</div>`).join('')}
   </section>`;
   $('#cBank').onclick = bankScreen;
-  screenEl.querySelectorAll('[data-read]').forEach(b => b.onclick = () => readPassage(b.dataset.read));
+  screenEl.querySelectorAll('[data-read]').forEach(b => b.onclick = () => askPin(() => readPassage(b.dataset.read), 'علشان فرحة تبدأ تقرا القطعة وتكسب فلوسها، بابا أو ماما يكتبوا الرقم السري.'));
 }
 function readPassage(pid){
   setTop(true);
@@ -4708,7 +4720,7 @@ function askPin(onOk, note='', forceSet=false){
   const m = modal(`<h3>${setting ? 'بابا أو ماما: اعملوا رقم سري' : 'الرقم السري لبابا أو ماما'}</h3>
     <p class="muted" id="pinNote">${note || (setting ? 'اختاروا ٤ أرقام. هتحتاجوها لما فرحة تسحب فلوس أو تغيّروا الإعدادات.' : 'اكتبوا الرقم السري.')}</p>
     <div class="pin-dots" id="pinDots"></div>
-    <div class="pin-pad" dir="ltr">${[1,2,3,4,5,6,7,8,9,'⌫',0,'✕'].map(k => `<button class="key" data-p="${k}">${k}</button>`).join('')}</div>`);
+    <div class="pin-pad" dir="ltr">${[1,2,3,4,5,6,7,8,9,'⌫',0,'✕'].map(k => `<button class="key" data-p="${k}">${typeof k === 'number' ? AR_DIG[k] : k}</button>`).join('')}</div>`);
   const dots = () => { m.querySelector('#pinDots').innerHTML = [0,1,2,3].map(j => `<i class="${j < pin.length ? 'on' : ''}"></i>`).join(''); };
   dots();
   m.querySelector('.pin-pad').onclick = e => {
@@ -4796,8 +4808,22 @@ function finish(game, msg, back, backLabel='الرئيسية'){
   const tm = $('#toMall'); if(tm) tm.onclick = () => mall();
 }
 
+/* ---------- Arabic digits: numbers in Arabic text show as ٠١٢٣٤٥٦٧٨٩; English stays as is ---------- */
+const AR_DIG = '٠١٢٣٤٥٦٧٨٩', DIG_SKIP = '.en,[lang="en"],[dir="ltr"],script,style,textarea,code';
+function arDigit(n){
+  const t = n.data;
+  if(!/[0-9]/.test(t) || /[A-Za-z]/.test(t)) return;
+  const p = n.parentElement; if(!p || p.closest(DIG_SKIP)) return;
+  n.data = t.replace(/[0-9]/g, d => AR_DIG[d]);
+}
+function arDigitsIn(root){ const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); for(let n = w.nextNode(); n; n = w.nextNode()) arDigit(n); }
+new MutationObserver(ms => ms.forEach(m => {
+  if(m.type === 'characterData') arDigit(m.target);
+  else m.addedNodes.forEach(x => x.nodeType === 3 ? arDigit(x) : x.nodeType === 1 && arDigitsIn(x));
+})).observe(document.body, {childList:true, subtree:true, characterData:true});
+
 /* ---------- boot ---------- */
-function start(){ renderSound(); renderStars(); home(); }
+function start(){ renderSound(); renderStars(); home(); arDigitsIn(document.body); }
 if(window.claude && window.claude.hot && window.claude.hot.ready) window.claude.hot.ready(start); else start();
 })();
 </script>

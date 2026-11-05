@@ -842,6 +842,7 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
 .nb-ico{font-size:54px}
 .nb-head h2{margin:0;font-size:28px}.nb-head h2 .en{font-size:17px;color:var(--ink-soft)}
 .nb-head p{margin:4px 0 0}
+.nb-acts{display:grid;gap:6px;justify-items:stretch}
 .nb-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
 .nb-card{position:relative;display:grid;gap:8px;align-content:start;min-height:150px;padding:30px 16px 12px;border:3px solid var(--ink);border-radius:14px;background:var(--paper);background-image:repeating-linear-gradient(transparent 0 27px,rgba(43,34,51,.12) 27px 28px);box-shadow:3px 3px 0 var(--ink);text-align:start;transform:rotate(-.6deg)}
 .nb-card:nth-child(even){transform:rotate(.7deg)}
@@ -2656,6 +2657,7 @@ document.addEventListener('click', e => {
 
 /* ============ HOME ============ */
 function home(keep){
+  nbUnlocked = false;
   setTop(false, keep === true);
   const nm = S.name ? ', ' + S.name : '';
   const afford = ITEMS.filter(i => !S.owned.includes(i.id) && i.price <= S.stars).sort((a,b) => b.price - a.price)[0];
@@ -4853,7 +4855,9 @@ function readPassage(pid){
 /* ---------- Farha's notebook: free notes she keeps for herself (synced across devices like the money box) ---------- */
 const NOTE_COLORS = ['#FFF6C9', '#FFE1EC', '#DDF3FF', '#E3F8DD', '#EDE3FF', '#FFE8D1'];
 const NOTE_STICKERS = ['🐱', '😺', '⭐', '🌸', '💖', '🎀', '🦋', '🍓', '🎨', '📚', '✏️', '🌙', '☀️', '🎉', '🧁', '🐾', '🌷', '🍀'];
-let NB = {notes: (store.get('notes', {notes: []}).notes || [])};
+const nbStored = store.get('notes', {notes: []});
+let NB = {notes: nbStored.notes || [], pin: nbStored.pin || '', pinTs: nbStored.pinTs || 0};
+let nbUnlocked = false;
 const liveNotes = () => NB.notes.filter(n => !n.deleted).sort((a, b) => b.updated - a.updated);
 function nbMerge(a, b){
   const m = new Map();
@@ -4877,18 +4881,19 @@ function nbSave(){
   nbDoc = db.doc('notebook/farha');
   nbDoc.onSnapshot(snap => {
     if(snap.metadata && snap.metadata.fromCache) return;
-    const remote = snap.exists ? (snap.data().notes || []) : null;
-    const before = canon(NB.notes);
-    if(remote) NB.notes = nbMerge(NB.notes, remote);
-    const after = canon(NB.notes);
+    const rd = snap.exists ? snap.data() : null, remote = rd ? (rd.notes || []) : null;
+    const before = canon(NB);
+    if(remote){ NB.notes = nbMerge(NB.notes, remote); if((rd.pinTs || 0) > (NB.pinTs || 0)){ NB.pin = rd.pin || ''; NB.pinTs = rd.pinTs; } }
+    const after = canon(NB);
     store.set('notes', NB);
-    if(!remote || canon(nbMerge(remote, [])) !== after) nbSave();
+    if(!rd || canon({notes: nbMerge(remote, []), pin: rd.pin || '', pinTs: rd.pinTs || 0}) !== after) nbSave();
     if(after !== before && screenEl.querySelector('.nb-list')) notesScreen(true);
   }, () => { nbDoc = null; });
 })();
 const noteDate = ts => new Date(ts).toLocaleDateString('ar-EG', {weekday:'long', day:'numeric', month:'long'});
 
 function notesScreen(keep){
+  if(!nbUnlocked) return notebookLock(() => { nbUnlocked = true; notesScreen(keep); });
   setTop(true, keep === true);
   const list = liveNotes();
   screenEl.innerHTML = `<section class="hub">
@@ -4896,7 +4901,8 @@ function notesScreen(keep){
       <span class="nb-ico" aria-hidden="true">📒</span>
       <div><h2>دفتر ${KID_AR} <span class="en">My Notebook</span></h2>
       <p>اكتبي فيه أي حاجة تحبيها: حاجة حصلت النهارده، فكرة، حلم، أو كلمات إنجليزي جديدة عاوزة تفتكريها. بالعربي أو بالإنجليزي، زي ما تحبي.</p></div>
-      <button class="btn primary" id="newNote">✏️ اكتبي حاجة جديدة</button>
+      <div class="nb-acts"><button class="btn primary" id="newNote">✏️ اكتبي حاجة جديدة</button>
+        <button class="btn sm" id="nbLockBtn">🔒 اقفلي الدفتر</button><button class="btn sm" id="nbPinBtn">🔑 غيّري الرقم السري</button></div>
     </div>
     ${list.length ? `<div class="nb-list">${list.map(n => `<button class="nb-card" data-note="${n.id}" style="--paper:${n.color || NOTE_COLORS[0]}">
         <span class="nb-stk">${n.sticker || ''}</span>
@@ -4905,6 +4911,8 @@ function notesScreen(keep){
       : `<p class="empty">الدفتر لسه فاضي. دوسي «اكتبي حاجة جديدة» وابدأي أول صفحة! 📝</p>`}
   </section>`;
   $('#newNote').onclick = () => noteEdit(null);
+  $('#nbLockBtn').onclick = () => { nbUnlocked = false; home(); toast('الدفتر اتقفل 🔒'); };
+  $('#nbPinBtn').onclick = () => notebookLock(() => toast('اتغيّر الرقم السري بتاع دفترك 🔑'), true);
   screenEl.querySelectorAll('[data-note]').forEach(b => b.onclick = () => noteEdit(b.dataset.note));
 }
 function noteEdit(id){
@@ -4972,19 +4980,24 @@ function modal(html){
   document.body.appendChild(m); m.addEventListener('click', e => { if(e.target === m) m.remove(); });
   return m;
 }
-function askPin(onOk, note='', forceSet=false){
-  const B = S.bank, setting = forceSet || !B.pin;
+/* one 4-digit PIN dialog for both locks: the parents' (money) and Farha's own (notebook) */
+function pinDialog(o){
+  const setting = o.forceSet || !o.current();
+  const T = o.text;
   let first = '', pin = '';
-  const m = modal(`<h3>${setting ? 'بابا أو ماما: اعملوا رقم سري' : 'الرقم السري لبابا أو ماما'}</h3>
-    <p class="muted" id="pinNote">${note || (setting ? 'اختاروا ٤ أرقام. هتحتاجوها لما فرحة تسحب فلوس أو تغيّروا الإعدادات.' : 'اكتبوا الرقم السري.')}</p>
+  const m = modal(`<h3>${setting ? T.setTitle : T.title}</h3>
+    <p class="muted" id="pinNote">${o.note || (setting ? T.setNote : T.note)}</p>
     <div class="pin-dots" id="pinDots"></div>
-    <div class="pin-pad" dir="ltr">${[1,2,3,4,5,6,7,8,9,'⌫',0,'✕'].map(k => `<button class="key" data-p="${k}">${typeof k === 'number' ? AR_DIG[k] : k}</button>`).join('')}</div>`);
+    <div class="pin-pad" dir="ltr">${[1,2,3,4,5,6,7,8,9,'⌫',0,'✕'].map(k => `<button class="key" data-p="${k}">${typeof k === 'number' ? AR_DIG[k] : k}</button>`).join('')}</div>
+    ${!setting && o.forgot ? '<button class="btn sm" id="pinForgot">نسيتي الرقم؟</button>' : ''}`);
   const dots = () => { m.querySelector('#pinDots').innerHTML = [0,1,2,3].map(j => `<i class="${j < pin.length ? 'on' : ''}"></i>`).join(''); };
+  const say2 = t => { m.querySelector('#pinNote').textContent = t; };
   dots();
+  if(m.querySelector('#pinForgot')) m.querySelector('#pinForgot').onclick = () => { m.remove(); o.forgot(); };
   m.querySelector('.pin-pad').onclick = e => {
     const b = e.target.closest('[data-p]'); if(!b) return;
     const k = b.dataset.p;
-    if(k === '✕') return m.remove();
+    if(k === '✕'){ m.remove(); return o.onCancel && o.onCancel(); }
     if(k === '⌫'){ pin = pin.slice(0, -1); return dots(); }
     if(pin.length >= 4) return;
     pin += k; dots(); sfxTick();
@@ -4992,15 +5005,31 @@ function askPin(onOk, note='', forceSet=false){
     m.classList.add('busy');
     setTimeout(() => {
       m.classList.remove('busy');
-      if(setting && !first){ first = pin; pin = ''; dots(); m.querySelector('#pinNote').textContent = 'اكتبوا نفس الرقم تاني للتأكيد.'; return; }
+      if(setting && !first){ first = pin; pin = ''; dots(); say2(T.again); return; }
       if(setting){
-        if(pin !== first){ first = ''; pin = ''; dots(); m.querySelector('#pinNote').textContent = 'الرقمين مش زي بعض. ابدأوا من الأول.'; sfxBad(); return; }
-        S.bank.pin = pin; S.bank.setTs = Date.now(); bankSave(); m.remove(); return onOk();
+        if(pin !== first){ first = ''; pin = ''; dots(); say2(T.mismatch); sfxBad(); return; }
+        o.save(pin); m.remove(); return o.onOk();
       }
-      if(pin === S.bank.pin){ m.remove(); onOk(); }
-      else { pin = ''; dots(); sfxBad(); m.querySelector('#pinNote').textContent = 'الرقم غلط. جربوا تاني.'; m.querySelector('.bk-box').classList.remove('shake'); void m.offsetWidth; m.querySelector('.bk-box').classList.add('shake'); }
+      if(pin === o.current()){ m.remove(); o.onOk(); }
+      else { pin = ''; dots(); sfxBad(); say2(T.wrong); m.querySelector('.bk-box').classList.remove('shake'); void m.offsetWidth; m.querySelector('.bk-box').classList.add('shake'); }
     }, 150);
   };
+}
+function askPin(onOk, note='', forceSet=false){
+  pinDialog({onOk, note, forceSet, current: () => S.bank.pin,
+    save: p => { S.bank.pin = p; S.bank.setTs = Date.now(); bankSave(); },
+    text: {title:'الرقم السري لبابا أو ماما', note:'اكتبوا الرقم السري.', setTitle:'بابا أو ماما: اعملوا رقم سري',
+      setNote:'اختاروا ٤ أرقام. هتحتاجوها لما فرحة تسحب فلوس أو تبدأ تكسب أو تغيّروا الإعدادات.', again:'اكتبوا نفس الرقم تاني للتأكيد.',
+      mismatch:'الرقمين مش زي بعض. ابدأوا من الأول.', wrong:'الرقم غلط. جربوا تاني.'}});
+}
+/* Farha's own notebook lock; if she forgets it, a parent PIN lets her choose a new one */
+function notebookLock(onOk, forceSet=false){
+  pinDialog({onOk, forceSet, current: () => NB.pin,
+    save: p => { NB.pin = p; NB.pinTs = Date.now(); nbSave(); },
+    forgot: () => askPin(() => notebookLock(onOk, true), `${KID_AR} نسيت الرقم السري بتاع دفترها. اكتبوا رقمكم علشان تعمل رقم جديد (الدفتر مش هيتفتح ليكم).`),
+    text: {title:`🔒 دفتر ${KID_AR}`, note:'اكتبي الرقم السري بتاعك.', setTitle:'🔒 اعملي رقم سري لدفترك',
+      setNote:'اختاري ٤ أرقام سهل تفتكريها، ومتقوليهاش لحد. محدش هيقدر يفتح الدفتر غيرك.', again:'اكتبي نفس الرقم تاني علشان نتأكد.',
+      mismatch:'الرقمين مش زي بعض. ابدأي من الأول.', wrong:'الرقم غلط. جربي تاني.'}});
 }
 function withdrawFlow(){
   const B = S.bank, bal = B.balance;

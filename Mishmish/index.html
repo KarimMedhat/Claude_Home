@@ -887,6 +887,8 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
 .talk-mic{justify-content:center}
 .mic-big{font-size:21px;padding:12px 26px}
 .mic-big.listening{background:#FF5C7A;color:#fff;animation:pulse 1.2s infinite}
+.kb-mic{padding:10px 14px;border:2px dashed var(--ink);border-radius:14px;background:#FFFFFF;text-align:start}
+.kb-mic ol{margin:6px 0 0;padding-inline-start:22px;display:grid;gap:2px;font-size:15px}
 .talk-heard{margin:0;text-align:center;font-size:17px;min-height:1.5em}
 .talk-heard small{color:#1E8E4E;font-weight:700}
 .talk-type{display:flex;gap:8px}
@@ -4396,8 +4398,10 @@ function talkPanel(){
       ${SpeechRec ? `<button class="btn primary mic-big" id="micGo">🎤 دوسي واتكلمي</button>
         <button class="chip" id="talkLang" aria-pressed="${talkLang === 'ar-EG'}">${talkLang === 'en-US' ? '🇬🇧 English' : '🇪🇬 عربي'}</button>` : ''}
     </div>
-    <p class="talk-heard" id="talkHeard">${SpeechRec ? 'دوسي على المايك وقولي لمشمش تعمل حاجة، زي <span class="en">"Go to your bed"</span>' : 'اكتبي لمشمش بالإنجليزي هي تعمل إيه، أو دوسي على جملة من تحت.'}</p>
-    <form class="talk-type" id="talkForm" dir="ltr"><input id="talkInput" lang="en" autocomplete="off" placeholder="Type: Go to your bed" maxlength="80"><button class="btn" type="submit">Send ➤</button></form>
+    ${SpeechRec ? '' : `<div class="kb-mic"><b>🎤 اتكلمي من مايك الكيبورد</b>
+      <ol><li>دوسي في المربع الأبيض تحت.</li><li>دوسي على <b>المايك 🎤</b> اللي في كيبورد الموبايل.</li><li>قولي الأمر، زي <span class="en">"Go to your bed"</span> أو "روحي اوضتك"، وبعدين دوسي <b class="en">Send</b>.</li></ol></div>`}
+    <p class="talk-heard" id="talkHeard">${SpeechRec ? 'دوسي على المايك وقولي لمشمش تعمل حاجة، زي <span class="en">"Go to your bed"</span>' : 'أو اكتبي الأمر بالإنجليزي، أو دوسي على جملة من تحت.'}</p>
+    <form class="talk-type" id="talkForm" dir="ltr"><input id="talkInput" lang="en" autocomplete="off" enterkeyhint="send" placeholder="🎤 Say or type: Go to your bed" maxlength="80"><button class="btn" type="submit">Send ➤</button></form>
     <div class="chips talk-chips" dir="ltr">${TALK_CHIPS.concat(near.map(it => [`Go to the ${it.en}`, `روحي عند ${it.ar}`])).map(([en, ar]) => `<button class="chip" data-cmd="${esc(en)}" title="${esc(ar)}"><span class="en">${esc(en)}</span><small>${esc(ar)}</small></button>`).join('')}</div>
   </div>`;
   $('#talkClose').onclick = () => { stopListening(); el.hidden = true; };
@@ -4423,7 +4427,7 @@ function listen(){
   };
   r.onerror = e => {
     const blocked = /not-allowed|service-not-allowed|audio-capture/.test(e.error);
-    h.textContent = blocked ? 'المايك مقفول هنا (التطبيق أو المتصفح مش سامح بيه). اكتبي الجملة بالإنجليزي بدل كده 👇' : e.error === 'no-speech' ? 'مسمعتش حاجة. قربي من الموبايل وجربي تاني.' : 'حصلت مشكلة في المايك. جربي تاني أو اكتبي الجملة 👇';
+    h.textContent = blocked ? 'المايك مقفول هنا. استخدمي مايك كيبورد الموبايل: دوسي في المربع تحت، وبعدين على 🎤 اللي في الكيبورد واتكلمي 👇' : e.error === 'no-speech' ? 'مسمعتش حاجة. قربي من الموبايل وجربي تاني.' : 'حصلت مشكلة في المايك. جربي تاني أو اكتبي الجملة 👇';
     if(blocked && $('#micGo')){ $('#micGo').disabled = true; }
   };
   r.onend = () => { talkRec = null; const bb = $('#micGo'); if(bb){ bb.classList.remove('listening'); if(!bb.disabled) bb.textContent = '🎤 دوسي واتكلمي'; } };
@@ -4461,9 +4465,16 @@ function talkCommand(raw, dry){
   };
   else if(has('dance', 'ارقص')) act = () => { playTune(rand(TUNES), .2); mishAnim('dancing', 3200); reply("Look! I'm dancing!", 'بترقص'); };
   else if(has('jump', 'hop', 'نط')) act = () => { mishAnim('jump', 1100); setTimeout(() => mishAnim('jump', 1100), 600); reply('Jump, jump!', 'بتنط'); };
-  else if(has('play', 'ball', 'toy', 'العب')) act = () => {
-    if(!toys.length) return reply("I don't have a toy! Can we buy one?", 'معندهاش لعبة، اشتريلها من المول');
-    playWith(rand(toys)); const h = $('#talkHeard'); if(h) h.insertAdjacentHTML('beforeend', '<br><small>✔ مشمش فهمتك: بتلعب</small>');
+  else if(has('play', 'ball', 'toy', 'العب', 'لعب')) act = () => {
+    /* any toy in the room: her own cat toys first, then the room's toys and fun things */
+    const roomToys = S.room.items.filter(p => { const it = ITEM_BY_ID[p.id]; return it && it.dept === 'fun' && !['r_books','r_dollhouse'].includes(it.id); });
+    const pool = toys.length ? toys : roomToys;
+    const done = '<br><small>✔ مشمش فهمتك: بتلعب</small>', h = $('#talkHeard');
+    if(pool.length){ const pl = rand(pool), it = ITEM_BY_ID[pl.id]; playWith(pl); if(h) h.insertAdjacentHTML('beforeend', done); if(it.kind !== 'cattoy') setTimeout(() => say(`I love my ${it.en}!`), 1600); return; }
+    const worn = S.equip.toy && ITEM_BY_ID[S.equip.toy];
+    if(worn){ mishAnim('jump', 1100); setTimeout(() => mishAnim('jump', 1100), 600); reply(`I love playing with my ${worn.en}!`, `بتلعب بـ${worn.ar}`); return; }
+    mishAnim('dancing', 2400); walkTo(clampX(mishSt.x + (Math.random() < .5 ? -15 : 15)), mishSt.y, () => mishAnim('jump', 600));
+    reply("I'm chasing my tail! Can you buy me a toy?", 'بتلعب لوحدها وبتجري ورا ديلها. اشتريلها لعبة من المول');
   };
   else if(target) act = () => {
     const [p, it] = target;

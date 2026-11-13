@@ -1198,12 +1198,75 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
   .swipe-card{font-size:19px}
   .boss{grid-template-columns:auto minmax(0,1fr) 50px}
 }
+/* word picker */
+.pk-tools{justify-content:center}
+.pk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-top:12px}
+.pk{position:relative;display:grid;justify-items:center;gap:2px;padding:12px 6px 10px;border:3px solid var(--ink);border-radius:16px;background:var(--card);box-shadow:3px 3px 0 var(--ink);transition:transform .1s}
+.pk:hover{transform:translateY(-2px)}
+.pk .emo{font-size:34px;line-height:1.1}
+.pk .en{font-size:19px;font-weight:700}
+.pk small{font-size:13px;color:var(--ink-soft);line-height:1.3}
+.pk.on{background:var(--good-l);border-color:var(--good)}
+.pk-chk{position:absolute;top:-10px;inset-inline-end:-8px;width:26px;height:26px;border:2px solid var(--ink);border-radius:50%;background:var(--good);color:#fff;display:none;place-items:center;font-style:normal;font-size:14px}
+.pk.on .pk-chk{display:grid}
+.pk-st{position:absolute;top:4px;inset-inline-start:6px;font-size:16px}
+.pk-sp{position:absolute;top:4px;inset-inline-end:8px;font-size:14px}
+.pk-bar{position:sticky;bottom:10px;z-index:3;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;padding:10px 14px;border:3px solid var(--ink);border-radius:18px;background:var(--sun-l);box-shadow:var(--shadow);font-weight:800}
+/* word gym */
+.a-gym{background:#FFE8F2}
+.wg-words{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:6px}
+.wg-card{min-width:0;width:min(420px,100%);padding:12px 18px}
+.wg-hint{margin:0;font-weight:800;font-size:18px;text-align:center}
+.wg-steps{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:6px}
+.wg-steps span{border:2px solid var(--ink);border-radius:99px;padding:2px 10px;font-weight:700;font-size:14px;background:var(--card)}
+.wg-steps .now{background:var(--sun)}.wg-steps .done{background:var(--good-l)}
+.lt-row{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.lt{display:grid;place-items:center;min-width:48px;height:62px;padding:0 6px;border:3px solid var(--ink);border-radius:12px;background:#E3EEFF;font-family:var(--learn);font-size:36px;font-weight:700;box-shadow:0 3px 0 var(--ink);cursor:pointer;user-select:none;transition:transform .12s,background .12s}
+.lt.v{background:#FFE1CC}
+.lt.sym{background:transparent;border-color:transparent;box-shadow:none;min-width:14px}
+.lt.lit{background:var(--good-l);transform:translateY(-5px)}
+.lt.hint{animation:shake .4s;border-color:var(--tangerine)}
+.lt.blank{background:var(--card);border-style:dashed}
+.lt.cur{border-color:var(--tangerine);box-shadow:0 4px 0 var(--tangerine)}
+.lt.filled{background:var(--good-l);animation:pop .4s}
+.lt.missed{background:var(--bad-l)}
+.lt-gap{width:20px}
+.wg-choices{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:520px}
+.wg-choice{width:58px;height:62px;border:3px solid var(--ink);border-radius:14px;background:var(--card);font-family:var(--learn);font-size:32px;font-weight:700;box-shadow:0 3px 0 var(--ink)}
+.wg-choice.wrong{background:var(--bad-l);animation:shake .4s}
+.diff{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;margin-top:6px;font-family:var(--learn);font-size:32px;font-weight:700}
+.diff .ok{color:#1E8E4E}.diff .no{color:#D93A30;text-decoration:underline wavy}
+.key.used-ok{background:var(--good-l)}
+.key.used-no{background:var(--bad-l);opacity:.55}
+.bl-scene{display:grid;justify-items:center;width:min(300px,100%)}
+.bl-svg{width:100%;height:auto;display:block}
+.bl-on{animation:bob 2.2s ease-in-out infinite}
+.bl-cat{width:110px;margin-top:-14px;transition:transform .4s}
+.bl-cat svg{width:100%;height:auto;display:block}
+.bl-cat.happy{animation:bob 1s ease-in-out infinite}
+.rain{position:relative;width:min(640px,100%);height:280px;border:3px solid var(--ink);border-radius:var(--r);overflow:hidden;background:linear-gradient(#CFEFFF,#F2FBFF)}
+.rl{position:absolute;top:-64px;width:56px;height:56px;border:3px solid var(--ink);border-radius:50%;background:var(--card);font-family:var(--learn);font-size:30px;font-weight:700;box-shadow:0 3px 0 var(--ink);animation:rlfall var(--d,5s) linear forwards}
+.rl.wrong{background:var(--bad-l)}
+@keyframes rlfall{to{top:calc(100% + 10px)}}
+/* lesson chips under a unit, and the back button */
+.lesson-chips{margin-top:10px;padding:10px;border:2px dashed var(--ink);border-radius:16px;background:#F5F9FF}
+.lesson-chips .chip{font-size:15px;padding:4px 12px}
+.lesson-chips .lc-label{font-weight:800;font-size:15px;align-self:center}
+.wtile .wsp{position:absolute;top:4px;inset-inline-start:6px;font-size:14px}
+@media (max-width:760px){
+  .lt{min-width:38px;height:52px;font-size:28px;padding:0 4px}
+  .wg-choice{width:50px;height:54px;font-size:28px}
+  .rain{height:240px}
+  .rl{width:50px;height:50px;font-size:26px}
+  .pk-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
+}
 </style>
 
 <div dir="rtl" lang="ar">
   <header class="topbar">
     <div class="topbar-in">
-      <button class="icon-btn" id="homeBtn" hidden>→ الرئيسية</button>
+      <button class="icon-btn" id="backBtn" hidden aria-label="رجوع للصفحة اللي قبلها">→ رجوع</button>
+      <button class="icon-btn" id="homeBtn" hidden aria-label="الصفحة الرئيسية">🏠 الرئيسية</button>
       <div class="brand" id="brand"></div>
       <div class="spacer"></div>
       <button class="icon-btn" id="soundBtn" aria-pressed="true" title="الصوت">🔊</button>
@@ -2212,7 +2275,8 @@ const S = {
   exams: store.get('exams', {}),
   pDone: store.get('pDone', {}),
   wDone: store.get('wDone', {}),
-  sci: store.get('sci', {})
+  sci: store.get('sci', {}),
+  spellOk: store.get('spellOk', {})
 };
 /* Stars are a per-device ledger so stars earned on two devices add up instead of overwriting each other:
    balance = base (stars from before the ledger) + everything earned on every device - everything spent.
@@ -2240,7 +2304,7 @@ const save = k => { store.set(k, S[k]); progStamp(k); };
 /* ---------- whole-game progress synced across devices (artifact db doc progress/farha) ----------
    Every save(k) stamps the key's time. Copies merge per key: lists of things done or owned are united,
    scores keep the best, everything else keeps the newest copy. A reset wins over older data everywhere. */
-const PROG_KEYS = ['starLedger','owned','equip','gallery','tricky','mish','room','treats','pet','day','name','readWords','famDone','storyDone','wl','gDone','vDone','writings','exams','pDone','wDone','sci'];
+const PROG_KEYS = ['starLedger','owned','equip','gallery','tricky','mish','room','treats','pet','day','name','readWords','famDone','storyDone','wl','gDone','vDone','writings','exams','pDone','wDone','sci','spellOk'];
 const PROG_META = Object.assign({ts:{}, resetTs:0, joined:false}, store.get('sync_meta', {}));
 let progDoc = null, progTimer = null, progWriting = false, progDirty = false, progState = 'wait';
 function progStamp(k){ if(PROG_KEYS.includes(k)){ PROG_META.ts[k] = Date.now(); store.set('sync_meta', PROG_META); progSchedule(); } }
@@ -2265,7 +2329,7 @@ function progMergeKey(k, a, b, ta, tb, joining){
   if(a == null) return b; if(b == null) return a;
   if(k === 'owned' || k === 'readWords') return [...new Set([...b, ...a])];
   if(['gDone','vDone','wDone','famDone','storyDone'].includes(k) && pIsObj(a) && pIsObj(b)){ const o = {...b}; Object.keys(a).forEach(x => { if(a[x]) o[x] = a[x]; }); return o; }
-  if(['exams','pDone','tricky','sci'].includes(k) && pIsObj(a) && pIsObj(b)){ const o = {...b}; Object.keys(a).forEach(x => { o[x] = Math.max(+a[x] || 0, +o[x] || 0); }); return o; }
+  if(['exams','pDone','tricky','sci','spellOk'].includes(k) && pIsObj(a) && pIsObj(b)){ const o = {...b}; Object.keys(a).forEach(x => { o[x] = Math.max(+a[x] || 0, +o[x] || 0); }); return o; }
   if(k === 'wl' && pIsObj(a) && pIsObj(b)){ const o = {...b}; Object.keys(a).forEach(x => { if(!o[x] || (a[x].due || 0) > (o[x].due || 0)) o[x] = a[x]; }); return o; }
   if(k === 'writings' && Array.isArray(a) && Array.isArray(b)){ const seen = new Set(), out = []; [...a, ...b].forEach(w => { const id = JSON.stringify([w.wid, w.title, w.text]); if(!seen.has(id)){ seen.add(id); out.push(w); } }); return out.slice(0, 20); }
   if(k === 'starLedger' && pIsObj(a) && pIsObj(b)) return ledgerMerge(a, b);
@@ -2345,7 +2409,16 @@ const TOPICS = [
   {id:'u1',en:'Unit 1',ar:'الوحدة ١',book:1},{id:'u2',en:'Unit 2',ar:'الوحدة ٢',book:1},{id:'u3',en:'Unit 3',ar:'الوحدة ٣',book:1},{id:'u4',en:'Unit 4',ar:'الوحدة ٤',book:1},{id:'u5',en:'Unit 5',ar:'الوحدة ٥',book:1}
 ];
 /* the five home games use Farha's school-book words: the whole book, or one unit */
-const topicWords = () => S.topic !== 'all' && BOOK.some(u => u.id === S.topic) ? unitWordsWithPics(S.topic) : bookWordsWithPics();
+const topicLesson = () => S.topic && S.topic.startsWith('L:') ? LESSONS[S.topic.slice(2)] : null;
+const topicWords = () => {
+  const l = topicLesson();
+  if(l){                                         /* one lesson: its picture words, topped up from its unit if there are too few */
+    const seen = new Set(), ws = l.words.map(k => WORDS[k]).filter(w => w.e && !w.abs && !seen.has(w.e) && seen.add(w.e));
+    if(ws.length >= 6) return ws;
+    return ws.concat(shuffle(unitWordsWithPics(l.unit.id).filter(w => !ws.includes(w) && !seen.has(w.e))).slice(0, 6 - ws.length));
+  }
+  return S.topic !== 'all' && BOOK.some(u => u.id === S.topic) ? unitWordsWithPics(S.topic) : bookWordsWithPics();
+};
 
 const PARTS = {
   head:{en:'head',ar:'الراس'}, body:{en:'body',ar:'الجسم'}, ears:{en:'ears',ar:'الودان'}, eyes:{en:'eyes',ar:'العينين'},
@@ -5410,8 +5483,10 @@ function englishWorld(keep){
 
   <h2 class="sec-title">اختاري الموضوع <span class="en">Choose a topic</span></h2>
   <div class="chips" id="chips">
-    ${GAME_TOPICS().map(t => `<button class="chip chip-book" data-topic="${t.id}" aria-pressed="${(GAME_TOPICS().some(x => x.id === S.topic) ? S.topic : 'all') === t.id}">📘 ${t.ar} <span class="en">${t.en}</span></button>`).join('')}
+    ${GAME_TOPICS().map(t => `<button class="chip chip-book" data-topic="${t.id}" aria-pressed="${(topicLesson() ? topicLesson().unit.id : GAME_TOPICS().some(x => x.id === S.topic) ? S.topic : 'all') === t.id}">📘 ${t.ar} <span class="en">${t.en}</span></button>`).join('')}
   </div>
+  ${(() => { const u = topicLesson() ? topicLesson().unit : BOOK.find(x => x.id === S.topic); if(!u) return '';
+    return `<div class="chips lesson-chips"><span class="lc-label">📗 أو درس واحد:</span>${u.lessons.map((l, i) => `<button class="chip" data-topic="L:${l.id}" aria-pressed="${S.topic === 'L:' + l.id}">${u.id === 'st' ? '' : `الدرس ${i + 1} · `}<span class="en">${l.en}</span></button>`).join('')}</div>`; })()}
 
   <h2 class="sec-title">اختاري لعبة <span class="en">Let's play</span></h2>
   <div class="tiles">
@@ -5430,8 +5505,8 @@ function englishWorld(keep){
 </section>`;
   screenEl.querySelectorAll('[data-topic]').forEach(b => b.onclick = () => {
     S.topic = b.dataset.topic; save('topic');
-    screenEl.querySelectorAll('[data-topic]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-    const t = GAME_TOPICS().find(t => t.id === S.topic); if(t) say(t.en);
+    const y = window.scrollY; englishWorld(true); window.scrollTo(0, y);
+    const l = topicLesson(), t = GAME_TOPICS().find(t => t.id === S.topic); say(l ? l.en : t ? t.en : '');
   });
   screenEl.querySelectorAll('[data-game]').forEach(b => b.onclick = () => { actx(); roundStars = 0; GAMES[b.dataset.game](); });
   $('#bookDoor').onclick = () => { actx(); bookHome(); };
@@ -5996,14 +6071,15 @@ function lessonScreen(lid){
   const tile = k => { const w = WORDS[k], lv = lvl(k);
     return `<button class="wtile ${w.e ? '' : 'noimg'} ${isDue(k) ? 'thirsty' : ''}" data-say="${esc(w.en)}">
       ${w.e ? `<span class="emo" aria-hidden="true">${w.e}</span>` : ''}<span class="en">${w.en}</span><small>${w.ar}</small>
-      <span class="wstage" title="${STAGE_AR[lv]}">${S.wl[k] ? potSVG(lv, {dry:isDue(k)}) : ''}</span></button>`; };
+      <span class="wstage" title="${STAGE_AR[lv]}">${S.wl[k] ? potSVG(lv, {dry:isDue(k)}) : ''}</span>${S.spellOk[k] ? '<span class="wsp" title="كتبتيها من دماغك">✍️</span>' : ''}</button>`; };
   const impKeys = l.imp ? l.imp.split(';').filter(Boolean).map(s => s.split('|')[0].trim()) : [];
   const extKeys = l.words.filter(k => !impKeys.includes(k));
   screenEl.innerHTML = `<section class="hub" style="--uc:${u.c};--ucl:${u.cl}">
     ${crumbs([['منهج المدرسة','book'], [u.id === 'st' ? 'القصة' : `الوحدة ${u.n}`, u.id], [l.ar]])}
     <div class="unit-head"><span class="u-badge">${u.id === 'st' ? '📖' : u.n}</span><div><h2 class="en">${l.en}</h2><p>${l.ar} · 🌱 ${grown.length} من ${l.words.length} كلمة</p></div></div>
     <div class="actions">
-      ${fresh.length ? `<button class="act-card a-learn" id="aLearn"><span class="a-ico">🌱</span><b>ازرعي كلمات جديدة</b><small>${Math.min(6, fresh.length)} كلمات · اتعرّفي، طابقي، افتكري</small></button>` : `<div class="act-card a-done"><span class="a-ico">🌳</span><b>زرعتي كل كلمات الدرس!</b><small>كمّلي سقي في الحديقة</small></div>`}
+      <button class="act-card a-learn" id="aLearn"><span class="a-ico">🌱</span><b>${fresh.length ? 'ازرعي كلمات' : 'ازرعي تاني'}</b><small>${fresh.length ? `اختاري الكلمات اللي هتزرعيها من الدرس كله · فاضل ${nWords(fresh.length)} جديدة` : 'زرعتي كل كلمات الدرس! تقدري تختاري كلمات وتزرعيها تاني'}</small></button>
+      <button class="act-card a-gym" id="aGym"><span class="a-ico">🔤</span><b>احفظي الكلمة بحروفها</b><small>حرف بحرف · بالونات مشمش · مطر الحروف${l.words.filter(k => S.spellOk[k]).length ? ` · ✍️ ${l.words.filter(k => S.spellOk[k]).length}/${l.words.length}` : ''}</small></button>
       ${grown.length ? `<button class="act-card a-water" id="aWater"><span class="a-ico">💧</span><b>اسقي كلمات الدرس</b><small>راجعي ${Math.min(12, grown.length)} كلمة</small></button>` : ''}
       ${l.g ? `<button class="act-card a-gram ${S.gDone[l.g] ? 'is-done' : ''}" id="aGram"><span class="a-ico">📐</span><b>قاعدة: ${GRAMMAR[l.g].ar}</b><small class="en">${GRAMMAR[l.g].en}${S.gDone[l.g] ? ' ✔' : ''}</small></button>` : ''}
       ${l.p ? `<button class="act-card a-sound ${S.gDone[l.p] ? 'is-done' : ''}" id="aSound"><span class="a-ico">🔊</span><b>معمل الأصوات</b><small>${GRAMMAR[l.p].ar}${S.gDone[l.p] ? ' ✔' : ''}</small></button>` : ''}
@@ -6020,7 +6096,12 @@ function lessonScreen(lid){
   bindCrumbs();
   const back = () => lessonScreen(lid);
   const pool = l.words;
-  if($('#aLearn')) $('#aLearn').onclick = () => { roundStars = 0; learnSession(fresh.slice(0, 6), pool, back); };
+  $('#aLearn').onclick = () => wordPicker({keys: l.words, pre: (fresh.length ? fresh : l.words).slice(0, 6), max: 8, freshFirst: true,
+    title: '🌱 اختاري الكلمات اللي هتزرعيها', sub: 'دوسي على الكلمات اللي عاوزة تزرعيها من الدرس كله (لحد ٨ كلمات في المرة). الزرعة اللي فوق الكلمة معناها إنها اتزرعت قبل كده.',
+    goLabel: n => n ? `🌱 ازرعي ${nWords(n)}` : 'اختاري كلمات', go: ks => learnSession(ks, pool, back)});
+  $('#aGym').onclick = () => wordPicker({keys: l.words, pre: [...impKeys, ...extKeys].filter(k => !S.spellOk[k]).slice(0, 5), max: 10,
+    title: '🔤 اختاري الكلمات اللي هتحفظي حروفها', sub: 'أحسن حاجة ٣ لـ ٦ كلمات في المرة. ✍️ معناها إنك كتبتيها من دماغك قبل كده.',
+    goLabel: n => n ? `🔤 يلا نحفظ ${nWords(n)}` : 'اختاري كلمات', go: ks => wordGym(ks, back)});
   if($('#aWater')) $('#aWater').onclick = () => { roundStars = 0; review(shuffle(grown).slice(0, 12), pool, back, 'ركن الدرس'); };
   if($('#aGram')) $('#aGram').onclick = () => { roundStars = 0; grammarRun(l.g, back); };
   if($('#aVerb')) $('#aVerb').onclick = () => { roundStars = 0; verbQuiz(l, back); };
@@ -8020,6 +8101,354 @@ new MutationObserver(ms => ms.forEach(m => {
 })).observe(document.body, {childList:true, subtree:true, characterData:true});
 
 /* ---------- boot ---------- */
+/* ============ WORD PICKER: choose which lesson words to plant or practise ============ */
+function wordPicker(o){
+  setTop(true);
+  const sel = new Set((o.pre || []).slice(0, o.max));
+  const tile = k => { const w = WORDS[k];
+    return `<button class="pk ${sel.has(k) ? 'on' : ''}" data-k="${esc(k)}" aria-pressed="${sel.has(k)}">
+      ${w.e ? `<span class="emo" aria-hidden="true">${w.e}</span>` : ''}<span class="en">${esc(w.en)}</span><small>${esc(w.ar)}</small>
+      ${S.wl[k] ? `<span class="pk-st" title="${STAGE_AR[lvl(k)]}">${STAGE[lvl(k)]}</span>` : ''}${S.spellOk[k] ? '<span class="pk-sp" title="كتبتيها قبل كده">✍️</span>' : ''}<i class="pk-chk">✔</i></button>`; };
+  screenEl.innerHTML = `<section class="hub picker">
+    <div class="g-head"><h2>${o.title}</h2><p class="ask">${o.sub}</p></div>
+    <div class="row pk-tools">
+      ${o.freshFirst ? '<button class="chip" id="pkFresh">🌰 الكلمات الجديدة بس</button>' : '<button class="chip" id="pkFresh">✨ اللي لسه ماكتبتيهاش</button>'}
+      <button class="chip" id="pkAll">✔ اختاري ${o.max < o.keys.length ? `أول ${o.max}` : 'الكل'}</button>
+      <button class="chip" id="pkNone">✖ امسحي الاختيار</button>
+    </div>
+    <div class="pk-grid">${o.keys.map(tile).join('')}</div>
+    <div class="pk-bar"><span id="pkN"></span><button class="btn primary" id="pkGo"></button></div>
+  </section>`;
+  const paint = () => {
+    screenEl.querySelectorAll('.pk').forEach(b => { const on = sel.has(b.dataset.k); b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
+    $('#pkN').textContent = sel.size ? `اخترتي ${nWords(sel.size)} (لحد ${o.max})` : 'اختاري كلمة واحدة على الأقل';
+    $('#pkGo').textContent = o.goLabel(sel.size); $('#pkGo').disabled = !sel.size;
+  };
+  screenEl.querySelectorAll('.pk').forEach(b => b.onclick = () => {
+    const k = b.dataset.k;
+    if(sel.has(k)) sel.delete(k);
+    else if(sel.size >= o.max){ toast(`أقصى عدد ${nWords(o.max)} في المرة الواحدة`); return; }
+    else { sel.add(k); say(WORDS[k].en); }
+    sfxTick(); paint();
+  });
+  const pickSome = list => { sel.clear(); list.slice(0, o.max).forEach(k => sel.add(k)); paint(); };
+  $('#pkFresh').onclick = () => pickSome(o.keys.filter(k => o.freshFirst ? !S.wl[k] : !S.spellOk[k]));
+  $('#pkAll').onclick = () => pickSome(o.keys);
+  $('#pkNone').onclick = () => { sel.clear(); paint(); };
+  $('#pkGo').onclick = () => { if(sel.size){ actx(); roundStars = 0; o.go(o.keys.filter(k => sel.has(k))); } };
+  paint();
+}
+
+/* ============ WORD GYM: learn each word letter by letter ============ */
+const WG_VOW = 'aeiou';
+const isLetter = c => /[a-z]/i.test(c);
+const lettersOf = en => [...en];
+function spellMark(k){ S.spellOk[k] = (S.spellOk[k] || 0) + 1; save('spellOk'); }
+const wgCard = w => `<div class="qcard sticker wg-card">${w.e ? `<span class="emo big" aria-hidden="true">${w.e}</span>` : ''}<p class="flash-ar">${esc(w.ar)}</p>${sayBtn(w.en)}</div>`;
+const wgTiles = (en, show, extra = () => '') => `<div class="lt-row" dir="ltr">${lettersOf(en).map((c, i) => !isLetter(c)
+  ? (c === ' ' ? '<span class="lt-gap"></span>' : `<span class="lt sym">${esc(c)}</span>`)
+  : `<span class="lt ${WG_VOW.includes(c.toLowerCase()) ? 'v' : 'c'} ${show(i) ? '' : 'blank'} ${extra(i)}" data-i="${i}">${show(i) ? esc(c) : '&nbsp;'}</span>`).join('')}</div>`;
+const wgKeyboard = (hasSpace) => `<div class="kb" dir="ltr">${KB_ROWS.map((r, ri) => `<div class="kb-row">${ri === 2 ? '<button class="key wide" data-key="back" aria-label="امسحي">⌫</button>' : ''}${[...r].map(c => `<button class="key" data-key="${c}">${c}</button>`).join('')}${ri === 2 ? '<button class="key wide ok" data-key="enter">✔</button>' : ''}</div>`).join('')}${hasSpace ? '<div class="kb-row"><button class="key space" data-key=" ">space</button></div>' : ''}</div>`;
+/* physical keyboard too, while this screen is open */
+function wgKeys(el, onKey){
+  const h = e => { if(!document.contains(el)){ document.removeEventListener('keydown', h); return; }
+    if(e.key === 'Backspace'){ e.preventDefault(); onKey('back'); } else if(e.key === 'Enter'){ e.preventDefault(); onKey('enter'); }
+    else if(e.key.length === 1 && /[a-z ']/i.test(e.key)){ e.preventDefault(); onKey(e.key.toLowerCase()); } };
+  document.addEventListener('keydown', h);
+}
+
+function wordGym(keys, back){
+  setTop(true);
+  const games = [
+    {id:'steps', ico:'🔤', t:'حرف بحرف', en:'Letter by Letter', d:'شوفي الكلمة، كمّلي الحروف الناقصة، وبعدين اكتبيها من دماغك. أحسن طريقة تحفظي بيها!', c:'#DCEBFF'},
+    {id:'balloons', ico:'🎈', t:'بالونات مشمش', en:'Balloon Rescue', d:'خمّني حروف الكلمة. كل حرف غلط بيفرقع بالونة، متخليش مشمش توقع!', c:'#FFE1EE'},
+    {id:'rain', ico:'🌧️', t:'مطر الحروف', en:'Letter Rain', d:'الحروف بتنزل من السما، اصطادي حروف الكلمة بالترتيب الصح.', c:'#D8F5E6'}
+  ];
+  screenEl.innerHTML = `<section class="hub">
+    <div class="g-head"><h2>🔤 احفظي الكلمة بحروفها <span class="en" style="font-size:20px;color:var(--ink-soft)">Word Gym</span></h2>
+      <p class="ask">الكلمات اللي اخترتيها:</p>
+      <div class="wg-words" dir="ltr">${keys.map(k => `<button class="mini-chip en" data-say="${esc(WORDS[k].en)}">${WORDS[k].e ? WORDS[k].e + ' ' : ''}${esc(WORDS[k].en)}${S.spellOk[k] ? ' ✍️' : ''}</button>`).join('')}</div></div>
+    <div class="game-pick">${games.map(g => `<button class="gp sticker" data-wg="${g.id}" style="background:${g.c}"><span class="gp-ico">${g.ico}</span><b>${g.t}</b><span class="en" style="font-size:14px;color:var(--ink-soft)">${g.en}</span><small>${g.d}</small></button>`).join('')}</div>
+    <p class="muted">نصيحة: ابدئي بـ«حرف بحرف»، وبعدين العبي البالونات والمطر بنفس الكلمات علشان تثبت في دماغك.</p>
+  </section>`;
+  screenEl.querySelectorAll('[data-wg]').forEach(b => b.onclick = () => { actx(); roundStars = 0; ({steps: wgSteps, balloons: wgBalloons, rain: wgRain})[b.dataset.wg](keys, back); });
+}
+const gymBack = (keys, back) => () => wordGym(keys, back);
+
+/* 1) letter by letter: look (tap every letter in order) → fill missing letters → write it from memory */
+function wgSteps(keys, back){
+  setTop(true);
+  const queue = shuffle(keys).map(k => ({k, tries: 0}));
+  let firstTry = 0;
+  const total = keys.length;
+  const head = step => `<div class="g-head"><h2>حرف بحرف <span class="en" style="font-size:20px;color:var(--ink-soft)">Letter by Letter</span></h2>
+    <div class="wg-steps">${['👀 شوفي واسمعي', '🧩 كمّلي الحروف', '✍️ اكتبيها من دماغك'].map((t, i) => `<span class="${i < step ? 'done' : i === step ? 'now' : ''}">${t}</span>`).join('')}</div>
+    <p class="ask">فاضل ${nWords(queue.length)}</p></div>`;
+  function next(){
+    if(!queue.length) return finish(() => wgSteps(keys, back), `كتبتي ${nWords(total)} من دماغك${firstTry === total ? ' ومن أول مرة كمان! 🏆' : `، منهم ${firstTry} من أول مرة`}`, gymBack(keys, back), 'ألعاب الحروف');
+    const it = queue[0];
+    it.tries ? fill(it) : look(it);
+  }
+  function look(it){
+    const w = WORDS[it.k], L = lettersOf(w.en);
+    const order = L.map((c, i) => i).filter(i => isLetter(L[i]));
+    let at = 0;
+    screenEl.innerHTML = `<section class="stage">${head(0)}${wgCard(w)}
+      <p class="wg-hint">دوسي على الحروف واحد واحد بالترتيب ← وقولي كل حرف بصوت عالي</p>
+      ${wgTiles(w.en, () => true)}
+      <button class="btn primary" id="wgNext" disabled>🧩 خبّي شوية حروف</button></section>`;
+    setTimeout(() => say(w.en, .75), 250);
+    screenEl.querySelectorAll('.lt[data-i]').forEach(t => t.onclick = () => {
+      const i = +t.dataset.i;
+      if(i !== order[at]){ const want = screenEl.querySelector(`.lt[data-i="${order[at]}"]`); if(want){ want.classList.remove('hint'); void want.offsetWidth; want.classList.add('hint'); } return; }
+      t.classList.add('lit'); sfxTick(); at++;
+      if(at === order.length){ say(w.en, .75); sfxGood(); $('#wgNext').disabled = false; screenEl.querySelector('.wg-hint').textContent = `برافو! قوليها تاني: ${w.en}`; }
+    });
+    $('#wgNext').onclick = () => fill(it);
+  }
+  function fill(it){
+    const w = WORDS[it.k], L = lettersOf(w.en);
+    const idx = L.map((c, i) => i).filter(i => isLetter(L[i]));
+    const n = Math.max(1, Math.min(idx.length - 1 || 1, Math.round(idx.length * (it.tries ? .6 : .4))));
+    const vowelsFirst = shuffle(idx).sort((a, b) => (WG_VOW.includes(L[b].toLowerCase()) ? 1 : 0) - (WG_VOW.includes(L[a].toLowerCase()) ? 1 : 0));
+    const hide = vowelsFirst.slice(0, n).sort((a, b) => a - b);
+    const shown = new Set(idx.filter(i => !hide.includes(i)));
+    let at = 0;
+    const need = hide.map(i => L[i].toLowerCase());
+    const extra = shuffle([...'abcdefghijklmnoprstuwy'].filter(c => !need.includes(c))).slice(0, Math.max(3, 6 - new Set(need).size));
+    const choices = shuffle([...new Set(need), ...extra]);
+    screenEl.innerHTML = `<section class="stage">${head(1)}${wgCard(w)}
+      <p class="wg-hint">كمّلي الحروف الناقصة بالترتيب</p>
+      <div id="tiles">${wgTiles(w.en, i => shown.has(i), i => i === hide[0] ? 'cur' : '')}</div>
+      <div class="wg-choices" dir="ltr">${choices.map(c => `<button class="wg-choice" data-c="${c}">${c}</button>`).join('')}</div>
+      <div class="feedback" id="fb" aria-live="polite"></div></section>`;
+    screenEl.querySelectorAll('.wg-choice').forEach(b => b.onclick = () => {
+      if(at >= hide.length) return;
+      if(b.dataset.c === need[at]){
+        shown.add(hide[at]); at++; sfxTick();
+        $('#tiles').innerHTML = wgTiles(w.en, i => shown.has(i), i => i === hide[at] ? 'cur' : (i === hide[at - 1] ? 'filled' : ''));
+        if(at === hide.length){ sfxGood(); say(w.en, .75); $('#fb').className = 'feedback good'; $('#fb').innerHTML = `<span class="en">${w.en}</span> ✔ دلوقتي هنخبّيها كلها!`; setTimeout(() => write(it), 1500); }
+      } else { b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); sfxBad(); }
+    });
+  }
+  function write(it){
+    const w = WORDS[it.k], target = w.en.toLowerCase(), L = lettersOf(target);
+    let typed = '';
+    screenEl.innerHTML = `<section class="stage">${head(2)}${wgCard(w)}
+      <p class="wg-hint">الكلمة اتخبّت! اكتبيها من دماغك</p>
+      <div class="slots" dir="ltr" id="slots"></div>
+      <div class="feedback" id="fb" aria-live="polite"></div>
+      ${wgKeyboard(false)}
+      <div class="row" style="justify-content:center" id="after"></div></section>`;
+    let over = false;
+    const paint = () => { $('#slots').innerHTML = L.map((c, i) => c === ' ' ? '<span class="gap"></span>' : `<span class="slot ${i === typed.length ? 'cur' : ''}">${typed[i] && typed[i] !== ' ' ? esc(typed[i]) : ''}</span>`).join(''); };
+    const key = k => {
+      if(over) return;
+      if(k === ' ' || k === "'") return;               /* spaces and apostrophes fill in by themselves */
+      if(k === 'back'){ typed = typed.slice(0, -1); while(typed.length && !isLetter(typed[typed.length - 1])) typed = typed.slice(0, -1); paint(); return; }
+      if(k === 'enter'){ if(typed.length >= L.filter(isLetter).length) check(); else toast('لسه فيه حروف ناقصة ✍️'); return; }
+      if(typed.length >= L.length) return;
+      typed += k; if(L[typed.length] === ' ' || L[typed.length] === "'") typed += L[typed.length]; sfxTick(); paint();
+      if(typed.length === L.length) setTimeout(check, 250);
+    };
+    const check = () => {
+      if(over) return; over = true;
+      const ok = typed.replace(/\s+/g, ' ').trim() === target;
+      if(ok){
+        $('#slots').classList.add('right'); sfxGood(); say(w.en); burst($('#slots'));
+        if(!it.tries){ firstTry++; addStars(2); } else addStars(1);
+        spellMark(it.k); queue.shift();
+        $('#fb').className = 'feedback good'; $('#fb').innerHTML = `<span class="en">${w.en}</span><span>${w.ar}</span> ✔ حفظتيها!`;
+        setTimeout(next, 1800);
+      } else {
+        sfxBad(); markTricky(w); it.tries++;
+        $('#fb').className = 'feedback bad';
+        $('#fb').innerHTML = `قربتي! الصح كده:<div class="diff" dir="ltr">${L.map((c, i) => c === ' ' ? '<span>&nbsp;</span>' : `<span class="${typed[i] === c ? 'ok' : 'no'}">${esc(w.en[i])}</span>`).join('')}</div>`;
+        say(w.en, .75);
+        queue.push(queue.shift());
+        if(it.tries >= 3) queue.pop();
+        $('#after').innerHTML = `<button class="btn primary" id="goOn">${it.tries >= 3 ? 'تمام، نكمّل' : 'تمام، هنرجعلها تاني 🔁'}</button>`;
+        $('#goOn').onclick = next;
+      }
+    };
+    screenEl.querySelectorAll('[data-key]').forEach(b => b.onclick = () => key(b.dataset.key));
+    wgKeys($('#slots'), key);
+    paint();
+  }
+  next();
+}
+
+/* 2) balloon rescue: guess the letters; every wrong letter pops a balloon */
+function wgBalloons(keys, back){
+  setTop(true);
+  const list = shuffle(keys); let i = 0, saved = 0;
+  const COLORS = ['#FF6B8A', '#FFB020', '#4CC3FF', '#8BD450', '#B07CFF', '#FF8A3D'];
+  function play(){
+    if(i >= list.length) return finish(() => wgBalloons(keys, back), `أنقذتي مشمش في ${saved} من ${list.length} ${list.length > 10 ? 'كلمة' : 'كلمات'} 🎈`, gymBack(keys, back), 'ألعاب الحروف');
+    const k = list[i], w = WORDS[k], L = lettersOf(w.en), low = w.en.toLowerCase();
+    const got = new Set(), tried = new Set(); let lives = 6, over = false;
+    const need = new Set([...low].filter(isLetter));
+    const balloonsSVG = () => `<svg viewBox="0 0 240 120" class="bl-svg" aria-hidden="true">${COLORS.map((c, j) => { const x = 30 + j * 36, on = j < lives;
+      return `<g class="${on ? 'bl-on' : 'bl-off'}"><line x1="${x}" y1="${48 + (j % 2) * 6}" x2="120" y2="118" stroke="#2B2233" stroke-width="1.5"/>${on ? `<ellipse cx="${x}" cy="${26 + (j % 2) * 6}" rx="16" ry="21" fill="${c}" stroke="#2B2233" stroke-width="2.5"/><path d="M${x - 4} ${46 + (j % 2) * 6} l4 5 l4 -5z" fill="${c}" stroke="#2B2233" stroke-width="1.5"/><ellipse cx="${x - 6}" cy="${18 + (j % 2) * 6}" rx="4" ry="6" fill="#fff" opacity=".6"/>` : ''}</g>`; }).join('')}</svg>`;
+    screenEl.innerHTML = `<section class="stage">
+      <div class="g-head"><h2>🎈 بالونات مشمش <span class="en" style="font-size:20px;color:var(--ink-soft)">Balloon Rescue</span></h2>
+        <p class="ask">كلمة ${i + 1} من ${list.length} · خمّني الحروف! كل حرف غلط بيفرقع بالونة</p></div>
+      <div class="bl-scene"><div id="bl">${balloonsSVG()}</div><div class="bl-cat" id="blCat">${catSVG(S.mish, (() => { const x = {...S.equip}; delete x.bg; return x; })())}</div></div>
+      ${wgCard(w)}
+      <div id="tiles">${wgTiles(w.en, j => got.has(low[j]))}</div>
+      <div class="feedback" id="fb" aria-live="polite"></div>
+      <div class="kb" dir="ltr">${KB_ROWS.map(r => `<div class="kb-row">${[...r].map(c => `<button class="key" data-key="${c}">${c}</button>`).join('')}</div>`).join('')}</div>
+      <div class="row" style="justify-content:center" id="after"></div>
+    </section>`;
+    const key = c => {
+      if(over || tried.has(c) || !/^[a-z]$/.test(c)) return;
+      tried.add(c);
+      const kb = screenEl.querySelector(`.key[data-key="${c}"]`);
+      if(need.has(c)){
+        got.add(c); kb.classList.add('used-ok'); sfxTick();
+        $('#tiles').innerHTML = wgTiles(w.en, j => got.has(low[j]), j => low[j] === c ? 'filled' : '');
+        if([...need].every(x => got.has(x))){ over = true; saved++; sfxGood(); say(w.en); addStars(lives >= 4 ? 2 : 1); spellMark(k);
+          $('#blCat').classList.add('happy'); $('#fb').className = 'feedback good'; $('#fb').innerHTML = `😻 أنقذتي مشمش! <span class="en">${w.en}</span> = ${w.ar}`; done(); }
+      } else {
+        kb.classList.add('used-no'); lives--; sfxBad(); $('#bl').innerHTML = balloonsSVG();
+        $('#blCat').style.transform = `translateY(${(6 - lives) * 6}px)`;
+        if(lives <= 0){ over = true; markTricky(w); $('#tiles').innerHTML = wgTiles(w.en, () => true, j => got.has(low[j]) ? '' : 'missed');
+          $('#fb').className = 'feedback bad'; $('#fb').innerHTML = `🪂 مشمش نزلت بالباراشوت! الكلمة: <span class="en">${w.en}</span>`; say(w.en, .75); done(); }
+      }
+    };
+    const done = () => { $('#after').innerHTML = `<button class="btn primary" id="goOn">${i < list.length - 1 ? 'الكلمة اللي بعدها ←' : 'النتيجة'}</button>`; $('#goOn').onclick = () => { i++; play(); }; };
+    screenEl.querySelectorAll('[data-key]').forEach(b => b.onclick = () => key(b.dataset.key));
+    wgKeys($('#tiles'), key);
+  }
+  play();
+}
+
+/* 3) letter rain: catch the word's letters in order as they fall */
+function wgRain(keys, back){
+  setTop(true);
+  const list = shuffle(keys); let i = 0, clean = 0;
+  function play(){
+    if(i >= list.length) return finish(() => wgRain(keys, back), `اصطدتي حروف ${nWords(list.length)}، منهم ${clean} من غير ولا غلطة 🌧️`, gymBack(keys, back), 'ألعاب الحروف');
+    const k = list[i], w = WORDS[k], L = lettersOf(w.en), low = w.en.toLowerCase();
+    const order = L.map((c, j) => j).filter(j => isLetter(L[j]));
+    let at = 0, miss = 0, since = 0, peeks = 0, over = false;
+    screenEl.innerHTML = `<section class="stage">
+      <div class="g-head"><h2>🌧️ مطر الحروف <span class="en" style="font-size:20px;color:var(--ink-soft)">Letter Rain</span></h2>
+        <p class="ask">كلمة ${i + 1} من ${list.length} · اصطادي حروف الكلمة بالترتيب</p></div>
+      ${wgCard(w)}
+      <div class="rain" id="rain" dir="ltr"></div>
+      <div id="tiles">${wgTiles(w.en, j => false, j => j === order[0] ? 'cur' : '')}</div>
+      <div class="row" style="justify-content:center"><button class="btn" id="peek">👀 بصّي على الكلمة</button></div>
+      <div class="feedback" id="fb" aria-live="polite"></div>
+      <div class="row" style="justify-content:center" id="after"></div>
+    </section>`;
+    setTimeout(() => say(w.en, .75), 250);
+    const rain = $('#rain');
+    const paint = flash => { $('#tiles').innerHTML = wgTiles(w.en, j => j < (order[at] ?? L.length), j => j === order[at] ? 'cur' : j === flash ? 'filled' : ''); };
+    const drop = () => {
+      if(over || !document.contains(rain)) { clearInterval(timer); return; }
+      const want = low[order[at]];
+      since++;
+      const c = since >= 3 || Math.random() < .4 ? want : rand([...'abcdefghijklmnopqrstuvwxyz'].filter(x => x !== want));
+      if(c === want) since = 0;
+      const el = document.createElement('button');
+      el.className = 'rl'; el.textContent = c; el.dataset.c = c;
+      el.style.left = (4 + Math.random() * 82) + '%'; el.style.setProperty('--d', (4.6 + Math.random() * 1.6).toFixed(1) + 's');
+      el.onclick = () => {
+        if(over) return;
+        if(el.dataset.c === low[order[at]]){ el.remove(); sfxTick(); const j = order[at]; at++; paint(j);
+          if(at === order.length){ over = true; clearInterval(timer); rain.innerHTML = ''; sfxGood(); say(w.en); if(!miss && !peeks){ clean++; addStars(2); } else addStars(1); spellMark(k);
+            $('#fb').className = 'feedback good'; $('#fb').innerHTML = `✔ <span class="en">${w.en}</span> = ${w.ar}`;
+            $('#after').innerHTML = `<button class="btn primary" id="goOn">${i < list.length - 1 ? 'الكلمة اللي بعدها ←' : 'النتيجة'}</button>`; $('#goOn').onclick = () => { i++; play(); }; }
+        } else { miss++; sfxBad(); el.classList.add('wrong'); setTimeout(() => el.remove(), 350); }
+      };
+      el.addEventListener('animationend', () => el.remove());
+      rain.appendChild(el);
+    };
+    const timer = setInterval(drop, 950); drop();
+    $('#peek').onclick = () => { peeks++; $('#tiles').innerHTML = wgTiles(w.en, () => true); say(w.en, .75); setTimeout(() => { if(document.contains(rain) && !over) paint(); }, 1800); };
+  }
+  play();
+}
+
+/* ============ BACK BUTTON: go to the previous screen, anywhere in the game ============ */
+const NAV = {stack: [], cur: null, going: false};
+const NAV_WRAP = new Map();
+const navKey = (w, args) => w.navName + JSON.stringify(args, (k, v) => typeof v === 'function' ? 'fn' : v);
+function navWrap(fn, name){
+  if(NAV_WRAP.has(fn)) return NAV_WRAP.get(fn);
+  const w = function(...args){
+    const going = NAV.going; NAV.going = false;
+    if(name === 'home') NAV.stack = [];
+    else if(!going && NAV.cur && NAV.cur.fn !== w){
+      const key = navKey(w, args), i = NAV.stack.map(e => navKey(e.fn, e.args)).lastIndexOf(key);
+      if(i >= 0) NAV.stack.length = i;               /* going back to a screen we came from: don't loop */
+      else { NAV.stack.push(NAV.cur); if(NAV.stack.length > 40) NAV.stack.shift(); }
+    }
+    NAV.cur = {fn: w, args};
+    const r = fn.apply(this, args); navPaint(); return r;
+  };
+  w.navName = name;
+  NAV_WRAP.set(fn, w); NAV_WRAP.set(w, w);
+  return w;
+}
+function navPaint(){ const b = $('#backBtn'); if(b) b.hidden = !NAV.stack.length || (NAV.cur && NAV.cur.fn.navName === 'home'); }
+function navBack(){
+  stopSpeech(); try{ stopAr(); }catch(e){}
+  const e = NAV.stack.pop();
+  if(!e){ home(); return; }
+  NAV.going = true; e.fn(...e.args);
+}
+$('#backBtn').onclick = navBack;
+
+home = navWrap(home, 'home');
+englishWorld = navWrap(englishWorld, 'englishWorld');
+scienceWorld = navWrap(scienceWorld, 'scienceWorld');
+sciChapter = navWrap(sciChapter, 'sciChapter');
+sciPlay = navWrap(sciPlay, 'sciPlay');
+sciSlides = navWrap(sciSlides, 'sciSlides');
+sciTerms = navWrap(sciTerms, 'sciTerms');
+sciRunQs = navWrap(sciRunQs, 'sciRunQs');
+sciLab = navWrap(sciLab, 'sciLab');
+gCatch = navWrap(gCatch, 'gCatch');
+gRace = navWrap(gRace, 'gRace');
+gSwipe = navWrap(gSwipe, 'gSwipe');
+gMatch = navWrap(gMatch, 'gMatch');
+gameListen = navWrap(gameListen, 'gameListen');
+gameSpell = navWrap(gameSpell, 'gameSpell');
+gameColor = navWrap(gameColor, 'gameColor');
+gameMemory = navWrap(gameMemory, 'gameMemory');
+readingHub = navWrap(readingHub, 'readingHub');
+gameFamily = navWrap(gameFamily, 'gameFamily');
+gameStory = navWrap(gameStory, 'gameStory');
+bookHome = navWrap(bookHome, 'bookHome');
+unitScreen = navWrap(unitScreen, 'unitScreen');
+lessonScreen = navWrap(lessonScreen, 'lessonScreen');
+learnSession = navWrap(learnSession, 'learnSession');
+review = navWrap(review, 'review');
+garden = navWrap(garden, 'garden');
+verbQuiz = navWrap(verbQuiz, 'verbQuiz');
+grammarRun = navWrap(grammarRun, 'grammarRun');
+writeRun = navWrap(writeRun, 'writeRun');
+typeIt = navWrap(typeIt, 'typeIt');
+examHall = navWrap(examHall, 'examHall');
+examRun = navWrap(examRun, 'examRun');
+roomScreen = navWrap(roomScreen, 'roomScreen');
+mall = navWrap(mall, 'mall');
+bankScreen = navWrap(bankScreen, 'bankScreen');
+packScreen = navWrap(packScreen, 'packScreen');
+spellTest = navWrap(spellTest, 'spellTest');
+readHub = navWrap(readHub, 'readHub');
+readPassage = navWrap(readPassage, 'readPassage');
+notesScreen = navWrap(notesScreen, 'notesScreen');
+noteEdit = navWrap(noteEdit, 'noteEdit');
+wordPicker = navWrap(wordPicker, 'wordPicker');
+wordGym = navWrap(wordGym, 'wordGym');
+wgSteps = navWrap(wgSteps, 'wgSteps');
+wgBalloons = navWrap(wgBalloons, 'wgBalloons');
+wgRain = navWrap(wgRain, 'wgRain');
+Object.keys(GAMES).forEach(k => { GAMES[k] = navWrap(GAMES[k]); });
+
 function start(){ renderSound(); renderStars(); home(); arDigitsIn(document.body); }
 if(window.claude && window.claude.hot && window.claude.hot.ready) window.claude.hot.ready(start); else start();
 })();

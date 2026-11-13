@@ -1249,6 +1249,14 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
 .rl.wrong{background:var(--bad-l)}
 @keyframes rlfall{to{top:calc(100% + 10px)}}
 /* lesson chips under a unit, and the back button */
+.read-topic{display:flex;align-items:center;gap:14px;width:100%;margin-top:14px;padding:14px 18px;text-align:start;background:var(--ucl)}
+.read-topic > span:nth-child(2){flex:1;display:grid;gap:2px}.read-topic b{font-size:20px}.read-topic small{font-size:14px;color:var(--ink-soft)}
+.read-topic .rt-ico{font-size:40px}.read-topic .emos{font-size:26px}
+.read-topic > span:nth-child(2){min-width:0}
+@media (max-width:760px){.read-topic .emos{display:none}.read-topic .rt-ico{font-size:32px}}
+.fam.open{box-shadow:0 0 0 4px var(--sun),var(--shadow)}
+.read-lessons{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;padding:12px;background:var(--ucl)}
+.read-lessons small{color:var(--ink-soft)}
 .lesson-chips{margin-top:10px;padding:10px;border:2px dashed var(--ink);border-radius:16px;background:#F5F9FF}
 .lesson-chips .chip{font-size:15px;padding:4px 12px}
 .lesson-chips .lc-label{font-weight:800;font-size:15px;align-self:center}
@@ -2434,14 +2442,17 @@ const TOPICS = [
   {id:'u1',en:'Unit 1',ar:'الوحدة ١',book:1},{id:'u2',en:'Unit 2',ar:'الوحدة ٢',book:1},{id:'u3',en:'Unit 3',ar:'الوحدة ٣',book:1},{id:'u4',en:'Unit 4',ar:'الوحدة ٤',book:1},{id:'u5',en:'Unit 5',ar:'الوحدة ٥',book:1}
 ];
 /* the five home games use Farha's school-book words: the whole book, or one unit */
+/* one lesson: its picture words, topped up from its unit if there are too few for a game */
+function lessonPicWords(l){
+  const seen = new Set(), ws = l.words.map(k => WORDS[k]).filter(w => w.e && !w.abs && !seen.has(w.e) && seen.add(w.e));
+  if(ws.length >= 6) return ws;
+  return ws.concat(shuffle(unitWordsWithPics(l.unit.id).filter(w => !ws.includes(w) && !seen.has(w.e))).slice(0, 6 - ws.length));
+}
 const topicLesson = () => S.topic && S.topic.startsWith('L:') ? LESSONS[S.topic.slice(2)] : null;
 const topicWords = () => {
   const l = topicLesson();
-  if(l){                                         /* one lesson: its picture words, topped up from its unit if there are too few */
-    const seen = new Set(), ws = l.words.map(k => WORDS[k]).filter(w => w.e && !w.abs && !seen.has(w.e) && seen.add(w.e));
-    if(ws.length >= 6) return ws;
-    return ws.concat(shuffle(unitWordsWithPics(l.unit.id).filter(w => !ws.includes(w) && !seen.has(w.e))).slice(0, 6 - ws.length));
-  }
+  if(l) return lessonPicWords(l);
+
   return S.topic !== 'all' && BOOK.some(u => u.id === S.topic) ? unitWordsWithPics(S.topic) : bookWordsWithPics();
 };
 
@@ -6138,21 +6149,31 @@ function gameMemory(){
 }
 
 /* ============ READING CORNER ============ */
-function readingHub(){
+function readingHub(openUnit){
   setTop(true);
   const next = FAMILIES.find(f => !S.famDone[f.id]);
+  const tl = topicLesson(), tu = tl ? tl.unit : BOOK.find(x => x.id === S.topic);
+  const ou = BOOK.find(x => x.id === (openUnit || (tu && tu.id)));
+  const readGot = ws => ws.filter(w => S.readWords.includes(w.en)).length;
   const n = S.readWords.length;
   screenEl.innerHTML = `<section class="hub">
     <div class="g-head"><h2>ركن القراءة <span class="en" style="font-size:20px;color:var(--ink-soft)">Reading Corner</span></h2>
       <p class="ask">اقري كلمات جديدة لوحدك، وبعدين اقري قصص مشمش.</p></div>
-    <div class="read-count sticker">${ICONS.read}<div><b>${n}</b> ${n === 1 ? 'كلمة' : 'كلمة جديدة'} قريتيها لوحدك<br><span class="muted">كل كلمة تقريها صح من أول مرة بتتحفظ هنا</span></div></div>
+    <div class="read-count sticker">${ICONS.read}<div>${n ? `<b>${n}</b> ${n === 1 ? 'كلمة' : 'كلمة جديدة'} قريتيها لوحدك` : 'لسه مقريتيش كلمات لوحدك'}<br><span class="muted">كل كلمة تقريها صح من أول مرة بتتحفظ هنا</span></div></div>
 
+    ${tu ? (() => { const ws = tl ? lessonPicWords(tl) : unitWordsWithPics(tu.id), g = readGot(ws);
+      return `<button class="read-topic sticker" id="readTopic" style="--uc:${tu.c};--ucl:${tu.cl}"><span class="rt-ico" aria-hidden="true">📖</span>
+        <span><b>اقري كلمات ${tl ? `الدرس: <span class="en">${tl.en}</span>` : tu.id === 'st' ? 'القصة' : `الوحدة ${tu.n}`}</b><small>اللي اخترتيه فوق · ${g ? `قريتي ${g} من ${ws.length}` : nWords(ws.length)} · دوسي وابدأي على طول</small></span>
+        <span class="emos" aria-hidden="true">${ws.slice(0, 4).map(w => w.e).join('')}</span></button>`; })() : ''}
     <h3 class="sec-title">اقري كلمات المنهج <span class="en">My School Book Words</span></h3>
-    <p class="muted">اقري الكلمة لوحدك واختاري صورتها. الكلمات من كتاب المدرسة بتاعك.</p>
+    <p class="muted">اختاري وحدة، وبعدين الوحدة كلها أو درس واحد منها. اقري الكلمة لوحدك واختاري صورتها.</p>
     <div class="fams">${BOOK.map(u => { const ws = unitWordsWithPics(u.id), got = ws.filter(w => S.readWords.includes(w.en)).length;
-      return `<button class="fam ${got === ws.length ? 'done' : ''}" data-bookread="${u.id}" style="border-color:${u.c}">
+      return `<button class="fam ${got === ws.length ? 'done' : ''} ${ou === u ? 'open' : ''}" data-bookread="${u.id}" style="border-color:${u.c}" aria-expanded="${ou === u}">
         <span class="rimebig">${u.id === 'st' ? 'القصة' : `الوحدة ${u.n}`}</span><span class="emos" aria-hidden="true">${ws.slice(0, 4).map(w => w.e).join('')}</span>
         <small>${got ? `قريتي ${got} من ${ws.length}` : `${ws.length} كلمة`}</small></button>`; }).join('')}</div>
+    ${ou ? `<div class="read-lessons sticker" style="--uc:${ou.c};--ucl:${ou.cl}"><b>${ou.id === 'st' ? 'القصة' : `الوحدة ${ou.n}`}: اقري</b>
+      <button class="chip" data-readunit="${ou.id}">📘 الوحدة كلها</button>
+      ${ou.lessons.map((l, i) => { const ws = lessonPicWords(l); return `<button class="chip" data-readles="${l.id}">📗 ${ou.id === 'st' ? '' : `الدرس ${i + 1} · `}<span class="en">${l.en}</span> <small>${readGot(ws)}/${ws.length}</small></button>`; }).join('')}</div>` : ''}
 
     <h3 class="sec-title">عائلات الكلمات <span class="en">Word Families</span></h3>
     <p class="muted">الكلمات اللي في عيلة واحدة آخرها زي بعض. لو عرفتي تقري <b class="en">at</b> هتعرفي تقري <b class="en">cat, hat, bat</b>. ركّزي على أول حرف!</p>
@@ -6172,8 +6193,12 @@ function readingHub(){
       <div class="chips">${S.readWords.map(w => `<button class="chip" data-say="${esc(w)}"><span class="en" style="color:var(--ink);font-size:18px">${esc(w)}</span></button>`).join('')}</div>` : ''}
   </section>`;
   screenEl.querySelectorAll('[data-fam]').forEach(b => b.onclick = () => { roundStars = 0; gameFamily(b.dataset.fam); });
-  screenEl.querySelectorAll('[data-bookread]').forEach(b => b.onclick = () => { roundStars = 0; const u = BOOK.find(x => x.id === b.dataset.bookread);
-    gameListen({pool: unitWordsWithPics(u.id), readOnly: true, title: u.id === 'st' ? 'The Story' : `Unit ${u.n}`, back: readingHub, backLabel: 'ركن القراءة'}); });
+  const readUnit = u => { roundStars = 0; gameListen({pool: unitWordsWithPics(u.id), readOnly: true, title: u.id === 'st' ? 'The Story' : `Unit ${u.n}`, back: () => readingHub(u.id), backLabel: 'ركن القراءة'}); };
+  const readLesson = l => { roundStars = 0; gameListen({pool: lessonPicWords(l), readOnly: true, title: l.en, back: () => readingHub(l.unit.id), backLabel: 'ركن القراءة'}); };
+  screenEl.querySelectorAll('[data-bookread]').forEach(b => b.onclick = () => { const y = window.scrollY; readingHub(b.dataset.bookread); window.scrollTo(0, y); sfxTick(); });
+  screenEl.querySelectorAll('[data-readunit]').forEach(b => b.onclick = () => readUnit(BOOK.find(x => x.id === b.dataset.readunit)));
+  screenEl.querySelectorAll('[data-readles]').forEach(b => b.onclick = () => readLesson(LESSONS[b.dataset.readles]));
+  if($('#readTopic')) $('#readTopic').onclick = () => tl ? readLesson(tl) : readUnit(tu);
   screenEl.querySelectorAll('[data-story]').forEach(b => b.onclick = () => { roundStars = 0; gameStory(+b.dataset.story); });
 }
 

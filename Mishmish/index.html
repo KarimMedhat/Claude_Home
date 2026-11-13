@@ -1260,6 +1260,31 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
   .rl{width:50px;height:50px;font-size:26px}
   .pk-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
 }
+/* color the lesson */
+.cs-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.cs-card{display:grid;gap:4px;justify-items:center;padding:10px;text-align:center;transition:transform .12s}
+.cs-card:hover{transform:translate(-2px,-2px) rotate(-.5deg)}
+.cs-thumb{display:block;width:100%;border:2px solid var(--ink);border-radius:12px;background:var(--card);overflow:hidden}
+.cs-thumb svg{width:100%;height:auto;display:block}
+.cs-thumb.mish svg{height:150px;margin:0 auto}
+.cs-card b{font-size:18px}.cs-card small{font-size:14px;color:var(--ink-soft)}
+.cs-svg [data-part],.cs-thumb [data-part]{stroke:#2B2233;stroke-width:3;stroke-linejoin:round}
+.cs-line{fill:none;stroke:#2B2233;stroke-linecap:round;pointer-events:none}
+.cs-ink,.cs-txt{pointer-events:none}
+.cs-txt{font-family:var(--learn);font-weight:800;fill:#2B2233;direction:ltr;unicode-bidi:plaintext}
+.cbig{gap:14px}
+.cbig .cinstr{width:min(900px,100%);padding:12px 18px;gap:6px}
+.cbig .canvas.big{width:min(900px,100%);padding:8px}
+.cbig .cs-svg{width:100%;height:auto;max-height:58vh;display:block}
+.cbig .cinstr .say{justify-self:start}
+.cbig .cpal{position:sticky;bottom:8px;z-index:3;width:min(900px,100%);padding:10px 14px}
+.cbig .palette{grid-template-columns:repeat(11,minmax(0,1fr));gap:8px}
+.cbig .cfeed{min-height:30px;text-align:center}
+@media (max-width:760px){
+  .cs-pick{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .cbig .palette{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .cbig .cs-svg{max-height:52vh}
+}
 </style>
 
 <div dir="rtl" lang="ar">
@@ -5493,7 +5518,7 @@ function englishWorld(keep){
     <button class="tile t-read" data-game="read">${ICONS.read}<div><h3>ركن القراءة</h3><span class="en">Reading Corner</span><p>اتعلمي تقري كلمات جديدة واقري قصص قصيرة عن مشمش${S.readWords.length ? ` · قريتي ${S.readWords.length} كلمة لحد دلوقتي` : ''}</p></div></button>
     <button class="tile t-listen" data-game="listen">${ICONS.listen}<div><h3>اسمعي واختاري</h3><span class="en">Listen &amp; Find</span><p>اسمعي الكلمة أو اقريها واختاري الصورة الصح</p></div></button>
     <button class="tile t-spell" data-game="spell">${ICONS.spell}<div><h3>رتّبي الحروف</h3><span class="en">Spell it</span><p>كوّني الكلمة من الحروف المتلخبطة</p></div></button>
-    <button class="tile t-color" data-game="color">${ICONS.color}<div><h3>لوّني مشمش</h3><span class="en">Color Mishmish</span><p>اقري الجملة ولوّني بالإنجليزي، وبعدين ارسمي براحتك</p></div></button>
+    <button class="tile t-color" data-game="color">${ICONS.color}<div><h3>لوّني بالإنجليزي</h3><span class="en">Color it in English</span><p>رسومات من الدرس اللي اخترتيه: اقري الجملة ولوّني الجزء الصح</p></div></button>
     <button class="tile t-memory" data-game="memory">${ICONS.memory}<div><h3>لعبة الذاكرة</h3><span class="en">Memory Cards</span><p>طابقي الكلمة مع صورتها</p></div></button>
   </div>
 
@@ -5737,7 +5762,253 @@ function gameSpell(){
 }
 
 /* ============ COLOR MISHMISH ============ */
+/* ============ COLORING SCENES: one drawing per lesson, built from that lesson's words ============ */
+/* each part: [english name, arabic, natural colors]; SVG elements carry data-part */
+const CS = (() => {
+  const p = (k, d) => `<path data-part="${k}" d="${d}"/>`;
+  const e = (k, cx, cy, rx, ry) => `<ellipse data-part="${k}" cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}"/>`;
+  const c = (k, cx, cy, r) => `<circle data-part="${k}" cx="${cx}" cy="${cy}" r="${r}"/>`;
+  const r = (k, x, y, w, h, rx = 4) => `<rect data-part="${k}" x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}"/>`;
+  const L = (d, w = 3) => `<path class="cs-line" d="${d}" stroke-width="${w}"/>`;
+  const D = (d, f = '#2B2233') => `<path class="cs-ink" d="${d}" fill="${f}"/>`;
+  const dot = (cx, cy, rr = 4, f = '#2B2233') => `<circle class="cs-ink" cx="${cx}" cy="${cy}" r="${rr}" fill="${f}"/>`;
+  const T = (x, y, t, s = 13) => `<text class="cs-txt" x="${x}" y="${y}" font-size="${s}" text-anchor="middle">${t}</text>`;
+  const ground = (y = 250) => L(`M0 ${y} H400`, 3);
+  const person = (k, x, y, extra = '') => `${c(k + '_skin', x, y, 15)}${p(k, `M${x - 22} ${y + 70} Q${x - 22} ${y + 22} ${x} ${y + 20} Q${x + 22} ${y + 22} ${x + 22} ${y + 70}Z`)}${dot(x - 5, y - 2, 2)}${dot(x + 5, y - 2, 2)}${L(`M${x - 5} ${y + 6} Q${x} ${y + 10} ${x + 5} ${y + 6}`, 2)}${extra}`;
+  const tree = (k, x, y, s = 1) => `${p(k + '_trunk', `M${x - 7 * s} ${y} V${y - 45 * s} H${x + 7 * s} V${y}Z`)}${p(k, `M${x} ${y - 110 * s} C${x - 45 * s} ${y - 110 * s} ${x - 50 * s} ${y - 45 * s} ${x - 10 * s} ${y - 42 * s} C${x} ${y - 30 * s} ${x + 15 * s} ${y - 38 * s} ${x + 15 * s} ${y - 42 * s} C${x + 52 * s} ${y - 45 * s} ${x + 45 * s} ${y - 110 * s} ${x} ${y - 110 * s}Z`)}`;
+  const sun = (k, x, y, rr = 26) => `${c(k, x, y, rr)}${[0, 45, 90, 135, 180, 225, 270, 315].map(a => L(`M${x + Math.cos(a * Math.PI / 180) * (rr + 6)} ${y + Math.sin(a * Math.PI / 180) * (rr + 6)} L${x + Math.cos(a * Math.PI / 180) * (rr + 16)} ${y + Math.sin(a * Math.PI / 180) * (rr + 16)}`, 3)).join('')}`;
+  const flower = (k, x, y, rr = 9) => `${L(`M${x} ${y} V${y + 45}`, 3)}${[0, 72, 144, 216, 288].map(a => c(k, x + Math.cos(a * Math.PI / 180) * rr * 1.4, y + Math.sin(a * Math.PI / 180) * rr * 1.4, rr)).join('')}${dot(x, y, rr * .7, '#FFD23F')}`;
+  const SKIN = ['pink', 'orange', 'brown'];
+  const SCENES = [
+    {id:'senses', en:'My Five Senses', ar:'حواسي الخمسة', les:['u1l1'], parts:{hair:['hair','الشعر',['brown','black','yellow','orange']], face:['face','الوش',SKIN], ears:['ears','الآذان',SKIN], eyes:['eyes','العيون',['blue','green','brown']], nose:['nose','الأنف',SKIN], tongue:['tongue','اللسان',['red','pink']], flowers:['flowers','الزهور',['red','pink','purple','yellow']], butterflies:['butterfly','الفراشة',['blue','purple','orange','yellow']]},
+     svg: e('ears', 118, 170, 15, 26) + e('ears', 282, 170, 15, 26) + c('face', 200, 165, 84) + p('hair', 'M114 160 C100 60 300 60 286 160 C276 115 250 98 200 96 C150 98 124 115 114 160Z') + e('eyes', 168, 152, 17, 13) + e('eyes', 232, 152, 17, 13) + dot(168, 152, 6) + dot(232, 152, 6)
+       + p('nose', 'M200 160 L186 194 Q200 202 214 194Z') + D('M166 212 Q200 252 234 212Z', '#7A2D3E') + e('tongue', 200, 230, 17, 10)
+       + flower('flowers', 50, 215, 11) + p('butterflies', 'M345 60 C320 30 300 50 318 72 C300 88 322 104 345 80Z') + p('butterflies', 'M351 60 C376 30 396 50 378 72 C396 88 374 104 351 80Z') + L('M348 52 V92', 4)},
+    {id:'healthy', en:'A Healthy Breakfast', ar:'فطار صحي', les:['u1l2'], parts:{table:['table','الترابيزة',['brown','orange']], bread:['bread','العيش',['brown','yellow','orange']], fruits:['fruits','الفاكهة',['red','yellow','green','orange']], vegetables:['vegetables','الخضار',['orange','green','red']], sweets:['sweets','الحلويات',['pink','purple','blue']], brush:['brush','الفرشة',['blue','green','pink','purple']]},
+     svg: r('table', 20, 200, 360, 22, 6) + r('table', 40, 222, 16, 60, 3) + r('table', 344, 222, 16, 60, 3) + e('plate', 150, 196, 80, 12)
+       + p('bread', 'M95 190 C90 150 205 150 205 190Z') + L('M125 170 l10 -12 M150 168 l10 -12 M175 170 l10 -12', 2.5)
+       + c('fruits', 255, 176, 22) + p('fruits', 'M280 192 C300 150 340 150 352 160 C330 165 305 185 290 196Z') + c('fruits', 318, 190, 9) + c('fruits', 332, 186, 9) + L('M255 154 q4 -10 10 -12', 3)
+       + p('vegetables', 'M40 196 L70 120 Q78 116 82 124 L50 198Z') + L('M74 120 l-6 -14 M76 120 l6 -14', 3) + c('vegetables', 210, 120, 18) + L('M204 102 q6 -8 12 0', 3)
+       + p('sweets', 'M290 110 L306 100 L306 120Z') + r('sweets', 306, 98, 34, 24, 10) + p('sweets', 'M340 110 L356 100 L356 120Z')
+       + p('brush', 'M110 60 L250 60 L250 72 L110 72Z') + r('brush', 250, 48, 40, 14, 3) + L('M256 48 v-10 M264 48 v-10 M272 48 v-10 M280 48 v-10', 3)},
+    {id:'market', en:'At the Market', ar:'في السوق', les:['u1l3'], parts:{market:['market','السوق',['red','blue','green','orange']], restaurant:['restaurant','المطعم',['yellow','orange','pink']], soup:['soup','الشوربة',['orange','yellow','green','red']], coins:['coins','العملات',['yellow','orange','gray']], money:['money','الفلوس',['green','blue']]},
+     svg: r('restaurant', 230, 40, 150, 160, 2) + r('rest_door', 285, 140, 40, 60, 2) + r('rest_sign', 250, 52, 110, 28, 6) + T(305, 72, 'RESTAURANT', 13)
+       + p('market', 'M20 70 H210 L200 100 H30Z') + L('M50 70 L45 100 M80 70 L78 100 M110 70 V100 M140 70 L142 100 M170 70 L175 100', 3) + L('M35 100 V220 M195 100 V220', 4) + r('stall', 25, 170, 180, 50, 3) + ground(250)
+       + p('soup', 'M60 160 Q60 200 100 200 Q140 200 140 160Z') + L('M80 148 q-6 -10 0 -18 M100 148 q-6 -10 0 -18 M120 148 q-6 -10 0 -18', 3)
+       + e('coins', 280, 236, 22, 8) + e('coins', 280, 226, 22, 8) + e('coins', 280, 216, 22, 8) + r('money', 320, 210, 66, 34, 4) + c('money_c', 353, 227, 9)},
+    {id:'routine', en:'My Daily Routine', ar:'روتيني اليومي', les:['u1l4'], parts:{teeth:['teeth','الأسنان',['white']], milk:['milk','اللبن',['white']], water:['water','الميه',['blue']], snack:['snack','السناك',['brown','yellow','orange']], sports:['ball','الكورة',['orange','red','blue','green']], homework:['homework','الواجب',['blue','purple','pink','green']]},
+     svg: p('lips', 'M40 70 Q110 20 180 70 Q110 140 40 70Z') + p('teeth', 'M60 70 Q110 48 160 70 Q110 82 60 70Z') + L('M85 62 v14 M110 58 v18 M135 62 v14', 2.5)
+       + p('milk', 'M230 40 L300 40 L292 130 L238 130Z') + L('M234 70 H296', 2.5) + T(265, 100, 'MILK', 14)
+       + p('water', 'M330 50 h30 v20 q14 10 14 28 v62 h-58 v-62 q0 -18 14 -28Z') + r('cap', 335, 32, 20, 18, 3)
+       + p('snack', 'M40 190 L190 190 L180 160 L50 160Z') + p('snack_mid', 'M45 175 H185') + p('snack', 'M40 205 H190 V214 H40Z')
+       + c('sports', 255, 210, 38) + L('M217 210 H293 M255 172 V248 M228 183 Q255 210 228 237 M282 183 Q255 210 282 237', 2.5)
+       + r('homework', 310, 165, 78, 98, 4) + L('M322 190 H376 M322 205 H376 M322 220 H376 M322 235 H360', 2.5)},
+    {id:'park', en:'Helping in the Park', ar:'بنساعد في الجنينة', les:['u2l1'], parts:{trees:['trees','الشجر',['green']], street:['street','الشارع',['gray','black']], trash:['trash can','صندوق الزبالة',['green','blue','gray']], volunteer:['volunteer\'s shirt','قميص المتطوع',['orange','yellow','blue','red']], flowers:['flowers','الزهور',['red','pink','purple','yellow']], clothes:['clothes box','صندوق الهدوم',['brown','orange','yellow']]},
+     svg: tree('trees', 60, 220, 1) + tree('trees', 340, 220, .8) + p('street', 'M0 300 L150 220 H250 L400 300Z') + ground(220)
+       + p('trash', 'M120 150 H170 L164 220 H126Z') + r('trash', 114, 140, 62, 12, 3) + L('M135 160 V210 M145 160 V210 M155 160 V210', 2)
+       + person('volunteer', 220, 120) + flower('flowers', 270, 180, 8) + flower('flowers', 300, 186, 8) + flower('flowers', 92, 236, 7)
+       + r('clothes', 300, 236, 80, 50, 3) + p('clothes', 'M310 236 L320 220 H362 L372 236Z') + T(340, 268, 'CLOTHES', 12)},
+    {id:'street', en:'Our Street', ar:'شارعنا', les:['u2l2'], parts:{road:['road','الطريق',['gray','black']], traffic:['cars','العربيات',['red','blue','yellow','green']], neighbors:['neighbors\' houses','بيوت الجيران',['orange','pink','yellow','purple']], trash:['trash','الزبالة',['black','green','gray']], street:['street sign','لافتة الشارع',['blue','green']]},
+     svg: r('neighbors', 20, 60, 110, 120, 2) + p('neighbors', 'M10 64 L75 20 L140 64Z') + r('win', 40, 90, 26, 26, 2) + r('win', 84, 90, 26, 26, 2) + r('neighbors', 250, 70, 120, 110, 2) + p('neighbors', 'M240 74 L310 30 L380 74Z') + r('win', 270, 100, 28, 26, 2) + r('win', 322, 100, 28, 26, 2)
+       + r('road', 0, 200, 400, 70, 0) + L('M20 235 H70 M110 235 H160 M200 235 H250 M290 235 H340', 4)
+       + p('traffic', 'M40 230 L55 210 H115 L130 230 V248 H40Z') + c('wheel', 62, 250, 9) + c('wheel', 110, 250, 9) + p('traffic', 'M240 230 L255 212 H310 L328 230 V248 H240Z') + c('wheel', 262, 250, 9) + c('wheel', 306, 250, 9)
+       + L('M190 200 V90', 5) + r('street', 160, 70, 64, 26, 5) + T(192, 88, 'STREET', 11)
+       + p('trash', 'M145 200 Q130 180 150 168 Q170 160 178 178 Q190 196 172 200Z') + L('M160 168 l-4 -8 l8 0', 2.5)},
+    {id:'culture', en:'My Culture', ar:'ثقافتي', les:['u2l3'], parts:{factory:['factory','المصنع',['gray','red','brown']], cotton:['cotton','القطن',['white']], cane:['sugar cane','القصب',['green','yellow']], rice:['rice','الرز',['white']], outfits:['outfit','الجلابية',['blue','purple','pink','red','green']], pottery:['pottery','الفخار',['brown','orange']]},
+     svg: r('factory', 230, 90, 150, 90, 2) + r('factory', 250, 40, 22, 52, 2) + r('factory', 300, 50, 22, 42, 2) + L('M261 36 q-8 -10 2 -18 M311 46 q-8 -10 2 -18', 3) + r('door', 290, 140, 30, 40, 2)
+       + L('M30 180 V120 M30 140 l-14 -12 M30 130 l14 -14', 3) + c('cotton', 16, 124, 11) + c('cotton', 44, 114, 11) + c('cotton', 30, 112, 10)
+       + p('cane', 'M70 180 L74 60 H82 L80 180Z') + p('cane', 'M90 180 L98 70 H106 L100 180Z') + L('M72 100 H82 M72 140 H81 M94 110 H104 M93 150 H102', 2.5) + p('cane_leaf', 'M76 70 Q50 50 46 30 Q70 50 80 66Z')
+       + p('bowl', 'M120 200 Q125 240 165 240 Q205 240 210 200Z') + p('rice', 'M122 200 Q165 170 208 200Z') + ground(250)
+       + c('outfits_skin', 255, 205, 13) + p('outfits', 'M232 290 L240 225 Q255 216 270 225 L278 290Z')
+       + p('pottery', 'M320 290 Q300 260 320 235 Q312 222 326 214 H354 Q368 222 360 235 Q380 260 360 290Z') + L('M318 255 H362', 3)},
+    {id:'poster', en:'Our Clean Air Poster', ar:'ملصق الهوا النضيف', les:['u2l5'], parts:{poster:['poster','الملصق',['yellow','pink','blue','green']], cycle:['bike','العجلة',['red','blue','green','orange']], trees:['trees','الشجر',['green']], plastic:['plastic bottle','زجاجة البلاستيك',['blue','gray']], air:['cloud','السحابة',['blue','white','gray']], sun:['sun','الشمس',['yellow','orange']]},
+     svg: r('poster', 10, 10, 380, 280, 10) + r('inner', 30, 54, 340, 216, 6) + T(200, 42, 'WALK · CYCLE · PLANT TREES', 17)
+       + sun('sun', 330, 95, 22) + p('air', 'M70 110 Q70 80 100 84 Q110 62 140 72 Q170 66 170 96 Q190 102 180 120 H75 Q60 118 70 110Z')
+       + tree('trees', 90, 255, .9) + tree('trees', 140, 255, .7)
+       + c('cycle', 220, 230, 26) + c('cycle', 300, 230, 26) + L('M220 230 L250 200 L290 200 L300 230 M250 200 L262 230 L290 200 M245 190 h14 M286 194 l8 -10', 4)
+       + p('plastic', 'M330 160 h20 v12 q10 6 10 18 v50 h-40 v-50 q0 -12 10 -18Z') + L('M315 170 L375 245 M375 170 L315 245', 5)},
+    {id:'diary', en:'A Trip to the Market', ar:'رحلة للسوق', les:['u2l4'], parts:{stalls:['stall','الفرشة',['red','blue','green','orange']], fruits:['fruits','الفاكهة',['red','yellow','orange']], vegetables:['vegetables','الخضار',['green','orange','red']], train:['train','القطر',['blue','red','green']], station:['station','المحطة',['yellow','orange','pink']], buildings:['buildings','العمارات',['gray','purple','blue']]},
+     svg: r('buildings', 10, 20, 70, 140, 2) + r('buildings', 90, 50, 60, 110, 2) + L('M25 40 h14 M50 40 h14 M25 70 h14 M50 70 h14 M25 100 h14 M50 100 h14 M105 70 h12 M125 70 h12 M105 100 h12 M125 100 h12', 4)
+       + r('station', 200, 40, 190, 80, 2) + p('station', 'M190 44 L295 10 L400 44Z') + T(295, 80, 'STATION', 15) + L('M190 152 H400', 4)
+       + p('train', 'M200 120 H360 Q385 120 385 140 V150 H200Z') + r('trwin', 215, 126, 26, 14, 2) + r('trwin', 255, 126, 26, 14, 2) + r('trwin', 295, 126, 26, 14, 2)
+       + p('stalls', 'M20 180 H220 L210 205 H30Z') + L('M35 205 V290 M205 205 V290', 4) + r('table2', 25, 250, 190, 14, 3)
+       + c('fruits', 60, 238, 13) + c('fruits', 86, 238, 13) + c('fruits', 73, 222, 13) + p('vegetables', 'M130 248 L150 205 Q156 202 158 208 L140 250Z') + c('vegetables', 180, 236, 14) + ground(290)},
+    {id:'jungle', en:'Animals in the Jungle', ar:'حيوانات الغابة', les:['u3l1'], parts:{leaves:['leaves','الورق',['green']], elephant:['elephant','الفيل',['gray','blue']], giraffe:['giraffe','الزرافة',['yellow','orange']], lion:['lion','الأسد',['yellow','orange','brown']], zebra:['zebra','الحمار الوحشي',['white']], monkey:['monkey','القرد',['brown','orange']]},
+     svg: p('leaves', 'M0 0 H400 V40 Q360 70 330 40 Q300 75 260 42 Q220 80 190 40 Q150 76 120 42 Q80 76 50 40 Q25 66 0 44Z') + L('M300 40 V90', 3) + c('monkey', 300, 100, 14) + e('monkey', 300, 128, 13, 18) + c('mface', 300, 102, 8) + dot(297, 100, 1.5) + dot(303, 100, 1.5) + L('M313 130 q20 10 10 30', 4)
+       + e('elephant', 85, 210, 62, 44) + c('elephant', 40, 180, 34) + p('elephant', 'M14 190 Q5 230 22 250 L30 246 Q20 228 30 200Z') + p('elephant', 'M52 160 Q86 150 84 190 Q66 206 50 196Z') + r('elephant', 50, 240, 18, 40, 4) + r('elephant', 110, 240, 18, 40, 4) + dot(30, 174, 3)
+       + p('giraffe', 'M180 280 V200 Q180 180 200 180 H230 Q250 180 250 200 V280 H236 V220 H194 V280Z') + p('giraffe', 'M228 186 L250 70 L266 74 L246 190Z') + e('giraffe', 266, 68, 20, 12) + dot(270, 64, 2.5) + dot(200, 200, 5, '#B5651D') + dot(225, 210, 5, '#B5651D') + dot(250, 120, 4, '#B5651D')
+       + c('lion', 340, 200, 42) + c('lionface', 340, 200, 26) + dot(331, 194, 3) + dot(349, 194, 3) + L('M334 210 Q340 216 346 210', 2.5)
+       + p('zebra', 'M120 120 H180 Q192 120 192 132 V150 H110 V132 Q110 120 120 120Z') + L('M128 122 V148 M142 122 V148 M156 122 V148 M170 122 V148', 4) + p('zebra', 'M180 122 L196 96 H210 L200 126Z') + L('M110 150 V176 M190 150 V176', 5) + ground(282)},
+    {id:'zoo', en:'Caring for Animals', ar:'رعاية الحيوانات', les:['u3l2'], parts:{zoo:['zoo sign','لافتة حديقة الحيوان',['green','yellow','blue']], cage:['cage','القفص',['gray','brown','blue']], vet:['vet\'s coat','بالطو الدكتور البيطري',['white','blue']], pets:['dog','الكلب',['brown','orange','gray']], tank:['fish tank','حوض السمك',['blue']], fish:['fish','السمكة',['orange','red','yellow']]},
+     svg: r('zoo', 110, 10, 180, 40, 8) + T(200, 37, 'ZOO', 20)
+       + p('cage', 'M20 70 Q80 40 140 70Z') + r('cage', 18, 190, 124, 14, 3) + L('M30 70 V190 M50 66 V190 M70 62 V190 M90 62 V190 M110 66 V190 M130 70 V190', 3) + e('bird', 80, 150, 16, 12) + dot(88, 146, 2)
+       + person('vet', 210, 110) + p('pets', 'M300 250 Q296 220 316 214 H360 Q378 214 378 236 V250 H366 V236 H318 V250Z') + c('pets', 302, 206, 16) + p('pets', 'M292 196 Q284 214 290 222 L298 208Z') + dot(298, 204, 2.5)
+       + r('tank', 20, 220, 140, 70, 4) + p('fish', 'M60 255 Q80 238 100 255 Q80 272 60 255Z') + p('fish', 'M100 255 L114 244 V266Z') + ground(290)},
+    {id:'cave', en:'The Old Lion and the Fox', ar:'الأسد العجوز والثعلب', les:['u3l3'], parts:{cave:['cave','الكهف',['gray','brown']], entrance:['entrance','المدخل',['black']], lion:['lion','الأسد',['yellow','orange']], fox:['fox','الثعلب',['orange','red']], footprints:['footprints','آثار الأقدام',['brown','black','gray']], grass:['grass','الحشيش',['green']]},
+     svg: p('cave', 'M10 250 Q20 80 160 60 Q300 70 300 250Z') + p('entrance', 'M90 250 Q100 150 160 150 Q220 150 230 250Z') + c('lion', 160, 210, 30) + c('lionface', 160, 212, 18) + dot(154, 208, 2.5) + dot(166, 208, 2.5)
+       + p('fox', 'M320 240 Q318 205 340 200 H368 Q384 204 384 228 V240Z') + p('fox', 'M326 204 L320 170 L334 182 L344 170 L346 204Z') + p('fox', 'M384 228 Q404 210 392 186 Q380 206 378 224Z') + dot(330, 192, 2.5)
+       + [[250, 270], [275, 262], [300, 272], [325, 262]].map(([x, y]) => e('footprints', x, y, 6, 8) + c('footprints', x - 6, y - 10, 2.5) + c('footprints', x, y - 12, 2.5) + c('footprints', x + 6, y - 10, 2.5)).join('')
+       + p('grass', 'M0 300 V280 L10 266 L18 282 L28 262 L38 284 L48 268 L58 286 V300Z') + ground(250)},
+    {id:'sea', en:'Saving the Dugong', ar:'ننقذ عروس البحر', les:['u3l4'], parts:{water:['water','المية',['blue']], dugong:['dugong','عروس البحر',['gray']], seagrass:['sea grass','حشائش البحر',['green']], nets:['fishing net','شبكة الصيد',['brown','black','orange']], fish:['fish','السمكة',['orange','yellow','red']], sun:['sun','الشمس',['yellow','orange']]},
+     svg: sun('sun', 340, 40, 22) + p('water', 'M0 70 Q50 60 100 70 T200 70 T300 70 T400 70 V300 H0Z')
+       + p('dugong', 'M60 160 Q80 130 150 135 Q210 140 230 165 L262 150 L258 190 L230 178 Q200 200 140 196 Q70 192 60 160Z') + dot(80, 156, 3) + p('fin', 'M140 190 Q130 214 116 214 Q128 200 126 190Z')
+       + p('seagrass', 'M20 300 Q10 250 30 220 Q26 260 40 300Z') + p('seagrass', 'M50 300 Q48 240 70 210 Q62 260 70 300Z') + p('seagrass', 'M180 300 Q176 260 196 236 Q190 270 198 300Z')
+       + p('nets', 'M260 210 L390 210 L380 300 L270 300Z') + L('M282 210 L290 300 M304 210 L310 300 M326 210 L328 300 M348 210 L346 300 M370 210 L364 300 M264 232 H388 M266 256 H386 M268 280 H384', 2)
+       + p('fish', 'M300 110 Q320 92 340 110 Q320 128 300 110Z') + p('fish', 'M340 110 L356 98 V122Z')},
+    {id:'egypt', en:'Places in Egypt', ar:'أماكن في مصر', les:['u4l1'], parts:{pyramids:['pyramids','الأهرامات',['yellow','orange','brown']], nile:['Nile River','نهر النيل',['blue']], camel:['camel','الجمل',['brown','orange','yellow']], tower:['Cairo Tower','برج القاهرة',['gray','blue','purple']], sun:['sun','الشمس',['yellow','orange']], oasis:['palm tree','النخلة',['green']]},
+     svg: sun('sun', 60, 50, 24) + p('pyramids', 'M110 200 L190 70 L270 200Z') + p('pyramids', 'M240 200 L300 110 L360 200Z') + L('M190 70 L210 200 M300 110 L312 200', 2.5)
+       + p('tower', 'M350 200 L358 60 H372 L380 200Z') + p('tower', 'M346 70 Q365 40 384 70Z') + L('M365 40 V24', 3)
+       + p('nile', 'M0 240 Q100 210 200 240 T400 240 V275 Q300 250 200 275 T0 275Z')
+       + L('M40 200 Q46 150 40 110', 6) + p('oasis', 'M40 112 Q10 96 2 120 Q20 110 40 116Z') + p('oasis', 'M40 112 Q70 92 82 116 Q60 108 40 116Z') + p('oasis', 'M40 112 Q30 80 52 72 Q44 92 42 112Z') + ground(200)
+       + p('camel', 'M200 290 V270 Q190 254 206 248 Q216 230 232 240 Q246 228 258 244 Q272 246 270 262 V290 H260 V268 H212 V290Z') + p('camel', 'M206 252 Q190 236 194 222 L204 222 L212 246Z')},
+    {id:'city', en:'My City', ar:'مدينتي', les:['u4l2', 'u4l3'], parts:{school:['school','المدرسة',['yellow','red','orange']], library:['library','المكتبة',['purple','blue','brown']], hospital:['hospital','المستشفى',['white','blue']], post:['post office','مكتب البريد',['blue','green','yellow']], mall:['shopping mall','المول',['pink','orange','purple']], road:['road','الطريق',['gray','black']]},
+     svg: r('school', 10, 90, 120, 110, 2) + p('school', 'M0 94 L70 50 L140 94Z') + T(70, 120, 'SCHOOL', 14) + r('door', 55, 160, 30, 40, 2)
+       + r('library', 145, 60, 110, 140, 2) + T(200, 88, 'LIBRARY', 14) + L('M160 110 H240 M160 140 H240 M170 110 V140 M190 110 V140 M210 110 V140 M230 110 V140', 3)
+       + r('hospital', 270, 40, 120, 160, 2) + T(330, 66, 'HOSPITAL', 13) + D('M320 90 h20 v18 h18 v20 h-18 v18 h-20 v-18 h-18 v-20 h18Z', '#E8433A')
+       + r('road', 0, 200, 400, 30, 0) + L('M20 215 H60 M100 215 H140 M180 215 H220 M260 215 H300 M340 215 H380', 3)
+       + r('post', 20, 236, 150, 60, 2) + T(95, 262, 'POST OFFICE', 13) + r('mall', 200, 236, 190, 60, 2) + T(295, 262, 'SHOPPING MALL', 13)},
+    {id:'sinai', en:'St. Catherine Mountain', ar:'جبل سانت كاترين', les:['u4l4'], parts:{mountain:['mountain','الجبل',['brown','gray','purple']], monastery:['monastery','الدير',['yellow','orange','brown']], rocks:['rocks','الصخور',['gray','brown']], plants:['plants','النباتات',['green']], sun:['sun','الشمس',['yellow','orange']], dates:['dates','البلح',['brown','red','orange']]},
+     svg: sun('sun', 340, 50, 24) + p('mountain', 'M0 230 L120 40 L200 150 L260 90 L400 230Z') + L('M100 72 L120 40 L140 72', 3)
+       + r('monastery', 140, 170, 120, 70, 2) + p('monastery', 'M180 170 L200 140 L220 170Z') + L('M200 140 V126 M194 132 H206', 3) + r('mdoor', 188, 205, 24, 35, 10)
+       + e('rocks', 50, 250, 44, 20) + e('rocks', 330, 256, 50, 22) + e('rocks', 120, 268, 30, 14)
+       + p('plants', 'M260 270 Q250 240 268 226 Q270 250 276 270Z') + p('plants', 'M282 270 Q290 236 306 232 Q296 254 292 270Z') + ground(240)
+       + L('M370 240 Q376 200 368 170', 5) + p('palm', 'M368 172 Q340 160 334 180 Q352 172 368 176Z') + p('palm', 'M368 172 Q396 156 400 176 Q384 170 368 176Z') + c('dates', 362, 182, 5) + c('dates', 372, 184, 5) + c('dates', 367, 192, 5)},
+    {id:'jobs', en:'Different Jobs', ar:'وظايف مختلفة', les:['u5l1'], parts:{doctor:['doctor\'s coat','بالطو الدكتور',['white','blue']], nurse:['nurse\'s uniform','زي الممرضة',['pink','blue','white']], teacher:['teacher\'s board','سبورة المدرّسة',['green','black']], engineer:['engineer\'s helmet','خوذة المهندس',['yellow','orange']], firefighter:['firefighter\'s helmet','خوذة رجل المطافي',['red','yellow']]},
+     svg: person('doctor', 50, 120, L('M42 160 Q50 176 58 160', 3)) + T(50, 220, 'DOCTOR', 12)
+       + person('nurse', 130, 120, '') + p('nurse', 'M118 102 H142 L138 92 H122Z') + T(130, 220, 'NURSE', 12)
+       + r('teacher', 170, 60, 80, 56, 3) + T(210, 94, 'A B C', 16) + person('tch', 210, 140) + T(210, 240, 'TEACHER', 12)
+       + person('eng', 285, 120) + p('engineer', 'M266 112 Q285 86 304 112Z') + T(285, 220, 'ENGINEER', 12)
+       + person('ff', 355, 120) + p('firefighter', 'M334 114 Q355 84 376 114 L384 118 H326Z') + T(355, 220, 'FIREFIGHTER', 11) + ground(250)},
+    {id:'puppets', en:'The Puppet Show', ar:'عرض العرايس', les:['u5l2'], parts:{curtains:['curtains','الستاير',['red','purple','blue']], stage:['stage','المسرح',['brown','yellow','orange']], puppets:['puppets','العرايس',['pink','yellow','green','orange']], camera:['camera','الكاميرا',['black','gray','blue']], children:['children','الأطفال',['blue','red','green','purple']]},
+     svg: r('stage', 40, 20, 320, 200, 6) + p('curtains', 'M50 30 H130 Q110 120 130 210 H50Z') + p('curtains', 'M350 30 H270 Q290 120 270 210 H350Z') + p('curtains', 'M50 30 H350 V56 Q200 76 50 56Z')
+       + c('puppets', 170, 150, 22) + p('puppets', 'M150 210 Q150 170 170 170 Q190 170 190 210Z') + dot(163, 146, 3) + dot(177, 146, 3) + c('puppets', 232, 150, 22) + p('puppets', 'M212 210 Q212 170 232 170 Q252 170 252 210Z') + dot(225, 146, 3) + dot(239, 146, 3)
+       + [70, 130, 190, 250].map(x => c('children', x, 262, 18)).join('') + r('camera', 300, 240, 70, 46, 6) + c('lens', 335, 263, 14) + r('camera', 312, 230, 20, 12, 3)},
+    {id:'house', en:'The Carpenter\'s House', ar:'بيت النجار', les:['u5l3'], parts:{house:['house','البيت',['yellow','orange','pink','blue']], roof:['roof','السقف',['red','brown']], furniture:['chair','الكرسي',['brown','orange']], hammer:['hammer','الشاكوش',['gray','brown']], keys:['keys','المفاتيح',['yellow','orange']], crown:['king\'s crown','تاج الملك',['yellow','orange']]},
+     svg: r('house', 40, 110, 180, 140, 2) + p('roof', 'M24 114 L130 40 L236 114Z') + r('door', 110, 180, 40, 70, 2) + r('win', 60, 140, 34, 30, 2) + r('win', 168, 140, 34, 30, 2) + ground(250)
+       + p('furniture', 'M260 250 V170 H276 V200 H320 V250 H306 V220 H274 V250Z') + r('furniture', 270, 196, 54, 10, 3)
+       + r('hammer', 340, 160, 12, 80, 3) + p('hammer', 'M322 150 H372 V172 H322Z') + L('M360 250 L372 260', 3)
+       + c('keys', 300, 60, 16) + c('ring', 300, 60, 6) + p('keys', 'M314 64 H366 V72 H358 V80 H350 V72 H314Z')
+       + p('crown', 'M300 120 L310 92 L325 110 L340 86 L355 110 L370 92 L380 120Z')},
+    {id:'fire', en:'Heroes Who Fight Fires', ar:'أبطال المطافي', les:['u5l4'], parts:{truck:['fire truck','عربية المطافي',['red']], ladder:['ladder','السلم',['gray','yellow','white']], hose:['hose','الخرطوم',['yellow','blue','gray']], helmet:['helmet','الخوذة',['red','yellow']], fire:['fire','النار',['orange','red','yellow']], house:['house','البيت',['yellow','pink','blue']]},
+     svg: r('house', 250, 90, 140, 130, 2) + p('hroof', 'M238 94 L320 40 L402 94Z') + r('win', 270, 120, 36, 30, 2) + r('win', 334, 120, 36, 30, 2)
+       + p('fire', 'M276 150 Q262 120 282 104 Q284 124 294 118 Q300 98 290 84 Q318 100 310 150Z') + p('fire', 'M340 150 Q326 124 346 110 Q348 128 358 122 Q362 104 354 92 Q380 110 372 150Z')
+       + p('truck', 'M20 250 V180 H140 V160 H200 L224 196 V250Z') + r('twin', 150, 168, 40, 26, 3) + c('wheel', 60, 254, 18) + c('wheel', 180, 254, 18)
+       + p('ladder', 'M40 172 L230 60 L240 74 L52 186Z') + L('M70 160 L80 172 M100 142 L110 154 M130 124 L140 136 M160 106 L170 118 M190 88 L200 100', 3)
+       + p('hose', 'M210 220 Q240 250 236 210 Q232 170 262 150 L268 156 Q242 176 246 214 Q250 260 204 228Z')
+       + p('helmet', 'M100 140 Q120 112 140 140 L148 144 H92Z') + ground(272)},
+    {id:'dresses', en:'The Hundred Dresses', ar:'المائة فستان', les:['stl1'], parts:{closet:['closet','الدولاب',['brown','orange']], dress:['dress','الفستان',['pink','blue','purple','red','green']], drawings:['drawing','الرسمة',['yellow','blue','pink']], medal:['medal','الميدالية',['yellow','orange']], letter:['letter','الجواب',['white','pink','blue']], sign:['sign','اللافتة',['green','blue','red']]},
+     svg: r('closet', 20, 40, 140, 230, 4) + L('M90 40 V270', 3) + dot(80, 160, 4) + dot(100, 160, 4) + L('M30 270 V286 M150 270 V286', 4)
+       + r('drawings', 190, 40, 100, 120, 3) + p('dress', 'M240 60 L224 76 L232 82 L228 140 H252 L248 82 L256 76Z') + p('sign', 'M300 30 H392 V80 H300Z') + T(346, 62, 'WINNER!', 15)
+       + c('medal', 345, 140, 26) + p('ribbon', 'M330 92 L345 116 L360 92 H350 L345 102 L340 92Z') + D('M345 128 l4 8 h8 l-6 6 l2 8 l-8 -5 l-8 5 l2 -8 l-6 -6 h8Z', '#FFFFFF')
+       + r('letter', 190, 190, 120, 80, 3) + L('M190 190 L250 236 L310 190', 3) + ground(286)}
+  ];
+  return SCENES;
+})();
+const CS_INIT = '#ECE9F1';
+const csScene = id => CS.find(s => s.id === id);
+/* scenes for the topic chosen above the games: a lesson, a unit, or the whole book */
+function csForTopic(){
+  const l = topicLesson();
+  if(l){ const own = CS.filter(s => s.les.includes(l.id)); return own.length ? own : CS.filter(s => s.les.some(x => LESSONS[x] && LESSONS[x].unit === l.unit)); }
+  const u = BOOK.find(x => x.id === S.topic);
+  if(u) return CS.filter(s => s.les.some(x => LESSONS[x] && LESSONS[x].unit === u));
+  return CS;
+}
+
+/* ============ COLOR THE LESSON: pick a drawing from the chosen unit / lesson, then follow English sentences ============ */
 function gameColor(){
+  setTop(true);
+  const list = csForTopic(), l = topicLesson(), u = l ? l.unit : BOOK.find(x => x.id === S.topic);
+  const where = l ? `<span class="en">${l.en}</span>` : u ? (u.id === 'st' ? 'القصة' : `الوحدة ${u.n} · <span class="en">${u.en}</span>`) : 'كل المنهج';
+  screenEl.innerHTML = `<section class="hub">
+    <div class="g-head"><h2>🎨 لوّني بالإنجليزي <span class="en" style="font-size:20px;color:var(--ink-soft)">Color it in English</span></h2>
+      <p class="ask">رسومات ${where}. اختاري رسمة، واقري الجملة ولوّني الجزء الصح.</p></div>
+    <div class="cs-pick">${list.map(s => `<button class="cs-card sticker" data-cs="${s.id}"><span class="cs-thumb"><svg viewBox="0 0 400 300">${s.svg}</svg></span><b class="en">${s.en}</b><small>${s.ar}</small></button>`).join('')}
+      <button class="cs-card sticker" data-cs="mish"><span class="cs-thumb mish">${catSVG(DEFAULT_MISH)}</span><b class="en">Mishmish</b><small>لوّني مشمش</small></button></div>
+  </section>`;
+  screenEl.querySelectorAll('.cs-thumb svg [data-part]').forEach(x => x.style.fill = CS_INIT);
+  screenEl.querySelectorAll('[data-cs]').forEach(b => b.onclick = () => { actx(); roundStars = 0; b.dataset.cs === 'mish' ? gameColorMish() : colorScene(b.dataset.cs); });
+}
+function colorScene(id){
+  setTop(true);
+  const sc = csScene(id), palette = COLORS;
+  const keys = Object.keys(sc.parts);
+  const steps = shuffle(keys).slice(0, Math.min(6, keys.length)).map(k => {
+    const nat = sc.parts[k][2].filter(n => palette.some(c => c.en === n));
+    const want = rand(nat.length ? nat : ['red', 'blue', 'green', 'yellow']); return {part: k, color: palette.find(c => c.en === want)};
+  });
+  const name = k => sc.parts[k] ? sc.parts[k][0] : null;
+  const sentence = st => `Color the ${name(st.part)} ${st.color.en}.`;
+  let s = 0, sel = null, miss = 0, free = false;
+  screenEl.innerHTML = `<section class="stage cbig">
+    <div id="chead"></div>
+    <div class="cinstr instr sticker" id="instr"></div>
+    <div class="canvas sticker paint big" id="canvas"><svg viewBox="0 0 400 300" class="cs-svg">${sc.svg}</svg></div>
+    <div class="cpal sticker"><div class="palette" id="pal">${palette.map(c => `<button class="swb" style="--c:${c.sw}" data-c="${c.en}" aria-pressed="false" aria-label="${c.en}" title="${c.en}"></button>`).join('')}</div></div>
+    <p class="cfeed" id="cfb" aria-live="polite"></p>
+    <div class="row" id="cact" style="justify-content:center"></div>
+  </section>`;
+  screenEl.querySelectorAll('#canvas [data-part]').forEach(x => x.style.fill = CS_INIT);
+  const head = () => { $('#chead').innerHTML = free
+    ? `<div class="g-head"><h2>لوّني براحتك <span class="en" style="font-size:20px;color:var(--ink-soft)">Free painting</span></h2><p class="ask">خلصتي الجمل! كمّلي تلوين الرسمة زي ما تحبي.</p></div>`
+    : gameHead('لوّني بالإنجليزي', sc.en, 'اقري الجملة، اختاري اللون، ودوسي على الجزء الصح', s, steps.length, steps.map(() => true)); };
+  const instr = () => {
+    if(free){
+      $('#instr').innerHTML = `<p class="sentence" lang="en">Now color the picture your way!</p>${sayBtn('Now color the picture your way!')}`;
+      $('#cact').innerHTML = `<button class="btn primary" id="cDone">خلصت الرسمة ✔</button><button class="btn" id="cNew">رسمة تانية</button>`;
+      $('#cDone').onclick = () => { addStars(2); finish(() => colorScene(id), `لوّنتي «${sc.ar}» وقريتي ${steps.length} جمل بالإنجليزي 🎨`, gameColor, 'الرسومات'); };
+      $('#cNew').onclick = gameColor;
+      return;
+    }
+    const st = steps[s];
+    $('#instr').innerHTML = `<span class="step">Step ${s + 1} of ${steps.length}</span><p class="sentence" lang="en">${sentence(st)}</p>${sayBtn(sentence(st))}
+      ${miss >= 2 ? `<p class="arhint">مساعدة: لوّني ${sc.parts[st.part][1]} باللون ال${st.color.ar}</p>` : ''}`;
+  };
+  const hints = on => {
+    screenEl.querySelectorAll('.hint').forEach(x => x.classList.remove('hint'));
+    if(!on) return;
+    const st = steps[s];
+    screenEl.querySelectorAll(`#canvas [data-part="${st.part}"]`).forEach(x => x.classList.add('hint'));
+    screenEl.querySelector(`.swb[data-c="${st.color.en}"]`).classList.add('hint');
+  };
+  const paint = (part, c) => screenEl.querySelectorAll(`#canvas [data-part="${part}"]`).forEach(x => x.style.fill = c.sw);
+  $('#pal').onclick = e => {
+    const b = e.target.closest('.swb'); if(!b) return;
+    sel = palette.find(c => c.en === b.dataset.c);
+    screenEl.querySelectorAll('.swb').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    say(sel.en);
+  };
+  $('#canvas').onclick = e => {
+    const el = e.target.closest('[data-part]'); if(!el) return;
+    const part = el.dataset.part, fb = $('#cfb');
+    if(!sel){ fb.style.color = 'var(--grape)'; fb.textContent = 'اختاري لون الأول من الألوان 🎨'; if(name(part)) say(name(part)); return; }
+    if(free){ paint(part, sel); sfxTick(); if(name(part)) say(`${sel.en} ${name(part)}`); return; }
+    const st = steps[s];
+    if(part === st.part && sel.en === st.color.en){
+      paint(part, sel); hints(false); sfxGood(); burst(el);
+      addStars(miss < 2 ? 1 : 0); say(rand(PRAISE));
+      fb.style.color = 'var(--good)'; fb.innerHTML = `<span class="en">${st.color.en} ${name(st.part)}</span> ✔`;
+      s++; miss = 0;
+      if(s >= steps.length){ free = true; meow(); }
+      head(); setTimeout(() => { instr(); say(free ? 'Now color the picture your way!' : sentence(steps[s])); }, 900);
+    } else {
+      miss++; sfxBad(); fb.style.color = 'var(--bad)';
+      if(part !== st.part){
+        if(name(part)){ fb.innerHTML = `ده <span class="en">${name(part)}</span> (${sc.parts[part][1]}). دوّري على <span class="en">${name(st.part)}</span>`; say(`This is the ${name(part)}. Find the ${name(st.part)}.`); }
+        else { fb.innerHTML = `دوّري على <span class="en">${name(st.part)}</span>`; say(`Find the ${name(st.part)}.`); }
+      } else {
+        fb.innerHTML = `اللون ده <span class="en">${sel.en}</span>. محتاجين <span class="en">${st.color.en}</span>`;
+        say(`This is ${sel.en}. We need ${st.color.en}.`);
+        const cw = VOCAB.find(v => v.en === st.color.en); if(cw) markTricky(cw);
+      }
+      if(miss >= 2){ instr(); hints(true); }
+    }
+  };
+  head(); instr(); setTimeout(() => say(sentence(steps[0])), 300);
+}
+
+/* the original game: color Mishmish herself */
+function gameColorMish(){
   setTop(true);
   const palette = COLORS;
   /* ears, eyes and nose are Unit 1 words (The Five Senses), so they are always in */
@@ -8417,6 +8688,8 @@ gMatch = navWrap(gMatch, 'gMatch');
 gameListen = navWrap(gameListen, 'gameListen');
 gameSpell = navWrap(gameSpell, 'gameSpell');
 gameColor = navWrap(gameColor, 'gameColor');
+colorScene = navWrap(colorScene, 'colorScene');
+gameColorMish = navWrap(gameColorMish, 'gameColorMish');
 gameMemory = navWrap(gameMemory, 'gameMemory');
 readingHub = navWrap(readingHub, 'readingHub');
 gameFamily = navWrap(gameFamily, 'gameFamily');

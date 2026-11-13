@@ -7966,7 +7966,7 @@ function packScreen(pid){
   $('#practice').onclick = () => { roundStars = 0; spellTest(shuffle(P.words).slice(0, 10), back, false); };
 }
 
-const KB_ROWS = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'];
+const KB_ROWS = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm.'];   /* the dot is for words like St. Catherine */
 function spellTest(words, back, forMoney){
   setTop(true);
   let i = 0, earnedNow = 0, gotWords = 0;
@@ -8047,7 +8047,7 @@ function spellTest(words, back, forMoney){
       if(e.ctrlKey || e.metaKey || e.altKey) return;
       if(e.key === 'Backspace'){ e.preventDefault(); press('back'); }
       else if(e.key === 'Enter'){ e.preventDefault(); press('enter'); }
-      else if(/^[a-zA-Z ]$/.test(e.key)){ e.preventDefault(); press(e.key.toLowerCase()); }
+      else if(/^[a-zA-Z .]$/.test(e.key)){ e.preventDefault(); press(e.key.toLowerCase()); }
     };
     document.addEventListener('keydown', keyHandler);
     $('#hHear').onclick = () => { helped = true; say(w.en, .7); };
@@ -8475,7 +8475,7 @@ const wgKeyboard = (hasSpace) => `<div class="kb" dir="ltr">${KB_ROWS.map((r, ri
 function wgKeys(el, onKey){
   const h = e => { if(!document.contains(el)){ document.removeEventListener('keydown', h); return; }
     if(e.key === 'Backspace'){ e.preventDefault(); onKey('back'); } else if(e.key === 'Enter'){ e.preventDefault(); onKey('enter'); }
-    else if(e.key.length === 1 && /[a-z ']/i.test(e.key)){ e.preventDefault(); onKey(e.key.toLowerCase()); } };
+    else if(e.key.length === 1 && /[a-z '.]/i.test(e.key)){ e.preventDefault(); onKey(e.key.toLowerCase()); } };
   document.addEventListener('keydown', h);
 }
 
@@ -8621,7 +8621,7 @@ function wgBalloons(keys, back){
       ${wgCard(w)}
       <div id="tiles">${wgTiles(w.en, j => got.has(low[j]))}</div>
       <div class="feedback" id="fb" aria-live="polite"></div>
-      <div class="kb" dir="ltr">${KB_ROWS.map(r => `<div class="kb-row">${[...r].map(c => `<button class="key" data-key="${c}">${c}</button>`).join('')}</div>`).join('')}</div>
+      <div class="kb" dir="ltr">${KB_ROWS.map(r => `<div class="kb-row">${[...r].filter(c => c !== '.').map(c => `<button class="key" data-key="${c}">${c}</button>`).join('')}</div>`).join('')}</div>
       <div class="row" style="justify-content:center" id="after"></div>
     </section>`;
     const key = c => {

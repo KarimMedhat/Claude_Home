@@ -1264,6 +1264,16 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
 .fl-bar i{display:block;height:100%;width:100%;background:var(--tangerine)}
 .wg-choice.used{opacity:.3}
 .spot-opts .opt.wopt{font-size:26px;letter-spacing:1px}
+.lx-units{display:grid;gap:14px}
+.lx-unit{display:grid;gap:10px;padding:12px 14px;background:var(--ucl)}
+.lx-uh{display:flex;align-items:center;gap:10px;font-size:19px}
+.lx-uh .u-badge{width:40px;height:40px;font-size:20px;border-radius:12px}
+.lx-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.lx{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px;align-items:center;text-align:start;padding:10px 12px;border:3px solid var(--ink);border-radius:14px;background:var(--card);box-shadow:3px 3px 0 var(--ink);transition:transform .1s}
+.lx:hover{transform:translateY(-2px)}
+.lx-n{grid-row:span 2;width:34px;height:34px;display:grid;place-items:center;border:2px solid var(--ink);border-radius:50%;background:var(--uc);color:#fff;font-weight:800}
+.lx-t{font-weight:700;font-size:16px;line-height:1.3}
+.lx small{font-size:13px;color:var(--ink-soft)}
 .lesson-chips{margin-top:10px;padding:10px;border:2px dashed var(--ink);border-radius:16px;background:#F5F9FF}
 .lesson-chips .chip{font-size:15px;padding:4px 12px}
 .lesson-chips .lc-label{font-weight:800;font-size:15px;align-self:center}
@@ -6851,7 +6861,14 @@ function examHall(){
         return `<button class="exam-card" data-exam="${e.id}" style="--uc:${u.c};--ucl:${u.cl}">
           <span class="u-badge">${u.n}</span><span class="u-body"><span class="u-title en">${e.title.replace('El-Moasser · ', '')}</span><span class="u-ar">المعاصر · ${u.ar}</span>
           <small>${best != null ? `أحسن درجة: <b>${best}%</b> ${gradeOf(best)[1]}` : `${e.secs.length} أسئلة رئيسية · فيها استماع`}</small></span></button>`; }).join('')}
-      </div>` : units.map(u => `
+      </div>
+      <h3 class="sec-title" id="lxTitle">امتحانات الدروس <span class="en">Lesson Tests</span></h3>
+      <p class="muted">امتحان قصير على درس واحد بس: كلمات الدرس ومعانيها وتهجيتها، وقاعدته وأفعاله، وقطعة وأسئلة من امتحانات الكتاب والمعاصر فيها كلمات الدرس. أسئلة جديدة كل مرة.</p>
+      <div class="lx-units">${BOOK.map(u => `<div class="lx-unit sticker" style="--uc:${u.c};--ucl:${u.cl}">
+        <b class="lx-uh"><span class="u-badge">${u.id === 'st' ? '★' : u.n}</span>${unitLabel(u.id)} <span class="en">${u.en}</span></b>
+        <div class="lx-row">${u.lessons.map((l, i) => { const best = S.exams['L:' + l.id];
+          return `<button class="lx" data-lx="${l.id}"><span class="lx-n">${u.id === 'st' ? '📖' : i + 1}</span><span class="lx-t en">${l.en}</span>
+            <small>${best != null ? `أحسن درجة ${best}% ${gradeOf(best)[1]}` : 'لسه ماامتحنتيش'}</small></button>`; }).join('')}</div></div>`).join('')}</div>` : units.map(u => `
       <h3 class="sec-title">${unitLabel(u.id)} <span class="en">${u.en}</span></h3>
       <div class="pass-grid">${PASSAGES.filter(p => p.u === u.id).map(p => `<button class="pass-card ${S.pDone[p.id] ? 'done' : ''}" data-pass="${p.id}" style="--uc:${u.c};--ucl:${u.cl}">
         <span class="p-kind">${p.kind}</span><span class="en p-title">${p.title}</span><small>${p.qs.length} أسئلة${S.pDone[p.id] != null ? ` · ✔ ${S.pDone[p.id]}%` : ''}</small></button>`).join('')}</div>`).join('')}
@@ -6859,10 +6876,60 @@ function examHall(){
   screenEl.querySelectorAll('[data-ht]').forEach(b => b.onclick = () => { hallTab = b.dataset.ht; examHall(); });
   screenEl.querySelectorAll('[data-exam]').forEach(b => b.onclick = () => { roundStars = 0; examRun(b.dataset.exam === 'final' ? finalExam() : [...EXAMS, ...MEXAMS].find(e => e.id === b.dataset.exam), examHall); });
   screenEl.querySelectorAll('[data-pass]').forEach(b => b.onclick = () => { roundStars = 0; examRun(passageExam(PASSAGES.find(p => p.id === b.dataset.pass)), examHall); });
+  screenEl.querySelectorAll('[data-lx]').forEach(b => b.onclick = () => { roundStars = 0; actx(); examRun(lessonExam(b.dataset.lx), examHall); });
 }
 function passageExam(p){
   return {id:p.id, passageId:p.id, title:p.title, isPassage:true, secs:[{en:"Read the text and answer the questions.", ar:"اقري القطعة وجاوبي", passage:p.id, items:p.qs}]};
 }
+/* ---------- lesson tests: a short exam on one lesson, new questions every time ---------- */
+function lessonExam(lid){
+  const l = LESSONS[lid], u = l.unit;
+  const pick = (arr, n) => shuffle(arr).slice(0, n);
+  const imp = l.imp ? l.imp.split(';').filter(Boolean).map(s => s.split('|')[0].trim()) : [];
+  const words = [...imp, ...l.words.filter(k => !imp.includes(k))].map(k => WORDS[k]).filter(w => w && /^[A-Za-z][A-Za-z .'-]*$/.test(w.en));
+  const unitWords = [...new Set(u.lessons.flatMap(x => x.words))].map(k => WORDS[k]).filter(w => w && /^[A-Za-z][A-Za-z .'-]*$/.test(w.en));
+  const others = (w, n, field) => {
+    const pool = words.filter(x => x !== w && x[field] !== w[field]);
+    const more = unitWords.filter(x => x !== w && x[field] !== w[field] && !pool.includes(x));
+    const seen = new Set([w[field]]);
+    return [...shuffle(pool), ...shuffle(more)].filter(x => !seen.has(x[field]) && seen.add(x[field])).slice(0, n);
+  };
+  const mcShuf = (q, right, wrong) => { const o = shuffle([right, ...wrong]); return MC(q, o, o.indexOf(right)); };
+  const esc2 = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const wordRe = words.length ? new RegExp('\\b(' + words.map(w => esc2(w.en)).join('|') + ')\\b', 'i') : /^$/;
+  const exs = [...EXAMS, ...MEXAMS].filter(e => e.u === u.id);
+  const items = exs.flatMap(e => e.secs.flatMap(s => Array.isArray(s.items) && !s.passage ? s.items : []));
+  const top = words.slice(0, Math.max(6, imp.length));
+  const secs = [];
+  // 1) picture / meaning → the English word
+  const v1 = pick(top, 4).map(w => mcShuf(`${w.e ? w.e + ' ' : ''}${w.ar} = ___`, w.en, others(w, 3, 'en').map(x => x.en)));
+  if(v1.length) secs.push({en: "Choose the correct word.", ar: "اختاري الكلمة الإنجليزي الصح", items: v1});
+  // 2) English word → its meaning
+  const v2 = pick(words.filter(w => !v1.some(it => it.o.includes(w.en))), 3).map(w => mcShuf(`"${w.en}" means ___`, w.ar, others(w, 3, 'ar').map(x => x.ar)));
+  if(v2.length) secs.push({en: "Choose the correct meaning.", ar: "اختاري المعنى الصح", items: v2});
+  // 3) spelling
+  const v3 = pick(top, 3).map(w => mcShuf(`${w.e ? w.e + ' ' : ''}${w.ar}: choose the correct spelling.`, w.en, misspell(w.en)));
+  if(v3.length) secs.push({en: "Choose the correct spelling.", ar: "اختاري الكتابة الصح للكلمة", items: v3});
+  // 4) school-book and El-Moasser questions that use this lesson's words
+  const book = pick(items.filter(it => it.t === 'c' && !it.tf && wordRe.test(it.q + ' ' + it.o.join(' '))), 6);
+  if(book.length) secs.push({en: "Choose the correct answer from a, b, c or d.", ar: "اختاري الإجابة الصحيحة (من امتحانات الكتاب والمعاصر)", items: book});
+  // 5) the lesson's grammar
+  const G = l.g && GRAMMAR[l.g] && Array.isArray(GRAMMAR[l.g].qs) ? GRAMMAR[l.g].qs : [];
+  const gc = pick(G.filter(q => q.t === 'c' && Array.isArray(q.o) && typeof q.a === 'number'), 4).map(q => ({t: 'c', q: q.q, o: q.o, a: q.a}));
+  if(gc.length) secs.push({en: `Grammar: ${GRAMMAR[l.g].en}`, ar: `القاعدة: ${GRAMMAR[l.g].ar}`, items: gc});
+  // 6) the lesson's verbs in the past
+  const vb = pick(l.verbs, 3).map(v => { const wrong = [...new Set([v.b, v.b + 's', v.b + 'ing', v.b + 'ed'].filter(x => x !== v.p))].slice(0, 2);
+    return mcShuf(`Yesterday, I ___ (${v.b}).`, v.p, wrong); });
+  if(vb.length) secs.push({en: "Choose the past form of the verb.", ar: "اختاري الفعل في الماضي", items: vb});
+  // 7) a unit passage that talks about this lesson
+  const ps = PASSAGES.filter(p => p.u === u.id).map(p => ({p, n: (p.lines.join(' ').match(new RegExp(wordRe.source, 'gi')) || []).length})).filter(x => x.n >= 2).sort((a, b) => b.n - a.n);
+  if(ps.length) secs.push({en: "Read the text and answer the questions.", ar: "اقري القطعة وجاوبي", passage: ps[0].p.id, items: pick(ps[0].p.qs, 3)});
+  // 8) put the words in order
+  const ords = pick([...items.filter(it => it.t === 'b' && wordRe.test(it.w.join(' '))), ...G.filter(q => q.t === 'b' && Array.isArray(q.w))], 2).map(q => ({t: 'b', w: q.w, ar: q.ar}));
+  if(ords.length) secs.push({en: "Rearrange the words to make correct sentences.", ar: "رتّبي الكلمات", items: ords});
+  return {id: 'L:' + lid, title: `Lesson Test: ${l.en}`, secs, regen: () => lessonExam(lid)};
+}
+
 function finalExam(){
   const pick = (arr, n) => shuffle(arr).slice(0, n);
   const mcs = pick(EXAMS.flatMap(e => e.secs[0].items), 10);
@@ -6935,7 +7002,7 @@ function examRun(ex, back){
       </div>
     </section>`;
     burst($('.result'));
-    $('#again').onclick = () => { roundStars = 0; examRun(ex.id === 'final' ? finalExam() : ex, back); };
+    $('#again').onclick = () => { roundStars = 0; examRun(ex.regen ? ex.regen() : ex.id === 'final' ? finalExam() : ex, back); };
     $('#hall').onclick = back;
   }
   next();

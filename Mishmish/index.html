@@ -1274,6 +1274,11 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
 .lx-n{grid-row:span 2;width:34px;height:34px;display:grid;place-items:center;border:2px solid var(--ink);border-radius:50%;background:var(--uc);color:#fff;font-weight:800}
 .lx-t{font-weight:700;font-size:16px;line-height:1.3}
 .lx small{font-size:13px;color:var(--ink-soft)}
+.x-coin{display:inline-block;margin-top:4px;border:2px solid var(--ink);border-radius:99px;background:#FFE58A;padding:0 8px;font-size:13px;font-weight:800;width:max-content}
+.x-coin.done{background:var(--good-l)}
+.lx .x-coin{grid-column:2}
+.x-won{padding:12px 18px;background:#FFE58A;font-size:20px;text-align:center;animation:pop .5s}
+.x-try{margin:0;font-weight:700;color:#8A5A00;text-align:center}
 .lesson-chips{margin-top:10px;padding:10px;border:2px dashed var(--ink);border-radius:16px;background:#F5F9FF}
 .lesson-chips .chip{font-size:15px;padding:4px 12px}
 .lesson-chips .lc-label{font-weight:800;font-size:15px;align-self:center}
@@ -6851,7 +6856,7 @@ function examHall(){
       <div class="exam-grid">${EXAMS.map(e => { const u = BOOK.find(x => x.id === e.u), best = S.exams[e.id];
         return `<button class="exam-card" data-exam="${e.id}" style="--uc:${u.c};--ucl:${u.cl}">
           <span class="u-badge">${u.n}</span><span class="u-body"><span class="u-title en">${e.title}</span><span class="u-ar">${u.ar}</span>
-          <small>${best != null ? `أحسن درجة: <b>${best}%</b> ${gradeOf(best)[1]}` : `${e.secs.length} أسئلة رئيسية · مع كتابة`}</small></span></button>`; }).join('')}
+          <small>${best != null ? `أحسن درجة: <b>${best}%</b> ${gradeOf(best)[1]}` : `${e.secs.length} أسئلة رئيسية · مع كتابة`}</small>${prizeTag(e)}</span></button>`; }).join('')}
         <button class="exam-card final" data-exam="final" style="--uc:#2B2233;--ucl:#FFF0BF">
           <span class="u-badge">★</span><span class="u-body"><span class="u-title en">Final Term Exam</span><span class="u-ar">امتحان شامل على الترم كله · أسئلة جديدة كل مرة</span>
           <small>${S.exams.final != null ? `أحسن درجة: <b>${S.exams.final}%</b> ${gradeOf(S.exams.final)[1]}` : 'من كل الوحدات'}</small></span></button>
@@ -6860,7 +6865,7 @@ function examHall(){
       <div class="exam-grid">${MEXAMS.map(e => { const u = BOOK.find(x => x.id === e.u) || {n:'★', c:'#2B2233', cl:'#FFF0BF', ar:'على المنهج كله'}, best = S.exams[e.id];
         return `<button class="exam-card" data-exam="${e.id}" style="--uc:${u.c};--ucl:${u.cl}">
           <span class="u-badge">${u.n}</span><span class="u-body"><span class="u-title en">${e.title.replace('El-Moasser · ', '')}</span><span class="u-ar">المعاصر · ${u.ar}</span>
-          <small>${best != null ? `أحسن درجة: <b>${best}%</b> ${gradeOf(best)[1]}` : `${e.secs.length} أسئلة رئيسية · فيها استماع`}</small></span></button>`; }).join('')}
+          <small>${best != null ? `أحسن درجة: <b>${best}%</b> ${gradeOf(best)[1]}` : `${e.secs.length} أسئلة رئيسية · فيها استماع`}</small>${prizeTag(e)}</span></button>`; }).join('')}
       </div>
       <h3 class="sec-title" id="lxTitle">امتحانات الدروس <span class="en">Lesson Tests</span></h3>
       <p class="muted">امتحان قصير على درس واحد بس: كلمات الدرس ومعانيها وتهجيتها، وقاعدته وأفعاله، وقطعة وأسئلة من امتحانات الكتاب والمعاصر فيها كلمات الدرس. أسئلة جديدة كل مرة.</p>
@@ -6868,7 +6873,7 @@ function examHall(){
         <b class="lx-uh"><span class="u-badge">${u.id === 'st' ? '★' : u.n}</span>${unitLabel(u.id)} <span class="en">${u.en}</span></b>
         <div class="lx-row">${u.lessons.map((l, i) => { const best = S.exams['L:' + l.id];
           return `<button class="lx" data-lx="${l.id}"><span class="lx-n">${u.id === 'st' ? '📖' : i + 1}</span><span class="lx-t en">${l.en}</span>
-            <small>${best != null ? `أحسن درجة ${best}% ${gradeOf(best)[1]}` : 'لسه ماامتحنتيش'}</small></button>`; }).join('')}</div></div>`).join('')}</div>` : units.map(u => `
+            <small>${best != null ? `أحسن درجة ${best}% ${gradeOf(best)[1]}` : 'لسه ماامتحنتيش'}</small>${prizeTag({id: 'L:' + l.id}, true)}</button>`; }).join('')}</div></div>`).join('')}</div>` : units.map(u => `
       <h3 class="sec-title">${unitLabel(u.id)} <span class="en">${u.en}</span></h3>
       <div class="pass-grid">${PASSAGES.filter(p => p.u === u.id).map(p => `<button class="pass-card ${S.pDone[p.id] ? 'done' : ''}" data-pass="${p.id}" style="--uc:${u.c};--ucl:${u.cl}">
         <span class="p-kind">${p.kind}</span><span class="en p-title">${p.title}</span><small>${p.qs.length} أسئلة${S.pDone[p.id] != null ? ` · ✔ ${S.pDone[p.id]}%` : ''}</small></button>`).join('')}</div>`).join('')}
@@ -6930,6 +6935,13 @@ function lessonExam(lid){
   return {id: 'L:' + lid, title: `Lesson Test: ${l.en}`, secs, regen: () => lessonExam(lid)};
 }
 
+const examPrize = ex => { const B = S.bank; if(!ex || !ex.id || ex.isPassage) return 0;
+  if(ex.id.startsWith('L:')) return B.perLessonExam || 0;
+  const e = [...EXAMS, ...MEXAMS].find(x => x.id === ex.id);
+  return e && e.u && e.u !== 'all' ? (B.perUnitExam || 0) : 0; };
+const examPaid = id => !!S.bank.paid['x:' + id];
+const prizeTag = (ex, short) => { const amt = examPrize(ex); if(!amt) return '';
+  return examPaid(ex.id) ? `<span class="x-coin done">🪙 ✔</span>` : `<span class="x-coin">🪙 ${money(amt)} جنيه${short ? '' : ` بـ ${S.bank.examPass}٪`}</span>`; };
 function finalExam(){
   const pick = (arr, n) => shuffle(arr).slice(0, n);
   const mcs = pick(EXAMS.flatMap(e => e.secs[0].items), 10);
@@ -6985,6 +6997,11 @@ function examRun(ex, back){
     const [g, ic] = gradeOf(pct);
     if(ex.isPassage){ S.pDone[ex.passageId] = Math.max(S.pDone[ex.passageId] || 0, pct); save('pDone'); }
     else { S.exams[ex.id] = Math.max(S.exams[ex.id] || 0, pct); save('exams'); }
+    const prize = examPrize(ex), wasPaid = examPaid(ex.id), pass = S.bank.examPass ?? 80;
+    let won = 0;
+    if(prize && !wasPaid && pct >= pass){ S.bank.paid['x:' + ex.id] = Date.now(); won = prize; bankAdd(prize, `امتحان: ${ex.title}`); sfxMoney && sfxMoney(); }
+    const prizeLine = !prize ? '' : won ? `<p class="x-won sticker">🪙 كسبتي <b>${money(won)} جنيه</b> في الحصالة! برافو!</p>`
+      : wasPaid ? `<p class="muted">🪙 خدتي فلوس الامتحان ده قبل كده</p>` : `<p class="x-try">🪙 الامتحان ده عليه ${money(prize)} جنيه لما تجيبي ${pass}٪ أو أكتر. حاولي تاني!</p>`;
     if(pct >= 90){ meow(); }
     setTimeout(() => say(pct >= 75 ? `Great job! You got ${score} out of ${graded}!` : `You got ${score} out of ${graded}. Let's practice more!`), 400);
     const ansOf = it => it.tf ? `${it.q} → ${it.a === 0 ? 'True' : 'False'}` : it.t === 'c' ? it.q.replace('___', it.o[it.a]).replace(/\s*\([^)]*\)\s*$/, '') : it.t === 'b' ? it.w.join(' ') : it.fixed;
@@ -6995,6 +7012,7 @@ function examRun(ex, back){
         <p class="res-score"><b>${score}</b> / ${graded} · ${pct}%</p>
         <p class="muted">${esc(ex.title)} · كسبتي ⭐ ${roundStars}</p>
       </div>
+      ${prizeLine}
       ${wrong.length ? `<div class="mistakes sticker"><h3>راجعي الأسئلة دي</h3>${wrong.map(it => `<button class="mis en" data-say="${esc(it.tf ? it.q : ansOf(it))}">✔ ${esc(ansOf(it))}</button>`).join('')}</div>` : '<p class="feedback good">ولا غلطة! برافو عليكي</p>'}
       <div class="row" style="justify-content:center">
         <button class="btn primary" id="again">امتحني تاني</button>
@@ -7814,8 +7832,8 @@ const GAMES = {listen:gameListen, spell:gameSpell, color:gameColor, memory:gameM
    The ledger (earned words, paid passages, every deposit/withdrawal) is the source of truth; balance and
    progress are derived from it. It is kept in the artifact's shared db so every device sees the same box,
    with localStorage as an offline copy. Copies from two devices merge by union, so nothing is lost. */
-const BANK_KEEP = ['earned', 'paid', 'log', 'words', 'amount', 'perPassage', 'min', 'pin', 'setTs'];
-const BANK_DEF = {earned:{}, paid:{}, log:[], words:10, amount:5, perPassage:1, min:10, pin:'', setTs:0};
+const BANK_KEEP = ['earned', 'paid', 'log', 'words', 'amount', 'perPassage', 'perLessonExam', 'perUnitExam', 'examPass', 'min', 'pin', 'setTs'];
+const BANK_DEF = {earned:{}, paid:{}, log:[], words:10, amount:5, perPassage:1, perLessonExam:2, perUnitExam:5, examPass:80, min:10, pin:'', setTs:0};
 const bankId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 function bankNorm(o){
   const B = Object.assign({}, BANK_DEF, o || {});
@@ -7842,7 +7860,7 @@ function bankMerge(a, b){
   Object.keys(r.earned).forEach(k => { if(!m.earned[k] || r.earned[k] < m.earned[k]) m.earned[k] = r.earned[k]; });
   Object.keys(r.paid).forEach(k => { if(!m.paid[k]) m.paid[k] = r.paid[k]; });
   const ids = new Set(m.log.map(e => e.id)); r.log.forEach(e => { if(!ids.has(e.id)) m.log.push(e); });
-  if((r.setTs || 0) > (m.setTs || 0)) ['words', 'amount', 'perPassage', 'min', 'pin', 'setTs'].forEach(k => m[k] = r[k]);
+  if((r.setTs || 0) > (m.setTs || 0)) ['words', 'amount', 'perPassage', 'perLessonExam', 'perUnitExam', 'examPass', 'min', 'pin', 'setTs'].forEach(k => m[k] = r[k]);
   return m;
 }
 const bankPlain = B => { const o = {}; BANK_KEEP.forEach(k => o[k] = B[k]); return o; };
@@ -7989,6 +8007,7 @@ function bankScreen(keep){
     <h3 class="sec-title">إزاي تكسبي فلوس؟ <span class="en">How to earn</span></h3>
     <div class="earn-ways">
       ${B.amount > 0 ? `<button class="earn-card sticker" id="ewWords"><span class="ew-ico">🔤</span><b>احفظي كلمات المنهج</b><small>${bankRule()}. هتشوفي الكلمة بالعربي وتكتبيها بالإنجليزي.</small><span class="pill">حفظتي ${learned ? nWords(learned) : 'لسه ولا كلمة'}</span></button>` : ''}
+      ${B.perLessonExam > 0 || B.perUnitExam > 0 ? `<button class="earn-card sticker" id="ewExam"><span class="ew-ico">📝</span><b>امتحانات الإنجليزي</b><small>${B.perLessonExam > 0 ? `امتحان درس = <b>${money(B.perLessonExam)} جنيه</b>` : ''}${B.perLessonExam > 0 && B.perUnitExam > 0 ? ' · ' : ''}${B.perUnitExam > 0 ? `امتحان وحدة = <b>${money(B.perUnitExam)} جنيه</b>` : ''}. لما تجيبي ${B.examPass}٪ أو أكتر (مرة واحدة لكل امتحان)</small><span class="pill">نجحتي في ${Object.keys(B.paid).filter(k => k.startsWith('x:')).length} امتحان</span></button>` : ''}
       ${B.perPassage > 0 ? `<button class="earn-card sticker" id="ewPass"><span class="ew-ico">📖</span><b>اقري قطعة</b><small>كل قطعة من الكتاب تقريها للآخر = <b>${money(B.perPassage)} جنيه</b> (مرة واحدة لكل قطعة)</small><span class="pill">قريتي ${passDone} من ${PASSAGES.length} قطعة</span></button>` : ''}
     </div>
 
@@ -8005,6 +8024,7 @@ function bankScreen(keep){
   </section>`;
   screenEl.querySelectorAll('[data-pack]').forEach(b => b.onclick = () => packScreen(b.dataset.pack));
   if($('#ewPass')) $('#ewPass').onclick = readHub;
+  if($('#ewExam')) $('#ewExam').onclick = () => { hallTab = 'exams'; examHall(); };
   if($('#ewWords')) $('#ewWords').onclick = () => $('#market').scrollIntoView({behavior:'smooth'});
   bankStatusPaint();
   $('#withdraw').onclick = withdrawFlow;
@@ -8432,6 +8452,9 @@ function parentSettings(){
     ${num('psWords', 'عدد الكلمات', B.words, 1, 'كام كلمة جديدة')}
     ${num('psAmount', 'تاخد عليهم كام جنيه', B.amount, .25, '')}
     ${num('psPassage', 'كل قطعة تقراها', B.perPassage, .25, 'جنيه')}
+    ${num('psLx', 'امتحان درس', B.perLessonExam, .25, 'جنيه')}
+    ${num('psUx', 'امتحان وحدة', B.perUnitExam, .25, 'جنيه')}
+    ${num('psPass', 'درجة النجاح علشان تاخد فلوس الامتحان', B.examPass, 5, '٪')}
     ${num('psMin', 'أقل مبلغ للسحب', B.min, 1, 'جنيه')}
     <div class="row" style="justify-content:center"><button class="btn primary" id="psSave">حفظ</button><button class="btn" id="psPin">تغيير الرقم السري</button><button class="btn" id="psClose">قفل</button></div>
     <p class="muted">${bankSync === 'ok' ? 'الإعدادات والحصالة محفوظين على كل الأجهزة.' : 'لسه الحصالة مش متوصلة بكل الأجهزة، فالإعدادات محفوظة على الجهاز ده بس.'}</p>`);
@@ -8440,6 +8463,7 @@ function parentSettings(){
     const B = S.bank;
     B.words = Math.max(1, Math.round(v('psWords', B.words))); B.amount = v('psAmount', B.amount);
     B.perPassage = v('psPassage', B.perPassage); B.min = v('psMin', B.min);
+    B.perLessonExam = v('psLx', B.perLessonExam); B.perUnitExam = v('psUx', B.perUnitExam); B.examPass = Math.min(100, Math.max(0, Math.round(v('psPass', B.examPass))));
     B.setTs = Date.now(); bankDerive(B); bankPayWords('');
     bankSave(); m.remove(); bankScreen(); toast('اتحفظت الإعدادات ✔');
   };

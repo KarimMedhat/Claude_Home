@@ -1279,6 +1279,17 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
 .lx .x-coin{grid-column:2}
 .x-won{padding:12px 18px;background:#FFE58A;font-size:20px;text-align:center;animation:pop .5s}
 .x-try{margin:0;font-weight:700;color:#8A5A00;text-align:center}
+.pp-units{display:grid;gap:12px}
+.pp-unit{border:3px solid var(--ink);border-radius:var(--r);background:var(--card);overflow:hidden;box-shadow:var(--shadow)}
+.pp-uhead{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;background:var(--ucl);text-align:start}
+.pp-uhead small{display:block;color:var(--ink-soft);font-size:14px}.pp-uhead b{font-size:19px}.pp-uhead i{margin-inline-start:auto;font-style:normal;font-size:20px}
+.pp-uhead .u-badge{flex:none}
+.pp-lessons{display:grid;gap:8px;padding:12px}
+.pp-les{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 12px;border:2px solid var(--ink);border-radius:14px;background:var(--card);text-align:start}
+.pp-les:hover{background:var(--ucl)}.pp-les small{display:block;color:var(--ink-soft);font-size:14px}
+.pp-les em{margin-inline-start:auto;font-style:normal;font-weight:700;font-size:14px;padding:3px 10px;border-radius:99px;background:var(--good-l)}
+.pp-les.full em{background:#EEE}
+.g-acts{gap:10px;flex-wrap:wrap}
 .lesson-chips{margin-top:10px;padding:10px;border:2px dashed var(--ink);border-radius:16px;background:#F5F9FF}
 .lesson-chips .chip{font-size:15px;padding:4px 12px}
 .lesson-chips .lc-label{font-weight:800;font-size:15px;align-self:center}
@@ -6415,9 +6426,7 @@ function lessonScreen(lid){
   bindCrumbs();
   const back = () => lessonScreen(lid);
   const pool = l.words;
-  $('#aLearn').onclick = () => wordPicker({keys: l.words, groups: [{title: '⭐ الكلمات المهمة <span class="en">Important</span>', keys: impKeys}, {title: '➕ كلمات زيادة <span class="en">Extra</span>', keys: extKeys}], pre: (fresh.length ? fresh : l.words).slice(0, 6), max: 8, freshFirst: true,
-    title: '🌱 اختاري الكلمات اللي هتزرعيها', sub: 'دوسي على الكلمات اللي عاوزة تزرعيها من الدرس كله (لحد ٨ كلمات في المرة). الزرعة اللي فوق الكلمة معناها إنها اتزرعت قبل كده.',
-    goLabel: n => n ? `🌱 ازرعي ${nWords(n)}` : 'اختاري كلمات', go: ks => learnSession(ks, pool, back)});
+  $('#aLearn').onclick = () => plantLesson(lid, back);
   const groups = [{title: '⭐ الكلمات المهمة <span class="en">Important</span>', keys: impKeys}, {title: '➕ كلمات زيادة <span class="en">Extra</span>', keys: extKeys}];
   const firstUnspelled = ks => [...ks.filter(k => !S.spellOk[k]), ...ks.filter(k => S.spellOk[k])];
   const openGym = () => {
@@ -6442,8 +6451,42 @@ function lessonScreen(lid){
   if($('#aWrite')) $('#aWrite').onclick = () => { roundStars = 0; writeRun(l.w, back); };
 }
 
+/* ---------- planting picker: any lesson, as many rounds as she likes ---------- */
+function plantLesson(lid, back){
+  const l = LESSONS[lid];
+  const impKeys = l.imp ? l.imp.split(';').filter(Boolean).map(s => s.split('|')[0].trim()) : [];
+  const extKeys = l.words.filter(k => !impKeys.includes(k));
+  const fresh = [...impKeys, ...extKeys].filter(k => !S.wl[k]);
+  wordPicker({keys: l.words, groups: [{title: '⭐ الكلمات المهمة <span class="en">Important</span>', keys: impKeys}, {title: '➕ كلمات زيادة <span class="en">Extra</span>', keys: extKeys}], pre: (fresh.length ? fresh : l.words).slice(0, 6), max: 10, freshFirst: true,
+    title: `🌱 ازرعي من درس <span class="en">${l.en}</span>`, sub: `دوسي على الكلمات اللي عاوزة تزرعيها (لحد ١٠ كلمات في المرة، وتقدري تزرعي تاني على طول). ${fresh.length ? `فاضل ${nWords(fresh.length)} لسه متزرعتش.` : 'كل كلمات الدرس اتزرعت! تقدري تزرعيها تاني.'} الزرعة اللي فوق الكلمة معناها إنها اتزرعت قبل كده.`,
+    goLabel: n => n ? `🌱 ازرعي ${nWords(n)}` : 'اختاري كلمات', go: ks => learnSession(ks, l.words, back, () => {
+      /* "plant more": back from the next picker should skip this finished round */
+      NAV.cur = null; const t = NAV.stack[NAV.stack.length - 1]; if(t && t.fn.navName === 'wordPicker') NAV.stack.pop();
+      plantLesson(lid, back); })});
+}
+function plantPick(openUnit){
+  setTop(true);
+  const tl = topicLesson();
+  let uid = openUnit || (tl ? tl.unit.id : BOOK.some(u => u.id === S.topic) ? S.topic : (BOOK.find(u => u.lessons.some(l => l.words.some(k => !S.wl[k]))) || BOOK[0]).id);
+  const draw = () => { screenEl.innerHTML = `<section class="hub">
+    ${crumbs([['منهج المدرسة','book'], ['حديقة الكلمات','garden'], ['ازرعي كلمات جديدة']])}
+    <div class="g-head"><h2>🌱 ازرعي كلمات جديدة <span class="en">Plant new words</span></h2>
+      <p class="ask">اختاري الوحدة وبعدين الدرس، وازرعي الكلمات اللي عاوزاها. الحديقة بتاعتك وتساع كل الكلمات! مزروع دلوقتي ${nWords(Object.keys(S.wl).length)}.</p></div>
+    <div class="pp-units">${BOOK.map(u => { const all = [...new Set(u.lessons.flatMap(l => l.words))], p = planted(all), open = u.id === uid;
+      return `<div class="pp-unit ${open ? 'open' : ''}" style="--uc:${u.c};--ucl:${u.cl}">
+        <button class="pp-uhead" data-ppu="${u.id}" aria-expanded="${open}"><span class="u-badge">${u.id === 'st' ? '★' : u.n}</span><span><b class="en">${u.en}</b><small>${u.ar} · 🌱 ${p}/${all.length}</small></span><i aria-hidden="true">${open ? '▾' : '◂'}</i></button>
+        ${open ? `<div class="pp-lessons">${u.lessons.map((l, i) => { const lp = planted(l.words), left = l.words.length - lp;
+          return `<button class="pp-les ${left ? '' : 'full'}" data-ppl="${l.id}"><span class="l-num">${u.id === 'st' ? '📖' : i + 1}</span><span><b class="en">${l.en}</b><small>${l.ar}</small></span><em>${left ? `🌰 ${nWords(left)} جديدة` : '🌳 كله اتزرع'}</em></button>`; }).join('')}</div>` : ''}
+      </div>`; }).join('')}</div>
+  </section>`;
+  bindCrumbs();
+  screenEl.querySelectorAll('[data-ppu]').forEach(b => b.onclick = () => { sfxTick(); uid = b.dataset.ppu === uid ? '-' : b.dataset.ppu; draw(); });
+  screenEl.querySelectorAll('[data-ppl]').forEach(b => b.onclick = () => plantLesson(b.dataset.ppl, garden)); };
+  draw();
+}
+
 /* ---------- learn: meet → match → recall ---------- */
-function learnSession(keys, pool, back){
+function learnSession(keys, pool, back, more){
   setTop(true);
   let i = 0;
   const bedSt = keys.map(() => -1), bedWet = keys.map(() => false);
@@ -6515,7 +6558,7 @@ function learnSession(keys, pool, back){
       if(!queue.length){
         keys.forEach(k => { if(!S.wl[k]) grow(k, true); });
         addStars(keys.length);
-        return finish(() => learnSession(keys, pool, back), `زرعتي ${keys.length} كلمات جديدة في حديقتك وطلعت نبتات 🌱 بكرة هتعطش، ارجعي اسقيها عشان تكبر وتبقى شجرة 🌳`, back, 'ارجعي للدرس');
+        return finish(more || (() => learnSession(keys, pool, back)), `زرعتي ${keys.length} كلمات جديدة في حديقتك وطلعت نبتات 🌱 بكرة هتعطش، ارجعي اسقيها عشان تكبر وتبقى شجرة 🌳`, back, back === garden ? 'روحي الحديقة' : 'ارجعي للدرس', more ? '🌱 ازرعي كمان' : '');
       }
       const k = queue[0], w = WORDS[k];
       const opts = shuffle([k, ...distract(k, 3, 'en', pool)]);
@@ -6612,13 +6655,15 @@ function garden(){
       <div><h2>حديقة الكلمات <span class="en">Word Garden</span></h2>
       <p>كل كلمة بتزرعيها بتطلع نبتة. بعد يوم بتعطش وتدبل 💧، ولو سقيتيها (جاوبتي عليها صح) بتكبر خطوة، لحد ما تبقى شجرة فيها تفاح. كل ما تكبر، بتعطش بعد مدة أطول.</p></div>
       <div class="grow-path">${[1,2,3,4,5].map(i => `<span class="gp-step">${potSVG(i)}<b>${STAGE_AR[i]}</b><small>${counts[i]} كلمة</small></span>`).join('<i class="gp-arrow" aria-hidden="true">💧←</i>')}</div>
-      ${due.length ? `<button class="btn primary" id="waterAll">💧 اسقي ${Math.min(15, due.length)} كلمة عطشانة</button>` : keys.length ? '<p class="muted">مفيش كلمات عطشانة دلوقتي. ارجعي بكرة تسقي!</p>' : ''}
+      <div class="row g-acts">${due.length ? `<button class="btn primary" id="waterAll">💧 اسقي ${Math.min(15, due.length)} كلمة عطشانة</button>` : ''}<button class="btn ${due.length ? '' : 'primary'}" id="plantNew">🌱 ازرعي كلمات جديدة</button></div>
+      ${!due.length && keys.length ? '<p class="muted">مفيش كلمات عطشانة دلوقتي. ارجعي بكرة تسقي، أو ازرعي كلمات جديدة!</p>' : ''}
     </div>
     ${keys.length ? `<div class="plot">${keys.map(k => `<button class="plant-tile ${isDue(k) ? 'thirsty' : ''}" data-say="${esc(k)}"><span class="p-ico">${potSVG(lvl(k), {dry:isDue(k)})}${isDue(k) ? '<i>💧</i>' : ''}</span><span class="en">${k}</span><small>${WORDS[k] ? WORDS[k].ar : ''}</small><em class="p-status">${isDue(k) ? 'عطشانة!' : dueIn(k)}</em></button>`).join('')}</div>`
-      : '<p class="empty">الحديقة لسه فاضية. ادخلي أي درس من منهج المدرسة ودوسي «ازرعي كلمات جديدة».</p>'}
+      : '<p class="empty">الحديقة لسه فاضية. دوسي «🌱 ازرعي كلمات جديدة» واختاري الدرس.</p>'}
   </section>`;
   bindCrumbs();
   if($('#waterAll')) $('#waterAll').onclick = () => { roundStars = 0; review(shuffle(due).slice(0, 15), null, garden, 'garden'); };
+  $('#plantNew').onclick = () => plantPick();
 }
 
 /* ---------- past tense challenge ---------- */
@@ -8471,7 +8516,7 @@ function parentSettings(){
   m.querySelector('#psClose').onclick = () => m.remove();
 }
 
-function finish(game, msg, back, backLabel='الرئيسية'){
+function finish(game, msg, back, backLabel='الرئيسية', againLabel=''){
   if(!back && curWorld === 'en'){ back = englishWorld; if(backLabel === 'الرئيسية') backLabel = 'عالم الإنجليزي'; }
   const again = typeof game === 'function' ? game : GAMES[game];
   setTop(true);
@@ -8485,7 +8530,7 @@ function finish(game, msg, back, backLabel='الرئيسية'){
     ${afford ? `<p>معاكي ⭐ ${S.stars}، تقدري تشتري لمشمش <span class="en">${afford.en}</span> (${afford.ar}) من المول!</p>` : ''}
     <div class="row" style="justify-content:center;margin-top:8px">
       ${afford ? '<button class="btn soft" id="toMall">روحي المول 🛍️</button>' : ''}
-      <button class="btn primary" id="again">العبي تاني</button>
+      <button class="btn primary" id="again">${againLabel || 'العبي تاني'}</button>
       <button class="btn" id="goHome">${backLabel}</button>
     </div>
   </section>`;
@@ -8930,7 +8975,7 @@ gameStory = navWrap(gameStory, 'gameStory');
 bookHome = navWrap(bookHome, 'bookHome');
 unitScreen = navWrap(unitScreen, 'unitScreen');
 lessonScreen = navWrap(lessonScreen, 'lessonScreen');
-learnSession = navWrap(learnSession, 'learnSession');
+learnSession = navWrap(learnSession, 'learnSession'); plantPick = navWrap(plantPick, 'plantPick');
 review = navWrap(review, 'review');
 garden = navWrap(garden, 'garden');
 verbQuiz = navWrap(verbQuiz, 'verbQuiz');

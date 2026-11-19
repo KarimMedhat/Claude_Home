@@ -8736,13 +8736,18 @@ const F_SENT = [
 const F_ALLW = new Set([...Object.keys(FW), ...F_SIGHT.map(x => x.toLowerCase()), ...F_PAIRS_BD.flat(), ...F_PAIRS_E.flat()]);
 
 /* ---------- sound player: phonics sounds (voice/v_snd.json) and word clips, same voice ---------- */
-let F_SND = null;
-const fSndPack = () => F_SND || (F_SND = fetch('voice/v_snd.json').then(r => r.ok ? r.json() : {}).then(d => { Object.keys(d).forEach(k => { VOICE['§' + k] = d[k]; }); }).catch(() => { F_SND = null; }));
+let F_SND = null; const F_KP = {};
+const fKPack = l => F_KP[l] || (F_KP[l] = fetch('voice/k_' + l + '.json?v=1').then(r => r.ok ? r.json() : {}).then(d => { Object.keys(d).forEach(k => { VOICE['¤' + k] = d[k]; }); }).catch(() => { delete F_KP[l]; }));
+const fSndPack = () => F_SND || (F_SND = fetch('voice/v_snd.json?v=3').then(r => r.ok ? r.json() : {}).then(d => { Object.keys(d).forEach(k => { VOICE['§' + k] = d[k]; }); }).catch(() => { F_SND = null; }));
 async function fBuf(key){
   const c = actx(); if(!c) return null;
   let vk;
   if(key.startsWith('s:')){ await fSndPack(); vk = '§' + key.slice(2); }
-  else { vk = key.slice(2).toLowerCase(); await voiceChunk(vk[0]); }
+  else {                                        /* the foundation's own clear voice first, then the game's word clips */
+    const t = key.slice(2).replace(/[.!?]/g, '').trim().toLowerCase(); if(!t) return null;
+    await fKPack(t[0]); vk = '¤' + t;
+    if(!VOICE[vk]){ vk = t; await voiceChunk(t[0]); }
+  }
   if(!VOICE[vk]) return null;
   if(!VOICE_BUF[vk]){
     try{ const bin = atob(VOICE[vk]), arr = new Uint8Array(bin.length); for(let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i); VOICE_BUF[vk] = await c.decodeAudioData(arr.buffer); }catch(e){ return null; }
@@ -9053,13 +9058,14 @@ function fRun(lid, g){
   if(g === 'magic') return fMagic(lid);
   if(g === 'hearLetter') return M(P(10, FL).map(([l, w]) => {
     const grp = FL_GROUPS.find(G => G.includes(l)), wrong = P(3, (grp.length > 4 ? grp : FL.map(x => x[0])).filter(x => x !== l && !(l === 'c' && x === 'k') && !(l === 'k' && x === 'c')));
-    return {card: fRep('اسمعي الصوت'), play: ['s:' + (l === 'c' ? 'k' : l === 'q' ? 'qu' : l)], ask: 'اسمعي الصوت ودوسي على الحرف بتاعه', kind: 'fw',
+    const sk = 's:' + (l === 'c' ? 'k' : l === 'q' ? 'qu' : l);
+    return {card: fRep('اسمعي الصوت') + `<button class="say" data-snd="${sk} w:${w}" data-gap=".5">${SPK}<span>مش واضح؟ اسمعيه مع كلمة</span></button>`, play: [sk, sk], ask: 'اسمعي الصوت ودوسي على الحرف بتاعه', kind: 'fw',
       opts: [fLetOpt(l, true), ...wrong.map(x => fLetOpt(x, false))], after: ['s:' + (l === 'c' ? 'k' : l === 'q' ? 'qu' : l), 'w:' + w], good: `<span class="en">${l}</span> زي ${FLK[l][2]} <span class="en">${w}</span>`}; }));
   if(g === 'firstSound') return M(P(10, Object.values(FW).filter(w => /^[a-z]+$/.test(w.en) && FLK[w.en[0]] && !/^(sh|ch|th|wh|kn)/.test(w.en))).map(w => {
     const l = w.en[0], wrong = P(2, FL.map(x => x[0]).filter(x => x !== l && !(['c','k'].includes(x) && ['c','k'].includes(l))));
     return {word: w.en, card: `<span class="emo big" aria-hidden="true">${w.e}</span>${sndBtn('w:' + w.en, 'اسمعي')}`, ask: 'الكلمة دي بتبدأ بأنهي حرف؟', kind: 'fw',
       opts: [fLetOpt(l, true), ...wrong.map(x => fLetOpt(x, false))], after: ['s:' + fSk(l), 'w:' + w.en], good: `<span class="en"><b>${l}</b>${w.en.slice(1)}</span> 👏`}; }));
-  if(g === 'hearBD') return M(P(10, ['b','d','b','d','p','b','d','qu','b','d','p','d']).map(s => ({card: fRep('اسمعي الصوت'), play: ['s:' + s], ask: 'سمعتي أنهي صوت؟', kind: 'fw',
+  if(g === 'hearBD') return M(P(10, ['b','d','b','d','p','b','d','qu','b','d','p','d']).map(s => ({card: fRep('اسمعي الصوت'), play: ['s:' + s, 's:' + s], ask: 'سمعتي أنهي صوت؟', kind: 'fw',
     opts: ['b','d','p','q'].map(l => fLetOpt(l, l === s[0])), after: ['s:' + s, 'w:' + FLK[s[0]][1]], good: `<span class="en">${s[0]}</span> زي ${FLK[s[0]][2]} <span class="en">${FLK[s[0]][1]}</span>`})));
   if(g === 'fillBD') return M(P(10, F_BD_FILL).map(([w, bl]) => fFillItem(w, bl, w[bl.indexOf('_')], ['b','d'], 'اختاري الحرف الناقص: افتكري سرير bed 🛏️')));
   if(g === 'pairsBD') return M(P(10, F_PAIRS_BD).map(pr => { const w = rand(pr); return fHearWordItem(w, [pr.find(x => x !== w), ...fConf(w, 3).filter(x => !pr.includes(x))].slice(0, 2)); }));

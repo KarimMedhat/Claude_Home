@@ -8736,18 +8736,13 @@ const F_SENT = [
 const F_ALLW = new Set([...Object.keys(FW), ...F_SIGHT.map(x => x.toLowerCase()), ...F_PAIRS_BD.flat(), ...F_PAIRS_E.flat()]);
 
 /* ---------- sound player: phonics sounds (voice/v_snd.json) and word clips, same voice ---------- */
-let F_SND = null; const F_KP = {};
-const fKPack = l => F_KP[l] || (F_KP[l] = fetch('voice/k_' + l + '.json?v=1').then(r => r.ok ? r.json() : {}).then(d => { Object.keys(d).forEach(k => { VOICE['¤' + k] = d[k]; }); }).catch(() => { delete F_KP[l]; }));
-const fSndPack = () => F_SND || (F_SND = fetch('voice/v_snd.json?v=3').then(r => r.ok ? r.json() : {}).then(d => { Object.keys(d).forEach(k => { VOICE['§' + k] = d[k]; }); }).catch(() => { F_SND = null; }));
+let F_SND = null;
+const fSndPack = () => F_SND || (F_SND = fetch('voice/v_snd.json?v=4').then(r => r.ok ? r.json() : {}).then(d => { Object.keys(d).forEach(k => { VOICE['§' + k] = d[k]; }); }).catch(() => { F_SND = null; }));
 async function fBuf(key){
   const c = actx(); if(!c) return null;
   let vk;
   if(key.startsWith('s:')){ await fSndPack(); vk = '§' + key.slice(2); }
-  else {                                        /* the foundation's own clear voice first, then the game's word clips */
-    const t = key.slice(2).replace(/[.!?]/g, '').trim().toLowerCase(); if(!t) return null;
-    await fKPack(t[0]); vk = '¤' + t;
-    if(!VOICE[vk]){ vk = t; await voiceChunk(t[0]); }
-  }
+  else { vk = key.slice(2).replace(/[.!?]/g, '').trim().toLowerCase(); if(!vk) return null; await voiceChunk(vk[0]); }
   if(!VOICE[vk]) return null;
   if(!VOICE_BUF[vk]){
     try{ const bin = atob(VOICE[vk]), arr = new Uint8Array(bin.length); for(let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i); VOICE_BUF[vk] = await c.decodeAudioData(arr.buffer); }catch(e){ return null; }

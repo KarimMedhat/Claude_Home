@@ -15,3 +15,8 @@ New lines (math, social studies, edited science) are made in that same voice by 
    a different voice ≈ 0.64 (test run in `clone_test.py`).
 4. Pack like the existing chunks (mp3 22050 Hz mono ~48 kbps, appended to a chunk + byte index) and add
    `va-h.json` entries = djb2/base36 hash of the exact on-screen text (see README in `va/`), then bump AR_VER.
+
+## Lines with numbers (math)
+Whole sentences with numbers come out weaker. `phrase_by_phrase.py` makes each short phrase separately (best of 5 takes by
+recognizer score) and joins them with short pauses (0.25 s after a comma, 0.45 s after the opening phrase). In the test, the
+number phrases («تلات تفاحات»، «اتنين كمان») came out word-perfect this way.

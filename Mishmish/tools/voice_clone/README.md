@@ -19,5 +19,10 @@ New lines (math, social studies, edited science) are made in that same voice by 
 
 ## Don't: phrase-by-phrase
 `phrase_by_phrase.py` (each phrase made alone, then joined) sounded much worse to the user (sample 6) than whole sentences
-(sample 4). Always generate whole sentences with best_of.py. Open issue: some words get formal-Arabic vowels instead of
-Egyptian ones (e.g. «نتعلم» should sound نِتْعَلِّم).
+(sample 4). Always generate whole sentences with best_of.py.
+
+## Egyptian vowels (user-approved, samples 4 and 7)
+Some words come out with formal-Arabic vowels (e.g. «نتعلم» must sound نِتْعَلِّم). Fix: put Egyptian vowel marks ONLY on
+the words whose Egyptian pronunciation differs from the formal one, leave the rest bare — e.g.
+«يَلّا نِتعلِّم الجَمع. لو معاكي تَلات تُفّاحات، وجِبتي اِتنين كمان، يِبقى معاكي خَمَس تُفّاحات.» (sample 7).
+Full vowel marks on every word sound bad (sample 8, rejected). No marks at all is also fine (sample 4).

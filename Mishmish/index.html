@@ -2507,12 +2507,13 @@ const myLedger = () => { const L = fixLedger(); return (L.dev[DEV] = L.dev[DEV] 
 /* every saved/synced value is forced into the shape the game expects, so an odd copy from another device or an old version can never break a screen */
 const ST_OBJ = ['equip','tricky','famDone','storyDone','wl','gDone','vDone','exams','pDone','wDone','sci','spellOk','fnd','fndHard','gymExt'], ST_ARR = ['gallery','readWords','writings'], ST_NUL = ['room','treats','pet','day'];
 const isObj = v => !!v && typeof v === 'object' && !Array.isArray(v);
-function normState(){
+function normState(boot){
   try{
     ST_OBJ.forEach(k => { if(!isObj(S[k])) S[k] = {}; });
     ST_ARR.forEach(k => { if(!Array.isArray(S[k])) S[k] = []; });
+    S.gallery = S.gallery.filter(isObj); S.writings = S.writings.filter(isObj); S.readWords = S.readWords.filter(x => typeof x === 'string');
     ST_NUL.forEach(k => { if(S[k] != null && !isObj(S[k])) S[k] = null; });
-    if(S.owned != null && !Array.isArray(S.owned)) S.owned = null;
+    if(S.owned != null && !Array.isArray(S.owned)) S.owned = boot ? null : [];
     if(Array.isArray(S.owned)) S.owned = S.owned.filter(x => typeof x === 'string');
     if(!isObj(S.mish)) S.mish = {...DEFAULT_MISH};
     if(typeof S.name !== 'string') S.name = '';
@@ -2520,11 +2521,18 @@ function normState(){
     if(S.pet){ ['hearts','last','fedAt','pettedAt','playedAt'].forEach(k => { if(typeof S.pet[k] !== 'number' || !isFinite(S.pet[k])) S.pet[k] = k === 'hearts' ? 3 : k === 'last' ? Date.now() : 0; }); }
     if(S.treats){ Object.keys(S.treats).forEach(k => { if(typeof S.treats[k] !== 'number') S.treats[k] = +S.treats[k] || 0; }); }
     if(S.day && typeof S.day.date !== 'string') S.day = null;
+    if(!boot){   /* after a cloud copy arrives the room must still exist (at start-up initRoom builds it) */
+      if(!S.owned) S.owned = [];
+      ['c_box','c_bowl','w_default','f_default'].forEach(id => { if(!S.owned.includes(id)) S.owned.push(id); });
+      if(!S.room) S.room = {items:[{uid:1, id:'c_box', x:14, y:93}, {uid:2, id:'c_bowl', x:29, y:96}], wall:'w_default', floor:'f_default', next:3, curtain:false};
+      if(!S.treats) S.treats = {t_food:3, t_milk:2};
+      if(!S.pet) S.pet = {hearts:3, last:Date.now(), fedAt:0, pettedAt:0, playedAt:0};
+    }
     fixLedger();
     Object.keys(S.starLedger.dev).forEach(id => { const x = S.starLedger.dev[id]; if(!isObj(x)) S.starLedger.dev[id] = {e: 0, s: 0}; else { x.e = +x.e || 0; x.s = +x.s || 0; } });
   }catch(e){}
 }
-normState(); fixLedger(); S.stars = ledgerStars(S.starLedger);
+normState(true); fixLedger(); S.stars = ledgerStars(S.starLedger);
 function ledgerMerge(a, b){
   const o = {base: Math.max(a.base || 0, b.base || 0), dev: {}};
   new Set([...Object.keys(a.dev || {}), ...Object.keys(b.dev || {})]).forEach(id => {

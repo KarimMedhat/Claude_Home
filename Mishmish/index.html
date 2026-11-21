@@ -2504,7 +2504,27 @@ function fixLedger(){ const L = S.starLedger; if(!L || typeof L !== 'object') S.
 /* safety net: if anything unexpected breaks while she is answering, never leave her stuck behind a locked "next" */
 window.addEventListener('error', () => { setTimeout(() => { try{ ['#next', '#qNext', '#sxNext', '#exNext', '#pkGo'].forEach(sel => { const b = document.querySelector(sel); if(b && b.disabled && !document.querySelector('[data-ask]:not([disabled])') && !document.querySelector('.sci-item')) b.disabled = false; }); }catch(e){} }, 0); });
 const myLedger = () => { const L = fixLedger(); return (L.dev[DEV] = L.dev[DEV] || {e: 0, s: 0}); };
-fixLedger(); S.stars = ledgerStars(S.starLedger);
+/* every saved/synced value is forced into the shape the game expects, so an odd copy from another device or an old version can never break a screen */
+const ST_OBJ = ['equip','tricky','famDone','storyDone','wl','gDone','vDone','exams','pDone','wDone','sci','spellOk','fnd','fndHard','gymExt'], ST_ARR = ['gallery','readWords','writings'], ST_NUL = ['room','treats','pet','day'];
+const isObj = v => !!v && typeof v === 'object' && !Array.isArray(v);
+function normState(){
+  try{
+    ST_OBJ.forEach(k => { if(!isObj(S[k])) S[k] = {}; });
+    ST_ARR.forEach(k => { if(!Array.isArray(S[k])) S[k] = []; });
+    ST_NUL.forEach(k => { if(S[k] != null && !isObj(S[k])) S[k] = null; });
+    if(S.owned != null && !Array.isArray(S.owned)) S.owned = null;
+    if(Array.isArray(S.owned)) S.owned = S.owned.filter(x => typeof x === 'string');
+    if(!isObj(S.mish)) S.mish = {...DEFAULT_MISH};
+    if(typeof S.name !== 'string') S.name = '';
+    if(S.room){ if(!Array.isArray(S.room.items)) S.room.items = []; S.room.items = S.room.items.filter(isObj); if(typeof S.room.next !== 'number') S.room.next = S.room.items.length + 3; }
+    if(S.pet){ ['hearts','last','fedAt','pettedAt','playedAt'].forEach(k => { if(typeof S.pet[k] !== 'number' || !isFinite(S.pet[k])) S.pet[k] = k === 'hearts' ? 3 : k === 'last' ? Date.now() : 0; }); }
+    if(S.treats){ Object.keys(S.treats).forEach(k => { if(typeof S.treats[k] !== 'number') S.treats[k] = +S.treats[k] || 0; }); }
+    if(S.day && typeof S.day.date !== 'string') S.day = null;
+    fixLedger();
+    Object.keys(S.starLedger.dev).forEach(id => { const x = S.starLedger.dev[id]; if(!isObj(x)) S.starLedger.dev[id] = {e: 0, s: 0}; else { x.e = +x.e || 0; x.s = +x.s || 0; } });
+  }catch(e){}
+}
+normState(); fixLedger(); S.stars = ledgerStars(S.starLedger);
 function ledgerMerge(a, b){
   const o = {base: Math.max(a.base || 0, b.base || 0), dev: {}};
   new Set([...Object.keys(a.dev || {}), ...Object.keys(b.dev || {})]).forEach(id => {
@@ -2546,7 +2566,7 @@ function progPaint(){
 const pIsObj = v => v && typeof v === 'object' && !Array.isArray(v);
 function progMergeKey(k, a, b, ta, tb, joining){
   if(a == null) return b; if(b == null) return a;
-  if(k === 'owned' || k === 'readWords') return [...new Set([...b, ...a])];
+  if(k === 'owned' || k === 'readWords'){ if(!Array.isArray(a)) return b; if(!Array.isArray(b)) return a; return [...new Set([...b, ...a])]; }
   if(['gDone','vDone','wDone','famDone','storyDone','gymExt'].includes(k) && pIsObj(a) && pIsObj(b)){ const o = {...b}; Object.keys(a).forEach(x => { if(a[x]) o[x] = a[x]; }); return o; }
   if(['exams','pDone','tricky','sci','spellOk','fnd'].includes(k) && pIsObj(a) && pIsObj(b)){ const o = {...b}; Object.keys(a).forEach(x => { o[x] = Math.max(+a[x] || 0, +o[x] || 0); }); return o; }
   if(k === 'wl' && pIsObj(a) && pIsObj(b)){ const o = {...b}; Object.keys(a).forEach(x => { if(!o[x] || (a[x].due || 0) > (o[x].due || 0)) o[x] = a[x]; }); return o; }
@@ -2564,19 +2584,20 @@ function progApply(remote){
   if(rReset > PROG_META.resetTs){            /* another device reset the game: take its copy as it is */
     PROG_KEYS.forEach(k => { if(k in remote.data){ S[k] = remote.data[k]; store.set(k, S[k]); } });
     if(!S.starLedger || !S.starLedger.dev) S.starLedger = {base: 0, dev: {}};
+    normState();
     S.stars = ledgerStars(S.starLedger); store.set('stars', S.stars);
     PROG_META.ts = {...rts}; PROG_META.resetTs = rReset; PROG_META.joined = true; store.set('sync_meta', PROG_META);
     return {changed:true, push:false};
   }
   if(PROG_META.resetTs > rReset){ PROG_META.joined = true; store.set('sync_meta', PROG_META); return {changed, push:true}; }
   PROG_KEYS.forEach(k => {
-    const m = progMergeKey(k, S[k], remote.data[k], PROG_META.ts[k], rts[k], joining && (k in remote.data));
+    let m; try{ m = progMergeKey(k, S[k], remote.data[k], PROG_META.ts[k], rts[k], joining && (k in remote.data)); }catch(e){ m = S[k]; }
     if(canon(m) !== canon(S[k])){ S[k] = m; store.set(k, m); changed = true; }
     PROG_META.ts[k] = Math.max(PROG_META.ts[k] || 0, rts[k] || 0);
   });
   PROG_META.joined = true;
   store.set('sync_meta', PROG_META);
-  fixLedger(); S.stars = ledgerStars(S.starLedger); store.set('stars', S.stars);
+  normState(); fixLedger(); S.stars = ledgerStars(S.starLedger); store.set('stars', S.stars);
   const push = PROG_KEYS.some(k => canon(S[k]) !== canon(remote.data[k]));
   return {changed, push};
 }
@@ -4387,8 +4408,8 @@ const SCI_LESSON = {};
 SCI.forEach(C => C.lessons.forEach((L, i) => { L.ch = C; L.n = i + 1; SCI_LESSON[L.id] = L; }));
 /* a definition never repeats its own term at the start (the game already shows the term before it) */
 SCI.forEach(C => C.lessons.forEach(L => { L.terms = L.terms.map(([t, d]) => [t, d.startsWith(t) ? d.slice(t.length).replace(/^\s*[:：،,-]\s*/, '') : d]); }));
-const sciGet = k => S.sci[k] || 0;
-function sciSet(k, v){ if(v > (S.sci[k] || 0)){ S.sci[k] = v; save('sci'); return true; } return false; }
+const sciGet = k => { if(!isObj(S.sci)) S.sci = {}; return +S.sci[k] || 0; };
+function sciSet(k, v){ if(!isObj(S.sci)) S.sci = {}; if(v > (+S.sci[k] || 0)){ S.sci[k] = v; save('sci'); return true; } return false; }
 const sciChapterPct = C => Math.round((C.lessons.reduce((t, L) => t + sciLessonPct(L), 0) + Math.min(100, sciGet('x_' + C.id) / .8)) / (C.lessons.length + 1));
 const AR_ORD = ['', 'الأول', 'التاني', 'التالت', 'الرابع', 'الخامس', 'السادس', 'السابع', 'التامن'];
 
@@ -4972,10 +4993,9 @@ function sxRun(ex, again){
     setTop(true); stopAr();
     const right = items.map((q, k) => q.k === 'tf' ? (ans[k] === 0) === q.tf : ans[k] === q.a);
     const n = right.filter(Boolean).length, pct = Math.round(n / items.length * 100);
-    const first = !sciGet(ex.key); sciSet(ex.key, pct);
-    addStars(Math.round(n / 3));
-    let won = 0; const prize = examPrize(ex), pass = S.bank.examPass ?? 80;
-    if(prize && !examPaid(ex.id) && pct >= pass){ S.bank.paid['x:' + ex.id] = Date.now(); won = prize; bankAdd(prize, `امتحان علوم: ${ex.title.replace(/^امتحان (درس|الوحدة): /, '')}`); try{ sfxMoney(); }catch(e){} }
+    try{ sciSet(ex.key, pct); }catch(e){} addStars(Math.round(n / 3));
+    let won = 0, prize = 0; try{ prize = examPrize(ex); }catch(e){} const pass = examPass();
+    if(prize && !examPaid(ex.id) && pct >= pass) won = payExam(ex.id, prize, `امتحان علوم: ${ex.title.replace(/^امتحان (درس|الوحدة): /, '')}`);
     const lab = (q, k) => q.k === 'tf' ? (k === 0 ? '✔ صح' : '✘ خطأ') : q.o[k];
     const wrong = items.map((q, k) => ({q, k})).filter(x => !right[x.k]);
     meow(); setTimeout(() => sayAr(null, pct >= 60 ? 'g_done' : 'g_try'), 450);
@@ -6450,9 +6470,9 @@ function sxRealRun(mid){
   function result(){
     setTop(true); stopAr();
     const ok = items.map((_, k) => right(k)), n = ok.filter(Boolean).length, pct = Math.round(n / items.length * 100);
-    sciSet('xr_' + mid, pct); addStars(Math.round(n / 4));
-    let won = 0; const prize = examPrize({id: payId}), pass = S.bank.examPass ?? 80;
-    if(prize && !examPaid(payId) && pct >= pass){ S.bank.paid['x:' + payId] = Date.now(); won = prize; bankAdd(prize, `علوم: ${M.title}`); try{ sfxMoney(); }catch(e){} }
+    try{ sciSet('xr_' + mid, pct); }catch(e){} addStars(Math.round(n / 4));
+    let won = 0, prize = 0; try{ prize = examPrize({id: payId}); }catch(e){} const pass = examPass();
+    if(prize && !examPaid(payId) && pct >= pass) won = payExam(payId, prize, `علوم: ${M.title}`);
     const wrong = items.map((it, k) => ({it, k})).filter(x => !ok[x.k]);
     const correct = it => it.t === 'mc' ? `(${SXR_LET[it.a]}) ${it.o[it.a]}` : it.t === 'tf' ? (it.tf ? '✔ صح' : '✘ خطأ') : it.t === 'sort' ? it.items.map(([e, nm, g]) => `${e} ${nm}: ${it.groups[g]}`).join(' · ') : it.ans.replace(/\n/g, '<br>');
     const mine = (it, k) => it.t === 'mc' ? `(${SXR_LET[ans[k]]}) ${it.o[ans[k]]}` : it.t === 'tf' ? (ans[k] === 0 ? '✔ صح' : '✘ خطأ') : it.t === 'sort' ? it.items.map(([e, nm], x) => `${e} ${nm}: ${it.groups[ans[k][x]]}`).join(' · ') : 'محتاجة أراجعها';
@@ -8882,7 +8902,10 @@ const examPrize = ex => { const B = S.bank; if(!ex || !ex.id || ex.isPassage) re
   if(ex.id.startsWith('SW:')) return B.perLessonExam || 0;
   const e = [...EXAMS, ...MEXAMS].find(x => x.id === ex.id);
   return e && e.u && e.u !== 'all' ? (B.perUnitExam || 0) : 0; };
-const examPaid = id => !!S.bank.paid['x:' + id];
+const examPaid = id => { try{ return !!(S.bank && S.bank.paid && S.bank.paid['x:' + id]); }catch(e){ return false; } };
+/* pay an exam prize; a money hiccup must never stop the result screen from showing */
+function payExam(id, prize, why){ try{ if(!S.bank.paid || typeof S.bank.paid !== 'object') S.bank.paid = {}; S.bank.paid['x:' + id] = Date.now(); bankAdd(prize, why); try{ sfxMoney(); }catch(e){} return prize; }catch(e){ try{ console.warn('payExam', e); }catch(_){} return 0; } }
+const examPass = () => { try{ return S.bank.examPass ?? 80; }catch(e){ return 80; } };
 const prizeTag = (ex, short) => { const amt = examPrize(ex); if(!amt) return '';
   return examPaid(ex.id) ? `<span class="x-coin done">🪙 ✔</span>` : `<span class="x-coin">🪙 ${money(amt)} جنيه${short ? '' : ` بـ ${S.bank.examPass}٪`}</span>`; };
 function finalExam(){
@@ -8938,11 +8961,11 @@ function examRun(ex, back){
   function result(){
     const pct = graded ? Math.round(score / graded * 100) : 100;
     const [g, ic] = gradeOf(pct);
-    if(ex.isPassage){ S.pDone[ex.passageId] = Math.max(S.pDone[ex.passageId] || 0, pct); save('pDone'); }
-    else { S.exams[ex.id] = Math.max(S.exams[ex.id] || 0, pct); save('exams'); }
-    const prize = examPrize(ex), wasPaid = examPaid(ex.id), pass = S.bank.examPass ?? 80;
+    try{ if(ex.isPassage){ S.pDone[ex.passageId] = Math.max(+S.pDone[ex.passageId] || 0, pct); save('pDone'); }
+    else { S.exams[ex.id] = Math.max(+S.exams[ex.id] || 0, pct); save('exams'); } }catch(e){}
+    let prize = 0; try{ prize = examPrize(ex); }catch(e){} const wasPaid = examPaid(ex.id), pass = examPass();
     let won = 0;
-    if(prize && !wasPaid && pct >= pass){ S.bank.paid['x:' + ex.id] = Date.now(); won = prize; bankAdd(prize, `امتحان: ${ex.title}`); sfxMoney && sfxMoney(); }
+    if(prize && !wasPaid && pct >= pass) won = payExam(ex.id, prize, `امتحان: ${ex.title}`);
     const prizeLine = !prize ? '' : won ? `<p class="x-won sticker">🪙 كسبتي <b>${money(won)} جنيه</b> في الحصالة! برافو!</p>`
       : wasPaid ? `<p class="muted">🪙 خدتي فلوس الامتحان ده قبل كده</p>` : `<p class="x-try">🪙 الامتحان ده عليه ${money(prize)} جنيه لما تجيبي ${pass}٪ أو أكتر. حاولي تاني!</p>`;
     if(pct >= 90){ meow(); }
@@ -9779,10 +9802,14 @@ const BANK_KEEP = ['earned', 'paid', 'log', 'words', 'amount', 'perPassage', 'pe
 const BANK_DEF = {earned:{}, paid:{}, log:[], words:10, amount:5, perPassage:1, perLessonExam:2, perUnitExam:5, examPass:80, min:10, pin:'', setTs:0};
 const bankId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 function bankNorm(o){
-  const B = Object.assign({}, BANK_DEF, o || {});
-  B.earned = Object.assign({}, B.earned); B.paid = Object.assign({}, B.paid);
-  B.log = (Array.isArray(B.log) ? B.log : []).map(e => {
+  const B = Object.assign({}, BANK_DEF, o && typeof o === 'object' && !Array.isArray(o) ? o : {});
+  const plain = v => v && typeof v === 'object' && !Array.isArray(v) ? v : {};
+  B.earned = Object.assign({}, plain(B.earned)); B.paid = Object.assign({}, plain(B.paid));
+  ['words', 'amount', 'perPassage', 'perLessonExam', 'perUnitExam', 'examPass', 'min', 'setTs'].forEach(k => { const v = +B[k]; B[k] = isFinite(v) ? v : BANK_DEF[k]; });
+  if(typeof B.pin !== 'string') B.pin = '';
+  B.log = (Array.isArray(B.log) ? B.log : []).filter(e => e && typeof e === 'object').map(e => {
     const x = Object.assign({}, e);
+    x.amt = +x.amt || 0; x.ts = +x.ts || 0; if(x.t !== 'in' && x.t !== 'out') x.t = 'in';
     if(!x.id) x.id = String(x.ts || 0) + ':' + x.t + ':' + x.amt;
     if(x.t === 'in' && x.n == null && /كلمة/.test(x.why || '')){ const m = String(x.why).match(/^(\d+)/); x.n = m ? +m[1] : 1; }
     return x;

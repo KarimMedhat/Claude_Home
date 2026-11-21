@@ -4386,21 +4386,27 @@ function sciSet(k, v){ if(v > (S.sci[k] || 0)){ S.sci[k] = v; save('sci'); retur
 const sciChapterPct = C => Math.round((C.lessons.reduce((t, L) => t + sciLessonPct(L), 0) + Math.min(100, sciGet('x_' + C.id) / .8)) / (C.lessons.length + 1));
 const AR_ORD = ['', 'الأول', 'التاني', 'التالت', 'الرابع', 'الخامس', 'السادس', 'السابع', 'التامن'];
 
-/* ---------- Arabic voice ----------
-   1) recorded Egyptian narration (voice_ar/<chapter>.json: id -> MP3 base64), played through Web Audio;
-   2) otherwise the device's own Arabic voice (Egyptian first); 3) otherwise text only. */
-const AR_CLIPS = {}, AR_LOADING = {}, AR_BUF = {};
-const AR_VER = 7;   /* bump when the recordings change so phones don't keep an old copy */
-const arChunk = c => AR_LOADING[c] || (AR_LOADING[c] = fetch('voice_ar/' + c + '.json?v=' + AR_VER).then(r => r.ok ? r.json() : {}).then(d => { Object.assign(AR_CLIPS, d); }).catch(() => { delete AR_LOADING[c]; }));
-let arVoice = null;
-function pickArVoice(){
-  if(!hasTTS) return;
-  try{
-    const vs = speechSynthesis.getVoices().filter(v => /^ar/i.test(v.lang));
-    arVoice = vs.find(v => /ar[-_]EG/i.test(v.lang)) || vs.find(v => /ar[-_]SA/i.test(v.lang)) || vs[0] || null;
-  }catch(e){}
-}
-if(hasTTS){ pickArVoice(); try{ speechSynthesis.addEventListener('voiceschanged', pickArVoice); }catch(e){} }
+/* ---------- Arabic voice (recorded Egyptian narration) ----------
+   Pre-recorded Egyptian-Arabic MP3 clips, sliced out of per-chapter chunk files and played
+   through Web Audio. A clip plays ONLY when its stored text-hash matches the exact on-screen
+   text; otherwise playback is suppressed with an Arabic notice. Device TTS is never used for
+   covered content - it can only be an explicit, separate user choice. */
+const AR_CLIPS = {}, AR_LOADING = {}, AR_BUF = {}, AR_HASH = {}; let AR_HLOADED = false;
+const AR_VER = 8;   /* bump when the recordings change so phones don't keep an old copy */
+const __b64 = buf => { const u = new Uint8Array(buf); let s = ''; for (let i = 0; i < u.length; i += 32768) s += String.fromCharCode.apply(null, u.subarray(i, i + 32768)); return btoa(s); };
+const arFetch = url => new Promise((res, rej) => {
+  const x = new XMLHttpRequest();
+  x.open('GET', url, true); x.responseType = 'arraybuffer'; x.timeout = 12000;
+  x.onload = () => (x.status >= 200 && x.status < 300) ? res(x.response) : rej(new Error('http ' + x.status));
+  x.onerror = () => rej(new Error('net')); x.ontimeout = () => rej(new Error('timeout'));
+  x.send();
+});
+/* chunk + clip index: va/va-index.json maps chunk -> { clipId: [byteOffset, byteLength] } into va/<chunk>.mp3.
+   Host the 80 chunk mp3s where the page can GET them (e.g. artifact uploaded files) and point these URLs there. */
+const arIndex = () => AR_LOADING.idx || (AR_LOADING.idx = (window.__VA_IDX ? Promise.resolve(window.__VA_IDX) : fetch('va/va-index.json?v=' + AR_VER).then(r => r.ok ? r.json() : {})).then(d => { window.__VA_IDX = d; }).catch(() => { delete AR_LOADING.idx; }));
+const arChunk = c => AR_LOADING[c] || (AR_LOADING[c] = arIndex().then(() => arFetch('va/' + c + '.mp3?v=' + AR_VER)).then(buf => { const ix = (window.__VA_IDX || {})[c] || {}; for (const id in ix) { const o = ix[id][0], l = ix[id][1]; AR_CLIPS[id] = __b64(buf.slice(o, o + l)); } }).catch(() => { delete AR_LOADING[c]; }));
+/* text->audio binding: va/va-h.json maps clip id -> ohash of the exact text it was recorded for. A clip whose text was edited (or whose hash cannot be loaded) is suppressed with a notice instead of playing stale or unverified audio. Device TTS is never a fallback for covered content. */
+const arHashLoad = () => AR_LOADING.h || (AR_LOADING.h = (window.__VA_H ? Promise.resolve(window.__VA_H) : fetch('va/va-h.json?v=' + AR_VER).then(r => r.ok ? r.json() : {})).then(d => { Object.assign(AR_HASH, d); AR_HLOADED = true; }).catch(() => { delete AR_LOADING.h; }));
 let arRun = 0, arSrc = null, arWarned = false;
 function stopAr(){ arRun++; if(arSrc){ try{ arSrc.stop(); }catch(e){} arSrc = null; } if(hasTTS) try{ speechSynthesis.cancel(); }catch(e){} document.querySelectorAll('.say-ar.on').forEach(b => b.classList.remove('on')); }
 async function sayAr(text, id, btn){
@@ -4409,9 +4415,9 @@ async function sayAr(text, id, btn){
   const run = arRun;
   if(btn) btn.classList.add('on');
   const off = () => { if(btn && run === arRun) btn.classList.remove('on'); };
-  const ch = id && id.match(/^(c\d+l\d+|g)/);
-  if(ch){ await Promise.race([arChunk(ch[1]), new Promise(r => setTimeout(r, 9000))]); if(run !== arRun) return; }
-  if(id && AR_CLIPS[id]){
+  const ch = id && id.match(/^(c\d+l\d+|c\d+x|c\d+o|sxr_(?:f\d+|w\d+|u\d[ab])|g)/);
+  if(ch){ await Promise.race([Promise.all([arChunk(ch[1]), arHashLoad()]), new Promise(r => setTimeout(r, 9000))]); if(run !== arRun) return; }
+  if(id && AR_CLIPS[id] && (text === null || (AR_HLOADED && AR_HASH[id] === ohash(text)))){
     const c = actx();
     if(c){
       try{
@@ -4422,21 +4428,32 @@ async function sayAr(text, id, btn){
       }catch(e){}
     }
   }
-  if(hasTTS){
-    if(!arVoice) pickArVoice();
-    if(arVoice || !arWarned){
-      try{
-        const u = new SpeechSynthesisUtterance(text.replace(/[«»]/g, ''));
-        u.lang = arVoice ? arVoice.lang : 'ar-EG'; if(arVoice) u.voice = arVoice; u.rate = .92;
-        u.onend = off; u.onerror = off;
-        try{ speechSynthesis.resume(); }catch(e){}
-        setTimeout(() => { if(run === arRun) speechSynthesis.speak(u); }, 90);
-        if(!arVoice){ arWarned = true; noArVoice(id); }
-        return;
-      }catch(e){}
-    }
+  if(id){
+    /* covered route with no playable recording: never the device voice - suppress and say why */
+    off();
+    if(text === null) return;   /* lab feedback: exact display-text binding is the freshness check; unmapped or missing stays silent */
+    if(!AR_HLOADED && AR_CLIPS[id]) arUnverified(id);   /* recording exists but its freshness could not be verified - fail closed */
+    else if(AR_CLIPS[id]) arEdited(id);
+    else noArVoice(id);
+    return;
   }
+  /* no clip id on a covered science route: suppress - never the device voice */
   off(); noArVoice(id);
+}
+/* the hash file itself could not be loaded: a covered clip stays silent rather than playing unverified (once per chunk) */
+const arUnverifiedFor = {};
+function arUnverified(id){
+  const lk = (id || 'q').replace(/_.*/, '');
+  if(arUnverifiedFor[lk]) return;
+  arUnverifiedFor[lk] = true;
+  toast('⚠️ مش قادرين نتأكد من تسجيل الجزء ده دلوقتي — اقريه مكتوب لحد ما يشتغل');
+}
+/* an edited line whose recording no longer matches its text: suppress the stale clip, say it needs a new recording (once per clip) */
+const arEditedFor = {};
+function arEdited(id){
+  if(arEditedFor[id]) return;
+  arEditedFor[id] = true;
+  toast('✏️ السطر ده اتعدّل ومحتاج تسجيل جديد — اقريه مكتوب لحد ما نسجّله');
 }
 /* no recording yet and no Arabic voice on this device: say why, once per lesson */
 const arWarnedFor = {};
@@ -4446,15 +4463,82 @@ function noArVoice(id){
   arWarnedFor[lk] = true;
   toast(id ? '🎙️ صوت مشمش للجزء ده لسه بيتسجل، اقريه مكتوب لحد كده' : 'الجهاز ده مفيهوش صوت عربي للأسئلة، اقريها مكتوبة 👀');
 }
+/* option-text hash - MUST match the generation-side djb2/base36 exactly */
+const ohash = t => { let h = 5381; for(let i = 0; i < t.length; i++) h = ((h << 5) + h + t.charCodeAt(i)) >>> 0; return h.toString(36); };
+/* play a stem then its options back-to-back in the displayed order; a missing, edited or unverifiable clip is suppressed per-part with a notice - never device TTS */
+async function sayArSeq(parts, btn){
+  if(!S.sound) return;
+  stopAr(); stopSpeech();
+  const run = arRun;
+  if(btn) btn.classList.add('on');
+  const off = () => { if(btn && run === arRun) btn.classList.remove('on'); };
+  for(const part of parts){
+    if(run !== arRun){ off(); return; }
+    const ch = part.id && part.id.match(/^(c\d+l\d+|c\d+x|c\d+o|sxr_(?:f\d+|w\d+|u\d[ab])|g)/);
+    if(ch){ await Promise.race([Promise.all([arChunk(ch[1]), arHashLoad()]), new Promise(r => setTimeout(r, 9000))]); if(run !== arRun){ off(); return; } }
+    let played = false;
+    if(part.id && AR_CLIPS[part.id] && AR_HLOADED && AR_HASH[part.id] === ohash(part.text)){
+      const c = actx();
+      if(c){
+        try{
+          if(!AR_BUF[part.id]){ const bin = atob(AR_CLIPS[part.id]), arr = new Uint8Array(bin.length); for(let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i); AR_BUF[part.id] = await c.decodeAudioData(arr.buffer); }
+          if(run !== arRun){ off(); return; }
+          await new Promise(res => { const src = c.createBufferSource(); src.buffer = AR_BUF[part.id]; src.connect(c.destination); src.onended = res; src.start(c.currentTime + .05); arSrc = src; });
+          played = true;
+        }catch(e){}
+      }
+    }
+    if(!played && part.id){
+      if(!AR_HLOADED && AR_CLIPS[part.id]) arUnverified(part.id); else if(AR_CLIPS[part.id]) arEdited(part.id); else noArVoice(part.id);
+    }
+    if(!played && !part.id) noArVoice('q');   /* uncovered line: suppress + notice, never device voice */
+    if(run !== arRun){ off(); return; }
+  }
+  off();
+}
+/* stem part + one part per displayed option, ids from the stable qid and the option hash */
+function qParts(q, islandId, displayedOpts){
+  const parts = [{ text: q.q, id: q.qid || '' }];
+  (displayedOpts || []).forEach(o => parts.push({ text: o, id: islandId + 'o_' + ohash(o) }));
+  return parts;
+}
+/* exam-hall composition: term prefix clip + definition clip, or lesson/boss stem + option clips (term options carry their own tn ids) */
+function sxParts(q){
+  const parts = [];
+  if(q.term){ parts.push({ text: 'المصطلح العلمي اللي معناه: ', id: 'g_termq' }); parts.push({ text: q.q.replace(/[«»]/g, ''), id: q.tdid || '' }); }
+  else if(q.tmid){ parts.push({ text: q.tnm, id: q.tmid }); parts.push({ text: q.dfn, id: q.tdid || '' }); }
+  else parts.push({ text: q.q, id: q.qid || '' });
+  if(q.k === 'mc'){ (q.order || []).forEach(k => parts.push({ text: q.o[k], id: q.oids ? q.oids[k] : ((q.isl || '') + 'o_' + ohash(q.o[k])) })); }
+  return parts;
+}
 const sayArBtn = (text, id, label = 'اسمعي الشرح') => `<button class="say say-ar" data-sayar="${esc(text)}" ${id ? `data-arid="${id}"` : ''}>${SPK}<span>${label}</span></button>`;
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-sayar]'); if(!b) return;
   if(b.classList.contains('on')){ stopAr(); return; }
   sayAr(b.dataset.sayar, b.dataset.arid, b);
 });
-const AR_PRAISE = ['أحسنتِ!', 'رائع يا فرحة!', 'إجابة صحيحة، ممتاز!', 'عظيم! استمري هكذا!', 'ممتاز!'];
-const AR_OOPS = ['لا بأس، ركزي قليلًا وستعرفينها.', 'اقتربتِ! انظري إلى الإجابة الصحيحة.', 'لا بأس، ستنجحين في المرة القادمة.'];
+const AR_PRAISE = ['برافو عليكي!', 'رائع يا فرحة!', 'إجابة صح، ممتاز!', 'جميل! كمّلي كده!', 'ممتاز!'];
+const AR_OOPS = ['معلش، ركّزي شوية وهتعرفيها.', 'قريب أوي! بصّي على الإجابة الصح.', 'معلش، هتنجحي المرة الجاية.'];
 function cheerAr(ok){ const k = Math.floor(Math.random() * (ok ? AR_PRAISE.length : AR_OOPS.length)); sayAr(ok ? AR_PRAISE[k] : AR_OOPS[k], (ok ? 'g_ok' : 'g_no') + k); }
+
+
+/* clip ids for the recorded narration: lesson/exam questions, terms and island options */
+const TERM_ID = {};
+SCI.forEach(C => C.lessons.forEach(L => {
+  L.qs.forEach((q, i) => { q.qid = L.id + '_q' + i; q.isl = C.id; });
+  L.terms.forEach(([t], i) => { if(!TERM_ID[t]) TERM_ID[t] = {tn: L.id + '_tn' + i, td: L.id + '_td' + i, tq: L.id + '_tq' + i, isl: C.id}; });
+}));
+SCI.forEach(C => (C.exam || []).forEach((q, i) => { q.qid = C.id + 'x_q' + i; q.isl = C.id; }));
+const TERM_DEF_ID = d => { for(const C of SCI) for(const L of C.lessons){ const k = L.terms.findIndex(x => x[1] === d); if(k >= 0) return L.id + '_td' + k; } return ''; };
+/* parts for one question: a term statement = term clip + definition clip; otherwise stem + the options in the order shown */
+function sciQParts(q, shownOpts){
+  if(q.tmid) return [{text: q.tnm, id: q.tmid}, {text: q.dfn, id: q.tdid || ''}];
+  const parts = [{text: q.q, id: q.qid || ''}];
+  (shownOpts || []).forEach(o => parts.push({text: o, id: (q.isl || '') + 'o_' + ohash(o)}));
+  return parts;
+}
+const sayQBtn = (label = 'اسمعي السؤال') => `<button class="say say-ar" data-sayq="1">${SPK}<span>${label}</span></button>`;
+function bindSayQ(getParts){ const b = screenEl.querySelector('[data-sayq]'); if(b) b.onclick = () => { if(b.classList.contains('on')){ stopAr(); return; } sayArSeq(getParts(), b); }; }
 
 /* ---------- screens ---------- */
 function sciCrumbs(items){
@@ -4637,12 +4721,13 @@ function sciRunQs(qs, o){
       ${o.boss ? `<div class="boss"><span class="boss-m" id="bossM">👾</span><span class="bar boss-hp"><i style="width:${100 - results.filter(Boolean).length / qs.length * 100}%"></i></span><span class="boss-cat">${sciCat()}</span></div>` : ''}
       <div class="qcard sticker sci-q">
         <p class="sci-qt">${q.q}</p>
-        ${sayArBtn(q.q + (tf ? '' : '. ' + idx.map(k => q.o[k]).join('، ')), '', 'اسمعي السؤال')}
+        ${sayQBtn()}
       </div>
       <div class="opts words ${idx.length === 2 ? 'n2' : ''} sci-opts">${idx.map(k => `<button class="opt wopt" data-k="${k}">${label(k)}</button>`).join('')}</div>
       <p class="sci-fb" aria-live="polite"></p>
       <div class="row" style="justify-content:center"><button class="btn primary" id="qNext" hidden>${i < qs.length - 1 ? 'السؤال اللي بعده' : 'النتيجة'}</button></div>
     </section>`;
+    bindSayQ(() => sciQParts(q, tf ? [] : idx.map(k => q.o[k])));
     const go = () => { i++; next(); };
     $('#qNext').onclick = go;
     screenEl.querySelectorAll('.sci-opts .opt').forEach(b => b.onclick = () => {
@@ -4662,7 +4747,7 @@ function sciRunQs(qs, o){
 function sciDone(msg, btns, pct){
   setTop(true); stopAr();
   const good = pct === undefined || pct >= 60;
-  meow(); setTimeout(() => sayAr(good ? 'أحسنتِ يا فرحة! أنتِ ذكية جدًا.' : 'محاولة جميلة! راجعي الدرس وحاولي مرة أخرى.', good ? 'g_done' : 'g_try'), 450);
+  meow(); setTimeout(() => sayAr(null, good ? 'g_done' : 'g_try'), 450);
   screenEl.innerHTML = `<section class="done-wrap sci">
     ${catSVG(S.mish, S.equip, 'bounce')}
     <h2>${good ? 'برافو يا ' + KID_AR + '! 🎉' : 'محاولة حلوة! 💪'}</h2>
@@ -4748,13 +4833,14 @@ const sxTerms = Ls => Ls.flatMap(L => L.terms.map(([t, d]) => [t, sxDef(t, d)]))
 function sxBuild(lessons, extra, n){
   const all = [...lessons.flatMap(L => L.qs), ...extra];
   const seen = new Set(), uniq = all.filter(q => !seen.has(q.q) && seen.add(q.q));
-  const mc = shuffle(uniq.filter(q => q.tf === undefined)).slice(0, n.mc).map(q => ({k: 'mc', q: q.q, o: q.o, a: q.a}));
+  const mc = shuffle(uniq.filter(q => q.tf === undefined)).slice(0, n.mc).map(q => ({k: 'mc', q: q.q, o: q.o, a: q.a, qid: q.qid, isl: q.isl}));
   const terms = sxTerms(lessons), pool = sxTerms(lessons[0].ch.lessons).concat(sxTerms(SCI.flatMap(C => C.lessons)));
   const others = (t, field) => { const s = new Set([t[field]]); return shuffle(pool).filter(x => x[0] !== t[0] && x[1] !== t[1] && !s.has(x[field]) && s.add(x[field])); };
-  const tfBook = shuffle(uniq.filter(q => q.tf !== undefined)).slice(0, Math.ceil(n.tf / 2)).map(q => ({k: 'tf', q: q.q, tf: q.tf}));
+  const tfBook = shuffle(uniq.filter(q => q.tf !== undefined)).slice(0, Math.ceil(n.tf / 2)).map(q => ({k: 'tf', q: q.q, tf: q.tf, qid: q.qid}));
   const tfTerm = shuffle(terms).slice(0, n.tf - tfBook.length).map((t, i) => { const o = others(t, 1)[0];
-    return i % 2 && o ? {k: 'tf', q: `${t[0]}: ${o[1]}`, tf: false} : {k: 'tf', q: `${t[0]}: ${t[1]}`, tf: true}; });
-  const termQ = shuffle(terms).slice(0, n.term).map(t => { const o = [t[0], ...others(t, 0).slice(0, 3).map(x => x[0])]; return {k: 'mc', q: `«${t[1]}»`, o, a: 0, term: true}; });
+    const T = TERM_ID[t[0]] || {};
+    return i % 2 && o ? {k: 'tf', q: `${t[0]}: ${o[1]}`, tf: false, tmid: T.tn, tnm: t[0], dfn: o[1], tdid: TERM_DEF_ID(o[1])} : {k: 'tf', q: `${t[0]}: ${t[1]}`, tf: true, tmid: T.tn, tnm: t[0], dfn: t[1], tdid: T.td}; });
+  const termQ = shuffle(terms).slice(0, n.term).map(t => { const o = [t[0], ...others(t, 0).slice(0, 3).map(x => x[0])]; return {k: 'mc', q: `«${t[1]}»`, o, a: 0, term: true, tdid: TERM_DEF_ID(t[1]), oids: o.map(x => (TERM_ID[x] || {}).tn || '')}; });
   return [
     {h: 'السؤال الأول: اختاري الإجابة الصحيحة', items: mc},
     {h: 'السؤال الثاني: ضعي علامة (✔) أو (✘)', items: shuffle([...tfBook, ...tfTerm])},
@@ -4859,7 +4945,7 @@ function sxRun(ex, again){
       <p class="sx-sec">${s.h}</p>
       <p class="sxq-row">${sxqChip(tf ? 'tf' : 'mc')} <small>${SXQ[tf ? 'tf' : 'mc'].tip}</small></p>
       <div class="qcard sticker sci-q"><p class="sci-qt">${q.term ? `<small class="sx-hint">إيه المصطلح العلمي اللي معناه:</small><br>` : ''}${q.q}</p>
-        ${sayArBtn((q.term ? 'المصطلح العلمي اللي معناه: ' : '') + q.q + (tf ? '' : '. ' + q.order.map(k => q.o[k]).join('، ')), '', 'اسمعي السؤال')}</div>
+        ${sayQBtn()}</div>
       <div class="opts words ${tf ? 'n2' : ''} sci-opts">${q.order.map(k => `<button class="opt wopt ${ans[i] === k ? 'picked' : ''}" data-k="${k}" aria-pressed="${ans[i] === k}">${label(k)}</button>`).join('')}</div>
       <div class="row sx-nav">
         ${i > 0 ? '<button class="btn" id="sxPrev">→ السابق</button>' : ''}
@@ -4871,6 +4957,7 @@ function sxRun(ex, again){
       ans[i] = +b.dataset.k; sfxTick();
       if(i < items.length - 1) setTimeout(() => { i++; view(); }, 350); else view();
     });
+    bindSayQ(() => q.tmid ? sciQParts(q) : sxParts(q));
     if($('#sxPrev')) $('#sxPrev').onclick = () => { i--; view(); };
     if($('#sxNext')) $('#sxNext').onclick = () => { i++; view(); };
     if($('#sxEnd')) $('#sxEnd').onclick = () => { if(ans.some(x => x === null)){ i = ans.findIndex(x => x === null); view(); } else result(); };
@@ -4885,7 +4972,7 @@ function sxRun(ex, again){
     if(prize && !examPaid(ex.id) && pct >= pass){ S.bank.paid['x:' + ex.id] = Date.now(); won = prize; bankAdd(prize, `امتحان علوم: ${ex.title.replace(/^امتحان (درس|الوحدة): /, '')}`); try{ sfxMoney(); }catch(e){} }
     const lab = (q, k) => q.k === 'tf' ? (k === 0 ? '✔ صح' : '✘ خطأ') : q.o[k];
     const wrong = items.map((q, k) => ({q, k})).filter(x => !right[x.k]);
-    meow(); setTimeout(() => sayAr(pct >= 60 ? 'أحسنتِ يا فرحة! أنتِ ذكية جدًا.' : 'محاولة جميلة! راجعي الدرس وحاولي مرة أخرى.', pct >= 60 ? 'g_done' : 'g_try'), 450);
+    meow(); setTimeout(() => sayAr(null, pct >= 60 ? 'g_done' : 'g_try'), 450);
     screenEl.innerHTML = `<section class="hub sci sx" style="--uc:${C.c};--ucl:${C.cl}">
       <div class="sx-res sticker"><div class="sx-score"><b>${n}</b><span>من ${items.length}</span></div>
         <div><h2>${pct}% · ${sxGrade(pct)}</h2><p>${ex.title}</p>
@@ -6325,7 +6412,7 @@ function sxRealRun(mid){
       body = `<div class="sxr-sort">${it.items.map(([e, name], k) => `<div class="sxr-srow sticker"><span class="sxr-sname">${e} ${name}</span><span class="sxr-sbtns">${it.groups.map((g, gi) => `<button class="btn sm ${a[k] === gi ? 'primary' : ''}" data-si="${k}" data-sg="${gi}">${g}</button>`).join('')}</span></div>`).join('')}</div>`;
     } else {
       const shown = seen[i];
-      body = `${shown ? `<div class="sxr-ans sticker"><b>✍️ الإجابة النموذجية:</b><p>${it.ans.replace(/\n/g, '<br>')}</p>${sayArBtn(it.ans.replace(/\n/g, '. '), '', 'اسمعي الإجابة')}</div>
+      body = `${shown ? `<div class="sxr-ans sticker"><b>✍️ الإجابة النموذجية:</b><p>${it.ans.replace(/\n/g, '<br>')}</p>${sayArBtn(it.ans.replace(/\n/g, '. '), `sxr_${mid}_i${String(i).padStart(2, '0')}a`, 'اسمعي الإجابة')}</div>
           <div class="row sxr-self"><button class="btn f-ok ${ans[i] === true ? 'on' : ''}" id="sxOk">✔ قلتها صح</button><button class="btn f-no ${ans[i] === false ? 'on' : ''}" id="sxNo">✘ محتاجة أراجعها</button></div>`
         : '<div class="row" style="justify-content:center"><button class="btn primary" id="sxShow">👀 شوفي الإجابة النموذجية</button></div>'}`;
     }
@@ -6334,7 +6421,7 @@ function sxRealRun(mid){
         <div class="dots">${items.map((_, k) => `<i class="${k === i ? 'now' : done(k) ? 'done' : ''}"></i>`).join('')}</div></div>
       ${head}
       <p class="sxq-row">${sxqChip(it.t)} <small>${SXQ[it.t].tip}</small></p>
-      <div class="qcard sticker sci-q"><p class="sci-qt">${it.q}</p>${sayArBtn(it.q + (it.t === 'mc' ? '. ' + it.o.join('، ') : ''), '', 'اسمعي السؤال')}</div>
+      <div class="qcard sticker sci-q"><p class="sci-qt">${it.q}</p>${sayArBtn(it.q + (it.t === 'mc' ? '. ' + it.o.join('، ') : ''), `sxr_${mid}_i${String(i).padStart(2, '0')}q`, 'اسمعي السؤال')}</div>
       ${body}
       <div class="row sx-nav">
         ${i > 0 ? '<button class="btn" id="sxPrev">→ السابق</button>' : ''}
@@ -6363,7 +6450,7 @@ function sxRealRun(mid){
     const wrong = items.map((it, k) => ({it, k})).filter(x => !ok[x.k]);
     const correct = it => it.t === 'mc' ? `(${SXR_LET[it.a]}) ${it.o[it.a]}` : it.t === 'tf' ? (it.tf ? '✔ صح' : '✘ خطأ') : it.t === 'sort' ? it.items.map(([e, nm, g]) => `${e} ${nm}: ${it.groups[g]}`).join(' · ') : it.ans.replace(/\n/g, '<br>');
     const mine = (it, k) => it.t === 'mc' ? `(${SXR_LET[ans[k]]}) ${it.o[ans[k]]}` : it.t === 'tf' ? (ans[k] === 0 ? '✔ صح' : '✘ خطأ') : it.t === 'sort' ? it.items.map(([e, nm], x) => `${e} ${nm}: ${it.groups[ans[k][x]]}`).join(' · ') : 'محتاجة أراجعها';
-    meow(); setTimeout(() => sayAr(pct >= 60 ? 'أحسنتِ يا فرحة! أنتِ ذكية جدًا.' : 'محاولة جميلة! راجعي الدرس وحاولي مرة أخرى.', pct >= 60 ? 'g_done' : 'g_try'), 450);
+    meow(); setTimeout(() => sayAr(null, pct >= 60 ? 'g_done' : 'g_try'), 450);
     screenEl.innerHTML = `<section class="hub sci sx" style="--uc:${C.c};--ucl:${C.cl}">
       <div class="sx-res sticker"><div class="sx-score"><b>${n}</b><span>من ${items.length}</span></div>
         <div><h2>${pct}% · ${sxGrade(pct)}</h2><p>${K.ico} ${M.title} · ${src}</p>${won ? `<p class="x-won">🪙 كسبتي ${money(won)} جنيه في الحصالة! برافو!</p>` : prize && !examPaid(payId) ? `<p class="x-try">الامتحان ده عليه ${money(prize)} جنيه لما تجيبي ${pass}٪ أو أكتر. حاولي تاني!</p>` : ''}</div></div>
@@ -6383,14 +6470,14 @@ function sxReal(mid){ sxRealRun(mid); }
 
 /* ---------- games ---------- */
 function sciPool(L){
-  const mc = L.qs.filter(q => q.tf === undefined).map(q => ({q: q.q, o: q.o, a: q.a}));
-  const tf = L.qs.filter(q => q.tf !== undefined).map(q => ({q: q.q, tf: q.tf}));
+  const mc = L.qs.filter(q => q.tf === undefined).map(q => ({q: q.q, o: q.o, a: q.a, qid: q.qid, isl: q.isl}));
+  const tf = L.qs.filter(q => q.tf !== undefined).map(q => ({q: q.q, tf: q.tf, qid: q.qid, isl: q.isl}));
   const chTerms = L.ch.lessons.flatMap(x => x.terms);
   L.terms.forEach(([t, d]) => {
-    const others = shuffle(chTerms.filter(x => x[0] !== t && x[1] !== d)).slice(0, 2);
-    if(others.length) mc.push({q: `«${t}» معناها إيه؟`, o: [d, ...others.map(x => x[1])], a: 0});
-    tf.push({q: `${t}: ${d}`, tf: true});
-    if(others[0]) tf.push({q: `${t}: ${others[0][1]}`, tf: false});
+    const others = shuffle(chTerms.filter(x => x[0] !== t && x[1] !== d)).slice(0, 2), T = TERM_ID[t] || {};
+    if(others.length) mc.push({q: `«${t}» يعني إيه؟`, o: [d, ...others.map(x => x[1])], a: 0, qid: T.tq, isl: T.isl});
+    tf.push({q: `${t}: ${d}`, tf: true, tmid: T.tn, tnm: t, dfn: d, tdid: T.td});
+    if(others[0]) tf.push({q: `${t}: ${others[0][1]}`, tf: false, tmid: T.tn, tnm: t, dfn: others[0][1], tdid: TERM_DEF_ID(others[0][1])});
   });
   return {mc, tf};
 }
@@ -6440,7 +6527,7 @@ function gCatch(lid){
       <div class="qcard sticker sci-q"><p class="sci-qt">${q.q}</p></div>
       <div class="sky n${opts.length}">${opts.map(([t, ok], k) => `<button class="drop" data-ok="${ok ? 1 : 0}" style="--lane:${k};--dl:${(k * .45 + Math.random() * .5).toFixed(2)}s">${t}</button>`).join('')}<div class="sky-ground"></div></div>
     </section>`;
-    sayAr(q.q, '');
+    sayArSeq(sciQParts(q, []));
     let over = false;
     const end = ok => { if(over) return; over = true; screenEl.querySelectorAll('.drop').forEach(d => d.style.animationPlayState = 'paused'); i++; setTimeout(round, ok ? 900 : 1600); };
     screenEl.querySelectorAll('.drop').forEach(d => {
@@ -6487,7 +6574,7 @@ function gRace(lid){
     const idx = tf ? [0, 1] : shuffle(q.o.map((_, k) => k)), ans = tf ? (q.tf ? 0 : 1) : q.a;
     $('#rq').innerHTML = `<div class="qcard sticker sci-q"><p class="sci-qt">${q.q}</p></div>
       <div class="opts words ${idx.length === 2 ? 'n2' : ''} sci-opts">${idx.map(k => `<button class="opt wopt" data-k="${k}">${tf ? (k === 0 ? '✔ صح' : '✘ خطأ') : q.o[k]}</button>`).join('')}</div>`;
-    sayAr(q.q, '');
+    sayArSeq(sciQParts(q, []));
     $('#rq').querySelectorAll('.opt').forEach(b => b.onclick = () => {
       if(over) return;
       const ok = +b.dataset.k === ans;
@@ -6518,7 +6605,7 @@ function gSwipe(lid){
       <div class="row" style="justify-content:center;gap:24px"><button class="btn sw-no" id="swNo">✘ غلط</button><button class="btn sw-yes" id="swYes">✔ صح</button></div>
       <p class="sci-fb" aria-live="polite"></p>
     </section>`;
-    sayAr(q.q, '');
+    sayArSeq(sciQParts(q, []));
     const el = $('#sw'); let x0 = null, dx = 0, done = false;
     const answer = says => {
       if(done) return; done = true;
@@ -6552,7 +6639,7 @@ function gMatch(lid){
     <div class="mt-defs">${shuffle(terms.map((t, k) => k)).map(k => `<button class="mt-def sticker" data-k="${k}"><span class="mt-tag"></span>${terms[k][1]}</button>`).join('')}</div>
   </section>`;
   const ts = screenEl.querySelectorAll('.mt-term');
-  ts.forEach(b => b.onclick = () => { if(b.disabled) return; ts.forEach(x => x.classList.remove('picked')); pick = b; b.classList.add('picked'); sfxTick(); sayAr(terms[+b.dataset.k][0], ''); });
+  ts.forEach(b => b.onclick = () => { if(b.disabled) return; ts.forEach(x => x.classList.remove('picked')); pick = b; b.classList.add('picked'); sfxTick(); const tt = terms[+b.dataset.k][0]; sayAr(tt, (TERM_ID[tt] || {}).tn || ''); });
   screenEl.querySelectorAll('.mt-def').forEach(d => d.onclick = () => {
     if(d.classList.contains('ok')) return;
     if(!pick){ toast('اختاري مصطلح الأول 👆'); return; }
@@ -11322,7 +11409,7 @@ function wgRain(keys, back){
 /* ============ BACK BUTTON: go to the previous screen, anywhere in the game ============ */
 const NAV = {stack: [], cur: null, going: false};
 const NAV_WRAP = new Map();
-const navKey = (w, args) => w.navName + JSON.stringify(args, (k, v) => typeof v === 'function' ? 'fn' : v);
+const navKey = (w, args) => { const seen = new WeakSet(); return w.navName + JSON.stringify(args, (k, v) => { if(typeof v === 'function') return 'fn'; if(v && typeof v === 'object'){ if(seen.has(v)) return '~'; seen.add(v); } return v; }); };
 function navWrap(fn, name){
   if(NAV_WRAP.has(fn)) return NAV_WRAP.get(fn);
   const w = function(...args){

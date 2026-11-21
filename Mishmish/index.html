@@ -2498,9 +2498,13 @@ const S = {
    Each device only ever raises its own two counters, so copies merge by taking the larger number. */
 const DEV = (() => { let d = store.get('device_id', ''); if(!d){ d = Date.now().toString(36) + Math.random().toString(36).slice(2, 8); store.set('device_id', d); } return d; })();
 S.starLedger = store.get('starLedger', null) || {base: S.stars || 0, dev: {}};
-const ledgerStars = L => Math.max(0, (L.base || 0) + Object.values(L.dev || {}).reduce((t, x) => t + (x.e || 0) - (x.s || 0), 0));
-const myLedger = () => (S.starLedger.dev[DEV] = S.starLedger.dev[DEV] || {e: 0, s: 0});
-S.stars = ledgerStars(S.starLedger);
+const ledgerStars = L => !L ? 0 : Math.max(0, (L.base || 0) + Object.values(L.dev || {}).reduce((t, x) => t + (x.e || 0) - (x.s || 0), 0));
+/* a ledger from an older copy or from the cloud may lack parts: repair it instead of crashing */
+function fixLedger(){ const L = S.starLedger; if(!L || typeof L !== 'object') S.starLedger = {base: S.stars || 0, dev: {}}; else { if(!L.dev || typeof L.dev !== 'object') L.dev = {}; if(typeof L.base !== 'number') L.base = +L.base || 0; } return S.starLedger; }
+/* safety net: if anything unexpected breaks while she is answering, never leave her stuck behind a locked "next" */
+window.addEventListener('error', () => { setTimeout(() => { try{ ['#next', '#qNext', '#sxNext', '#exNext', '#pkGo'].forEach(sel => { const b = document.querySelector(sel); if(b && b.disabled && !document.querySelector('[data-ask]:not([disabled])') && !document.querySelector('.sci-item')) b.disabled = false; }); }catch(e){} }, 0); });
+const myLedger = () => { const L = fixLedger(); return (L.dev[DEV] = L.dev[DEV] || {e: 0, s: 0}); };
+fixLedger(); S.stars = ledgerStars(S.starLedger);
 function ledgerMerge(a, b){
   const o = {base: Math.max(a.base || 0, b.base || 0), dev: {}};
   new Set([...Object.keys(a.dev || {}), ...Object.keys(b.dev || {})]).forEach(id => {
@@ -2572,7 +2576,7 @@ function progApply(remote){
   });
   PROG_META.joined = true;
   store.set('sync_meta', PROG_META);
-  S.stars = ledgerStars(S.starLedger); store.set('stars', S.stars);
+  fixLedger(); S.stars = ledgerStars(S.starLedger); store.set('stars', S.stars);
   const push = PROG_KEYS.some(k => canon(S[k]) !== canon(remote.data[k]));
   return {changed, push};
 }
@@ -2856,9 +2860,11 @@ function toast(msg){
 /* ---------- stars (wallet) ---------- */
 let roundStars = 0;
 function addStars(n){
-  if(n > 0){ dayState().earned += n; save('day'); }
-  starsChange(n); roundStars += n;
-  renderStars(true);
+  try{
+    if(n > 0){ dayState().earned += n; save('day'); }
+    starsChange(n); roundStars += n;
+    renderStars(true);
+  }catch(e){ try{ console.warn('addStars', e); }catch(_){} }   /* a reward problem must never stop the lesson */
 }
 function renderStars(bump){
   $('#starCount').textContent = S.stars;
@@ -4631,7 +4637,7 @@ function bindSort(o, done){
     if(it[2] === +g.dataset.g){
       sfxGood(); g.querySelector('.sci-in').insertAdjacentHTML('beforeend', `<span class="sci-chip">${it[0]} ${it[1]}</span>`);
       pick.remove(); pick = null;
-      if(--left === 0){ addStars(1); cheerAr(true); burst(g); done(); }
+      if(--left === 0){ done(); addStars(1); cheerAr(true); burst(g); }
     } else { sfxBad(); pick.classList.add('wrong'); const p = pick; setTimeout(() => p.classList.remove('wrong'), 450); }
   });
 }
@@ -4646,7 +4652,7 @@ function bindOrder(o, done){
     if(+b.dataset.ord === at){
       sfxGood(); screenEl.querySelector('.sci-ordered').insertAdjacentHTML('beforeend', `<li><span class="emo">${o.items[at][0]}</span> ${o.items[at][1]}</li>`);
       b.remove(); at++;
-      if(at === o.items.length){ addStars(1); cheerAr(true); done(); }
+      if(at === o.items.length){ done(); addStars(1); cheerAr(true); }
     } else { sfxBad(); b.classList.add('wrong'); setTimeout(() => b.classList.remove('wrong'), 450); }
   });
 }

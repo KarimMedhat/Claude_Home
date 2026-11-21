@@ -16,7 +16,8 @@ New lines (math, social studies, edited science) are made in that same voice by 
 4. Pack like the existing chunks (mp3 22050 Hz mono ~48 kbps, appended to a chunk + byte index) and add
    `va-h.json` entries = djb2/base36 hash of the exact on-screen text (see README in `va/`), then bump AR_VER.
 
-## Lines with numbers (math)
-Whole sentences with numbers come out weaker. `phrase_by_phrase.py` makes each short phrase separately (best of 5 takes by
-recognizer score) and joins them with short pauses (0.25 s after a comma, 0.45 s after the opening phrase). In the test, the
-number phrases («تلات تفاحات»، «اتنين كمان») came out word-perfect this way.
+
+## Don't: phrase-by-phrase
+`phrase_by_phrase.py` (each phrase made alone, then joined) sounded much worse to the user (sample 6) than whole sentences
+(sample 4). Always generate whole sentences with best_of.py. Open issue: some words get formal-Arabic vowels instead of
+Egyptian ones (e.g. «نتعلم» should sound نِتْعَلِّم).

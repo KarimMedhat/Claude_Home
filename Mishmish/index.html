@@ -1374,6 +1374,34 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
   .f-sg{min-width:52px;height:64px;font-size:36px}
   .bd-big{font-size:84px}
 }
+.sx-door{display:flex;align-items:center;gap:12px;width:100%;margin:14px 0 4px;padding:14px 16px;background:#FFF4D6;color:var(--ink);text-align:start;font-size:30px;border:3px solid var(--ink);border-radius:var(--r)}
+.sx-door b{display:block;font-size:20px}.sx-door small{display:block;font-size:15px;color:var(--ink)}
+.sx-head{display:flex;gap:14px;align-items:center;padding:16px 18px;background:#FFF4D6;font-size:40px}
+.sx-head h2{margin:0;font-size:26px}.sx-head p{margin:4px 0 0;font-size:16px;color:var(--ink)}
+.sx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.sx-card{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 14px;background:var(--ucl,#FFF);color:var(--ink);text-align:start;border:3px solid var(--ink);border-radius:var(--r)}
+.sx-all{width:100%;margin-top:16px;background:#E6DCFF}
+.sx-ico{font-size:30px}.sx-t{flex:1;min-width:150px}.sx-t b{display:block;font-size:18px}.sx-t small{display:block;font-size:14px;color:var(--ink)}
+.sx-tags{display:flex;flex-wrap:wrap;gap:6px}
+.sx-units{display:grid;gap:10px}
+.sx-unit{padding:0;overflow:hidden;background:var(--card)}
+.sx-uh{display:flex;align-items:center;gap:10px;width:100%;padding:12px 14px;background:var(--ucl);color:var(--ink);text-align:start;font-size:18px}
+.sx-uh i{margin-inline-start:auto;font-style:normal}
+.sx-lessons{display:grid;gap:8px;padding:10px}
+.sx-les{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 12px;border:2px solid var(--ink);border-radius:14px;background:var(--card);color:var(--ink);text-align:start}
+.sx .dots{flex-wrap:wrap;justify-content:center;gap:5px;max-width:100%}.sx .dots i{width:11px;height:11px}
+.sx .stage,.stage.sx{max-width:100%;overflow-x:hidden}
+.sx-sec{margin:0;padding:8px 14px;border-radius:12px;background:var(--ucl);color:var(--ink);font-weight:800;font-size:17px;text-align:center}
+.sx-hint{font-size:16px;font-weight:600;color:var(--ink)}
+.sx .opt.picked{background:#DCEBFF;outline:4px solid #2F5BD3;outline-offset:2px}
+.sx-nav{justify-content:center;gap:12px}
+.sx-res{display:flex;flex-wrap:wrap;gap:18px;align-items:center;padding:18px}
+.sx-res h2{margin:0;font-size:26px}.sx-res p{margin:4px 0}
+.sx-score{display:grid;place-items:center;width:110px;height:110px;border-radius:50%;border:4px solid var(--ink);background:var(--ucl)}
+.sx-score b{font-size:40px;line-height:1}.sx-score span{font-size:15px}
+.sx-review{display:grid;gap:10px}
+.sx-rv{padding:12px 14px}.sx-rv p{margin:4px 0}
+.sx-rq{font-weight:700}.sx-bad{color:#A8261D}.sx-good{color:#146B34}
 .lesson-chips{margin-top:10px;padding:10px;border:2px dashed var(--ink);border-radius:16px;background:#F5F9FF}
 .lesson-chips .chip{font-size:15px;padding:4px 12px}
 .lesson-chips .lc-label{font-weight:800;font-size:15px;align-self:center}
@@ -4629,6 +4657,7 @@ function scienceWorld(keep){
         <span class="bar"><i style="width:${total}%"></i></span>
         <small>${won ? `🚩 كسبتي ${won === 1 ? 'جزيرة واحدة' : won === 2 ? 'جزيرتين' : won + ' جزر'}` : '⛵ يلا نبدأ الرحلة'} · خلصتي ${total}% من المنهج</small></div>
     </div>
+    <button class="sx-door sticker" id="sxDoor"><span aria-hidden="true">📝</span><span><b>قاعة امتحانات العلوم</b><small>امتحان لكل درس، وامتحان لكل وحدة، وامتحان شامل، زي امتحان المدرسة${Object.keys(S.sci).some(k => /^x[lua]_/.test(k)) ? ` · امتحنتي ${Object.keys(S.sci).filter(k => /^x[la]_|^xu_/.test(k)).length} امتحان` : ''}</small></span></button>
     <div class="sea">
       ${SCI.map((C, i) => { const p = sciChapterPct(C), isCur = C === cur; return `
       <button class="isle ${i % 2 ? 'r' : 'l'} ${isCur ? 'cur' : ''} ${p >= 100 ? 'won' : ''}" data-sch="${C.id}" style="--ic:${C.c};--icl:${C.cl}">
@@ -4640,6 +4669,7 @@ function scienceWorld(keep){
     </div>
   </section>`;
   screenEl.querySelectorAll('[data-sch]').forEach(b => b.onclick = () => { actx(); sciChapter(b.dataset.sch); });
+  $('#sxDoor').onclick = () => { actx(); sxHall(); };
 }
 function sciLesson(lid){ sciChapter(SCI_LESSON[lid].ch.id, lid); }
 function sciChapter(cid, focus){
@@ -4664,12 +4694,127 @@ function sciChapter(cid, focus){
         <span class="boss-m" aria-hidden="true">${x >= 60 ? '😵' : '👾'}</span>
         <span><b>تحدي الجزيرة: غول النسيان</b><small>${x >= 60 ? `هزمتيه! أحسن درجة ${x}%` : 'جاوبي صح وارمي عليه نجوم لحد ما يتهزم. أسئلة زي الامتحان من كل الجزيرة.'}</small></span>
       </button>
+      <button class="sx-door sticker" id="sxIsle"><span aria-hidden="true">📝</span><span><b>امتحانات الجزيرة دي</b><small>امتحان لكل درس وامتحان الوحدة كلها، زي امتحان المدرسة</small></span></button>
     </div>
   </section>`;
   bindSciCrumbs();
   screenEl.querySelectorAll('[data-st]').forEach(b => b.onclick = () => { actx(); const l = b.dataset.l; ({story: () => sciSlides(l), lab: () => sciLab(l), play: () => sciPlay(l)})[b.dataset.st](); });
   $('#bossGo').onclick = () => sciExam(C.id);
+  $('#sxIsle').onclick = () => sxHall(C.id);
   if(focus){ const el = screenEl.querySelector(`[data-stop="${focus}"]`); if(el) setTimeout(() => el.scrollIntoView({block:'center'}), 50); }
+}
+
+/* ---------- Science exam hall: lesson tests, unit (island) exams and a whole-term exam, school style ---------- */
+/* best scores: S.sci['xl_<lesson>'], S.sci['xu_<chapter>'], S.sci['xa_all']; money ids 'SL:<lesson>' / 'SU:<chapter>' (see examPrize) */
+const sxEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const sxDef = (t, d) => d.replace(new RegExp('^\\s*' + sxEsc(t) + '\\s*[:：]\\s*'), '');      /* a definition never shows its own term */
+const sxTerms = Ls => Ls.flatMap(L => L.terms.map(([t, d]) => [t, sxDef(t, d)]));
+function sxBuild(lessons, extra, n){
+  const all = [...lessons.flatMap(L => L.qs), ...extra];
+  const seen = new Set(), uniq = all.filter(q => !seen.has(q.q) && seen.add(q.q));
+  const mc = shuffle(uniq.filter(q => q.tf === undefined)).slice(0, n.mc).map(q => ({k: 'mc', q: q.q, o: q.o, a: q.a}));
+  const terms = sxTerms(lessons), pool = sxTerms(lessons[0].ch.lessons).concat(sxTerms(SCI.flatMap(C => C.lessons)));
+  const others = (t, field) => { const s = new Set([t[field]]); return shuffle(pool).filter(x => x[0] !== t[0] && x[1] !== t[1] && !s.has(x[field]) && s.add(x[field])); };
+  const tfBook = shuffle(uniq.filter(q => q.tf !== undefined)).slice(0, Math.ceil(n.tf / 2)).map(q => ({k: 'tf', q: q.q, tf: q.tf}));
+  const tfTerm = shuffle(terms).slice(0, n.tf - tfBook.length).map((t, i) => { const o = others(t, 1)[0];
+    return i % 2 && o ? {k: 'tf', q: `${t[0]}: ${o[1]}`, tf: false} : {k: 'tf', q: `${t[0]}: ${t[1]}`, tf: true}; });
+  const termQ = shuffle(terms).slice(0, n.term).map(t => { const o = [t[0], ...others(t, 0).slice(0, 3).map(x => x[0])]; return {k: 'mc', q: `«${t[1]}»`, o, a: 0, term: true}; });
+  return [
+    {h: 'السؤال الأول: اختاري الإجابة الصحيحة', items: mc},
+    {h: 'السؤال الثاني: ضعي علامة (✔) أو (✘)', items: shuffle([...tfBook, ...tfTerm])},
+    {h: 'السؤال الثالث: اكتبي المصطلح العلمي (اختاري المصطلح المناسب)', items: termQ}
+  ].filter(s => s.items.length);
+}
+function sxMake(kind, id){
+  if(kind === 'L'){ const L = SCI_LESSON[id];
+    return {id: 'SL:' + id, key: 'xl_' + id, ch: L.ch, title: `امتحان درس: ${L.title}`, sub: `جزيرة ${L.ch.title} · الدرس ${L.n}`, secs: sxBuild([L], [], {mc: 5, tf: 4, term: Math.min(3, L.terms.length)})}; }
+  if(kind === 'U'){ const C = SCI.find(x => x.id === id);
+    return {id: 'SU:' + id, key: 'xu_' + id, ch: C, title: `امتحان الوحدة: ${C.title}`, sub: `الجزيرة ${C.n} · ${C.lessons.length === 1 ? 'درس واحد' : C.lessons.length === 2 ? 'درسين' : C.lessons.length + ' دروس'}`, secs: sxBuild(C.lessons, C.exam || [], {mc: 8, tf: 6, term: 5})}; }
+  return {id: 'SA:all', key: 'xa_all', ch: SCI[0], title: 'الامتحان الشامل', sub: 'كل منهج العلوم', secs: sxBuild(SCI.flatMap(C => C.lessons), SCI.flatMap(C => C.exam || []), {mc: 12, tf: 8, term: 6})};
+}
+const sxGrade = p => p >= 90 ? 'ممتاز 🌟' : p >= 80 ? 'جيد جدًا 👏' : p >= 65 ? 'جيد 👍' : p >= 50 ? 'مقبول' : 'محتاجة مذاكرة شوية 💪';
+const sxTag = (id, key) => { const best = sciGet(key); return `${best ? `<span class="pill">أحسن درجة ${best}%</span>` : ''}${prizeTag({id}, true)}`; };
+
+function sxHall(openCh){
+  setTop(true); stopAr(); curWorld = 'sci';
+  let oc = openCh || null;
+  const draw = () => { screenEl.innerHTML = `<section class="hub sci sx">
+    ${sciCrumbs([['خريطة الرحلة', 'world'], ['قاعة الامتحانات']])}
+    <div class="sx-head sticker"><span aria-hidden="true">📝</span><div><h2>قاعة امتحانات العلوم</h2>
+      <p>امتحانات زي امتحان المدرسة: اختاري، وصح ولا خطأ، والمصطلح العلمي. الأسئلة بتتغير كل مرة، والدرجة بتطلع في الآخر مع الإجابات الصح.${S.bank.perLessonExam > 0 || S.bank.perUnitExam > 0 ? ` 🪙 امتحان الدرس عليه ${money(S.bank.perLessonExam)} جنيه، وامتحان الوحدة ${money(S.bank.perUnitExam)} جنيه لما تجيبي ${S.bank.examPass}٪ أو أكتر.` : ''}</p></div></div>
+    <h3 class="sec-title">امتحانات الوحدات <small>(كل جزيرة)</small></h3>
+    <div class="sx-grid">${SCI.map(C => `<button class="sx-card sticker" data-sxu="${C.id}" style="--uc:${C.c};--ucl:${C.cl}"><span class="sx-ico">${C.ico}</span><span class="sx-t"><b>الوحدة ${C.n}: ${C.title}</b><small>${C.lessons.length === 1 ? 'درس واحد' : C.lessons.length === 2 ? 'درسين' : C.lessons.length + ' دروس'} · ١٩ سؤال</small></span><span class="sx-tags">${sxTag('SU:' + C.id, 'xu_' + C.id)}</span></button>`).join('')}</div>
+    <h3 class="sec-title">امتحانات الدروس</h3>
+    <div class="sx-units">${SCI.map(C => `<div class="sx-unit sticker ${oc === C.id ? 'open' : ''}" style="--uc:${C.c};--ucl:${C.cl}">
+      <button class="sx-uh" data-sxo="${C.id}" aria-expanded="${oc === C.id}"><span class="sx-ico">${C.ico}</span><b>الوحدة ${C.n}: ${C.title}</b><i aria-hidden="true">${oc === C.id ? '▾' : '◂'}</i></button>
+      ${oc === C.id ? `<div class="sx-lessons">${C.lessons.map(L => `<button class="sx-les" data-sxl="${L.id}"><span class="l-num">${L.n}</span><span class="sx-t"><b>${L.title}</b><small>حوالي ١٢ سؤال</small></span><span class="sx-tags">${sxTag('SL:' + L.id, 'xl_' + L.id)}</span></button>`).join('')}</div>` : ''}
+    </div>`).join('')}</div>
+    <button class="sx-card sx-all sticker" id="sxAll"><span class="sx-ico">🏆</span><span class="sx-t"><b>الامتحان الشامل</b><small>كل منهج العلوم · ٢٦ سؤال</small></span><span class="sx-tags">${sciGet('xa_all') ? `<span class="pill">أحسن درجة ${sciGet('xa_all')}%</span>` : ''}</span></button>
+  </section>`;
+  bindSciCrumbs();
+  screenEl.querySelectorAll('[data-sxu]').forEach(b => b.onclick = () => sxStart('U', b.dataset.sxu));
+  screenEl.querySelectorAll('[data-sxl]').forEach(b => b.onclick = () => sxStart('L', b.dataset.sxl));
+  screenEl.querySelectorAll('[data-sxo]').forEach(b => b.onclick = () => { sfxTick(); const y = window.scrollY; oc = b.dataset.sxo === oc ? null : b.dataset.sxo; draw(); window.scrollTo(0, y); });
+  $('#sxAll').onclick = () => sxStart('A', 'all'); };
+  draw();
+}
+
+function sxStart(kind, id){ sxRun(sxMake(kind, id), () => sxStart(kind, id)); }
+function sxRun(ex, again){
+  setTop(true); stopAr();
+  const C = ex.ch, items = ex.secs.flatMap((s, si) => s.items.map(q => ({...q, sec: si, order: q.k === 'mc' ? shuffle(q.o.map((_, k) => k)) : [0, 1]})));
+  const ans = items.map(() => null); let i = 0;
+  function view(){
+    const q = items[i], s = ex.secs[q.sec], tf = q.k === 'tf';
+    const label = k => tf ? (k === 0 ? '✔ صح' : '✘ خطأ') : q.o[k];
+    const done = ans.filter(x => x !== null).length;
+    screenEl.innerHTML = `<section class="stage sci sx" style="--uc:${C.c};--ucl:${C.cl}">
+      <div class="g-head"><h2>${ex.title}</h2><p class="ask">${ex.sub} · سؤال ${i + 1} من ${items.length}</p>
+        <div class="dots">${items.map((_, k) => `<i class="${k === i ? 'now' : ans[k] !== null ? 'done' : ''}"></i>`).join('')}</div></div>
+      <p class="sx-sec">${s.h}</p>
+      <div class="qcard sticker sci-q"><p class="sci-qt">${q.term ? `<small class="sx-hint">إيه المصطلح العلمي اللي معناه:</small><br>` : ''}${q.q}</p>
+        ${sayArBtn((q.term ? 'المصطلح العلمي اللي معناه: ' : '') + q.q + (tf ? '' : '. ' + q.order.map(k => q.o[k]).join('، ')), '', 'اسمعي السؤال')}</div>
+      <div class="opts words ${tf ? 'n2' : ''} sci-opts">${q.order.map(k => `<button class="opt wopt ${ans[i] === k ? 'picked' : ''}" data-k="${k}" aria-pressed="${ans[i] === k}">${label(k)}</button>`).join('')}</div>
+      <div class="row sx-nav">
+        ${i > 0 ? '<button class="btn" id="sxPrev">→ السابق</button>' : ''}
+        ${i < items.length - 1 ? `<button class="btn primary" id="sxNext" ${ans[i] === null ? 'disabled' : ''}>التالي ←</button>` : `<button class="btn primary" id="sxEnd" ${done < items.length ? 'disabled' : ''}>📤 سلّمي الامتحان</button>`}
+      </div>
+      ${i === items.length - 1 && done < items.length ? `<p class="muted" style="text-align:center">فاضل ${items.length - done} سؤال من غير إجابة. ارجعي جاوبيهم.</p>` : ''}
+    </section>`;
+    screenEl.querySelectorAll('.sci-opts .opt').forEach(b => b.onclick = () => {
+      ans[i] = +b.dataset.k; sfxTick();
+      if(i < items.length - 1) setTimeout(() => { i++; view(); }, 350); else view();
+    });
+    if($('#sxPrev')) $('#sxPrev').onclick = () => { i--; view(); };
+    if($('#sxNext')) $('#sxNext').onclick = () => { i++; view(); };
+    if($('#sxEnd')) $('#sxEnd').onclick = () => { if(ans.some(x => x === null)){ i = ans.findIndex(x => x === null); view(); } else result(); };
+  }
+  function result(){
+    setTop(true); stopAr();
+    const right = items.map((q, k) => q.k === 'tf' ? (ans[k] === 0) === q.tf : ans[k] === q.a);
+    const n = right.filter(Boolean).length, pct = Math.round(n / items.length * 100);
+    const first = !sciGet(ex.key); sciSet(ex.key, pct);
+    addStars(Math.round(n / 3));
+    let won = 0; const prize = examPrize(ex), pass = S.bank.examPass ?? 80;
+    if(prize && !examPaid(ex.id) && pct >= pass){ S.bank.paid['x:' + ex.id] = Date.now(); won = prize; bankAdd(prize, `امتحان علوم: ${ex.title.replace(/^امتحان (درس|الوحدة): /, '')}`); try{ sfxMoney(); }catch(e){} }
+    const lab = (q, k) => q.k === 'tf' ? (k === 0 ? '✔ صح' : '✘ خطأ') : q.o[k];
+    const wrong = items.map((q, k) => ({q, k})).filter(x => !right[x.k]);
+    meow(); setTimeout(() => sayAr(pct >= 60 ? 'أحسنتِ يا فرحة! أنتِ ذكية جدًا.' : 'محاولة جميلة! راجعي الدرس وحاولي مرة أخرى.', pct >= 60 ? 'g_done' : 'g_try'), 450);
+    screenEl.innerHTML = `<section class="hub sci sx" style="--uc:${C.c};--ucl:${C.cl}">
+      <div class="sx-res sticker"><div class="sx-score"><b>${n}</b><span>من ${items.length}</span></div>
+        <div><h2>${pct}% · ${sxGrade(pct)}</h2><p>${ex.title}</p>
+        ${won ? `<p class="x-won">🪙 كسبتي ${money(won)} جنيه في الحصالة! برافو!</p>` : prize && !examPaid(ex.id) ? `<p class="x-try">الامتحان ده عليه ${money(prize)} جنيه لما تجيبي ${pass}٪ أو أكتر. حاولي تاني!</p>` : ''}</div></div>
+      ${wrong.length ? `<h3 class="sec-title">راجعي الأسئلة دي (${wrong.length})</h3>
+      <div class="sx-review">${wrong.map(({q, k}) => `<div class="sx-rv sticker"><p class="sx-rq">${q.term ? 'المصطلح العلمي: ' : ''}${q.q}</p>
+        <p class="sx-bad">✘ إجابتك: ${lab(q, ans[k])}</p><p class="sx-good">✔ الإجابة الصح: <b>${q.k === 'tf' ? (q.tf ? '✔ صح' : '✘ خطأ') : q.o[q.a]}</b></p></div>`).join('')}</div>`
+        : '<p class="f-advice sticker">🎉 كل الإجابات صح! ممتازة.</p>'}
+      <div class="row" style="justify-content:center;margin-top:10px"><button class="btn primary" id="sxAgain">🔁 امتحان جديد</button><button class="btn" id="sxBack">قاعة الامتحانات</button></div>
+    </section>`;
+    if(pct >= 60) burst($('.sx-score'));
+    $('#sxAgain').onclick = again;
+    $('#sxBack').onclick = () => sxHall(ex.id.startsWith('SL:') ? C.id : null);
+  }
+  view();
 }
 
 /* ---------- games ---------- */
@@ -7075,7 +7220,8 @@ function lessonExam(lid){
 }
 
 const examPrize = ex => { const B = S.bank; if(!ex || !ex.id || ex.isPassage) return 0;
-  if(ex.id.startsWith('L:')) return B.perLessonExam || 0;
+  if(ex.id.startsWith('L:') || ex.id.startsWith('SL:')) return B.perLessonExam || 0;
+  if(ex.id.startsWith('SU:')) return B.perUnitExam || 0;
   const e = [...EXAMS, ...MEXAMS].find(x => x.id === ex.id);
   return e && e.u && e.u !== 'all' ? (B.perUnitExam || 0) : 0; };
 const examPaid = id => !!S.bank.paid['x:' + id];
@@ -8146,7 +8292,7 @@ function bankScreen(keep){
     <h3 class="sec-title">إزاي تكسبي فلوس؟ <span class="en">How to earn</span></h3>
     <div class="earn-ways">
       ${B.amount > 0 ? `<button class="earn-card sticker" id="ewWords"><span class="ew-ico">🔤</span><b>احفظي كلمات المنهج</b><small>${bankRule()}. هتشوفي الكلمة بالعربي وتكتبيها بالإنجليزي.</small><span class="pill">حفظتي ${learned ? nWords(learned) : 'لسه ولا كلمة'}</span></button>` : ''}
-      ${B.perLessonExam > 0 || B.perUnitExam > 0 ? `<button class="earn-card sticker" id="ewExam"><span class="ew-ico">📝</span><b>امتحانات الإنجليزي</b><small>${B.perLessonExam > 0 ? `امتحان درس = <b>${money(B.perLessonExam)} جنيه</b>` : ''}${B.perLessonExam > 0 && B.perUnitExam > 0 ? ' · ' : ''}${B.perUnitExam > 0 ? `امتحان وحدة = <b>${money(B.perUnitExam)} جنيه</b>` : ''}. لما تجيبي ${B.examPass}٪ أو أكتر (مرة واحدة لكل امتحان)</small><span class="pill">نجحتي في ${Object.keys(B.paid).filter(k => k.startsWith('x:')).length} امتحان</span></button>` : ''}
+      ${B.perLessonExam > 0 || B.perUnitExam > 0 ? `<button class="earn-card sticker" id="ewExam"><span class="ew-ico">📝</span><b>امتحانات الإنجليزي والعلوم</b><small>${B.perLessonExam > 0 ? `امتحان درس = <b>${money(B.perLessonExam)} جنيه</b>` : ''}${B.perLessonExam > 0 && B.perUnitExam > 0 ? ' · ' : ''}${B.perUnitExam > 0 ? `امتحان وحدة = <b>${money(B.perUnitExam)} جنيه</b>` : ''}. لما تجيبي ${B.examPass}٪ أو أكتر (مرة واحدة لكل امتحان)</small><span class="pill">نجحتي في ${Object.keys(B.paid).filter(k => k.startsWith('x:')).length} امتحان</span></button>` : ''}
       ${B.perPassage > 0 ? `<button class="earn-card sticker" id="ewPass"><span class="ew-ico">📖</span><b>اقري قطعة</b><small>كل قطعة من الكتاب تقريها للآخر = <b>${money(B.perPassage)} جنيه</b> (مرة واحدة لكل قطعة)</small><span class="pill">قريتي ${passDone} من ${PASSAGES.length} قطعة</span></button>` : ''}
     </div>
 
@@ -9641,7 +9787,7 @@ $('#backBtn').onclick = navBack;
 home = navWrap(home, 'home');
 englishWorld = navWrap(englishWorld, 'englishWorld');
 scienceWorld = navWrap(scienceWorld, 'scienceWorld');
-sciChapter = navWrap(sciChapter, 'sciChapter');
+sciChapter = navWrap(sciChapter, 'sciChapter'); sxHall = navWrap(sxHall, 'sxHall'); sxStart = navWrap(sxStart, 'sxStart');
 sciPlay = navWrap(sciPlay, 'sciPlay');
 sciSlides = navWrap(sciSlides, 'sciSlides');
 sciTerms = navWrap(sciTerms, 'sciTerms');

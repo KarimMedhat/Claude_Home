@@ -26,3 +26,9 @@ Some words come out with formal-Arabic vowels (e.g. «نتعلم» must sound ن
 the words whose Egyptian pronunciation differs from the formal one, leave the rest bare — e.g.
 «يَلّا نِتعلِّم الجَمع. لو معاكي تَلات تُفّاحات، وجِبتي اِتنين كمان، يِبقى معاكي خَمَس تُفّاحات.» (sample 7).
 Full vowel marks on every word sound bad (sample 8, rejected). No marks at all is also fine (sample 4).
+
+## Math narration (done)
+`math/lines.json` holds the 43 Egyptian-Arabic explanation lines for the (English) math world, ids `m_*`.
+`math/gen.py` made them (best of 3 by ASR), `math/redo.py` retried lines under 0.9 with more seeds,
+`math/pack.py` packs `out/*.mp3` into `va/m.mp3` + `va-index.json["m"]` + `va-h.json`. The game's `MV` table holds the
+exact same texts (hashes must match). After changing a line: regenerate it, repack, bump AR_VER.

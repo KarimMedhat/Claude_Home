@@ -34,7 +34,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--card);border-bottom:3px solid var(--ink);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px}
 .topbar-in{max-width:1040px;margin:0 auto;display:flex;align-items:center;gap:12px}
-.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:22px;line-height:1}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:22px;line-height:1;min-width:0;overflow:hidden}
 .brand svg{width:40px;height:40px}
 .brand small{display:block;font-size:13px;font-weight:500;color:var(--ink-soft)}
 .spacer{flex:1}
@@ -936,6 +936,13 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
   .topbar .icon-btn{padding:4px 9px;font-size:14px;white-space:nowrap}
   .topbar .pill.stars{padding:4px 10px;white-space:nowrap}
   .brand{font-size:18px}.brand svg{width:32px;height:32px}
+  /* inside a world the back/home buttons need the room: the name goes, the stars always stay fully on screen */
+  .topbar.inner .brand{display:none}
+  .topbar .icon-btn,.topbar .pill.stars{flex-shrink:0}
+}
+@media (max-width:359px){
+  .topbar.inner .tb-l{display:none}
+  .topbar .pill.stars{font-size:17px;padding:3px 8px}
 }
 @media (max-width:760px){
   .levels{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -1478,7 +1485,7 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
   <header class="topbar">
     <div class="topbar-in">
       <button class="icon-btn" id="backBtn" hidden aria-label="رجوع للصفحة اللي قبلها">→ رجوع</button>
-      <button class="icon-btn" id="homeBtn" hidden aria-label="الصفحة الرئيسية">🏠 الرئيسية</button>
+      <button class="icon-btn" id="homeBtn" hidden aria-label="الصفحة الرئيسية">🏠 <span class="tb-l">الرئيسية</span></button>
       <div class="brand" id="brand"></div>
       <div class="spacer"></div>
       <button class="icon-btn" id="soundBtn" aria-pressed="true" title="الصوت">🔊</button>
@@ -4387,7 +4394,7 @@ $('#homeBtn').onclick = () => { stopSpeech(); home(); };
 $('#stars').onclick = () => { actx(); mall(); };
 function renderSound(){ const b = $('#soundBtn'); b.textContent = S.sound ? '🔊' : '🔇'; b.setAttribute('aria-pressed', String(S.sound)); }
 $('#soundBtn').onclick = () => { S.sound = !S.sound; save('sound'); renderSound(); if(!S.sound) stopSpeech(); };
-function setTop(inGame, keep){ $('#homeBtn').hidden = !inGame; if(!keep) window.scrollTo(0,0); }
+function setTop(inGame, keep){ $('#homeBtn').hidden = !inGame; document.querySelector('.topbar').classList.toggle('inner', !!inGame); if(!keep) window.scrollTo(0,0); }
 
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-say]');

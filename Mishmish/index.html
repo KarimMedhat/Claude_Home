@@ -4924,8 +4924,14 @@ function sxNext(){
   const f = SXR_MODELS.find(m => sxBest('F', m.id) < SX_PASS) || SXR_MODELS[0];
   return {kind:'F', id:f.id, name:f.title, C:SCI[0]};
 }
-function sxOpen(kind, id){ kind === 'L' ? sxStart('L', id) : sxReal(id); }
-const sxState = (kind, id) => { const b = sxBest(kind, id); return b >= SX_PASS ? `<span class="sx-st ok">✔ ${b}%</span>` : b ? `<span class="sx-st try">${b}%</span>` : '<span class="sx-st new">لسه</span>'; };
+/* an exam she already passed is locked: only a parent's PIN opens it again */
+function sxOpen(kind, id){
+  const go = () => kind === 'L' ? sxStart('L', id) : sxReal(id), b = sxBest(kind, id);
+  if(b >= SX_PASS) askPin(go, `${KID_AR} جابت ${b}٪ في الامتحان ده فاتقفل 🔒. علشان تحلّه تاني، بابا أو ماما يكتبوا الرقم السري.`);
+  else go();
+}
+const sxLocked = (kind, id) => sxBest(kind, id) >= SX_PASS;
+const sxState = (kind, id) => { const b = sxBest(kind, id); return b >= SX_PASS ? `<span class="sx-st ok">🔒 ✔ ${b}%</span>` : b ? `<span class="sx-st try">${b}%</span>` : '<span class="sx-st new">لسه</span>'; };
 
 let sxLastUnit = null;   /* the unit she was looking at, kept when she comes back from an exam */
 function sxHall(openCh){
@@ -4965,8 +4971,8 @@ function sxHall(openCh){
   draw();
 }
 
-function sxStart(kind, id){ sxRun(sxMake(kind, id), () => sxStart(kind, id)); }
-function sxRun(ex, again){
+function sxStart(kind, id){ sxRun(sxMake(kind, id), () => sxOpen(kind, id), kind, id); }
+function sxRun(ex, again, xk, xid){
   setTop(true); stopAr();
   const C = ex.ch, items = ex.secs.flatMap((s, si) => s.items.map(q => ({...q, sec: si, order: q.k === 'mc' ? shuffle(q.o.map((_, k) => k)) : [0, 1]})));
   const ans = items.map(() => null); let i = 0;
@@ -5015,7 +5021,7 @@ function sxRun(ex, again){
       <div class="sx-review">${wrong.map(({q, k}) => `<div class="sx-rv sticker"><p class="sx-rq">${q.term ? 'المصطلح العلمي: ' : ''}${q.q}</p>
         <p class="sx-bad">✘ إجابتك: ${lab(q, ans[k])}</p><p class="sx-good">✔ الإجابة الصح: <b>${q.k === 'tf' ? (q.tf ? '✔ صح' : '✘ خطأ') : q.o[q.a]}</b></p></div>`).join('')}</div>`
         : '<p class="f-advice sticker">🎉 كل الإجابات صح! ممتازة.</p>'}
-      <div class="row" style="justify-content:center;margin-top:10px"><button class="btn primary" id="sxAgain">🔁 امتحان جديد</button><button class="btn" id="sxBack">قاعة الامتحانات</button></div>
+      <div class="row" style="justify-content:center;margin-top:10px"><button class="btn primary" id="sxAgain">${xid && sxLocked(xk, xid) ? '🔒 امتحان جديد (بالرقم السري)' : '🔁 امتحان جديد'}</button><button class="btn" id="sxBack">قاعة الامتحانات</button></div>
     </section>`;
     if(pct >= 60) burst($('.sx-score'));
     $('#sxAgain').onclick = again;
@@ -6492,10 +6498,10 @@ function sxRealRun(mid){
       <div class="sx-review">${wrong.map(({it, k}) => `<div class="sx-rv sticker"><small class="muted">${it.qh} · ${it.ph}</small><p class="sx-rq">${it.q}</p>
         <p class="sx-bad">✘ إجابتك: ${mine(it, k)}</p><p class="sx-good">✔ إجابة الكتاب: <b>${correct(it)}</b></p></div>`).join('')}</div>`
         : '<p class="f-advice sticker">🎉 كل الإجابات صح! ممتازة.</p>'}
-      <div class="row" style="justify-content:center;margin-top:10px"><button class="btn primary" id="sxAgain">🔁 حلّيه تاني</button><button class="btn" id="sxBack">قاعة الامتحانات</button></div>
+      <div class="row" style="justify-content:center;margin-top:10px"><button class="btn primary" id="sxAgain">${sxLocked(kind, mid) ? '🔒 حلّيه تاني (بالرقم السري)' : '🔁 حلّيه تاني'}</button><button class="btn" id="sxBack">قاعة الامتحانات</button></div>
     </section>`;
     if(pct >= 60) burst($('.sx-score'));
-    $('#sxAgain').onclick = () => sxReal(mid);
+    $('#sxAgain').onclick = () => sxOpen(kind, mid);
     $('#sxBack').onclick = () => sxHall(kind === 'F' ? null : C.id);
   }
   view();

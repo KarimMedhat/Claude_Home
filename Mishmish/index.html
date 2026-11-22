@@ -1509,7 +1509,13 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
   .cbig .cs-svg{max-height:52vh}
 }
 /* ============ math world ============ */
-.mw{display:grid;gap:12px}
+.mw{display:grid;gap:12px;font-family:var(--learn);text-align:left}
+.mw h2,.mw h3,.mw b,.m-key,.m-q,.m-ans{font-family:var(--learn)}
+.mw-m{display:grid;gap:12px;justify-items:center;width:100%;font-family:var(--learn)}
+.m-vrow{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between}
+.m-vrow > p{flex:1 1 220px;margin:0}
+.m-voice{flex:none}
+.mh-txt .m-voice{margin-top:6px}
 .mw .sec-title{margin:10px 0 0}
 .m-head{background:#EEE3FF}
 .m-hat{position:absolute;top:-6px;inset-inline-start:-4px;font-size:34px}
@@ -1561,7 +1567,7 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
 .m-key.go{background:var(--good);color:#FFFFFF}.m-key.del{background:var(--bad-l)}
 .m-track{position:relative;height:46px;border:3px solid var(--ink);border-radius:99px;background:linear-gradient(90deg,#DCEBFF,#EEE3FF)}
 .m-rocket{position:absolute;inset-inline-start:2%;top:50%;transform:translateY(-50%);font-size:30px;transition:inset-inline-start .3s}
-.m-rocket.rk{transform:translateY(-50%) scaleX(-1)}
+.m-rocket.flip{transform:translateY(-50%) scaleX(-1)}
 .m-rocket.fly{animation:mFly .7s ease-in forwards}
 @keyframes mFly{to{inset-inline-start:96%;opacity:0}}
 .m-moon{position:absolute;inset-inline-end:6px;top:50%;transform:translateY(-50%);font-size:26px;font-style:normal}
@@ -4618,16 +4624,18 @@ const WORLDS = [
   {id:'en', ar:'عالم الإنجليزي', sub:'English · المنهج والألعاب والامتحانات', ico:'🇬🇧', c:'#3A7BE8', cl:'#DCEBFF', ready:true},
   {id:'sci', ar:'عالم العلوم', sub:'٨ مفاهيم بالشرح المصري والصوت والأسئلة', ico:'🔬', c:'#2BA36B', cl:'#D8F5E6', ready:true},
   {id:'soc', ar:'عالم الدراسات', sub:'الدراسات الاجتماعية', ico:'🌍', c:'#E08A1E', cl:'#FFEBD1', ready:false},
-  {id:'math', ar:'عالم الرياضيات', sub:'جدول الضرب والحساب الذهني', ico:'➗', c:'#9B5DE5', cl:'#EEE3FF', ready:true}
+  {id:'math', ar:'عالم الرياضيات', sub:'Times Tables · Mental Math (in English)', ico:'➗', c:'#9B5DE5', cl:'#EEE3FF', ready:true}
 ];
 function openWorld(id){
   const w = WORLDS.find(x => x.id === id); if(!w) return;
   if(!w.ready){ toast(`${w.ar} لسه بنجهزه. قريباً! 🚧`); return; }
   if(id === 'en') englishWorld(); else if(id === 'sci') scienceWorld(); else if(id === 'math') mathWorld();
 }
-/* ============ MATH WORLD: «مدينة الأرقام» — multiplication tables + mental math (the school syllabus comes later) ============
-   Progress lives in S.math (synced): f = multiplication facts in a spaced-review box {"3x7":[box, dueDay]},
-   tl = tables learned, st = best % per mental strategy, best = game records, day/streak = the daily warm-up. */
+/* ============ MATH WORLD: "Number City" — times tables + mental math (the school syllabus comes later) ============
+   Farha studies math in English, so every screen here is in English (left-to-right, 0-9 digits).
+   The spoken explanations are in Egyptian Arabic, recorded in the game's voice (va/m.mp3, ids m_*).
+   Progress lives in S.math (synced): f = times facts in a spaced-review box {"3x7":[box, dueDay]},
+   tl = tables learned, st = best % per mental strategy, best = game records, day/streak = the daily practice. */
 const MS = () => {
   if(!isObj(S.math)) S.math = {};
   const m = S.math;
@@ -4637,13 +4645,56 @@ const MS = () => {
 };
 const mSave = () => save('math');
 const dayNo = () => Math.floor((Date.now() - new Date().getTimezoneOffset() * 6e4) / 864e5);
-const ad = n => String(n).replace(/[0-9]/g, d => AR_DIG[d]);
-/* «7 + ؟ = 10» already holds its blank; «3 × 7» gets « = ؟» */
-const qAsk = q => q.includes('؟') ? q : q + ' = ؟', qFill = (q, a) => q.includes('؟') ? q.replace('؟', a) : `${q} = ${a}`;
+/* "7 + ? = 10" already holds its blank; "3 × 7" gets " = ?" */
+const qAsk = q => q.includes('?') ? q : q + ' = ?', qFill = (q, a) => q.includes('?') ? q.replace('?', a) : `${q} = ${a}`;
 const ri = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
 const ceil10 = n => Math.ceil(n / 10) * 10;
 let mTok = 0;                                   /* every math screen gets a token; timers from an old screen stop by themselves */
 const mAlive = t => t === mTok && !!$('.mw');
+const mNew = () => { try{ stopAr(); }catch(e){} mKeyFn = null; return ++mTok; };
+const LTR = 'dir="ltr" lang="en"';
+
+/* ---- the Arabic explanations, in the game's Egyptian voice (text = exactly what was recorded) ---- */
+const MV = {
+  m_t1a: 'جدول الواحد زي المِراية: أي رقم تِضربيه في واحد، بيفضل زي ما هو.', m_t1b: 'وأي رقم في صفر، الناتج صفر، عشان مفيش ولا مجموعة.',
+  m_t10a: 'الإيدين فيهم عشر صوابع. جدول العشرة أسهل جدول في الدنيا.', m_t10b: 'بِنِكتِب الرقم، ونِحُط جنبه صفر، وخلاص!',
+  m_t2a: 'جدول الاِتنين هو التوأم: الجَزمة فردتين، والعينين اِتنين.', m_t2b: 'الضرب في اِتنين يعني الضِّعف: الرقم زائد نفسه.',
+  m_t5a: 'كل إيد فيها خمس صوابع، والساعة كمان بِتعِد بالخمسات.', m_t5b: 'الحيلة: اِضربي في عشرة، وبعدين خُدي النُّص.',
+  m_t3a: 'التروسيكل ليه تَلات عجلات.', m_t3b: 'الحيلة: هاتي الضِّعف، وبعدين زوّدي الرقم مرة كمان.',
+  m_t4a: 'مشمش ليها أربع رِجلين!', m_t4b: 'الحيلة: ضِعف الضِّعف. ضاعفي الرقم، وبعدين ضاعفيه تاني.',
+  m_t9a: 'جدول التسعة ليه سحر في صوابعك!', m_t9b: 'اِفردي إيديكي، ونزّلي الصباع اللي رقمه نفس الرقم.', m_t9c: 'الصوابع اللي على الشمال عشرات، واللي على اليمين آحاد.', m_t9d: 'وفيه حيلة تانية: اِضربي في عشرة، وبعدين اِطرحي الرقم مرة.',
+  m_t6a: 'الخنفسة ليها سِت رِجلين.', m_t6b: 'الحيلة: اِضربي في خمسة، وبعدين زوّدي الرقم مرة كمان.',
+  m_t8a: 'الأخطبوط ليه تَمَن دراعات.', m_t8b: 'الحيلة: ضاعفي الرقم تَلات مرات ورا بعض.',
+  m_t7a: 'الأسبوع فيه سَبع أيام.', m_t7b: 'الحيلة: اِضربي في خمسة، واِضربي في اِتنين، واجمعيهم.', m_t7c: 'وخبر حلو: انتي عارفة أغلب جدول السبعة من الجداول اللي فاتت!',
+  m_s_b10: 'كل رقم ليه صاحب بيكمّله لعشرة: سبعة وتَلاتة، سِتة وأربعة. اِحفظي الأصحاب دول، وهتحسبي بسرعة جداً.',
+  m_s_mk10: 'لما نِجمع ونعدّي العشرة، نكمّل للعشرة الأول، وبعدين نزوّد الباقي. زي ما تِطلعي السلم لحد البسطة، وبعدين تكمّلي.',
+  m_s_tens: 'فكّكي كل رقم لعشرات وآحاد. اِجمعي العشرات مع العشرات، والآحاد مع الآحاد، وبعدين اِجمعيهم.',
+  m_s_rnd: 'الرقم اللي قريب من العشرة، قرّبيه لأقرب عشرة، عشان الحساب يبقى سهل. وبعدين صلّحي الفرق.',
+  m_s_up: 'لما الرقمين قريبين من بعض، اِمشي من الصغير للكبير وعِدّي الخطوات. روحي لأقرب عشرة الأول، وبعدين كمّلي.',
+  m_s_x10: 'الضرب في عشرة يعني نِحُط صفر، والضرب في مية يعني نِحُط صفرين.', m_s_x10b: 'ولو فيه رقم بالصفر، اِضربي من غير الصفر، وبعدين رجّعيه.',
+  m_s_dbl: 'الضِّعف والنُّص بيتحسبوا حتة حتة: العشرات لوحدها، والآحاد لوحدها، وبعدين نِجمعهم.',
+  m_s_b100: 'زي أصحاب العشرة بالظبط، بس للمية. كمّلي لأقرب عشرة الأول، وبعدين لحد المية.',
+  m_s_split: 'لو الرقم كبير، كسّريه لعشرات وآحاد. اِضربي كل حتة لوحدها، وبعدين اِجمعي الناتجين.',
+  m_g_world: 'أهلاً في مدينة الأرقام! هنا هنحب جدول الضرب، ونِحسب في دماغنا بسرعة.',
+  m_g_secret: 'سر صغير: تَلاتة في سبعة، هي هي سبعة في تَلاتة. يعني نُص الجدول انتي عارفاه من غير ما تحفظيه!',
+  m_g_ladder: 'كل درجة في السلم بتزيد رقم الجدول. اختاري الرقم اللي بعده، وطلّعي مشمش لفوق!',
+  m_g_build: 'دوسي على الزرار عشان تحطي مجموعة جديدة، وشوفي الرقم بيكبر إزاي.',
+  m_g_steps: 'اكتبي ناتج كل خطوة، والحيلة هتوصّلك للإجابة.',
+  m_g_fingers: 'اِفردي صوابعك العشرة، ونزّلي الصباع اللي رقمه نفس الرقم اللي بنضربه في تسعة.',
+  m_g_club: 'الحساب الذهني يعني نِحسب في دماغنا من غير ورقة ولا قلم. السر إنك تعرفي الحيلة المناسبة.',
+  m_g_chain: 'اِفتكري الرقم اللي على القطر. كل عربية هتغيّره، وفي الآخر قوليلي بقى كام.',
+  m_g_scale: 'اِحسبي الناحيتين في دماغك، ودوسي على الناحية الأتقل.',
+  m_g_daily: 'تمرين النهارده: شوية ضرب وشوية حساب ذهني. المسائل اللي بتغلطي فيها هترجعلك تاني عشان تثبت.'
+};
+const mvBtn = (ids, label = 'Listen') => `<button class="say say-ar m-voice" data-mv="${ids.join(',')}" aria-label="Listen to the explanation (Arabic)">${SPK}<span>${label}</span></button>`;
+const mvPlay = (ids, btn) => sayArSeq(ids.filter(id => MV[id]).map(id => ({text: MV[id], id})), btn);
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-mv]'); if(!b) return;
+  if(b.classList.contains('on')){ stopAr(); return; }
+  mvPlay(b.dataset.mv.split(','), b);
+});
+/* a lesson's first screen explains itself out loud once she opens it */
+const mvAuto = ids => setTimeout(() => { const b = $(`.mw [data-mv="${ids.join(',')}"]`); if(b) mvPlay(ids, b); }, 350);
 
 /* ---- spaced review of the 55 different facts (3×7 is the same fact as 7×3) ---- */
 const FK = (a, b) => a <= b ? a + 'x' + b : b + 'x' + a;
@@ -4658,42 +4709,42 @@ function factMark(a, b, ok, fast){
   else { box = 1; due = dayNo(); }
   MS().f[FK(a, b)] = [box, due];
 }
-const factLevel = (a, b) => { const r = factGet(a, b); return !r ? 0 : r.box >= 3 ? 2 : 1; };   /* 0 new · 1 learning · 2 mastered */
+const factLevel = (a, b) => { const r = factGet(a, b); return !r ? 0 : r.box >= 3 ? 2 : 1; };   /* 0 new · 1 learning · 2 learned */
 const allFacts = () => { const o = []; for(let a = 1; a <= 10; a++) for(let b = a; b <= 10; b++) o.push([a, b]); return o; };
 const masteredN = () => allFacts().filter(([a, b]) => factLevel(a, b) === 2).length;
 const dueFacts = () => allFacts().filter(([a, b]) => { const r = factGet(a, b); return r && r.due <= dayNo(); }).sort((x, y) => factGet(...x).box - factGet(...y).box);
 
 /* ---- the tables: each one is a little creature with that many legs (or things) ---- */
 const MT = [
-  {n: 1, ico: '🌟', name: 'النجمة الوحيدة', thing: 'نجمة', unit: 'نجمة',
-   story: 'جدول الـ1 هو المراية: الرقم بيبص فيها يلاقي نفسه! أي رقم × 1 = نفس الرقم. وأي رقم × 0 = صفر، لأن مفيش ولا مجموعة.',
-   trick: 'أي رقم × 1 = نفسه', steps: k => [[`${k} × 1 = نفس الرقم`, k]]},
-  {n: 10, ico: '👐', name: 'الإيدين', thing: '👐', unit: 'صوابع',
-   story: 'كل إيدين فيهم 10 صوابع. جدول الـ10 أسهل جدول في الدنيا: نكتب الرقم ونحط جنبه صفر!',
-   trick: 'الرقم وجنبه صفر', steps: k => [[`${k} وجنبه صفر`, k * 10]]},
-  {n: 2, ico: '👯', name: 'التوأم', thing: '👟', unit: 'فردة',
-   story: 'الجزمة فردتين، والعينين اتنين. جدول الـ2 هو «الضعف»: الرقم + نفسه.',
-   trick: 'الضعف: الرقم + نفسه', steps: k => [[`${k} + ${k}`, k * 2]]},
-  {n: 5, ico: '✋', name: 'الإيد', thing: '✋', unit: 'صوابع',
-   story: 'كل إيد فيها 5 صوابع. والساعة كمان بتعد بالخمسات: لما العقرب الكبير يقف على 3 تبقى 15 دقيقة! وحيلة سريعة: × 5 = نُص الـ × 10.',
-   trick: '× 10 وبعدين النُص', steps: k => [[`${k} × 10`, k * 10], [`نُص ${k * 10}`, k * 5]]},
-  {n: 3, ico: '🚲', name: 'التروسيكل', thing: '🛞', unit: 'عجلة',
-   story: 'التروسيكل ليه 3 عجل. جدول الـ3 = الضعف وبعدين نزوّد الرقم مرة كمان.',
-   trick: 'الضعف + الرقم', steps: k => [[`ضعف ${k}`, k * 2], [`${k * 2} + ${k}`, k * 3]]},
-  {n: 4, ico: '🐱', name: 'رجلين مشمش', thing: '🐱', unit: 'رجل',
-   story: 'مشمش ليها 4 رجلين! جدول الـ4 = ضعف الضعف: نضاعف الرقم مرة، ونضاعفه تاني.',
-   trick: 'ضعف الضعف', steps: k => [[`ضعف ${k}`, k * 2], [`ضعف ${k * 2}`, k * 4]]},
-  {n: 9, ico: '🙌', name: 'الصوابع السحرية', thing: '🎈', unit: 'بالونة',
-   story: 'جدول الـ9 ليه سحر في صوابعك! افردي إيديكي، ونزّلي الصباع اللي رقمه نفس الرقم. اللي على الشمال عشرات، واللي على اليمين آحاد. وحيلة تانية: × 10 وبعدين ننقص الرقم مرة.',
-   trick: '× 10 ناقص الرقم', steps: k => [[`${k} × 10`, k * 10], [`${k * 10} − ${k}`, k * 9]], fingers: true},
-  {n: 6, ico: '🐞', name: 'الخنفسة', thing: '🐞', unit: 'رجل',
-   story: 'الخنفسة ليها 6 رجلين. جدول الـ6 = جدول الـ5 + الرقم مرة كمان. وسر حلو: 6 × رقم زوجي بيخلص بنفس الرقم (6 × 4 = 24، 6 × 8 = 48).',
-   trick: '× 5 وبعدين + الرقم', steps: k => [[`${k} × 5`, k * 5], [`${k * 5} + ${k}`, k * 6]]},
-  {n: 8, ico: '🐙', name: 'الأخطبوط', thing: '🐙', unit: 'دراع',
-   story: 'الأخطبوط ليه 8 دراعات. جدول الـ8 = ضعف ضعف الضعف: نضاعف 3 مرات ورا بعض!',
-   trick: 'نضاعف 3 مرات', steps: k => [[`ضعف ${k}`, k * 2], [`ضعف ${k * 2}`, k * 4], [`ضعف ${k * 4}`, k * 8]]},
-  {n: 7, ico: '📅', name: 'أيام الأسبوع', thing: '📅', unit: 'يوم',
-   story: 'الأسبوع 7 أيام. جدول الـ7 = جدول الـ5 + جدول الـ2. وخبر حلو: انتي خلاص عارفة معظمه من الجداول اللي فاتت! والجديد بس 7×7=49 و 7×8=56 (افتكري: 5، 6، 7، 8 → 56 = 7 × 8).',
+  {n: 1, ico: '🌟', name: 'The Mirror', thing: '🌟', mv: ['m_t1a', 'm_t1b'],
+   story: 'The 1 times table is a mirror: the number looks in and sees itself! Any number × 1 = the same number. And any number × 0 = 0, because there are no groups at all.',
+   trick: '× 1 = the same number', steps: k => [[`${k} × 1`, k]]},
+  {n: 10, ico: '👐', name: 'Ten Fingers', thing: '👐', mv: ['m_t10a', 'm_t10b'],
+   story: 'Two hands have 10 fingers. The 10 times table is the easiest one in the world: write the number and add a zero!',
+   trick: 'Add a zero', steps: k => [[`${k} with a 0`, k * 10]]},
+  {n: 2, ico: '👯', name: 'The Twins', thing: '👟', mv: ['m_t2a', 'm_t2b'],
+   story: 'Shoes come in twos, and so do eyes. × 2 means DOUBLE: the number + itself.',
+   trick: 'Double it', steps: k => [[`${k} + ${k}`, k * 2]]},
+  {n: 5, ico: '✋', name: 'The Hand', thing: '✋', mv: ['m_t5a', 'm_t5b'],
+   story: 'Every hand has 5 fingers. The clock counts in fives too: when the long hand is on 3, it is 15 minutes! Quick trick: × 5 is half of × 10.',
+   trick: '× 10, then half', steps: k => [[`${k} × 10`, k * 10], [`half of ${k * 10}`, k * 5]]},
+  {n: 3, ico: '🚲', name: 'The Tricycle', thing: '🛞', mv: ['m_t3a', 'm_t3b'],
+   story: 'A tricycle has 3 wheels. The 3 times table = double the number, then add it one more time.',
+   trick: 'Double + the number', steps: k => [[`double ${k}`, k * 2], [`${k * 2} + ${k}`, k * 3]]},
+  {n: 4, ico: '🐱', name: "Mishmish's Legs", thing: '🐱', mv: ['m_t4a', 'm_t4b'],
+   story: 'Mishmish has 4 legs! The 4 times table = double, then double again.',
+   trick: 'Double, double', steps: k => [[`double ${k}`, k * 2], [`double ${k * 2}`, k * 4]]},
+  {n: 9, ico: '🙌', name: 'Magic Fingers', thing: '🎈', mv: ['m_t9a', 'm_t9b', 'm_t9c', 'm_t9d'],
+   story: 'The 9 times table has magic in your fingers! Hold up 10 fingers and fold down the finger with the same number. Fingers on the left are tens, fingers on the right are ones. Another trick: × 10, then take away the number once.',
+   trick: '× 10, minus the number', steps: k => [[`${k} × 10`, k * 10], [`${k * 10} − ${k}`, k * 9]], fingers: true},
+  {n: 6, ico: '🐞', name: 'The Ladybug', thing: '🐞', mv: ['m_t6a', 'm_t6b'],
+   story: 'A ladybug has 6 legs. The 6 times table = the 5 times table + the number one more time. A cool secret: 6 × an even number ends with that number (6 × 4 = 24, 6 × 8 = 48).',
+   trick: '× 5, then + the number', steps: k => [[`${k} × 5`, k * 5], [`${k * 5} + ${k}`, k * 6]]},
+  {n: 8, ico: '🐙', name: 'The Octopus', thing: '🐙', mv: ['m_t8a', 'm_t8b'],
+   story: 'An octopus has 8 arms. The 8 times table = double, double, double: three doubles in a row!',
+   trick: 'Double 3 times', steps: k => [[`double ${k}`, k * 2], [`double ${k * 2}`, k * 4], [`double ${k * 4}`, k * 8]]},
+  {n: 7, ico: '📅', name: 'The Week', thing: '📅', mv: ['m_t7a', 'm_t7b', 'm_t7c'],
+   story: 'A week has 7 days. The 7 times table = × 5 plus × 2. Good news: you already know most of it from the other tables! The new ones are 7 × 7 = 49 and 7 × 8 = 56 (5, 6, 7, 8 → 56 = 7 × 8).',
    trick: '× 5 + × 2', steps: k => [[`${k} × 5`, k * 5], [`${k} × 2`, k * 2], [`${k * 5} + ${k * 2}`, k * 7]]}
 ];
 const MT_BY = {}; MT.forEach(T => MT_BY[T.n] = T);
@@ -4702,10 +4753,10 @@ const tableStars = n => { const L = tableMastery(n), m = L.filter(x => x === 2).
 const learnedTables = () => MT.filter(T => MS().tl[T.n]).map(T => T.n);
 const nextTable = () => MT.find(T => !MS().tl[T.n]) || MT.slice().sort((a, b) => tableStars(a.n) - tableStars(b.n))[0];
 const factHint = (a, b) => { const T = MT_BY[Math.max(a, b)], k = Math.min(a, b);
-  return `<b>${T.ico} حيلة جدول الـ${T.n}: ${T.trick}</b><br>${T.steps(k).map(([l]) => l).join(' ← ')}`; };
+  return `<b>${T.ico} ${T.n} times table trick: ${T.trick}</b><br>${T.steps(k).map(([l]) => l).join(' → ')}`; };
 
-/* ---- shared bits: number pad, stars line, Mishmish cheering ---- */
-function padHTML(){ return `<div class="m-pad" dir="ltr" role="group" aria-label="أرقام">${[7, 8, 9, 4, 5, 6, 1, 2, 3, '⌫', 0, '✔'].map(k => `<button class="m-key ${k === '✔' ? 'go' : k === '⌫' ? 'del' : ''}" data-mk="${k}" aria-label="${k === '⌫' ? 'امسحي' : k === '✔' ? 'تأكيد' : k}">${typeof k === 'number' ? AR_DIG[k] : k}</button>`).join('')}</div>`; }
+/* ---- shared bits: number pad, results ---- */
+function padHTML(){ return `<div class="m-pad" role="group" aria-label="Number pad">${[7, 8, 9, 4, 5, 6, 1, 2, 3, '⌫', 0, '✔'].map(k => `<button class="m-key ${k === '✔' ? 'go' : k === '⌫' ? 'del' : ''}" data-mk="${k}" aria-label="${k === '⌫' ? 'Delete' : k === '✔' ? 'Check' : k}">${k}</button>`).join('')}</div>`; }
 let mKeyFn = null;
 document.addEventListener('keydown', e => {
   if(!mKeyFn || !$('.mw .m-pad') || e.target.closest('input,textarea')) return;
@@ -4728,19 +4779,21 @@ function bindPad(root, show, onGo, max = 4){
 }
 const mCat = (cls = '') => `<div class="m-cat ${cls}" aria-hidden="true">${catSVG(S.mish, lookNoBg())}</div>`;
 function mResult(o){
-  setTop(true); mTok++; mKeyFn = null;
+  setTop(true); mNew();
   const pct = o.total ? Math.round(o.score / o.total * 100) : 100;
   if(o.stars) addStars(o.stars);
   meow(); if(pct >= 60) sfxGood();
-  screenEl.innerHTML = `<section class="mw m-res">
+  const head = pct >= 90 ? 'Amazing! 🏆' : pct >= 70 ? 'Great job! 🌟' : pct >= 50 ? 'Good! Keep going 💪' : "Don't worry, we'll practise together 💛";
+  screenEl.innerHTML = `<section class="mw m-res" ${LTR}>
     <div class="m-res-card sticker">${mCat('bounce')}
-      <h2>${pct >= 90 ? 'تحفة! 🏆' : pct >= 70 ? 'شاطرة أوي! 🌟' : pct >= 50 ? 'كويس! كمّلي 💪' : 'ولا يهمك، هنتمرن سوا 💛'}</h2>
-      <p class="m-big">${o.line || `${o.score} من ${o.total}`}</p>
+      <h2>${head}</h2>
+      <p class="m-big">${o.line || `${o.score} out of ${o.total}`}</p>
       ${o.extra || ''}
-      ${o.stars ? `<p class="pill stars">كسبتي ⭐ ${o.stars}</p>` : ''}
-      <div class="row" style="justify-content:center">${o.again ? '<button class="btn primary" id="mAgain">🔁 تاني</button>' : ''}<button class="btn" id="mBack">${o.backLabel || 'رجوع'}</button></div>
+      ${o.stars ? `<p class="pill stars">You won ⭐ ${o.stars}</p>` : ''}
+      <div class="row" style="justify-content:center">${o.again ? '<button class="btn primary" id="mAgain">🔁 Again</button>' : ''}<button class="btn" id="mBack">${o.backLabel || 'Back'}</button></div>
     </div></section>`;
   burst($('.m-res-card svg'));
+  setTimeout(() => say(pct >= 90 ? 'Amazing!' : pct >= 70 ? 'Great job!' : pct >= 50 ? 'Good! Keep going!' : "Good try! Let's practise together."), 400);
   if(o.again) $('#mAgain').onclick = o.again;
   $('#mBack').onclick = o.back;
 }
@@ -4749,21 +4802,22 @@ function mResult(o){
    untimed: a wrong answer shows the trick as a hint; a second wrong shows the answer and she types it (that question comes back once at the end).
    timed: 60 s, no hints, as many as she can. ---- */
 function mQuiz(o){
-  setTop(true); const tok = ++mTok;
+  setTop(true); const tok = mNew();
   const queue = o.items.slice(), total = o.items.length;
   let i = 0, score = 0, tries = 0, t0 = Date.now(), ended = false, left = o.timer || 0, done = 0;
   const comeBack = new Set();
-  screenEl.innerHTML = `<section class="mw m-quiz">
+  screenEl.innerHTML = `<section class="mw m-quiz" ${LTR}>
     <div class="m-qhead"><h2>${o.title}</h2>${o.timer ? '<span class="m-timer" id="mT" role="timer"></span>' : '<span class="m-prog" id="mProg"></span>'}</div>
-    ${o.timer ? `<div class="m-track" aria-hidden="true"><span class="m-rocket ${o.icon ? '' : 'rk'}" id="mRk">${o.icon || '🚀'}</span><i class="m-moon">${o.goalIcon || '🌙'}</i></div>` : ''}
-    <div class="m-qcard sticker"><p class="m-q" id="mQ" dir="rtl"></p><p class="m-ans" id="mA" aria-live="polite"></p><div class="m-hint" id="mH" hidden></div></div>
+    ${o.timer ? `<div class="m-track" aria-hidden="true"><span class="m-rocket ${o.icon ? 'flip' : ''}" id="mRk">${o.icon || '🚀'}</span><i class="m-moon">${o.goalIcon || '🌙'}</i></div>` : ''}
+    ${o.voice ? `<div class="m-vrow">${mvBtn(o.voice)}</div>` : ''}
+    <div class="m-qcard sticker"><p class="m-q" id="mQ"></p><p class="m-ans" id="mA" aria-live="polite"></p><div class="m-hint" id="mH" hidden></div></div>
     ${padHTML()}
   </section>`;
   const q = () => queue[i];
-  const show = v => { $('#mA').textContent = v === '' ? '؟' : v; };
+  const show = v => { $('#mA').textContent = v === '' ? '?' : v; };
   const draw = () => {
     tries = 0; t0 = Date.now(); $('#mH').hidden = true; $('#mQ').textContent = qAsk(q().q);
-    if(!o.timer) $('#mProg').textContent = `${Math.min(i + 1, total)} من ${total}`;
+    if(!o.timer) $('#mProg').textContent = `${Math.min(i + 1, total)} of ${total}`;
     pad.clear();
   };
   const next = () => { i++; if(i >= queue.length) return end(); draw(); };
@@ -4778,7 +4832,7 @@ function mQuiz(o){
     if(ok){
       sfxGood(); $('#mA').classList.add('ok'); setTimeout(() => $('#mA') && $('#mA').classList.remove('ok'), 400);
       if(it.fact) factMark(it.fact[0], it.fact[1], tries === 0 && !it.again, fast);
-      if(tries === 0 && !it.again){ score++; if(it.onRight) it.onRight(fast); }
+      if(tries === 0 && !it.again) score++;
       done++;
       if(o.timer && $('#mRk')) $('#mRk').style.insetInlineStart = Math.min(88, score * 4) + '%';
       setTimeout(() => { if(tok === mTok) next(); }, o.timer ? 150 : 650);
@@ -4786,11 +4840,10 @@ function mQuiz(o){
     }
     sfxBad(); tries++; $('#mA').classList.add('no'); setTimeout(() => $('#mA') && $('#mA').classList.remove('no'), 400);
     if(it.fact && tries === 1) factMark(it.fact[0], it.fact[1], false);
-    if(it.onWrong && tries === 1) it.onWrong();
     if(o.timer){ done++; setTimeout(() => { if(tok === mTok) next(); }, 250); return; }
     const h = $('#mH'); h.hidden = false;
-    if(tries === 1) h.innerHTML = `🤔 قرّبتي! فكّري تاني:<br>${it.hint ? it.hint() : ''}`;
-    else { h.innerHTML = `✏️ الإجابة: <b>${it.a}</b>. اكتبيها عشان تفتكريها.${it.hint ? '<br>' + it.hint() : ''}`;
+    if(tries === 1) h.innerHTML = `🤔 So close! Think again:<br>${it.hint ? it.hint() : ''}`;
+    else { h.innerHTML = `✏️ The answer is <b>${it.a}</b>. Type it to remember it.${it.hint ? '<br>' + it.hint() : ''}`;
       if(!it.again && !comeBack.has(it) && o.retry !== false){ comeBack.add(it); queue.push({...it, again: true}); } }
     clear();
   }, o.max || 4);
@@ -4803,20 +4856,19 @@ function mQuiz(o){
 
 /* ---- step-by-step solving: each step of the trick is typed, then the final answer ---- */
 function mSteps(o){
-  /* o: {title, sub, items:[{q, a, steps:[[label, value]...]}], onEnd} */
-  setTop(true); const tok = ++mTok;
+  setTop(true); const tok = mNew();
   let i = 0, s = 0;
-  screenEl.innerHTML = `<section class="mw m-quiz">
+  screenEl.innerHTML = `<section class="mw m-quiz" ${LTR}>
     <div class="m-qhead"><h2>${o.title}</h2><span class="m-prog" id="mProg"></span></div>
-    ${o.sub ? `<p class="muted m-sub">${o.sub}</p>` : ''}
+    <div class="m-vrow">${o.sub ? `<p class="muted m-sub">${o.sub}</p>` : ''}${mvBtn(['m_g_steps'])}</div>
     <div class="m-qcard sticker"><p class="m-q" id="mQ"></p><ol class="m-steps" id="mS"></ol><p class="m-ans" id="mA" aria-live="polite"></p><div class="m-hint" id="mH" hidden></div></div>
     ${padHTML()}
   </section>`;
   const it = () => o.items[i];
-  const show = v => { $('#mA').textContent = v === '' ? '؟' : v; };
+  const show = v => { $('#mA').textContent = v === '' ? '?' : v; };
   const draw = () => {
     const I = it();
-    $('#mProg').textContent = `${i + 1} من ${o.items.length}`;
+    $('#mProg').textContent = `${i + 1} of ${o.items.length}`;
     $('#mQ').textContent = qAsk(I.q);
     $('#mS').innerHTML = I.steps.map(([l, v], k) => `<li class="${k < s ? 'done' : k === s ? 'now' : ''}"><span>${l}</span> = <b>${k < s ? v : k === s ? '…' : ''}</b></li>`).join('');
     $('#mH').hidden = true; pad.clear();
@@ -4831,7 +4883,7 @@ function mSteps(o){
       } else draw();
       return;
     }
-    sfxBad(); const h = $('#mH'); h.hidden = false; h.innerHTML = `حاولي تاني 💛 ${o.helpOf ? o.helpOf(I, s) : ''}`; clear();
+    sfxBad(); const h = $('#mH'); h.hidden = false; h.innerHTML = 'Try again 💛'; clear();
   });
   draw();
 }
@@ -4839,25 +4891,26 @@ function floatOK(){ const c = $('.mw .m-qcard'); if(c) burst(c); }
 
 /* ============ HUB ============ */
 function mathWorld(keep){
-  curWorld = 'math'; stopAr(); mTok++; mKeyFn = null;
+  curWorld = 'math'; mNew();
   setTop(true, keep === true);
   const M = MS(), due = dueFacts().length, today = M.day === dayNo();
   const stN = Object.keys(M.st).filter(k => M.st[k] >= 80).length;
   const streak = M.streak.last >= dayNo() - 1 ? M.streak.n : 0;
-  screenEl.innerHTML = `<section class="world-page mw">
+  screenEl.innerHTML = `<section class="world-page mw" ${LTR}>
     <div class="map-head sticker m-head">
       <div class="mh-cat">${catSVG(S.mish, lookNoBg())}<span class="m-hat" aria-hidden="true">🧮</span></div>
-      <div class="mh-txt"><h2>مدينة الأرقام</h2>
-        <p>هنا هنحب الأرقام ونلعب بيها! جدول الضرب هيبقى صاحبك، والحساب في دماغك هيبقى أسرع من الآلة الحاسبة.</p>
-        <small>${streak ? `🔥 بتتمرني بقالك ${streak === 1 ? 'يوم' : streak === 2 ? 'يومين' : streak + ' أيام'} ورا بعض` : '🌱 ابدئي النهارده وخلّي النار 🔥 تولّع كل يوم'}</small></div>
+      <div class="mh-txt"><h2>Number City</h2>
+        <p>Let's fall in love with numbers! Your times tables will become your friends, and you'll work out sums in your head faster than a calculator.</p>
+        <small>${streak ? `🔥 You practised ${streak === 1 ? '1 day' : streak + ' days'} in a row` : '🌱 Start today and keep the fire 🔥 going every day'}</small>
+        ${mvBtn(['m_g_world'])}</div>
     </div>
     <button class="m-daily sticker ${today ? 'done' : ''}" id="mDaily"><span class="m-dico" aria-hidden="true">${today ? '✅' : '⭐'}</span>
-      <span><b>${today ? 'خلّصتي تمرين النهارده!' : 'تمرين النهارده · 3 دقايق'}</b><small>${today ? 'برافو! تعالي بكرة عشان النار 🔥 تفضل والعة. وتقدري تتمرني تاني لو حابة.' : due ? `${due} مسألة ضرب مستنيين مراجعة عشان ما تنسيهمش + حساب ذهني` : 'شوية ضرب وشوية حساب ذهني، كل يوم'}</small></span></button>
+      <span><b>${today ? "Today's practice is done!" : "Today's practice · 3 minutes"}</b><small>${today ? 'Well done! Come back tomorrow to keep your 🔥 going. You can practise again if you like.' : due ? `${due} times ${due === 1 ? 'fact is' : 'facts are'} due for review, so you never forget them + mental math` : 'A little × and a little mental math, every day'}</small></span></button>
     <div class="m-doors">
-      <button class="m-door sticker m-d1" id="mMul"><span class="m-dbig" aria-hidden="true">🏰</span><b>قلعة جدول الضرب</b>
-        <small>${masteredN()} من 55 مسألة محفوظة صم</small><span class="bar"><i style="width:${Math.round(masteredN() / 55 * 100)}%"></i></span></button>
-      <button class="m-door sticker m-d2" id="mMen"><span class="m-dbig" aria-hidden="true">🧠</span><b>نادي الحساب الذهني</b>
-        <small>${stN} من ${MM.length} حيل اتقنتيها</small><span class="bar"><i style="width:${Math.round(stN / MM.length * 100)}%"></i></span></button>
+      <button class="m-door sticker m-d1" id="mMul"><span class="m-dbig" aria-hidden="true">🏰</span><b>Times Tables Castle</b>
+        <small>${masteredN()} of 55 facts learned by heart</small><span class="bar"><i style="width:${Math.round(masteredN() / 55 * 100)}%"></i></span></button>
+      <button class="m-door sticker m-d2" id="mMen"><span class="m-dbig" aria-hidden="true">🧠</span><b>Mental Math Club</b>
+        <small>${stN} of ${MM.length} tricks mastered</small><span class="bar"><i style="width:${Math.round(stN / MM.length * 100)}%"></i></span></button>
     </div>
   </section>`;
   $('#mDaily').onclick = mDaily;
@@ -4874,66 +4927,66 @@ function mDaily(){
   const items = shuffle(facts).map(([a, b]) => Math.random() < .5 ? factItem(a, b) : factItem(b, a));
   const strat = MM.filter(s => MS().st[s.id]);
   const mental = (strat.length ? strat : MM.slice(0, 2)).slice(-4);
-  for(let k = 0; k < 4; k++){ const g = rand(mental).gen(); items.splice(ri(1, items.length), 0, {q: g.q, a: g.a, hint: () => g.steps.map(([l, v]) => `${l} = ${v}`).slice(0, -1).join(' ← ')}); }
-  mQuiz({title: '⭐ تمرين النهارده', items, onEnd: r => {
+  for(let k = 0; k < 4; k++) items.splice(ri(1, items.length), 0, mmItem(rand(mental)));
+  mQuiz({title: "⭐ Today's Practice", items, voice: ['m_g_daily'], onEnd: r => {
     const M = MS(); const first = M.day !== dayNo();
     if(first){ M.streak = {n: M.streak.last === dayNo() - 1 ? M.streak.n + 1 : 1, last: dayNo()}; M.day = dayNo(); }
     mSave();
-    mResult({score: r.score, total: r.total, stars: first ? 4 : 1, extra: first ? `<p>🔥 ${M.streak.n === 1 ? 'أول يوم' : `${M.streak.n} أيام ورا بعض`}! المسائل اللي غلطتي فيها هترجعلك بكرة عشان تثبت.</p>` : '',
-      again: mDaily, back: () => mathWorld(), backLabel: 'مدينة الأرقام'});
+    mResult({score: r.score, total: r.total, stars: first ? 4 : 1, extra: first ? `<p>🔥 ${M.streak.n === 1 ? 'Day 1' : `${M.streak.n} days in a row`}! The facts you missed will come back tomorrow, so they stick.</p>` : '',
+      again: mDaily, back: () => mathWorld(), backLabel: 'Number City'});
   }});
 }
 const factItem = (a, b) => ({q: `${a} × ${b}`, a: a * b, fact: [a, b], hint: () => factHint(a, b)});
 
-/* ============ MULTIPLICATION CASTLE ============ */
+/* ============ TIMES TABLES CASTLE ============ */
 function mulHub(){
-  setTop(true); stopAr(); mTok++; mKeyFn = null; curWorld = 'math';
+  setTop(true); mNew(); curWorld = 'math';
   const nx = nextTable(), due = dueFacts().length;
-  const cell = (a, b) => { const L = factLevel(a, b); return `<button class="mg-c l${L}" data-ga="${a}" data-gb="${b}" aria-label="${a} × ${b}${L === 2 ? '، محفوظة' : L ? '، بتتعلميها' : ''}">${a * b}</button>`; };
-  screenEl.innerHTML = `<section class="mw m-mul">
-    <h2 class="m-title">🏰 قلعة جدول الضرب</h2>
+  const cell = (a, b) => { const L = factLevel(a, b); return `<button class="mg-c l${L}" data-ga="${a}" data-gb="${b}" aria-label="${a} × ${b}${L === 2 ? ', learned' : L ? ', learning' : ''}">${a * b}</button>`; };
+  screenEl.innerHTML = `<section class="mw m-mul" ${LTR}>
+    <h2 class="m-title">🏰 Times Tables Castle</h2>
     <div class="m-grid-card sticker">
-      <p class="m-secret">🤫 <b>سر صغير:</b> 3 × 7 هي هي 7 × 3! يعني الجدول اللي فيه 100 مسألة، محتاجة تحفظي منه 55 بس. وكل مسألة بتنوّر في الشبكة لما تفتكريها كذا يوم ورا بعض (كده تبقى محفوظة صم ومش هتتنسي).</p>
-      <div class="m-grid" role="group" aria-label="شبكة جدول الضرب">
+      <div class="m-vrow"><p class="m-secret">🤫 <b>A little secret:</b> 3 × 7 is the same as 7 × 3! So the big table with 100 facts really has only 55 to learn. A fact lights up green when you remember it on different days — then it's yours forever.</p>${mvBtn(['m_g_secret'])}</div>
+      <div class="m-grid" role="group" aria-label="Times table grid">
         <span class="mg-h">×</span>${Array.from({length: 10}, (_, b) => `<span class="mg-h">${b + 1}</span>`).join('')}
         ${Array.from({length: 10}, (_, a) => `<span class="mg-h">${a + 1}</span>${Array.from({length: 10}, (_, b) => cell(a + 1, b + 1)).join('')}`).join('')}
       </div>
-      <p class="m-legend"><span class="lg l0"></span> لسه <span class="lg l1"></span> بتتعلميها <span class="lg l2"></span> محفوظة ⭐ · <b>${masteredN()} من 55</b> · دوسي على أي مربع تشوفيه</p>
+      <p class="m-legend"><span class="lg l0"></span> new <span class="lg l1"></span> learning <span class="lg l2"></span> learned ⭐ · <b>${masteredN()} of 55</b> · tap any square</p>
     </div>
-    ${due ? `<button class="m-daily sticker" id="mRev"><span class="m-dico" aria-hidden="true">🔁</span><span><b>مراجعة: ${due} مسألة</b><small>دول المسائل اللي جه وقت مراجعتهم عشان ما يتنسوش</small></span></button>` : ''}
-    <h3 class="sec-title">الجداول · كل جدول ليه حكاية</h3>
+    ${due ? `<button class="m-daily sticker" id="mRev"><span class="m-dico" aria-hidden="true">🔁</span><span><b>Review: ${due} ${due === 1 ? 'fact' : 'facts'}</b><small>These facts are due today, so you don't forget them</small></span></button>` : ''}
+    <h3 class="sec-title">The tables · each one has a story</h3>
     <div class="m-tables">${MT.map(T => { const st = tableStars(T.n); return `<button class="m-tb sticker ${T === nx ? 'next' : ''} ${st ? 'got' : ''}" data-tb="${T.n}">
-      <span class="m-tbico" aria-hidden="true">${T.ico}</span><b>جدول الـ${T.n}</b><small>${T.name}</small>
-      <span class="m-stars" aria-label="${st} من 3 نجوم">${'★'.repeat(st)}${'☆'.repeat(3 - st)}</span>${T === nx ? '<span class="m-nx">ابدئي هنا</span>' : ''}</button>`; }).join('')}</div>
-    <h3 class="sec-title">ألعاب الضرب</h3>
+      <span class="m-tbico" aria-hidden="true">${T.ico}</span><b>× ${T.n} table</b><small>${T.name}</small>
+      <span class="m-stars" aria-label="${st} of 3 stars">${'★'.repeat(st)}${'☆'.repeat(3 - st)}</span>${T === nx ? '<span class="m-nx">Start here</span>' : ''}</button>`; }).join('')}</div>
+    <h3 class="sec-title">Times tables games</h3>
     <div class="m-games">
-      <button class="m-game sticker" data-mg="balloon"><span aria-hidden="true">🎈</span><b>فرقعي البالونة</b><small>دوسي على البالونة اللي فيها الناتج قبل ما تطير</small></button>
-      <button class="m-game sticker" data-mg="rocket"><span aria-hidden="true">🚀</span><b>صاروخ الدقيقة</b><small>أكبر عدد في دقيقة · رقمك القياسي ${MS().best.rocket || 0}</small></button>
-      <button class="m-game sticker" data-mg="memory"><span aria-hidden="true">🃏</span><b>ميموري الضرب</b><small>طابقي كل مسألة مع ناتجها</small></button>
+      <button class="m-game sticker" data-mg="balloon"><span aria-hidden="true">🎈</span><b>Pop the Balloon</b><small>Tap the balloon with the answer before it flies away</small></button>
+      <button class="m-game sticker" data-mg="rocket"><span aria-hidden="true">🚀</span><b>One-Minute Rocket</b><small>As many as you can in 1 minute · your record: ${MS().best.rocket || 0}</small></button>
+      <button class="m-game sticker" data-mg="memory"><span aria-hidden="true">🃏</span><b>Times Memory</b><small>Match each fact with its answer</small></button>
     </div>
   </section>`;
   screenEl.querySelectorAll('[data-tb]').forEach(b => b.onclick = () => mulLesson(+b.dataset.tb));
   screenEl.querySelectorAll('.mg-c').forEach(b => b.onclick = () => factCard(+b.dataset.ga, +b.dataset.gb));
   if($('#mRev')) $('#mRev').onclick = () => { const items = shuffle(dueFacts().slice(0, 12)).map(([a, b]) => Math.random() < .5 ? factItem(a, b) : factItem(b, a));
-    mQuiz({title: '🔁 مراجعة', items, onEnd: r => mResult({score: r.score, total: r.total, stars: Math.round(r.score / 3), back: () => mulHub(), backLabel: 'القلعة'})}); };
+    mQuiz({title: '🔁 Review', items, onEnd: r => mResult({score: r.score, total: r.total, stars: Math.round(r.score / 3), back: () => mulHub(), backLabel: 'Castle'})}); };
   screenEl.querySelectorAll('[data-mg]').forEach(b => b.onclick = () => mulPick(b.dataset.mg));
 }
 /* a fact up close: dots in rows, and the same fact turned around */
 function factCard(a, b){
   const L = factLevel(a, b), dots = n => `<span class="m-dots" style="--c:${n}" aria-hidden="true">${'<i></i>'.repeat(n)}</span>`;
-  const m = modal(`<h3>${a} × ${b} = ${a * b}</h3>
-    <div class="m-arr" style="--cols:${b}" aria-hidden="true">${Array.from({length: a}, () => dots(b)).join('')}</div>
-    <p>${a} ${a === 1 ? 'صف' : 'صفوف'}، في كل صف ${b} → كلهم ${a * b}</p>
-    ${a !== b ? `<p class="muted">ولو لفّيتي الشكل يبقى ${b} × ${a} = ${a * b} برضه! 🔄</p>` : '<p class="muted">مربع! نفس العدد في الصفوف والعواميد 🟪</p>'}
+  const m = modal(`<div class="mw-m" ${LTR}><h3>${a} × ${b} = ${a * b}</h3>
+    <div class="m-arr" aria-hidden="true">${Array.from({length: a}, () => dots(b)).join('')}</div>
+    <p>${a} ${a === 1 ? 'row' : 'rows'} of ${b} → ${a * b} in all</p>
+    ${a !== b ? `<p class="muted">Turn it around: ${b} × ${a} = ${a * b} too! 🔄</p>` : '<p class="muted">A square! The same number of rows and columns 🟪</p>'}
     <div class="m-hint">${factHint(a, b)}</div>
-    <p class="pill">${L === 2 ? '⭐ محفوظة' : L ? '🌱 بتتعلميها' : '🔒 لسه ما جربتيهاش'}</p>
-    <button class="btn" id="fcX">تمام</button>`);
+    <p class="pill">${L === 2 ? '⭐ Learned' : L ? '🌱 Learning' : '🔒 Not tried yet'}</p>
+    <button class="btn" id="fcX">OK</button></div>`);
   m.querySelector('#fcX').onclick = () => m.remove();
 }
 function mulPick(game){
   const L = learnedTables();
-  const opts = [['all', L.length ? `كل الجداول اللي اتعلمتيها (${L.length})` : 'جداول 1 و 2 و 10 (البداية)']].concat(MT.map(T => [String(T.n), `جدول الـ${T.n} ${T.ico}`]));
-  const m = modal(`<h3>هنلعب بأنهي جدول؟</h3><div class="m-pick">${opts.map(([k, l]) => `<button class="chip" data-pk="${k}">${l}</button>`).join('')}</div><button class="btn" id="pkX">رجوع</button>`);
+  const opts = [['all', L.length ? `All the tables you learned (${L.length})` : 'Tables 1, 2 and 10 (to start)']].concat(MT.map(T => [String(T.n), `× ${T.n} table ${T.ico}`]));
+  const m = modal(`<div class="mw-m" ${LTR}><h3>Which table do you want to play?</h3><div class="m-pick">${opts.map(([k, l]) => `<button class="chip" data-pk="${k}">${l}</button>`).join('')}</div><button class="btn" id="pkX">Back</button></div>`);
   m.querySelector('#pkX').onclick = () => m.remove();
   m.querySelectorAll('[data-pk]').forEach(b => b.onclick = () => { m.remove();
     const tabs = b.dataset.pk === 'all' ? (L.length ? L : [1, 2, 10]) : [+b.dataset.pk];
@@ -4941,35 +4994,37 @@ function mulPick(game){
     if(game === 'balloon') mBalloons(pool); else if(game === 'rocket') mRocket(pool); else mMemory(pool); });
 }
 
-/* ---- a table lesson: meet → climb the ladder → build it → the trick → quick check ---- */
+/* ---- a table lesson: meet → climb the ladder → build it → the trick → quick test ---- */
 function mulLesson(n, stepAt = 0){
   const T = MT_BY[n]; if(!T) return mulHub();
   const steps = ['meet', 'ladder', 'build', 'trick', 'check'];
-  const names = ['تعرّفي', 'السلم', 'ابني', 'الحيلة', 'اختبار'];
+  const names = ['Meet', 'Ladder', 'Build', 'Trick', 'Test'];
   const go = k => mulLesson(n, k);
-  const head = k => `<ol class="m-path" aria-label="خطوات الدرس">${names.map((x, j) => `<li class="${j < k ? 'done' : j === k ? 'now' : ''}">${j < k ? '✔' : j + 1}<small>${x}</small></li>`).join('')}</ol>`;
-  setTop(true); const tok = ++mTok; mKeyFn = null;
+  const head = k => `<ol class="m-path" aria-label="Lesson steps">${names.map((x, j) => `<li class="${j < k ? 'done' : j === k ? 'now' : ''}">${j < k ? '✔' : j + 1}<small>${x}</small></li>`).join('')}</ol>`;
+  setTop(true); const tok = mNew();
   const st = steps[stepAt];
   if(st === 'meet'){
-    const k = n === 1 ? 4 : 3, thing = T.thing.length <= 2 ? T.thing : '⭐';
-    screenEl.innerHTML = `<section class="mw m-lesson">${head(0)}
-      <div class="m-meet sticker"><span class="m-hero" aria-hidden="true">${T.ico}</span><h2>جدول الـ${n}: ${T.name}</h2>
+    const k = n === 1 ? 4 : 3;
+    screenEl.innerHTML = `<section class="mw m-lesson" ${LTR}>${head(0)}
+      <div class="m-meet sticker"><span class="m-hero" aria-hidden="true">${T.ico}</span><h2>The ${n} times table: ${T.name}</h2>
+        ${mvBtn(T.mv)}
         <p class="m-story">${T.story}</p>
-        <div class="m-groups" aria-hidden="true">${Array.from({length: k}, () => `<span class="m-grp"><span>${thing}</span><small>${n}</small></span>`).join('<b>+</b>')}</div>
+        <div class="m-groups" aria-hidden="true">${Array.from({length: k}, () => `<span class="m-grp"><span>${T.thing}</span><small>${n}</small></span>`).join('<b>+</b>')}</div>
         <p class="m-eq">${k} × ${n} = ${Array.from({length: k}, () => n).join(' + ')} = <b>${k * n}</b></p>
-        <p class="m-trick">💡 الحيلة: <b>${T.trick}</b></p></div>
-      <div class="row m-nav"><button class="btn primary" id="mGo">يلا نطلع السلم ←</button></div></section>`;
+        <p class="m-trick">💡 Trick: <b>${T.trick}</b></p></div>
+      <div class="row m-nav"><button class="btn primary" id="mGo">Let's climb the ladder →</button></div></section>`;
     $('#mGo').onclick = () => go(1);
+    mvAuto(T.mv);
   }
   else if(st === 'ladder'){
-    /* skip counting: climb ten rungs, each one is the next number of the table */
+    /* skip counting: climb ten steps, each one is the next number of the table */
     let r = 0;
     const draw = () => {
       const prev = r * n, want = (r + 1) * n;
       const opts = shuffle([...new Set([want, want + 1, want - 1 > prev ? want - 1 : want + 2, want + n].filter(x => x > prev))]).slice(0, 3);
       if(!opts.includes(want)) opts[0] = want;
-      screenEl.innerHTML = `<section class="mw m-lesson">${head(1)}
-        <div class="m-ladder-card sticker"><h3>اطلعي السلم بجدول الـ${n} 🪜</h3><p class="muted">كل درجة = ${n} زيادة. إيه الرقم اللي بعد ${prev === 0 ? 'الصفر' : prev}؟</p>
+      screenEl.innerHTML = `<section class="mw m-lesson" ${LTR}>${head(1)}
+        <div class="m-ladder-card sticker"><h3>Climb the ${n} ladder 🪜</h3><div class="m-vrow"><p class="muted">Each step adds ${n}. What comes after ${prev}?</p>${mvBtn(['m_g_ladder'])}</div>
           <div class="m-ladder" aria-hidden="true">${Array.from({length: 10}, (_, j) => { const v = (10 - j) * n, idx = 10 - j; return `<span class="m-rung ${idx <= r ? 'on' : ''}">${idx <= r ? v : ''}${idx === r ? '<i class="m-climber">🐱</i>' : ''}</span>`; }).join('')}${r === 0 ? '<span class="m-rung on base"><i class="m-climber">🐱</i></span>' : ''}</div>
           <div class="m-opts">${shuffle(opts).map(o => `<button class="btn m-opt" data-o="${o}">${o}</button>`).join('')}</div></div></section>`;
       screenEl.querySelectorAll('[data-o]').forEach(b => b.onclick = () => {
@@ -4978,10 +5033,11 @@ function mulLesson(n, stepAt = 0){
       });
     };
     const ladderDone = () => {
-      screenEl.innerHTML = `<section class="mw m-lesson">${head(1)}<div class="m-meet sticker"><h2>وصلتي فوق! 🎉</h2>
-        <p>الأرقام اللي طلعتي عليها دي هي جدول الـ${n} كله:</p><p class="m-seq">${Array.from({length: 10}, (_, j) => `<span>${(j + 1) * n}</span>`).join('')}</p>
-        <p class="muted">${n} × 3 يعني الدرجة التالتة = ${n * 3}. و ${n} × 7 يعني الدرجة السابعة = ${n * 7}.</p></div>
-        <div class="row m-nav"><button class="btn primary" id="mGo">نبني المسألة بإيدينا ←</button></div></section>`;
+      screenEl.innerHTML = `<section class="mw m-lesson" ${LTR}>${head(1)}<div class="m-meet sticker"><h2>You reached the top! 🎉</h2>
+        <p>The numbers you climbed are the whole ${n} times table:</p><p class="m-seq">${Array.from({length: 10}, (_, j) => `<span>${(j + 1) * n}</span>`).join('')}</p>
+        <p class="muted">${n} × 3 is step 3 = ${n * 3}, and ${n} × 7 is step 7 = ${n * 7}.</p></div>
+        <div class="row m-nav"><button class="btn primary" id="mGo">Let's build it →</button></div></section>`;
+      say(`You did it! ${Array.from({length: 10}, (_, j) => (j + 1) * n).join(', ')}.`);
       $('#mGo').onclick = () => go(2);
     };
     draw();
@@ -4991,34 +5047,34 @@ function mulLesson(n, stepAt = 0){
     const ks = n === 1 ? [3, 6] : n === 10 ? [3, 4] : [3, ri(4, 6)];
     let e = 0, g = 0;
     const draw = () => {
-      const k = ks[e], thing = T.thing.length <= 2 ? T.thing : '⭐';
-      screenEl.innerHTML = `<section class="mw m-lesson">${head(2)}
-        <div class="m-build sticker"><h3>ابني ${k} × ${n}</h3><p class="muted">يعني ${k} ${k > 2 ? 'مجموعات' : 'مجموعة'}، في كل مجموعة ${n}. دوسي ➕ لحد ما يبقوا ${k}.</p>
+      const k = ks[e];
+      screenEl.innerHTML = `<section class="mw m-lesson" ${LTR}>${head(2)}
+        <div class="m-build sticker"><h3>Build ${k} × ${n}</h3><div class="m-vrow"><p class="muted">That's ${k} groups of ${n}. Tap ➕ until there are ${k}.</p>${mvBtn(['m_g_build'])}</div>
           <div class="m-rows">${Array.from({length: g}, (_, j) => `<div class="m-row"><span class="m-rn">${j + 1}</span><span class="m-dots" style="--c:${n}" aria-hidden="true">${'<i></i>'.repeat(n)}</span><b>${(j + 1) * n}</b></div>`).join('')}</div>
-          <p class="m-eq" aria-live="polite">${g ? `${g} × ${n} = <b>${g * n}</b>` : 'لسه مفيش'}</p>
-          ${g < k ? `<button class="btn primary" id="mAdd">➕ حطي مجموعة فيها ${n} ${thing}</button>` : `<p class="m-ok">✔ ${k} × ${n} = ${k * n}! ${k !== n ? `ولو لفّيناها: ${n} × ${k} = ${k * n} برضه 🔄` : ''}</p><button class="btn primary" id="mNext">${e + 1 < ks.length ? 'مسألة كمان ←' : 'نتعلم الحيلة ←'}</button>`}
+          <p class="m-eq" aria-live="polite">${g ? `${g} × ${n} = <b>${g * n}</b>` : 'Nothing yet'}</p>
+          ${g < k ? `<button class="btn primary" id="mAdd">➕ Add a group of ${n} ${T.thing}</button>` : `<p class="m-ok">✔ ${k} × ${n} = ${k * n}! ${k !== n ? `Turn it around: ${n} × ${k} = ${k * n} too 🔄` : ''}</p><button class="btn primary" id="mNext">${e + 1 < ks.length ? 'One more →' : 'Learn the trick →'}</button>`}
         </div></section>`;
-      if($('#mAdd')) $('#mAdd').onclick = () => { g++; tone(500 + g * 60, 0, .12, 'triangle', .1); draw(); if(g === ks[e]) sfxGood(); };
+      if($('#mAdd')) $('#mAdd').onclick = () => { g++; tone(500 + g * 60, 0, .12, 'triangle', .1); draw(); if(g === ks[e]){ sfxGood(); say(`${k} times ${n} is ${k * n}!`); } };
       if($('#mNext')) $('#mNext').onclick = () => { e++; g = 0; if(e >= ks.length) go(3); else draw(); };
     };
     draw();
   }
   else if(st === 'trick'){
-    const ex = n === 1 ? 6 : n === 10 ? 7 : 7;
+    const ex = n === 1 ? 6 : 7;
     let shown = 0;
     const draw = () => {
       const S2 = T.steps(ex);
-      screenEl.innerHTML = `<section class="mw m-lesson">${head(3)}
-        <div class="m-meet sticker"><h2>💡 ${T.trick}</h2><p class="m-q">${ex} × ${n} = ؟</p>
+      screenEl.innerHTML = `<section class="mw m-lesson" ${LTR}>${head(3)}
+        <div class="m-meet sticker"><h2>💡 ${T.trick}</h2>${mvBtn(T.mv.slice(-1))}<p class="m-q">${ex} × ${n} = ?</p>
           <ol class="m-steps">${S2.map(([l, v], j) => `<li class="${j < shown ? 'done' : ''}"><span>${l}</span> = <b>${j < shown ? v : '…'}</b></li>`).join('')}</ol>
           ${shown >= S2.length ? `<p class="m-ok">✔ ${ex} × ${n} = ${ex * n}</p>` : ''}
           ${T.fingers ? fingersHTML(ex) : ''}
         </div>
-        <div class="row m-nav">${shown < S2.length ? '<button class="btn soft" id="mStep">الخطوة اللي بعدها 👀</button>' : `<button class="btn primary" id="mTry">جربي انتي ✍️</button>`}</div></section>`;
+        <div class="row m-nav">${shown < S2.length ? '<button class="btn soft" id="mStep">Next step 👀</button>' : `<button class="btn primary" id="mTry">Your turn ✍️</button>`}</div></section>`;
       if($('#mStep')) $('#mStep').onclick = () => { shown++; sfxTick(); draw(); };
       if($('#mTry')) $('#mTry').onclick = () => {
         const ks = shuffle([2, 3, 4, 5, 6, 8, 9].filter(k => k !== ex)).slice(0, 3);
-        const run = () => mSteps({title: `جربي الحيلة · جدول الـ${n}`, sub: `💡 ${T.trick}`, items: ks.map(k => ({q: `${k} × ${n}`, a: k * n, steps: T.steps(k)})), onEnd: () => go(4)});
+        const run = () => mSteps({title: `Try the trick · × ${n} table`, sub: `💡 ${T.trick}`, items: ks.map(k => ({q: `${k} × ${n}`, a: k * n, steps: T.steps(k)})), onEnd: () => go(4)});
         if(T.fingers) fingersPlay(ks[0], run); else run();
       };
     };
@@ -5026,37 +5082,39 @@ function mulLesson(n, stepAt = 0){
   }
   else if(st === 'check'){
     const items = shuffle(Array.from({length: 10}, (_, k) => Math.random() < .5 ? factItem(k + 1, n) : factItem(n, k + 1)));
-    mQuiz({title: `اختبار جدول الـ${n} ${T.ico}`, items, onEnd: r => {
+    mQuiz({title: `× ${n} table test ${T.ico}`, items, onEnd: r => {
       const pass = r.score >= 8, first = pass && !MS().tl[n];
       if(pass){ MS().tl[n] = 1; mSave(); }
       mResult({score: r.score, total: r.total, stars: first ? 6 : pass ? 2 : 1,
-        extra: pass ? `<p>🎉 جدول الـ${n} بقى بتاعك! هيرجعلك في «تمرين النهارده» من وقت للتاني عشان ما يتنسيش.</p>` : '<p>محتاجة 8 من 10 عشان الجدول يبقى بتاعك. اللعبي في ألعاب الضرب شوية وارجعي تاني!</p>',
-        again: () => mulLesson(n, 4), back: () => mulHub(), backLabel: 'القلعة'});
+        extra: pass ? `<p>🎉 The ${n} times table is yours! It will come back in Today's Practice now and then, so you never forget it.</p>` : '<p>You need 8 out of 10 to win this table. Play the games for a bit and try again!</p>',
+        again: () => mulLesson(n, 4), back: () => mulHub(), backLabel: 'Castle'});
     }});
   }
 }
 /* the nine-times finger trick: fold finger k, left = tens, right = ones */
 function fingersHTML(k){
-  return `<div class="m-fing" dir="ltr" aria-label="${k} × 9: نزّلي الصباع رقم ${k}">${Array.from({length: 10}, (_, j) => `<span class="${j + 1 === k ? 'down' : j + 1 < k ? 'l' : 'r'}">${j + 1 === k ? '✊' : '☝️'}<small>${ad(j + 1)}</small></span>`).join('')}</div>
-    <p class="muted">صباع رقم ${k} نازل ← على الشمال ${k - 1} (عشرات) وعلى اليمين ${10 - k} (آحاد) ← ${k - 1}${10 - k} = ${k * 9}</p>`;
+  return `<div class="m-fing" aria-label="${k} × 9: fold down finger ${k}">${Array.from({length: 10}, (_, j) => `<span class="${j + 1 === k ? 'down' : j + 1 < k ? 'l' : 'r'}">${j + 1 === k ? '✊' : '☝️'}<small>${j + 1}</small></span>`).join('')}</div>
+    <p class="muted">Finger ${k} is down → left: ${k - 1} (tens), right: ${10 - k} (ones) → ${k - 1}${10 - k} = ${k * 9}</p>`;
 }
 function fingersPlay(k, then){
-  setTop(true); const tok = ++mTok;
-  screenEl.innerHTML = `<section class="mw m-lesson"><div class="m-meet sticker"><h2>🙌 الصوابع السحرية</h2><p class="m-q">${k} × 9 = ؟</p>
-    <p>دوسي على الصباع رقم <b>${k}</b> عشان تنزّليه</p>
-    <div class="m-fing play" dir="ltr">${Array.from({length: 10}, (_, j) => `<button class="m-f" data-f="${j + 1}" aria-label="صباع ${j + 1}">☝️<small>${ad(j + 1)}</small></button>`).join('')}</div>
+  setTop(true); const tok = mNew();
+  screenEl.innerHTML = `<section class="mw m-lesson" ${LTR}><div class="m-meet sticker"><h2>🙌 Magic Fingers</h2>${mvBtn(['m_g_fingers'])}<p class="m-q">${k} × 9 = ?</p>
+    <p>Tap finger number <b>${k}</b> to fold it down</p>
+    <div class="m-fing play">${Array.from({length: 10}, (_, j) => `<button class="m-f" data-f="${j + 1}" aria-label="Finger ${j + 1}">☝️<small>${j + 1}</small></button>`).join('')}</div>
     <p class="m-ok" id="fRes" aria-live="polite"></p></div></section>`;
+  mvAuto(['m_g_fingers']);
   screenEl.querySelectorAll('[data-f]').forEach(b => b.onclick = () => {
     if(+b.dataset.f !== k){ sfxBad(); b.classList.add('no'); setTimeout(() => b.classList.remove('no'), 400); return; }
     sfxGood(); screenEl.querySelectorAll('[data-f]').forEach(x => { const f = +x.dataset.f; x.disabled = true; x.classList.add(f === k ? 'down' : f < k ? 'l' : 'r'); if(f === k) x.firstChild.textContent = '✊'; });
-    $('#fRes').innerHTML = `على الشمال ${k - 1} صوابع، وعلى اليمين ${10 - k} → <b>${k * 9}</b> 🎉`;
+    $('#fRes').innerHTML = `${k - 1} ${k - 1 === 1 ? 'finger' : 'fingers'} on the left, ${10 - k} on the right → <b>${k * 9}</b> 🎉`;
+    say(`${k} times 9 is ${k * 9}!`);
     setTimeout(() => { if(tok === mTok) then(); }, 2600);
   });
 }
 
-/* ---- multiplication games ---- */
+/* ---- times tables games ---- */
 function mBalloons(pool){
-  setTop(true); const tok = ++mTok; mKeyFn = null;
+  setTop(true); const tok = mNew();
   const rounds = shuffle(pool).slice(0, 10).map(([a, b]) => Math.random() < .5 ? [a, b] : [b, a]);
   while(rounds.length < 10) rounds.push(rand(pool));
   let r = 0, score = 0, busy = false;
@@ -5065,123 +5123,122 @@ function mBalloons(pool){
     const [a, b] = rounds[r], p = a * b;
     const wrong = shuffle([...new Set([p + a, p - b, p + b, (a + 1) * (b + 1), Math.abs(p - a), p + 10, p - 1].filter(x => x > 0 && x !== p))]).slice(0, 3);
     const opts = shuffle([p, ...wrong]); busy = false;
-    screenEl.innerHTML = `<section class="mw m-bal">
-      <div class="m-qhead"><h2>🎈 فرقعي البالونة</h2><span class="m-prog">${r + 1} من 10 · ⭐ ${score}</span></div>
-      <p class="m-q m-bq">${a} × ${b} = ؟</p>
+    screenEl.innerHTML = `<section class="mw m-bal" ${LTR}>
+      <div class="m-qhead"><h2>🎈 Pop the Balloon</h2><span class="m-prog">${r + 1} of 10 · ⭐ ${score}</span></div>
+      <p class="m-q m-bq">${a} × ${b} = ?</p>
       <div class="m-sky">${opts.map((o, j) => `<button class="m-balloon" data-bv="${o}" style="--bc:${COL[(r + j) % COL.length]};--d:${7 + j * .6}s;--x:${8 + j * 23}%" aria-label="${o}"><span>${o}</span></button>`).join('')}</div>
     </section>`;
-    const bs = screenEl.querySelectorAll('.m-balloon');
-    bs.forEach(bn => {
+    screenEl.querySelectorAll('.m-balloon').forEach(bn => {
       bn.onclick = () => {
         if(busy) return;
         if(+bn.dataset.bv === p){ busy = true; score++; sfxGood(); factMark(a, b, true, true); bn.classList.add('pop'); burst(bn); setTimeout(() => { if(tok === mTok) nextR(); }, 650); }
         else { sfxBad(); factMark(a, b, false); bn.classList.add('shake'); bn.disabled = true; screenEl.querySelector(`.m-balloon[data-bv="${p}"]`).classList.add('hint'); }
       };
-      bn.addEventListener('animationend', e => { if(e.animationName === 'mFloat' && !busy && +bn.dataset.bv === p){ busy = true; factMark(a, b, false); toast(`طارت! ${a} × ${b} = ${p}`); setTimeout(() => { if(tok === mTok) nextR(); }, 900); } });
+      bn.addEventListener('animationend', e => { if(e.animationName === 'mFloat' && !busy && +bn.dataset.bv === p){ busy = true; factMark(a, b, false); toast(`It flew away! ${a} × ${b} = ${p}`); setTimeout(() => { if(tok === mTok) nextR(); }, 900); } });
     });
   };
-  const nextR = () => { r++; if(r >= 10){ mSave(); mResult({score, total: 10, stars: Math.round(score / 3), again: () => mBalloons(pool), back: () => mulHub(), backLabel: 'القلعة'}); } else draw(); };
+  const nextR = () => { r++; if(r >= 10){ mSave(); mResult({score, total: 10, stars: Math.round(score / 3), again: () => mBalloons(pool), back: () => mulHub(), backLabel: 'Castle'}); } else draw(); };
   draw();
 }
 function mRocket(pool){
   const items = Array.from({length: 60}, () => { const [a, b] = rand(pool); return Math.random() < .5 ? factItem(a, b) : factItem(b, a); });
-  mQuiz({title: '🚀 صاروخ الدقيقة', items, timer: 60, retry: false, onEnd: r => {
+  mQuiz({title: '🚀 One-Minute Rocket', items, timer: 60, retry: false, onEnd: r => {
     const B = MS().best, rec = r.score > (B.rocket || 0); if(rec){ B.rocket = r.score; mSave(); }
-    mResult({score: r.score, total: r.total, line: `🚀 ${r.score} صح في دقيقة`, extra: rec ? '<p class="m-ok">🏆 رقم قياسي جديد!</p>' : `<p class="muted">رقمك القياسي: ${B.rocket}</p>`,
-      stars: Math.min(8, Math.round(r.score / 3)), again: () => mRocket(pool), back: () => mulHub(), backLabel: 'القلعة'});
+    mResult({score: r.score, total: r.total, line: `🚀 ${r.score} right in one minute`, extra: rec ? '<p class="m-ok">🏆 New record!</p>' : `<p class="muted">Your record: ${B.rocket}</p>`,
+      stars: Math.min(8, Math.round(r.score / 3)), again: () => mRocket(pool), back: () => mulHub(), backLabel: 'Castle'});
   }});
 }
 function mMemory(pool){
-  setTop(true); const tok = ++mTok; mKeyFn = null;
+  setTop(true); const tok = mNew();
   const pick = [], seen = new Set();
   for(const [a, b] of shuffle(pool)){ if(pick.length >= 6) break; if(seen.has(a * b)) continue; seen.add(a * b); pick.push([a, b]); }
   const cards = shuffle(pick.flatMap(([a, b], i) => [{i, t: `${a} × ${b}`}, {i, t: String(a * b)}]));
   let open = [], got = 0, moves = 0, lock = false;
-  screenEl.innerHTML = `<section class="mw m-mem"><div class="m-qhead"><h2>🃏 ميموري الضرب</h2><span class="m-prog" id="mvN">0 محاولة</span></div>
-    <p class="muted">اقلبي كارتين: مسألة وناتجها يبقوا أصحاب 🤝</p>
-    <div class="m-cards">${cards.map((c, k) => `<button class="m-card" data-k="${k}" aria-label="كارت مقفول"><span>${c.t}</span></button>`).join('')}</div></section>`;
+  screenEl.innerHTML = `<section class="mw m-mem" ${LTR}><div class="m-qhead"><h2>🃏 Times Memory</h2><span class="m-prog" id="mvN">0 tries</span></div>
+    <p class="muted">Flip two cards: a fact and its answer are friends 🤝</p>
+    <div class="m-cards">${cards.map((c, k) => `<button class="m-card" data-k="${k}" aria-label="Closed card"><span>${c.t}</span></button>`).join('')}</div></section>`;
   screenEl.querySelectorAll('.m-card').forEach(el => el.onclick = () => {
     const k = +el.dataset.k; if(lock || el.classList.contains('open') || el.classList.contains('got')) return;
     el.classList.add('open'); el.setAttribute('aria-label', cards[k].t); sfxTick(); open.push(k);
     if(open.length < 2) return;
-    moves++; $('#mvN').textContent = `${moves} محاولة`;
+    moves++; $('#mvN').textContent = `${moves} ${moves === 1 ? 'try' : 'tries'}`;
     const [x, y] = open, A = cards[x], B = cards[y], els = [x, y].map(j => screenEl.querySelector(`[data-k="${j}"]`)); open = [];
     if(A.i === B.i && A.t !== B.t){ sfxGood(); els.forEach(e => e.classList.add('got')); got++; const [a, b] = pick[A.i]; factMark(a, b, true, moves <= got + 3);
-      if(got === pick.length){ mSave(); setTimeout(() => { if(tok === mTok) mResult({score: got, total: pick.length, line: `خلّصتي في ${moves} محاولة`, stars: moves <= 10 ? 4 : 3, again: () => mMemory(pool), back: () => mulHub(), backLabel: 'القلعة'}); }, 700); } }
-    else { lock = true; setTimeout(() => { els.forEach(e => { e.classList.remove('open'); e.setAttribute('aria-label', 'كارت مقفول'); }); lock = false; }, 900); }
+      if(got === pick.length){ mSave(); setTimeout(() => { if(tok === mTok) mResult({score: got, total: pick.length, line: `Done in ${moves} tries`, stars: moves <= 10 ? 4 : 3, again: () => mMemory(pool), back: () => mulHub(), backLabel: 'Castle'}); }, 700); } }
+    else { lock = true; setTimeout(() => { els.forEach(e => { e.classList.remove('open'); e.setAttribute('aria-label', 'Closed card'); }); lock = false; }, 900); }
   });
 }
 
 /* ============ MENTAL MATH CLUB ============ */
 const T10 = n => Math.floor(n / 10) * 10, U1 = n => n % 10;
 const MM = [
-  {id: 'b10', ico: '🤝', t: 'أصحاب العشرة', d: 'كل رقم ليه صاحب يكمّله لـ 10',
-   idea: 'تخيلي إن الأرقام عايزة تبقى 10 عشان تكسب! 7 بتدوّر على صاحبتها 3، و 6 صاحبتها 4. لو حفظتي الأصحاب دول، هتجمعي وتطرحي أسرع من أي حد.',
-   pic: () => `<div class="m-frame" dir="ltr" aria-hidden="true">${'<i class="a"></i>'.repeat(7)}${'<i></i>'.repeat(3)}</div><p class="m-eq">7 + 3 = 10 🤝</p>`,
-   gen(){ const a = ri(1, 9); return {q: `${a} + ؟ = 10`, a: 10 - a, steps: [[`صاحب ${a} في العشرة`, 10 - a]]}; }},
-  {id: 'mk10', ico: '🪜', t: 'اعبري العشرة', d: '8 + 5 = 8 + 2 + 3',
-   idea: 'لما نجمع ونعدّي الـ 10، نكمّل لـ 10 الأول (بصاحب الرقم)، وبعدين نزوّد الباقي. زي ما تطلعي السلم لحد البسطة وبعدين تكمّلي.',
+  {id: 'b10', ico: '🤝', t: 'Friends of 10', d: 'Every number has a friend that makes 10', mv: ['m_s_b10'],
+   idea: "Numbers love to make 10! 7's friend is 3, and 6's friend is 4. Learn these friends and you'll add and take away super fast.",
+   pic: () => `<div class="m-frame" aria-hidden="true">${'<i class="a"></i>'.repeat(7)}${'<i></i>'.repeat(3)}</div><p class="m-eq">7 + 3 = 10 🤝</p>`,
+   gen(){ const a = ri(1, 9); return {q: `${a} + ? = 10`, a: 10 - a, steps: [[`${a}'s friend in 10`, 10 - a]]}; }},
+  {id: 'mk10', ico: '🪜', t: 'Bridge Through 10', d: '8 + 5 = 8 + 2 + 3', mv: ['m_s_mk10'],
+   idea: "When a sum goes past 10, fill up to 10 first (with the number's friend), then add what's left. Like climbing the stairs to the landing, then carrying on.",
    pic: () => '<p class="m-eq">8 + 5 → 8 + <b>2</b> = 10 → 10 + <b>3</b> = 13</p>',
-   gen(){ const a = ri(6, 9), b = ri(11 - a, 9), c = 10 - a; return {q: `${a} + ${b}`, a: a + b, steps: [[`${a} + ؟ = 10`, c], [`فاضل من ${b}`, b - c], [`10 + ${b - c}`, a + b]]}; }},
-  {id: 'tens', ico: '🧱', t: 'العشرات مع العشرات', d: '34 + 25 = 50 + 9',
-   idea: 'فكّكي كل رقم لعشرات وآحاد، زي المكعبات: العواميد مع العواميد، والمكعبات الصغيرة مع الصغيرة. وفي الآخر نجمعهم.',
+   gen(){ const a = ri(6, 9), b = ri(11 - a, 9), c = 10 - a; return {q: `${a} + ${b}`, a: a + b, steps: [[`${a} + ? = 10`, c], [`what's left of ${b}`, b - c], [`10 + ${b - c}`, a + b]]}; }},
+  {id: 'tens', ico: '🧱', t: 'Tens and Ones', d: '34 + 25 = 50 + 9', mv: ['m_s_tens'],
+   idea: 'Split each number into tens and ones, like building blocks: tens with tens, ones with ones. Then put them together.',
    pic: () => '<p class="m-eq">34 + 25 → (30 + 20) + (4 + 5) → 50 + 9 = <b>59</b></p>',
    gen(){ const a = ri(11, 69), b = ri(11, 89 - a > 11 ? 89 - a : 12); return {q: `${a} + ${b}`, a: a + b, steps: [[`${T10(a)} + ${T10(b)}`, T10(a) + T10(b)], [`${U1(a)} + ${U1(b)}`, U1(a) + U1(b)], [`${T10(a) + T10(b)} + ${U1(a) + U1(b)}`, a + b]]}; }},
-  {id: 'rnd', ico: '🎯', t: 'قرّبي وعدّلي', d: '39 + 26 = 40 + 26 − 1',
-   idea: 'الأرقام اللي قريبة من العشرة (زي 39 و 48) نقرّبها لأقرب عشرة عشان الحساب يبقى سهل، وبعدين نصلّح الفرق. زي ما تدفعي 40 جنيه وتاخدي جنيه باقي!',
-   pic: () => '<p class="m-eq">39 + 26 → 40 + 26 = 66 → نشيل 1 → <b>65</b></p>',
+  {id: 'rnd', ico: '🎯', t: 'Round and Fix', d: '39 + 26 = 40 + 26 − 1', mv: ['m_s_rnd'],
+   idea: 'Numbers close to a ten (like 39 or 48) can be rounded to make the sum easy. Then fix the difference — like paying 40 and getting 1 back!',
+   pic: () => '<p class="m-eq">39 + 26 → 40 + 26 = 66 → take away 1 → <b>65</b></p>',
    gen(){
      const a = ri(1, 7) * 10 + rand([8, 9]), r = ceil10(a), d = r - a;
-     if(Math.random() < .5){ const b = ri(12, 99 - r); return {q: `${a} + ${b}`, a: a + b, steps: [[`نقرّب ${a} لأقرب عشرة`, r], [`${r} + ${b}`, r + b], [`${r + b} − ${d}`, a + b]]}; }
-     const c = ri(r + 5, Math.min(99, r + 60)); return {q: `${c} − ${a}`, a: c - a, steps: [[`نقرّب ${a} لأقرب عشرة`, r], [`${c} − ${r}`, c - r], [`${c - r} + ${d}`, c - a]]};
+     if(Math.random() < .5){ const b = ri(12, 99 - r); return {q: `${a} + ${b}`, a: a + b, steps: [[`round ${a} to the nearest ten`, r], [`${r} + ${b}`, r + b], [`${r + b} − ${d}`, a + b]]}; }
+     const c = ri(r + 5, Math.min(99, r + 60)); return {q: `${c} − ${a}`, a: c - a, steps: [[`round ${a} to the nearest ten`, r], [`${c} − ${r}`, c - r], [`${c - r} + ${d}`, c - a]]};
    }},
-  {id: 'up', ico: '🚶‍♀️', t: 'الطرح بالمشي لقدّام', d: '52 − 47: من 47 نمشي لـ 52',
-   idea: 'لما الرقمين قريبين من بعض، بدل ما نطرح، نمشي من الصغير للكبير ونعد الخطوات: نروح لأقرب عشرة الأول، وبعدين نكمّل.',
-   pic: () => '<p class="m-eq">52 − 47 → من 47 لـ 50 = 3 → من 50 لـ 52 = 2 → 3 + 2 = <b>5</b></p>',
-   gen(){ const b = ri(21, 87); const c = ceil10(b) === b ? b + 10 : ceil10(b); const a = Math.min(99, c + ri(1, 9)); return {q: `${a} − ${b}`, a: a - b, steps: [[`من ${b} لـ ${c}`, c - b], [`من ${c} لـ ${a}`, a - c], [`${c - b} + ${a - c}`, a - b]]}; }},
-  {id: 'x10', ico: '🔟', t: 'الضرب في 10 و 100', d: '40 × 6 = 4 × 6 وصفر',
-   idea: '× 10 = نحط صفر، و × 100 = نحط صفرين. ولما يكون فيه رقم بالصفر زي 40 × 6، نضرب 4 × 6 الأول، وبعدين نرجّع الصفر.',
-   pic: () => '<p class="m-eq">40 × 6 → 4 × 6 = 24 → وصفر → <b>240</b></p>',
+  {id: 'up', ico: '🚶‍♀️', t: 'Count Up to Subtract', d: '52 − 47: walk from 47 to 52', mv: ['m_s_up'],
+   idea: "When two numbers are close, don't take away — walk from the small one to the big one and count the steps. Go to the next ten first, then the rest.",
+   pic: () => '<p class="m-eq">52 − 47 → 47 to 50 = 3 → 50 to 52 = 2 → 3 + 2 = <b>5</b></p>',
+   gen(){ const b = ri(21, 87); const c = ceil10(b) === b ? b + 10 : ceil10(b); const a = Math.min(99, c + ri(1, 9)); return {q: `${a} − ${b}`, a: a - b, steps: [[`from ${b} to ${c}`, c - b], [`from ${c} to ${a}`, a - c], [`${c - b} + ${a - c}`, a - b]]}; }},
+  {id: 'x10', ico: '🔟', t: '× 10 and × 100', d: '40 × 6 = 4 × 6 and a 0', mv: ['m_s_x10', 'm_s_x10b'],
+   idea: '× 10 = add one zero, × 100 = add two zeros. For 40 × 6, do 4 × 6 first, then put the zero back.',
+   pic: () => '<p class="m-eq">40 × 6 → 4 × 6 = 24 → add the 0 → <b>240</b></p>',
    gen(){
      const v = ri(0, 2);
-     if(v === 0){ const a = ri(11, 99); return {q: `${a} × 10`, a: a * 10, steps: [[`${a} وجنبه صفر`, a * 10]]}; }
-     if(v === 1){ const a = ri(2, 45); return {q: `${a} × 100`, a: a * 100, steps: [[`${a} وجنبه صفرين`, a * 100]]}; }
-     const d = ri(2, 9), k = ri(2, 9); return {q: `${d * 10} × ${k}`, a: d * k * 10, steps: [[`${d} × ${k}`, d * k], [`${d * k} وجنبه صفر`, d * k * 10]]};
+     if(v === 0){ const a = ri(11, 99); return {q: `${a} × 10`, a: a * 10, steps: [[`${a} with a 0`, a * 10]]}; }
+     if(v === 1){ const a = ri(2, 45); return {q: `${a} × 100`, a: a * 100, steps: [[`${a} with two 0s`, a * 100]]}; }
+     const d = ri(2, 9), k = ri(2, 9); return {q: `${d * 10} × ${k}`, a: d * k * 10, steps: [[`${d} × ${k}`, d * k], [`${d * k} with a 0`, d * k * 10]]};
    }},
-  {id: 'dbl', ico: '🪞', t: 'الضعف والنُص', d: 'ضعف 36 = 60 + 12',
-   idea: 'الضعف والنُص بيتحسبوا حتة حتة: ضعف 36 = ضعف 30 + ضعف 6. ونُص 74 = نُص 60 + نُص 14. الحيلة دي هتساعدك في جدول الـ 4 والـ 8 كمان!',
-   pic: () => '<p class="m-eq">ضعف 36 → 60 + 12 = <b>72</b> · نُص 74 → 30 + 7 = <b>37</b></p>',
+  {id: 'dbl', ico: '🪞', t: 'Doubles and Halves', d: 'double 36 = 60 + 12', mv: ['m_s_dbl'],
+   idea: 'Double and halve piece by piece: double 36 = double 30 + double 6. Half of 74 = half of 60 + half of 14. This helps with the 4 and 8 tables too!',
+   pic: () => '<p class="m-eq">double 36 → 60 + 12 = <b>72</b> · half of 74 → 30 + 7 = <b>37</b></p>',
    gen(){
-     if(Math.random() < .55){ const n = ri(13, 49); return {q: `ضعف ${n}`, a: 2 * n, steps: [[`ضعف ${T10(n)}`, 2 * T10(n)], [`ضعف ${U1(n)}`, 2 * U1(n)], [`${2 * T10(n)} + ${2 * U1(n)}`, 2 * n]]}; }
+     if(Math.random() < .55){ const n = ri(13, 49); return {q: `double ${n}`, a: 2 * n, steps: [[`double ${T10(n)}`, 2 * T10(n)], [`double ${U1(n)}`, 2 * U1(n)], [`${2 * T10(n)} + ${2 * U1(n)}`, 2 * n]]}; }
      const n = 2 * ri(11, 49), big = Math.floor(n / 20) * 20, sm = n - big;
-     return {q: `نُص ${n}`, a: n / 2, steps: [[`نُص ${big}`, big / 2], [`نُص ${sm}`, sm / 2], [`${big / 2} + ${sm / 2}`, n / 2]]};
+     return {q: `half of ${n}`, a: n / 2, steps: [[`half of ${big}`, big / 2], [`half of ${sm}`, sm / 2], [`${big / 2} + ${sm / 2}`, n / 2]]};
    }},
-  {id: 'b100', ico: '💯', t: 'أصحاب المية', d: '65 + 35 = 100',
-   idea: 'زي أصحاب العشرة بالظبط بس أكبر: نكمّل لأقرب عشرة الأول، وبعدين لحد المية. وده بيفيد جداً في الفلوس والباقي!',
-   pic: () => '<p class="m-eq">65 → 70 (5) → 100 (30) → صاحبها <b>35</b></p>',
-   gen(){ let a = ri(11, 89); if(a % 10 === 0) a += ri(1, 9); const c = ceil10(a); return {q: `${a} + ؟ = 100`, a: 100 - a, steps: [[`من ${a} لـ ${c}`, c - a], [`من ${c} لـ 100`, 100 - c], [`${c - a} + ${100 - c}`, 100 - a]]}; }},
-  {id: 'split', ico: '✂️', t: 'الضرب بالتفكيك', d: '6 × 14 = 60 + 24',
-   idea: 'رقم كبير؟ نكسّره لعشرات وآحاد، ونضرب كل حتة لوحدها بجدول الضرب، ونجمعهم. كده جدول الضرب بيحل مسائل أكبر بكتير!',
+  {id: 'b100', ico: '💯', t: 'Friends of 100', d: '65 + 35 = 100', mv: ['m_s_b100'],
+   idea: 'Just like friends of 10, but bigger: go to the next ten first, then up to 100. Great for money and change!',
+   pic: () => '<p class="m-eq">65 → 70 (5) → 100 (30) → its friend is <b>35</b></p>',
+   gen(){ let a = ri(11, 89); if(a % 10 === 0) a += ri(1, 9); const c = ceil10(a); return {q: `${a} + ? = 100`, a: 100 - a, steps: [[`from ${a} to ${c}`, c - a], [`from ${c} to 100`, 100 - c], [`${c - a} + ${100 - c}`, 100 - a]]}; }},
+  {id: 'split', ico: '✂️', t: 'Split to Multiply', d: '6 × 14 = 60 + 24', mv: ['m_s_split'],
+   idea: 'A big number? Break it into tens and ones, multiply each part with your times tables, then add. Now your tables can solve much bigger sums!',
    pic: () => '<p class="m-eq">6 × 14 → 6 × 10 = 60 · 6 × 4 = 24 → <b>84</b></p>',
    gen(){ const a = ri(2, 9), b = ri(11, 29); return {q: `${a} × ${b}`, a: a * b, steps: [[`${a} × ${T10(b)}`, a * T10(b)], [`${a} × ${U1(b)}`, a * U1(b)], [`${a * T10(b)} + ${a * U1(b)}`, a * b]]}; }}
 ];
 const MM_BY = {}; MM.forEach(s => MM_BY[s.id] = s);
-const mmItem = s => { const g = s.gen(); return {q: g.q, a: g.a, fastMs: 9000, hint: () => `${s.ico} ${s.t}: ` + g.steps.map(([l, v], j) => j < g.steps.length - 1 ? `${l} = ${v}` : l).join(' ← ')}; };
+const mmItem = s => { const g = s.gen(); return {q: g.q, a: g.a, fastMs: 9000, hint: () => `${s.ico} ${s.t}: ` + g.steps.map(([l, v], j) => j < g.steps.length - 1 ? `${l} = ${v}` : l).join(' → ')}; };
 function mentalHub(){
-  setTop(true); stopAr(); mTok++; mKeyFn = null; curWorld = 'math';
+  setTop(true); mNew(); curWorld = 'math';
   const M = MS(), nx = MM.find(s => (M.st[s.id] || 0) < 80) || MM[0];
-  screenEl.innerHTML = `<section class="mw m-men">
-    <h2 class="m-title">🧠 نادي الحساب الذهني</h2>
-    <p class="m-secret sticker">🧠 الحساب الذهني يعني نحسب في دماغنا من غير ورقة ولا قلم. السر مش إنك تبقي سريعة، السر إنك تعرفي <b>الحيلة</b> المناسبة. كل حيلة هنا هتخلي المسألة الصعبة سهلة!</p>
-    <h3 class="sec-title">الحيل · بالترتيب</h3>
+  screenEl.innerHTML = `<section class="mw m-men" ${LTR}>
+    <h2 class="m-title">🧠 Mental Math Club</h2>
+    <div class="m-secret sticker m-vrow"><p>🧠 Mental math means working it out in your head — no paper, no pencil. The secret isn't being fast, it's knowing the right <b>trick</b>. Every trick here makes a hard sum easy!</p>${mvBtn(['m_g_club'])}</div>
+    <h3 class="sec-title">The tricks · in order</h3>
     <div class="m-strats">${MM.map((s, j) => { const b = M.st[s.id] || 0; return `<button class="m-st sticker ${s === nx ? 'next' : ''} ${b >= 80 ? 'got' : ''}" data-st="${s.id}">
-      <span class="m-stn">${j + 1}</span><span class="m-stico" aria-hidden="true">${s.ico}</span><span class="m-stt"><b>${s.t}</b><small dir="rtl">${s.d}</small></span>
-      <span class="m-stb">${b >= 80 ? `⭐ ${b}%` : b ? `${b}%` : s === nx ? 'ابدئي' : 'جديدة'}</span></button>`; }).join('')}</div>
-    <h3 class="sec-title">ألعاب الحساب الذهني</h3>
+      <span class="m-stn">${j + 1}</span><span class="m-stico" aria-hidden="true">${s.ico}</span><span class="m-stt"><b>${s.t}</b><small>${s.d}</small></span>
+      <span class="m-stb">${b >= 80 ? `⭐ ${b}%` : b ? `${b}%` : s === nx ? 'Start' : 'New'}</span></button>`; }).join('')}</div>
+    <h3 class="sec-title">Mental math games</h3>
     <div class="m-games">
-      <button class="m-game sticker" id="gChain"><span aria-hidden="true">🚂</span><b>قطار الحساب</b><small>افتكري الرقم وكل عربية بتغيّره · أعلى مستوى ${M.best.chain || 0}</small></button>
-      <button class="m-game sticker" id="gMin"><span aria-hidden="true">⏱️</span><b>تحدي الدقيقة</b><small>أكبر عدد في دقيقة · رقمك القياسي ${M.best.minute || 0}</small></button>
-      <button class="m-game sticker" id="gScale"><span aria-hidden="true">⚖️</span><b>الميزان</b><small>أنهي ناحية أتقل؟ احسبي بسرعة</small></button>
+      <button class="m-game sticker" id="gChain"><span aria-hidden="true">🚂</span><b>Number Train</b><small>Remember the number while each wagon changes it · best level: ${M.best.chain || 0}</small></button>
+      <button class="m-game sticker" id="gMin"><span aria-hidden="true">⏱️</span><b>One-Minute Challenge</b><small>As many as you can in 1 minute · your record: ${M.best.minute || 0}</small></button>
+      <button class="m-game sticker" id="gScale"><span aria-hidden="true">⚖️</span><b>The Scale</b><small>Which side is heavier? Work it out fast</small></button>
     </div>
   </section>`;
   screenEl.querySelectorAll('[data-st]').forEach(b => b.onclick = () => mStrat(b.dataset.st));
@@ -5192,40 +5249,41 @@ function mentalHub(){
 /* a strategy: the idea → a worked example step by step → solve 3 with the steps → 8 on her own */
 function mStrat(id, part = 0){
   const s = MM_BY[id]; if(!s) return mentalHub();
-  setTop(true); const tok = ++mTok; mKeyFn = null;
-  const names = ['الفكرة', 'مثال', 'معايا', 'لوحدك'];
-  const head = k => `<ol class="m-path" aria-label="خطوات الحيلة">${names.map((x, j) => `<li class="${j < k ? 'done' : j === k ? 'now' : ''}">${j < k ? '✔' : j + 1}<small>${x}</small></li>`).join('')}</ol>`;
+  setTop(true); mNew();
+  const names = ['Idea', 'Example', 'Together', 'On your own'];
+  const head = k => `<ol class="m-path" aria-label="Trick steps">${names.map((x, j) => `<li class="${j < k ? 'done' : j === k ? 'now' : ''}">${j < k ? '✔' : j + 1}<small>${x}</small></li>`).join('')}</ol>`;
   if(part === 0){
-    screenEl.innerHTML = `<section class="mw m-lesson">${head(0)}<div class="m-meet sticker"><span class="m-hero" aria-hidden="true">${s.ico}</span><h2>${s.t}</h2>
-      <p class="m-story">${s.idea}</p>${s.pic()}</div><div class="row m-nav"><button class="btn primary" id="mGo">نشوف مثال ←</button></div></section>`;
+    screenEl.innerHTML = `<section class="mw m-lesson" ${LTR}>${head(0)}<div class="m-meet sticker"><span class="m-hero" aria-hidden="true">${s.ico}</span><h2>${s.t}</h2>
+      ${mvBtn(s.mv)}<p class="m-story">${s.idea}</p>${s.pic()}</div><div class="row m-nav"><button class="btn primary" id="mGo">See an example →</button></div></section>`;
     $('#mGo').onclick = () => mStrat(id, 1);
+    mvAuto(s.mv);
   } else if(part === 1){
     const g = s.gen(); let shown = 0;
     const draw = () => {
-      screenEl.innerHTML = `<section class="mw m-lesson">${head(1)}<div class="m-meet sticker"><h2>${s.ico} ${s.t}</h2><p class="m-q">${qAsk(g.q)}</p>
+      screenEl.innerHTML = `<section class="mw m-lesson" ${LTR}>${head(1)}<div class="m-meet sticker"><h2>${s.ico} ${s.t}</h2><p class="m-q">${qAsk(g.q)}</p>
         <ol class="m-steps">${g.steps.map(([l, v], j) => `<li class="${j < shown ? 'done' : ''}"><span>${l}</span> = <b>${j < shown ? v : '…'}</b></li>`).join('')}</ol>
         ${shown >= g.steps.length ? `<p class="m-ok">✔ ${qFill(g.q, g.a)}</p>` : ''}</div>
-        <div class="row m-nav">${shown < g.steps.length ? '<button class="btn soft" id="mStep">الخطوة اللي بعدها 👀</button>' : '<button class="btn primary" id="mGo">جربي معايا ✍️</button>'}</div></section>`;
+        <div class="row m-nav">${shown < g.steps.length ? '<button class="btn soft" id="mStep">Next step 👀</button>' : '<button class="btn primary" id="mGo">Try with me ✍️</button>'}</div></section>`;
       if($('#mStep')) $('#mStep').onclick = () => { shown++; sfxTick(); draw(); };
       if($('#mGo')) $('#mGo').onclick = () => mStrat(id, 2);
     };
     draw();
   } else if(part === 2){
-    mSteps({title: `${s.ico} ${s.t} · معايا`, sub: 'اكتبي ناتج كل خطوة، والحيلة هتوصلك للإجابة', items: [s.gen(), s.gen(), s.gen()], onEnd: () => mStrat(id, 3)});
+    mSteps({title: `${s.ico} ${s.t} · together`, sub: 'Write the answer to each step — the trick takes you to the answer', items: [s.gen(), s.gen(), s.gen()], onEnd: () => mStrat(id, 3)});
   } else {
-    mQuiz({title: `${s.ico} ${s.t} · لوحدك`, items: Array.from({length: 8}, () => mmItem(s)), onEnd: r => {
+    mQuiz({title: `${s.ico} ${s.t} · on your own`, items: Array.from({length: 8}, () => mmItem(s)), onEnd: r => {
       const pct = Math.round(r.score / r.total * 100), M = MS(), was = M.st[s.id] || 0;
       if(pct > was){ M.st[s.id] = pct; mSave(); }
       const nx = MM[MM.indexOf(s) + 1];
       mResult({score: r.score, total: r.total, stars: pct >= 80 && was < 80 ? 5 : Math.round(r.score / 4),
-        extra: pct >= 80 ? `<p>⭐ اتقنتي «${s.t}»!${nx ? ` الحيلة الجاية: ${nx.ico} ${nx.t}` : ''}</p>` : '<p>محتاجة 80% عشان الحيلة تبقى بتاعتك. شوفي المثال تاني وجربي!</p>',
-        again: () => mStrat(id, 3), back: () => mentalHub(), backLabel: 'النادي'});
+        extra: pct >= 80 ? `<p>⭐ You mastered "${s.t}"!${nx ? ` Next trick: ${nx.ico} ${nx.t}` : ''}</p>` : '<p>You need 80% to master this trick. Look at the example again and have another go!</p>',
+        again: () => mStrat(id, 3), back: () => mentalHub(), backLabel: 'Club'});
     }});
   }
 }
 /* the number train: remember the number while each wagon changes it */
 function mChain(level){
-  setTop(true); const tok = ++mTok; mKeyFn = null;
+  setTop(true); const tok = mNew();
   const L = Math.max(1, Math.min(8, level)), wagons = 2 + Math.ceil(L / 2), ms = Math.max(1700, 3200 - L * 180);
   let round = 0, score = 0;
   const OPS = n => {
@@ -5240,26 +5298,29 @@ function mChain(level){
   const play = () => {
     let n = ri(2, L >= 4 ? 15 : 9); const start = n, seq = [];
     for(let k = 0; k < wagons; k++){ const o = rand(OPS(n)); seq.push(o); n = apply(n, o); }
-    screenEl.innerHTML = `<section class="mw m-chain"><div class="m-qhead"><h2>🚂 قطار الحساب · مستوى ${L}</h2><span class="m-prog">قطر ${round + 1} من 3</span></div>
+    screenEl.innerHTML = `<section class="mw m-chain" ${LTR}><div class="m-qhead"><h2>🚂 Number Train · level ${L}</h2><span class="m-prog">Train ${round + 1} of 3</span></div>
+      ${round === 0 ? `<div class="m-vrow">${mvBtn(['m_g_chain'])}</div>` : ''}
       <div class="m-rail sticker"><div class="m-wagon eng" id="cw"><span>🚂</span><b>${start}</b></div></div>
-      <p class="muted m-sub" id="cHelp">افتكري الرقم ده... العربيات جاية!</p></section>`;
+      <p class="muted m-sub" id="cHelp">Remember this number... the wagons are coming!</p></section>`;
+    say(`Remember ${start}!`);
     let k = 0;
     const step = () => {
       if(!mAlive(tok)) return;
       if(k >= seq.length) return ask();
       const [op, v] = seq[k++]; const w = $('#cw');
-      w.className = 'm-wagon go'; w.innerHTML = `<span>🚃</span><b dir="ltr">${op} ${v}</b>`; void w.offsetWidth; w.classList.add('in'); tone(420 + k * 70, 0, .1, 'triangle', .08);
-      $('#cHelp').textContent = 'غيّري الرقم اللي في دماغك...';
+      w.className = 'm-wagon go'; w.innerHTML = `<span>🚃</span><b>${op} ${v}</b>`; void w.offsetWidth; w.classList.add('in'); tone(420 + k * 70, 0, .1, 'triangle', .08);
+      say(`${op === '+' ? 'plus' : op === '−' ? 'minus' : op === '×' ? 'times' : 'divided by'} ${v}`);
+      $('#cHelp').textContent = 'Change the number in your head...';
       setTimeout(step, ms);
     };
-    setTimeout(step, ms + 400);
+    setTimeout(step, ms + (round === 0 ? 1400 : 400));
     const ask = () => {
-      screenEl.innerHTML = `<section class="mw m-quiz"><div class="m-qhead"><h2>🚂 القطر وصل!</h2><span class="m-prog">قطر ${round + 1} من 3</span></div>
-        <div class="m-qcard sticker"><p class="m-q">الرقم بقى كام؟</p><p class="m-ans" id="mA">؟</p><div class="m-hint" id="mH" hidden></div></div>${padHTML()}</section>`;
-      bindPad(screenEl, v => { $('#mA').textContent = v === '' ? '؟' : v; }, v => {
+      screenEl.innerHTML = `<section class="mw m-quiz" ${LTR}><div class="m-qhead"><h2>🚂 The train has arrived!</h2><span class="m-prog">Train ${round + 1} of 3</span></div>
+        <div class="m-qcard sticker"><p class="m-q">What is the number now?</p><p class="m-ans" id="mA">?</p><div class="m-hint" id="mH" hidden></div></div>${padHTML()}</section>`;
+      bindPad(screenEl, v => { $('#mA').textContent = v === '' ? '?' : v; }, v => {
         const ok = +v === n; ok ? sfxGood() : sfxBad(); if(ok) score++;
         const h = $('#mH'); h.hidden = false;
-        h.innerHTML = `${ok ? '✔ برافو!' : `الإجابة ${n}`}<br><span dir="rtl">${start} ${seq.map(([o, x]) => `${o} ${x}`).join(' ')} = ${n}</span>`;
+        h.innerHTML = `${ok ? '✔ Well done!' : `The answer is ${n}`}<br>${start} ${seq.map(([o, x]) => `${o} ${x}`).join(' ')} = ${n}`;
         mKeyFn = null;
         setTimeout(() => { if(tok !== mTok) return; round++; if(round < 3) play(); else end(); }, ok ? 1400 : 3200);
       });
@@ -5268,8 +5329,8 @@ function mChain(level){
   const end = () => {
     const B = MS().best, up = score >= 2, nl = up ? Math.min(8, L + 1) : Math.max(1, L - (score === 0 ? 1 : 0));
     if(up && L > (B.chain || 0)){ B.chain = L; mSave(); }
-    mResult({score, total: 3, stars: score + (up ? 1 : 0), extra: up ? `<p>🚂 هوب! المستوى الجاي: ${nl}${nl > L ? ' (عربيات أكتر وأسرع)' : ''}</p>` : '<p>نلعب تاني بنفس المستوى. خدي وقتك وافتكري الرقم 💛</p>',
-      again: () => mChain(nl), back: () => mentalHub(), backLabel: 'النادي'});
+    mResult({score, total: 3, stars: score + (up ? 1 : 0), extra: up ? `<p>🚂 Next level: ${nl}${nl > L ? ' (more wagons, a bit faster)' : ''}</p>` : "<p>Let's play this level again. Take your time and remember the number 💛</p>",
+      again: () => mChain(nl), back: () => mentalHub(), backLabel: 'Club'});
   };
   play();
 }
@@ -5281,15 +5342,15 @@ function mMinute(){
     if(tabs.length && Math.random() < .3){ const n = rand(tabs), k = ri(1, 10); return Math.random() < .5 ? factItem(n, k) : factItem(k, n); }
     return mmItem(rand(pool));
   });
-  mQuiz({title: '⏱️ تحدي الدقيقة', items, timer: 60, retry: false, icon: '🏃‍♀️', goalIcon: '🏁', onEnd: r => {
+  mQuiz({title: '⏱️ One-Minute Challenge', items, timer: 60, retry: false, icon: '🏃‍♀️', goalIcon: '🏁', onEnd: r => {
     const B = MS().best, rec = r.score > (B.minute || 0); if(rec){ B.minute = r.score; mSave(); }
-    mResult({score: r.score, total: r.total, line: `⏱️ ${r.score} صح في دقيقة`, extra: rec ? '<p class="m-ok">🏆 رقم قياسي جديد!</p>' : `<p class="muted">رقمك القياسي: ${B.minute}</p>`,
-      stars: Math.min(8, Math.round(r.score / 3)), again: mMinute, back: () => mentalHub(), backLabel: 'النادي'});
+    mResult({score: r.score, total: r.total, line: `⏱️ ${r.score} right in one minute`, extra: rec ? '<p class="m-ok">🏆 New record!</p>' : `<p class="muted">Your record: ${B.minute}</p>`,
+      stars: Math.min(8, Math.round(r.score / 3)), again: mMinute, back: () => mentalHub(), backLabel: 'Club'});
   }});
 }
 /* the scale: which side is heavier? quick estimation and exact sums */
 function mScale(){
-  setTop(true); const tok = ++mTok; mKeyFn = null;
+  setTop(true); const tok = mNew();
   let r = 0, score = 0;
   const side = () => { const v = ri(0, 3);
     if(v === 0){ const a = ri(11, 60), b = ri(5, 39); return [`${a} + ${b}`, a + b]; }
@@ -5299,17 +5360,18 @@ function mScale(){
   const draw = () => {
     let L = side(), R = side(); if(Math.random() < .2) R = [String(L[1]), L[1]];
     const ans = L[1] > R[1] ? 'L' : L[1] < R[1] ? 'R' : 'E';
-    screenEl.innerHTML = `<section class="mw m-scale"><div class="m-qhead"><h2>⚖️ الميزان</h2><span class="m-prog">${r + 1} من 10 · ⭐ ${score}</span></div>
-      <p class="muted m-sub">احسبي الناحيتين في دماغك، ودوسي على الناحية الأتقل (الأكبر)، أو «زي بعض».</p>
+    screenEl.innerHTML = `<section class="mw m-scale" ${LTR}><div class="m-qhead"><h2>⚖️ The Scale</h2><span class="m-prog">${r + 1} of 10 · ⭐ ${score}</span></div>
+      <div class="m-vrow"><p class="muted m-sub">Work out both sides in your head and tap the heavier (bigger) side — or "Same".</p>${r === 0 ? mvBtn(['m_g_scale']) : ''}</div>
       <div class="m-beam" id="beam" aria-hidden="true"><span class="m-pan">🍽️</span><span class="m-pivot">▲</span><span class="m-pan">🍽️</span></div>
-      <div class="m-sides"><button class="m-side sticker" data-s="R">${R[0]}</button><button class="btn m-eqb" data-s="E">= زي بعض</button><button class="m-side sticker" data-s="L">${L[0]}</button></div>
+      <div class="m-sides"><button class="m-side sticker" data-s="L">${L[0]}</button><button class="btn m-eqb" data-s="E">= Same</button><button class="m-side sticker" data-s="R">${R[0]}</button></div>
       <p class="m-ok" id="sRes" aria-live="polite"></p></section>`;
     screenEl.querySelectorAll('[data-s]').forEach(b => b.onclick = () => {
       screenEl.querySelectorAll('[data-s]').forEach(x => x.disabled = true);
       const ok = b.dataset.s === ans; ok ? (sfxGood(), score++) : sfxBad();
       $('#beam').classList.add(ans === 'E' ? 'eq' : ans === 'L' ? 'tl' : 'tr');
-      const sh = X => X[0] === String(X[1]) ? X[0] : `${X[0]} = ${X[1]}`; $('#sRes').innerHTML = `${ok ? '✔ صح!' : '✘ ركّزي'} · ${sh(R)} · ${sh(L)}`;
-      setTimeout(() => { if(tok !== mTok) return; r++; if(r < 10) draw(); else mResult({score, total: 10, stars: Math.round(score / 3), again: mScale, back: () => mentalHub(), backLabel: 'النادي'}); }, ok ? 1300 : 2400);
+      const sh = X => X[0] === String(X[1]) ? X[0] : `${X[0]} = ${X[1]}`;
+      $('#sRes').innerHTML = `${ok ? '✔ Right!' : '✘ Look again'} · ${sh(L)} · ${sh(R)}`;
+      setTimeout(() => { if(tok !== mTok) return; r++; if(r < 10) draw(); else mResult({score, total: 10, stars: Math.round(score / 3), again: mScale, back: () => mentalHub(), backLabel: 'Club'}); }, ok ? 1300 : 2400);
     });
   };
   draw();
@@ -5357,7 +5419,7 @@ async function sayAr(text, id, btn){
   const run = arRun;
   if(btn) btn.classList.add('on');
   const off = () => { if(btn && run === arRun) btn.classList.remove('on'); };
-  const ch = id && id.match(/^(c\d+l\d+|c\d+x|c\d+o|sxr_(?:f\d+|w\d+|u\d[ab])|g)/);
+  const ch = id && id.match(/^(c\d+l\d+|c\d+x|c\d+o|sxr_(?:f\d+|w\d+|u\d[ab])|m(?=_)|g)/);
   if(ch){ await Promise.race([Promise.all([arChunk(ch[1]), arHashLoad()]), new Promise(r => setTimeout(r, 9000))]); if(run !== arRun) return; }
   if(id && AR_CLIPS[id] && (text === null || (AR_HLOADED && AR_HASH[id] === ohash(text)))){
     const c = actx();
@@ -5416,7 +5478,7 @@ async function sayArSeq(parts, btn){
   const off = () => { if(btn && run === arRun) btn.classList.remove('on'); };
   for(const part of parts){
     if(run !== arRun){ off(); return; }
-    const ch = part.id && part.id.match(/^(c\d+l\d+|c\d+x|c\d+o|sxr_(?:f\d+|w\d+|u\d[ab])|g)/);
+    const ch = part.id && part.id.match(/^(c\d+l\d+|c\d+x|c\d+o|sxr_(?:f\d+|w\d+|u\d[ab])|m(?=_)|g)/);
     if(ch){ await Promise.race([Promise.all([arChunk(ch[1]), arHashLoad()]), new Promise(r => setTimeout(r, 9000))]); if(run !== arRun){ off(); return; } }
     let played = false;
     if(part.id && AR_CLIPS[part.id] && AR_HLOADED && AR_HASH[part.id] === ohash(part.text)){

@@ -1,0 +1,1 @@
+Backup of the first cloned math voice (made in-session). The game now uses the user's uploaded recordings (va/m.mp3, Nov 22). To go back: copy m.mp3 to va/ and put va-index-m.json's "m" into va-index.json, bump AR_VER.

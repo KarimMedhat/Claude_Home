@@ -5400,7 +5400,7 @@ const AR_ORD = ['', 'الأول', 'التاني', 'التالت', 'الرابع'
    text; otherwise playback is suppressed with an Arabic notice. Device TTS is never used for
    covered content - it can only be an explicit, separate user choice. */
 const AR_CLIPS = {}, AR_LOADING = {}, AR_BUF = {}, AR_HASH = {}; let AR_HLOADED = false;
-const AR_VER = 9;   /* bump when the recordings change so phones don't keep an old copy */
+const AR_VER = 10;   /* bump when the recordings change so phones don't keep an old copy */
 const __b64 = buf => { const u = new Uint8Array(buf); let s = ''; for (let i = 0; i < u.length; i += 32768) s += String.fromCharCode.apply(null, u.subarray(i, i + 32768)); return btoa(s); };
 const arFetch = url => new Promise((res, rej) => {
   const x = new XMLHttpRequest();

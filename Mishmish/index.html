@@ -3045,7 +3045,7 @@ const veChunk = ch => VE.loading[ch] || (VE.loading[ch] = arFetch('ve/' + ch + '
 function veFind(text){
   if(!VE.idx || text == null) return null;
   const n = veNorm(text); if(!n) return null;
-  return VE.idx.lex[n] || VE.idx.lex[n.replace(/'s$/, '')] || (VE_PAS && VE_PAS[n]) || null;
+  return VE.idx.lex[n] || VE.idx.lex[n.replace(/'s$/, '')] || (VE_PAS && VE_PAS[n]) || (VE.idx.lines && VE.idx.lines[n]) || null;   /* lines: whole fixed sentences, e.g. the home greeting */
 }
 let veRun = 0, veSrc = null;
 function veStop(){ veRun++; if(veSrc){ try{ veSrc.stop(); }catch(e){} veSrc = null; } }

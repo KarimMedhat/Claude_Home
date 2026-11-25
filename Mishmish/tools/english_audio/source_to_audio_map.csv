@@ -1,0 +1,569 @@
+source_clip_id,source_location,source_text,spoken_text,audio_file
+V-U1L1-01,The Five Senses > What are the Five Senses? > verbs,learn / learnt,learn,audio/lexicon/learn.mp3
+V-U1L1-01,The Five Senses > What are the Five Senses? > verbs,learn / learnt,learnt,audio/lexicon/learnt.mp3
+V-U1L1-02,The Five Senses > What are the Five Senses? > verbs,see / saw,saw,audio/lexicon/saw.mp3
+V-U1L1-02,The Five Senses > What are the Five Senses? > verbs,see / saw,see,audio/lexicon/see.mp3
+V-U1L1-03,The Five Senses > What are the Five Senses? > verbs,hear / heard,hear,audio/lexicon/hear.mp3
+V-U1L1-03,The Five Senses > What are the Five Senses? > verbs,hear / heard,heard,audio/lexicon/heard.mp3
+V-U1L1-04,The Five Senses > What are the Five Senses? > verbs,smell / smelt,smell,audio/lexicon/smell.mp3
+V-U1L1-04,The Five Senses > What are the Five Senses? > verbs,smell / smelt,smelt,audio/lexicon/smelt.mp3
+V-U1L1-05,The Five Senses > What are the Five Senses? > verbs,know / knew,knew,audio/lexicon/knew.mp3
+V-U1L1-05,The Five Senses > What are the Five Senses? > verbs,know / knew,know,audio/lexicon/know.mp3
+V-U1L2-01,The Five Senses > Healthy Habits > verbs,wake up / woke up,wake up,audio/lexicon/wake_up.mp3
+V-U1L2-01,The Five Senses > Healthy Habits > verbs,wake up / woke up,woke up,audio/lexicon/woke_up.mp3
+V-U1L2-02,The Five Senses > Healthy Habits > verbs,do / did,did,audio/lexicon/did.mp3
+V-U1L2-02,The Five Senses > Healthy Habits > verbs,do / did,do,audio/lexicon/do.mp3
+V-U1L2-03,The Five Senses > Healthy Habits > verbs,eat / ate,ate,audio/lexicon/ate.mp3
+V-U1L2-03,The Five Senses > Healthy Habits > verbs,eat / ate,eat,audio/lexicon/eat.mp3
+V-U1L2-04,The Five Senses > Healthy Habits > verbs,drink / drank,drank,audio/lexicon/drank.mp3
+V-U1L2-04,The Five Senses > Healthy Habits > verbs,drink / drank,drink,audio/lexicon/drink.mp3
+V-U1L2-05,The Five Senses > Healthy Habits > verbs,grow / grew,grew,audio/lexicon/grew.mp3
+V-U1L2-05,The Five Senses > Healthy Habits > verbs,grow / grew,grow,audio/lexicon/grow.mp3
+V-U1L2-06,The Five Senses > Healthy Habits > verbs,give / gave,gave,audio/lexicon/gave.mp3
+V-U1L2-06,The Five Senses > Healthy Habits > verbs,give / gave,give,audio/lexicon/give.mp3
+V-U1L2-07,The Five Senses > Healthy Habits > verbs,take / took,take,audio/lexicon/take.mp3
+V-U1L2-07,The Five Senses > Healthy Habits > verbs,take / took,took,audio/lexicon/took.mp3
+V-U1L3-01,The Five Senses > Story Time > verbs,feel / felt,feel,audio/lexicon/feel.mp3
+V-U1L3-01,The Five Senses > Story Time > verbs,feel / felt,felt,audio/lexicon/felt.mp3
+V-U1L3-02,The Five Senses > Story Time > verbs,sit / sat,sat,audio/lexicon/sat.mp3
+V-U1L3-02,The Five Senses > Story Time > verbs,sit / sat,sit,audio/lexicon/sit.mp3
+V-U1L3-03,The Five Senses > Story Time > verbs,shake / shook,shake,audio/lexicon/shake.mp3
+V-U1L3-03,The Five Senses > Story Time > verbs,shake / shook,shook,audio/lexicon/shook.mp3
+V-U1L3-04,The Five Senses > Story Time > verbs,pay / paid,paid,audio/lexicon/paid.mp3
+V-U1L3-04,The Five Senses > Story Time > verbs,pay / paid,pay,audio/lexicon/pay.mp3
+V-U1L3-05,The Five Senses > Story Time > verbs,think / thought,think,audio/lexicon/think.mp3
+V-U1L3-05,The Five Senses > Story Time > verbs,think / thought,thought,audio/lexicon/thought.mp3
+V-U1L3-06,The Five Senses > Story Time > verbs,say / said,said,audio/lexicon/said.mp3
+V-U1L3-06,The Five Senses > Story Time > verbs,say / said,say,audio/lexicon/say.mp3
+V-U1L3-07,The Five Senses > Story Time > verbs,come / came,came,audio/lexicon/came.mp3
+V-U1L3-07,The Five Senses > Story Time > verbs,come / came,come,audio/lexicon/come.mp3
+V-U1L4-01,The Five Senses > Sequence Words > verbs,tell / told,tell,audio/lexicon/tell.mp3
+V-U1L4-01,The Five Senses > Sequence Words > verbs,tell / told,told,audio/lexicon/told.mp3
+V-U1L4-02,The Five Senses > Sequence Words > verbs,get / got,get,audio/lexicon/get.mp3
+V-U1L4-02,The Five Senses > Sequence Words > verbs,get / got,got,audio/lexicon/got.mp3
+V-U1L4-03,The Five Senses > Sequence Words > verbs,have / had,had,audio/lexicon/had.mp3
+V-U1L4-03,The Five Senses > Sequence Words > verbs,have / had,have,audio/lexicon/have.mp3
+V-U1L4-04,The Five Senses > Sequence Words > verbs,go / went,go,audio/lexicon/go.mp3
+V-U1L4-04,The Five Senses > Sequence Words > verbs,go / went,went,audio/lexicon/went.mp3
+V-U1L4-05,The Five Senses > Sequence Words > verbs,keep / kept,keep,audio/lexicon/keep.mp3
+V-U1L4-05,The Five Senses > Sequence Words > verbs,keep / kept,kept,audio/lexicon/kept.mp3
+V-U2L1-01,My Community > Helping the Community > verbs,feed / fed,fed,audio/lexicon/fed.mp3
+V-U2L1-01,My Community > Helping the Community > verbs,feed / fed,feed,audio/lexicon/feed.mp3
+V-U2L1-02,My Community > Helping the Community > verbs,feel / felt,feel,audio/lexicon/feel.mp3
+V-U2L1-02,My Community > Helping the Community > verbs,feel / felt,felt,audio/lexicon/felt.mp3
+V-U2L1-03,My Community > Helping the Community > verbs,give / gave,gave,audio/lexicon/gave.mp3
+V-U2L1-03,My Community > Helping the Community > verbs,give / gave,give,audio/lexicon/give.mp3
+V-U2L1-04,My Community > Helping the Community > verbs,make / made,made,audio/lexicon/made.mp3
+V-U2L1-04,My Community > Helping the Community > verbs,make / made,make,audio/lexicon/make.mp3
+V-U2L1-05,My Community > Helping the Community > verbs,do / did,did,audio/lexicon/did.mp3
+V-U2L1-05,My Community > Helping the Community > verbs,do / did,do,audio/lexicon/do.mp3
+V-U2L2-01,My Community > Community Problems and Solutions > verbs,know / knew,knew,audio/lexicon/knew.mp3
+V-U2L2-01,My Community > Community Problems and Solutions > verbs,know / knew,know,audio/lexicon/know.mp3
+V-U2L2-02,My Community > Community Problems and Solutions > verbs,put / put,put,audio/lexicon/put.mp3
+V-U2L2-02,My Community > Community Problems and Solutions > verbs,put / put,put,audio/lexicon/put.mp3
+V-U2L2-03,My Community > Community Problems and Solutions > verbs,throw / threw,threw,audio/lexicon/threw.mp3
+V-U2L2-03,My Community > Community Problems and Solutions > verbs,throw / threw,throw,audio/lexicon/throw.mp3
+V-U2L2-04,My Community > Community Problems and Solutions > verbs,think / thought,think,audio/lexicon/think.mp3
+V-U2L2-04,My Community > Community Problems and Solutions > verbs,think / thought,thought,audio/lexicon/thought.mp3
+V-U2L3-01,My Community > My Culture > verbs,grow / grew,grew,audio/lexicon/grew.mp3
+V-U2L3-01,My Community > My Culture > verbs,grow / grew,grow,audio/lexicon/grow.mp3
+V-U2L3-02,My Community > My Culture > verbs,weave / wove,weave,audio/lexicon/weave.mp3
+V-U2L3-02,My Community > My Culture > verbs,weave / wove,wove,audio/lexicon/wove.mp3
+V-U2L3-03,My Community > My Culture > verbs,wear / wore,wear,audio/lexicon/wear.mp3
+V-U2L3-03,My Community > My Culture > verbs,wear / wore,wore,audio/lexicon/wore.mp3
+V-U2L3-04,My Community > My Culture > verbs,sing / sang,sang,audio/lexicon/sang.mp3
+V-U2L3-04,My Community > My Culture > verbs,sing / sang,sing,audio/lexicon/sing.mp3
+V-U2L4-01,My Community > Diary Entry > verbs,tell / told,tell,audio/lexicon/tell.mp3
+V-U2L4-01,My Community > Diary Entry > verbs,tell / told,told,audio/lexicon/told.mp3
+V-U2L4-02,My Community > Diary Entry > verbs,sell / sold,sell,audio/lexicon/sell.mp3
+V-U2L4-02,My Community > Diary Entry > verbs,sell / sold,sold,audio/lexicon/sold.mp3
+V-U2L4-03,My Community > Diary Entry > verbs,say / said,said,audio/lexicon/said.mp3
+V-U2L4-03,My Community > Diary Entry > verbs,say / said,say,audio/lexicon/say.mp3
+V-U2L4-04,My Community > Diary Entry > verbs,know / knew,knew,audio/lexicon/knew.mp3
+V-U2L4-04,My Community > Diary Entry > verbs,know / knew,know,audio/lexicon/know.mp3
+V-U2L4-05,My Community > Diary Entry > verbs,stand / stood,stand,audio/lexicon/stand.mp3
+V-U2L4-05,My Community > Diary Entry > verbs,stand / stood,stood,audio/lexicon/stood.mp3
+V-U3L1-01,Animals in Our World > Let's Meet the Animals! > verbs,show / showed,show,audio/lexicon/show.mp3
+V-U3L1-01,Animals in Our World > Let's Meet the Animals! > verbs,show / showed,showed,audio/lexicon/showed.mp3
+V-U3L1-02,Animals in Our World > Let's Meet the Animals! > verbs,drink / drank,drank,audio/lexicon/drank.mp3
+V-U3L1-02,Animals in Our World > Let's Meet the Animals! > verbs,drink / drank,drink,audio/lexicon/drink.mp3
+V-U3L2-01,Animals in Our World > Taking Care of Animals > verbs,stay / stayed,stay,audio/lexicon/stay.mp3
+V-U3L2-01,Animals in Our World > Taking Care of Animals > verbs,stay / stayed,stayed,audio/lexicon/stayed.mp3
+V-U3L2-02,Animals in Our World > Taking Care of Animals > verbs,need / needed,need,audio/lexicon/need.mp3
+V-U3L2-02,Animals in Our World > Taking Care of Animals > verbs,need / needed,needed,audio/lexicon/needed.mp3
+V-U3L2-03,Animals in Our World > Taking Care of Animals > verbs,make / made,made,audio/lexicon/made.mp3
+V-U3L2-03,Animals in Our World > Taking Care of Animals > verbs,make / made,make,audio/lexicon/make.mp3
+V-U3L2-04,Animals in Our World > Taking Care of Animals > verbs,teach / taught,taught,audio/lexicon/taught.mp3
+V-U3L2-04,Animals in Our World > Taking Care of Animals > verbs,teach / taught,teach,audio/lexicon/teach.mp3
+V-U3L3-01,Animals in Our World > The Old Lion and the Fox > verbs,think / thought,think,audio/lexicon/think.mp3
+V-U3L3-01,Animals in Our World > The Old Lion and the Fox > verbs,think / thought,thought,audio/lexicon/thought.mp3
+V-U3L3-02,Animals in Our World > The Old Lion and the Fox > verbs,lay down / laid down,laid down,audio/lexicon/laid_down.mp3
+V-U3L3-02,Animals in Our World > The Old Lion and the Fox > verbs,lay down / laid down,lay down,audio/lexicon/lay_down.mp3
+V-U3L3-03,Animals in Our World > The Old Lion and the Fox > verbs,die / died,die,audio/lexicon/die.mp3
+V-U3L3-03,Animals in Our World > The Old Lion and the Fox > verbs,die / died,died,audio/lexicon/died.mp3
+V-U3L3-04,Animals in Our World > The Old Lion and the Fox > verbs,hear / heard,hear,audio/lexicon/hear.mp3
+V-U3L3-04,Animals in Our World > The Old Lion and the Fox > verbs,hear / heard,heard,audio/lexicon/heard.mp3
+V-U3L3-05,Animals in Our World > The Old Lion and the Fox > verbs,catch / caught,catch,audio/lexicon/catch.mp3
+V-U3L3-05,Animals in Our World > The Old Lion and the Fox > verbs,catch / caught,caught,audio/lexicon/caught.mp3
+V-U3L4-01,Animals in Our World > Research Report > verbs,build / built,build,audio/lexicon/build.mp3
+V-U3L4-01,Animals in Our World > Research Report > verbs,build / built,built,audio/lexicon/built.mp3
+V-U3L4-02,Animals in Our World > Research Report > verbs,eat / ate,ate,audio/lexicon/ate.mp3
+V-U3L4-02,Animals in Our World > Research Report > verbs,eat / ate,eat,audio/lexicon/eat.mp3
+V-U3L4-03,Animals in Our World > Research Report > verbs,teach / taught,taught,audio/lexicon/taught.mp3
+V-U3L4-03,Animals in Our World > Research Report > verbs,teach / taught,teach,audio/lexicon/teach.mp3
+V-U3L4-04,Animals in Our World > Research Report > verbs,is / was,is,audio/lexicon/is.mp3
+V-U3L4-04,Animals in Our World > Research Report > verbs,is / was,was,audio/lexicon/was.mp3
+V-U3L4-05,Animals in Our World > Research Report > verbs,are / were,are,audio/lexicon/are.mp3
+V-U3L4-05,Animals in Our World > Research Report > verbs,are / were,were,audio/lexicon/were.mp3
+V-U4L1-01,Egypt - My Homeland > Places in Egypt > verbs,meet / met,meet,audio/lexicon/meet.mp3
+V-U4L1-01,Egypt - My Homeland > Places in Egypt > verbs,meet / met,met,audio/lexicon/met.mp3
+V-U4L1-02,Egypt - My Homeland > Places in Egypt > verbs,take / took,take,audio/lexicon/take.mp3
+V-U4L1-02,Egypt - My Homeland > Places in Egypt > verbs,take / took,took,audio/lexicon/took.mp3
+V-U4L1-03,Egypt - My Homeland > Places in Egypt > verbs,ride / rode,ride,audio/lexicon/ride.mp3
+V-U4L1-03,Egypt - My Homeland > Places in Egypt > verbs,ride / rode,rode,audio/lexicon/rode.mp3
+V-U4L1-04,Egypt - My Homeland > Places in Egypt > verbs,buy / bought,bought,audio/lexicon/bought.mp3
+V-U4L1-04,Egypt - My Homeland > Places in Egypt > verbs,buy / bought,buy,audio/lexicon/buy.mp3
+V-U4L1-05,Egypt - My Homeland > Places in Egypt > verbs,go / went,go,audio/lexicon/go.mp3
+V-U4L1-05,Egypt - My Homeland > Places in Egypt > verbs,go / went,went,audio/lexicon/went.mp3
+V-U4L2-01,Egypt - My Homeland > My City > verbs,learn / learnt,learn,audio/lexicon/learn.mp3
+V-U4L2-01,Egypt - My Homeland > My City > verbs,learn / learnt,learnt,audio/lexicon/learnt.mp3
+V-U4L2-02,Egypt - My Homeland > My City > verbs,meet / met,meet,audio/lexicon/meet.mp3
+V-U4L2-02,Egypt - My Homeland > My City > verbs,meet / met,met,audio/lexicon/met.mp3
+V-U4L2-03,Egypt - My Homeland > My City > verbs,read / read,red,audio/lexicon/read_past.mp3
+V-U4L2-03,Egypt - My Homeland > My City > verbs,read / read,reed,audio/lexicon/read_present.mp3
+V-U4L2-04,Egypt - My Homeland > My City > verbs,feel / felt,feel,audio/lexicon/feel.mp3
+V-U4L2-04,Egypt - My Homeland > My City > verbs,feel / felt,felt,audio/lexicon/felt.mp3
+V-U4L2-05,Egypt - My Homeland > My City > verbs,make / made,made,audio/lexicon/made.mp3
+V-U4L2-05,Egypt - My Homeland > My City > verbs,make / made,make,audio/lexicon/make.mp3
+V-U4L3-01,Egypt - My Homeland > Math: Big Numbers > verbs,mean / meant,mean,audio/lexicon/mean.mp3
+V-U4L3-01,Egypt - My Homeland > Math: Big Numbers > verbs,mean / meant,meant,audio/lexicon/meant.mp3
+V-U4L4-01,Egypt - My Homeland > Writing a Blog > verbs,wear / wore,wear,audio/lexicon/wear.mp3
+V-U4L4-01,Egypt - My Homeland > Writing a Blog > verbs,wear / wore,wore,audio/lexicon/wore.mp3
+V-U4L4-02,Egypt - My Homeland > Writing a Blog > verbs,wake up / woke up,wake up,audio/lexicon/wake_up.mp3
+V-U4L4-02,Egypt - My Homeland > Writing a Blog > verbs,wake up / woke up,woke up,audio/lexicon/woke_up.mp3
+V-U4L4-03,Egypt - My Homeland > Writing a Blog > verbs,see / saw,saw,audio/lexicon/saw.mp3
+V-U4L4-03,Egypt - My Homeland > Writing a Blog > verbs,see / saw,see,audio/lexicon/see.mp3
+V-U4L4-04,Egypt - My Homeland > Writing a Blog > verbs,take / took,take,audio/lexicon/take.mp3
+V-U4L4-04,Egypt - My Homeland > Writing a Blog > verbs,take / took,took,audio/lexicon/took.mp3
+V-U4L4-05,Egypt - My Homeland > Writing a Blog > verbs,learn / learnt,learn,audio/lexicon/learn.mp3
+V-U4L4-05,Egypt - My Homeland > Writing a Blog > verbs,learn / learnt,learnt,audio/lexicon/learnt.mp3
+V-U5L1-01,A Day at Work > Different Jobs > verbs,talk / talked,talk,audio/lexicon/talk.mp3
+V-U5L1-01,A Day at Work > Different Jobs > verbs,talk / talked,talked,audio/lexicon/talked.mp3
+V-U5L1-02,A Day at Work > Different Jobs > verbs,stop / stopped,stop,audio/lexicon/stop.mp3
+V-U5L1-02,A Day at Work > Different Jobs > verbs,stop / stopped,stopped,audio/lexicon/stopped.mp3
+V-U5L1-03,A Day at Work > Different Jobs > verbs,grow up / grew up,grew up,audio/lexicon/grew_up.mp3
+V-U5L1-03,A Day at Work > Different Jobs > verbs,grow up / grew up,grow up,audio/lexicon/grow_up.mp3
+V-U5L1-04,A Day at Work > Different Jobs > verbs,wear / wore,wear,audio/lexicon/wear.mp3
+V-U5L1-04,A Day at Work > Different Jobs > verbs,wear / wore,wore,audio/lexicon/wore.mp3
+V-U5L1-05,A Day at Work > Different Jobs > verbs,do / did,did,audio/lexicon/did.mp3
+V-U5L1-05,A Day at Work > Different Jobs > verbs,do / did,do,audio/lexicon/do.mp3
+V-U5L2-01,A Day at Work > Jobs I Love! > verbs,grow / grew,grew,audio/lexicon/grew.mp3
+V-U5L2-01,A Day at Work > Jobs I Love! > verbs,grow / grew,grow,audio/lexicon/grow.mp3
+V-U5L2-02,A Day at Work > Jobs I Love! > verbs,become / became,became,audio/lexicon/became.mp3
+V-U5L2-02,A Day at Work > Jobs I Love! > verbs,become / became,become,audio/lexicon/become.mp3
+V-U5L2-03,A Day at Work > Jobs I Love! > verbs,feel / felt,feel,audio/lexicon/feel.mp3
+V-U5L2-03,A Day at Work > Jobs I Love! > verbs,feel / felt,felt,audio/lexicon/felt.mp3
+V-U5L2-04,A Day at Work > Jobs I Love! > verbs,get / got,get,audio/lexicon/get.mp3
+V-U5L2-04,A Day at Work > Jobs I Love! > verbs,get / got,got,audio/lexicon/got.mp3
+V-U5L2-05,A Day at Work > Jobs I Love! > verbs,take / took,take,audio/lexicon/take.mp3
+V-U5L2-05,A Day at Work > Jobs I Love! > verbs,take / took,took,audio/lexicon/took.mp3
+V-U5L3-01,A Day at Work > The Last House > verbs,build / built,build,audio/lexicon/build.mp3
+V-U5L3-01,A Day at Work > The Last House > verbs,build / built,built,audio/lexicon/built.mp3
+V-U5L3-02,A Day at Work > The Last House > verbs,see / saw,saw,audio/lexicon/saw.mp3
+V-U5L3-02,A Day at Work > The Last House > verbs,see / saw,see,audio/lexicon/see.mp3
+V-U5L3-03,A Day at Work > The Last House > verbs,come / came,came,audio/lexicon/came.mp3
+V-U5L3-03,A Day at Work > The Last House > verbs,come / came,come,audio/lexicon/come.mp3
+V-U5L3-04,A Day at Work > The Last House > verbs,say / said,said,audio/lexicon/said.mp3
+V-U5L3-04,A Day at Work > The Last House > verbs,say / said,say,audio/lexicon/say.mp3
+V-U5L3-05,A Day at Work > The Last House > verbs,give / gave,gave,audio/lexicon/gave.mp3
+V-U5L3-05,A Day at Work > The Last House > verbs,give / gave,give,audio/lexicon/give.mp3
+V-U5L4-01,A Day at Work > Heroes Who Fight Fires > verbs,fight / fought,fight,audio/lexicon/fight.mp3
+V-U5L4-01,A Day at Work > Heroes Who Fight Fires > verbs,fight / fought,fought,audio/lexicon/fought.mp3
+V-U5L4-02,A Day at Work > Heroes Who Fight Fires > verbs,keep / kept,keep,audio/lexicon/keep.mp3
+V-U5L4-02,A Day at Work > Heroes Who Fight Fires > verbs,keep / kept,kept,audio/lexicon/kept.mp3
+V-U5L4-03,A Day at Work > Heroes Who Fight Fires > verbs,ring / rang,rang,audio/lexicon/rang.mp3
+V-U5L4-03,A Day at Work > Heroes Who Fight Fires > verbs,ring / rang,ring,audio/lexicon/ring.mp3
+V-U5L4-04,A Day at Work > Heroes Who Fight Fires > verbs,put / put,put,audio/lexicon/put.mp3
+V-U5L4-04,A Day at Work > Heroes Who Fight Fires > verbs,put / put,put,audio/lexicon/put.mp3
+V-U5L4-05,A Day at Work > Heroes Who Fight Fires > verbs,ride / rode,ride,audio/lexicon/ride.mp3
+V-U5L4-05,A Day at Work > Heroes Who Fight Fires > verbs,ride / rode,rode,audio/lexicon/rode.mp3
+W-STL1-I01,The Hundred Dresses > The Hundred Dresses > important,dress,dress,audio/lexicon/dress.mp3
+W-STL1-I02,The Hundred Dresses > The Hundred Dresses > important,closet,closet,audio/lexicon/closet.mp3
+W-STL1-I03,The Hundred Dresses > The Hundred Dresses > important,playground,playground,audio/lexicon/playground.mp3
+W-STL1-I04,The Hundred Dresses > The Hundred Dresses > important,competition,competition,audio/lexicon/competition.mp3
+W-STL1-I05,The Hundred Dresses > The Hundred Dresses > important,drawings,drawings,audio/lexicon/drawings.mp3
+W-STL1-I06,The Hundred Dresses > The Hundred Dresses > important,medal,medal,audio/lexicon/medal.mp3
+W-STL1-I07,The Hundred Dresses > The Hundred Dresses > important,sign,sign,audio/lexicon/sign.mp3
+W-STL1-I08,The Hundred Dresses > The Hundred Dresses > important,letter,letter,audio/lexicon/letter.mp3
+W-STL1-I09,The Hundred Dresses > The Hundred Dresses > important,announce,announce,audio/lexicon/announce.mp3
+W-STL1-I10,The Hundred Dresses > The Hundred Dresses > important,winner,winner,audio/lexicon/winner.mp3
+W-U1L1-E01,The Five Senses > What are the Five Senses? > extra,ears,ears,audio/lexicon/ears.mp3
+W-U1L1-E02,The Five Senses > What are the Five Senses? > extra,tongue,tongue,audio/lexicon/tongue.mp3
+W-U1L1-E03,The Five Senses > What are the Five Senses? > extra,nose,nose,audio/lexicon/nose.mp3
+W-U1L1-E04,The Five Senses > What are the Five Senses? > extra,children,children,audio/lexicon/children.mp3
+W-U1L1-E05,The Five Senses > What are the Five Senses? > extra,classroom,classroom,audio/lexicon/classroom.mp3
+W-U1L1-E06,The Five Senses > What are the Five Senses? > extra,flowers,flowers,audio/lexicon/flowers.mp3
+W-U1L1-E07,The Five Senses > What are the Five Senses? > extra,butterflies,butterflies,audio/lexicon/butterflies.mp3
+W-U1L1-E08,The Five Senses > What are the Five Senses? > extra,question,question,audio/lexicon/question.mp3
+W-U1L1-E09,The Five Senses > What are the Five Senses? > extra,smoke,smoke,audio/lexicon/smoke.mp3
+W-U1L1-E10,The Five Senses > What are the Five Senses? > extra,fire,fire,audio/lexicon/fire.mp3
+W-U1L1-E11,The Five Senses > What are the Five Senses? > extra,stay safe,stay safe,audio/lexicon/stay_safe.mp3
+W-U1L1-E12,The Five Senses > What are the Five Senses? > extra,beautiful,beautiful,audio/lexicon/beautiful.mp3
+W-U1L1-E13,The Five Senses > What are the Five Senses? > extra,senses,senses,audio/lexicon/senses.mp3
+W-U1L1-E14,The Five Senses > What are the Five Senses? > extra,understand,understand,audio/lexicon/understand.mp3
+W-U1L1-E15,The Five Senses > What are the Five Senses? > extra,world,world,audio/lexicon/world.mp3
+W-U1L1-I01,The Five Senses > What are the Five Senses? > important,taste,taste,audio/lexicon/taste.mp3
+W-U1L1-I02,The Five Senses > What are the Five Senses? > important,smell,smell,audio/lexicon/smell.mp3
+W-U1L1-I03,The Five Senses > What are the Five Senses? > important,see,see,audio/lexicon/see.mp3
+W-U1L1-I04,The Five Senses > What are the Five Senses? > important,touch,touch,audio/lexicon/touch.mp3
+W-U1L1-I05,The Five Senses > What are the Five Senses? > important,hear,hear,audio/lexicon/hear.mp3
+W-U1L2-E01,The Five Senses > Healthy Habits > extra,follows,follows,audio/lexicon/follows.mp3
+W-U1L2-E02,The Five Senses > Healthy Habits > extra,habits,habits,audio/lexicon/habits.mp3
+W-U1L2-E03,The Five Senses > Healthy Habits > extra,brush,brush,audio/lexicon/brush.mp3
+W-U1L2-E04,The Five Senses > Healthy Habits > extra,wash,wash,audio/lexicon/wash.mp3
+W-U1L2-E05,The Five Senses > Healthy Habits > extra,exercise,exercise,audio/lexicon/exercise.mp3
+W-U1L2-E06,The Five Senses > Healthy Habits > extra,breakfast,breakfast,audio/lexicon/breakfast.mp3
+W-U1L2-E07,The Five Senses > Healthy Habits > extra,energy,energy,audio/lexicon/energy.mp3
+W-U1L2-E08,The Five Senses > Healthy Habits > extra,during,during,audio/lexicon/during.mp3
+W-U1L2-E09,The Five Senses > Healthy Habits > extra,vegetables,vegetables,audio/lexicon/vegetables.mp3
+W-U1L2-E10,The Five Senses > Healthy Habits > extra,vitamins,vitamins,audio/lexicon/vitamins.mp3
+W-U1L2-E11,The Five Senses > Healthy Habits > extra,together,together,audio/lexicon/together.mp3
+W-U1L2-E12,The Five Senses > Healthy Habits > extra,shower,shower,audio/lexicon/shower.mp3
+W-U1L2-E13,The Five Senses > Healthy Habits > extra,mind,mind,audio/lexicon/mind.mp3
+W-U1L2-E14,The Five Senses > Healthy Habits > extra,sharp,sharp,audio/lexicon/sharp.mp3
+W-U1L2-E15,The Five Senses > Healthy Habits > extra,enough,enough,audio/lexicon/enough.mp3
+W-U1L2-I01,The Five Senses > Healthy Habits > important,healthy,healthy,audio/lexicon/healthy.mp3
+W-U1L2-I02,The Five Senses > Healthy Habits > important,strong,strong,audio/lexicon/strong.mp3
+W-U1L2-I03,The Five Senses > Healthy Habits > important,bread,bread,audio/lexicon/bread.mp3
+W-U1L2-I04,The Five Senses > Healthy Habits > important,sweets,sweets,audio/lexicon/sweets.mp3
+W-U1L2-I05,The Five Senses > Healthy Habits > important,fruits,fruits,audio/lexicon/fruits.mp3
+W-U1L3-E01,The Five Senses > Story Time > extra,through,through,audio/lexicon/through.mp3
+W-U1L3-E02,The Five Senses > Story Time > extra,suddenly,suddenly,audio/lexicon/suddenly.mp3
+W-U1L3-E03,The Five Senses > Story Time > extra,wonderful,wonderful,audio/lexicon/wonderful.mp3
+W-U1L3-E04,The Five Senses > Story Time > extra,outside,outside,audio/lexicon/outside.mp3
+W-U1L3-E05,The Five Senses > Story Time > extra,owner,owner,audio/lexicon/owner.mp3
+W-U1L3-E06,The Five Senses > Story Time > extra,delicious,delicious,audio/lexicon/delicious.mp3
+W-U1L3-E07,The Five Senses > Story Time > extra,moment,moment,audio/lexicon/moment.mp3
+W-U1L3-E08,The Five Senses > Story Time > extra,pocket,pocket,audio/lexicon/pocket.mp3
+W-U1L3-E09,The Five Senses > Story Time > extra,inside,inside,audio/lexicon/inside.mp3
+W-U1L3-E10,The Five Senses > Story Time > extra,clever,clever,audio/lexicon/clever.mp3
+W-U1L3-E11,The Five Senses > Story Time > extra,answer,answer,audio/lexicon/answer.mp3
+W-U1L3-E12,The Five Senses > Story Time > extra,better,better,audio/lexicon/better.mp3
+W-U1L3-E13,The Five Senses > Story Time > extra,others,others,audio/lexicon/others.mp3
+W-U1L3-E14,The Five Senses > Story Time > extra,sound,sound,audio/lexicon/sound.mp3
+W-U1L3-I01,The Five Senses > Story Time > important,market,market,audio/lexicon/market.mp3
+W-U1L3-I02,The Five Senses > Story Time > important,money,money,audio/lexicon/money.mp3
+W-U1L3-I03,The Five Senses > Story Time > important,restaurant,restaurant,audio/lexicon/restaurant.mp3
+W-U1L3-I04,The Five Senses > Story Time > important,soup,soup,audio/lexicon/soup.mp3
+W-U1L3-I05,The Five Senses > Story Time > important,coins,coins,audio/lexicon/coins.mp3
+W-U1L4-E01,The Five Senses > Sequence Words > extra,daily,daily,audio/lexicon/daily.mp3
+W-U1L4-E02,The Five Senses > Sequence Words > extra,routine,routine,audio/lexicon/routine.mp3
+W-U1L4-E03,The Five Senses > Sequence Words > extra,important,important,audio/lexicon/important.mp3
+W-U1L4-E04,The Five Senses > Sequence Words > extra,including,including,audio/lexicon/including.mp3
+W-U1L4-E05,The Five Senses > Sequence Words > extra,study,study,audio/lexicon/study.mp3
+W-U1L4-E06,The Five Senses > Sequence Words > extra,homework,homework,audio/lexicon/homework.mp3
+W-U1L4-E07,The Five Senses > Sequence Words > extra,because,because,audio/lexicon/because.mp3
+W-U1L4-E08,The Five Senses > Sequence Words > extra,hour,hour,audio/lexicon/hour.mp3
+W-U1L4-E09,The Five Senses > Sequence Words > extra,first,first,audio/lexicon/first.mp3
+W-U1L4-E10,The Five Senses > Sequence Words > extra,next,next,audio/lexicon/next.mp3
+W-U1L4-E11,The Five Senses > Sequence Words > extra,then,then,audio/lexicon/then.mp3
+W-U1L4-E12,The Five Senses > Sequence Words > extra,after that,after that,audio/lexicon/after_that.mp3
+W-U1L4-E13,The Five Senses > Sequence Words > extra,finally,finally,audio/lexicon/finally.mp3
+W-U1L4-I01,The Five Senses > Sequence Words > important,teeth,teeth,audio/lexicon/teeth.mp3
+W-U1L4-I02,The Five Senses > Sequence Words > important,snack,snack,audio/lexicon/snack.mp3
+W-U1L4-I03,The Five Senses > Sequence Words > important,sports,sports,audio/lexicon/sports.mp3
+W-U1L4-I04,The Five Senses > Sequence Words > important,milk,milk,audio/lexicon/milk.mp3
+W-U1L4-I05,The Five Senses > Sequence Words > important,water,water,audio/lexicon/water.mp3
+W-U2L1-E01,My Community > Helping the Community > extra,community,community,audio/lexicon/community.mp3
+W-U2L1-E02,My Community > Helping the Community > extra,trash,trash,audio/lexicon/trash.mp3
+W-U2L1-E03,My Community > Helping the Community > extra,things,things,audio/lexicon/things.mp3
+W-U2L1-E04,My Community > Helping the Community > extra,streets,streets,audio/lexicon/streets.mp3
+W-U2L1-E05,My Community > Helping the Community > extra,sometimes,sometimes,audio/lexicon/sometimes.mp3
+W-U2L1-E06,My Community > Helping the Community > extra,neighbors,neighbors,audio/lexicon/neighbors.mp3
+W-U2L1-E07,My Community > Helping the Community > extra,both,both,audio/lexicon/both.mp3
+W-U2L1-E08,My Community > Helping the Community > extra,sister,sister,audio/lexicon/sister.mp3
+W-U2L1-E09,My Community > Helping the Community > extra,clothes,clothes,audio/lexicon/clothes.mp3
+W-U2L1-E10,My Community > Helping the Community > extra,need,need,audio/lexicon/need.mp3
+W-U2L1-E11,My Community > Helping the Community > extra,great,great,audio/lexicon/great.mp3
+W-U2L1-E12,My Community > Helping the Community > extra,people,people,audio/lexicon/people.mp3
+W-U2L1-I01,My Community > Helping the Community > important,collect,collect,audio/lexicon/collect.mp3
+W-U2L1-I02,My Community > Helping the Community > important,plant,plant,audio/lexicon/plant.mp3
+W-U2L1-I03,My Community > Helping the Community > important,clean,clean,audio/lexicon/clean.mp3
+W-U2L1-I04,My Community > Helping the Community > important,volunteer,volunteer,audio/lexicon/volunteer.mp3
+W-U2L1-I05,My Community > Helping the Community > important,feed,feed,audio/lexicon/feed.mp3
+W-U2L2-E01,My Community > Community Problems and Solutions > extra,problems,problems,audio/lexicon/problems.mp3
+W-U2L2-E02,My Community > Community Problems and Solutions > extra,discuss,discuss,audio/lexicon/discuss.mp3
+W-U2L2-E03,My Community > Community Problems and Solutions > extra,especially,especially,audio/lexicon/especially.mp3
+W-U2L2-E04,My Community > Community Problems and Solutions > extra,dirty,dirty,audio/lexicon/dirty.mp3
+W-U2L2-E05,My Community > Community Problems and Solutions > extra,solutions,solutions,audio/lexicon/solutions.mp3
+W-U2L2-E06,My Community > Community Problems and Solutions > extra,instead,instead,audio/lexicon/instead.mp3
+W-U2L2-E07,My Community > Community Problems and Solutions > extra,everyone,everyone,audio/lexicon/everyone.mp3
+W-U2L2-E08,My Community > Community Problems and Solutions > extra,move,move,audio/lexicon/move.mp3
+W-U2L2-E09,My Community > Community Problems and Solutions > extra,solve,solve,audio/lexicon/solve.mp3
+W-U2L2-E10,My Community > Community Problems and Solutions > extra,talk,talk,audio/lexicon/talk.mp3
+W-U2L2-E11,My Community > Community Problems and Solutions > extra,second,second,audio/lexicon/second.mp3
+W-U2L2-E12,My Community > Community Problems and Solutions > extra,third,third,audio/lexicon/third.mp3
+W-U2L2-I01,My Community > Community Problems and Solutions > important,traffic,traffic,audio/lexicon/traffic.mp3
+W-U2L2-I02,My Community > Community Problems and Solutions > important,trash,trash,audio/lexicon/trash.mp3
+W-U2L2-I03,My Community > Community Problems and Solutions > important,street,street,audio/lexicon/street.mp3
+W-U2L2-I04,My Community > Community Problems and Solutions > important,road,road,audio/lexicon/road.mp3
+W-U2L2-I05,My Community > Community Problems and Solutions > important,neighbors,neighbors,audio/lexicon/neighbors.mp3
+W-U2L3-E01,My Community > My Culture > extra,traditions,traditions,audio/lexicon/traditions.mp3
+W-U2L3-E02,My Community > My Culture > extra,celebrate,celebrate,audio/lexicon/celebrate.mp3
+W-U2L3-E03,My Community > My Culture > extra,decorations,decorations,audio/lexicon/decorations.mp3
+W-U2L3-E04,My Community > My Culture > extra,special,special,audio/lexicon/special.mp3
+W-U2L3-E05,My Community > My Culture > extra,bright,bright,audio/lexicon/bright.mp3
+W-U2L3-E06,My Community > My Culture > extra,events,events,audio/lexicon/events.mp3
+W-U2L3-E07,My Community > My Culture > extra,share,share,audio/lexicon/share.mp3
+W-U2L3-E08,My Community > My Culture > extra,colorful,colorful,audio/lexicon/colorful.mp3
+W-U2L3-E09,My Community > My Culture > extra,harvest,harvest,audio/lexicon/harvest.mp3
+W-U2L3-E10,My Community > My Culture > extra,crafts,crafts,audio/lexicon/crafts.mp3
+W-U2L3-E11,My Community > My Culture > extra,different,different,audio/lexicon/different.mp3
+W-U2L3-E12,My Community > My Culture > extra,designs,designs,audio/lexicon/designs.mp3
+W-U2L3-E13,My Community > My Culture > extra,festivals,festivals,audio/lexicon/festivals.mp3
+W-U2L3-E14,My Community > My Culture > extra,pottery,pottery,audio/lexicon/pottery.mp3
+W-U2L3-E15,My Community > My Culture > extra,weave,weave,audio/lexicon/weave.mp3
+W-U2L3-E16,My Community > My Culture > extra,carpets,carpets,audio/lexicon/carpets.mp3
+W-U2L3-E17,My Community > My Culture > extra,modern,modern,audio/lexicon/modern.mp3
+W-U2L3-E18,My Community > My Culture > extra,region,region,audio/lexicon/region.mp3
+W-U2L3-I01,My Community > My Culture > important,outfits,outfits,audio/lexicon/outfits.mp3
+W-U2L3-I02,My Community > My Culture > important,rice,rice,audio/lexicon/rice.mp3
+W-U2L3-I03,My Community > My Culture > important,cotton,cotton,audio/lexicon/cotton.mp3
+W-U2L3-I04,My Community > My Culture > important,sugar cane,sugar cane,audio/lexicon/sugar_cane.mp3
+W-U2L3-I05,My Community > My Culture > important,factory,factory,audio/lexicon/factory.mp3
+W-U2L4-E01,My Community > Diary Entry > extra,amazing,amazing,audio/lexicon/amazing.mp3
+W-U2L4-E02,My Community > Diary Entry > extra,history,history,audio/lexicon/history.mp3
+W-U2L4-E03,My Community > Diary Entry > extra,market,market,audio/lexicon/market.mp3
+W-U2L4-E04,My Community > Diary Entry > extra,wooden,wooden,audio/lexicon/wooden.mp3
+W-U2L4-E05,My Community > Diary Entry > extra,fresh,fresh,audio/lexicon/fresh.mp3
+W-U2L4-E06,My Community > Diary Entry > extra,gardens,gardens,audio/lexicon/gardens.mp3
+W-U2L4-E07,My Community > Diary Entry > extra,buildings,buildings,audio/lexicon/buildings.mp3
+W-U2L4-E08,My Community > Diary Entry > extra,safely,safely,audio/lexicon/safely.mp3
+W-U2L4-E09,My Community > Diary Entry > extra,train,train,audio/lexicon/train.mp3
+W-U2L4-E10,My Community > Diary Entry > extra,photos,photos,audio/lexicon/photos.mp3
+W-U2L4-E11,My Community > Diary Entry > extra,still,still,audio/lexicon/still.mp3
+W-U2L4-E12,My Community > Diary Entry > extra,rich,rich,audio/lexicon/rich.mp3
+W-U2L4-I01,My Community > Diary Entry > important,neighborhood,neighborhood,audio/lexicon/neighborhood.mp3
+W-U2L4-I02,My Community > Diary Entry > important,fruits,fruits,audio/lexicon/fruits.mp3
+W-U2L4-I03,My Community > Diary Entry > important,vegetables,vegetables,audio/lexicon/vegetables.mp3
+W-U2L4-I04,My Community > Diary Entry > important,stalls,stalls,audio/lexicon/stalls.mp3
+W-U2L4-I05,My Community > Diary Entry > important,station,station,audio/lexicon/station.mp3
+W-U2L5-E01,My Community > Poster > extra,air,air,audio/lexicon/air.mp3
+W-U2L5-E02,My Community > Poster > extra,pollution,pollution,audio/lexicon/pollution.mp3
+W-U2L5-E03,My Community > Poster > extra,less,less,audio/lexicon/less.mp3
+W-U2L5-E04,My Community > Poster > extra,title,title,audio/lexicon/title.mp3
+W-U2L5-E05,My Community > Poster > extra,drawings,drawings,audio/lexicon/drawings.mp3
+W-U2L5-I01,My Community > Poster > important,walk,walk,audio/lexicon/walk.mp3
+W-U2L5-I02,My Community > Poster > important,cycle,cycle,audio/lexicon/cycle.mp3
+W-U2L5-I03,My Community > Poster > important,plastic,plastic,audio/lexicon/plastic.mp3
+W-U2L5-I04,My Community > Poster > important,trees,trees,audio/lexicon/trees.mp3
+W-U2L5-I05,My Community > Poster > important,poster,poster,audio/lexicon/poster.mp3
+W-U3L1-E01,Animals in Our World > Let's Meet the Animals! > extra,usually,usually,audio/lexicon/usually.mp3
+W-U3L1-E02,Animals in Our World > Let's Meet the Animals! > extra,forest,forest,audio/lexicon/forest.mp3
+W-U3L1-E03,Animals in Our World > Let's Meet the Animals! > extra,guide,guide,audio/lexicon/guide.mp3
+W-U3L1-E04,Animals in Our World > Let's Meet the Animals! > extra,animals,animals,audio/lexicon/animals.mp3
+W-U3L1-E05,Animals in Our World > Let's Meet the Animals! > extra,hunt,hunt,audio/lexicon/hunt.mp3
+W-U3L1-E06,Animals in Our World > Let's Meet the Animals! > extra,program,program,audio/lexicon/program.mp3
+W-U3L1-E07,Animals in Our World > Let's Meet the Animals! > extra,climbing,climbing,audio/lexicon/climbing.mp3
+W-U3L1-E08,Animals in Our World > Let's Meet the Animals! > extra,sure,sure,audio/lexicon/sure.mp3
+W-U3L1-I01,Animals in Our World > Let's Meet the Animals! > important,lion,lion,audio/lexicon/lion.mp3
+W-U3L1-I02,Animals in Our World > Let's Meet the Animals! > important,monkey,monkey,audio/lexicon/monkey.mp3
+W-U3L1-I03,Animals in Our World > Let's Meet the Animals! > important,elephant,elephant,audio/lexicon/elephant.mp3
+W-U3L1-I04,Animals in Our World > Let's Meet the Animals! > important,giraffe,giraffe,audio/lexicon/giraffe.mp3
+W-U3L1-I05,Animals in Our World > Let's Meet the Animals! > important,zebra,zebra,audio/lexicon/zebra.mp3
+W-U3L1-I06,Animals in Our World > Let's Meet the Animals! > important,bear,bear,audio/lexicon/bear.mp3
+W-U3L1-I07,Animals in Our World > Let's Meet the Animals! > important,visitors,visitors,audio/lexicon/visitors.mp3
+W-U3L1-I08,Animals in Our World > Let's Meet the Animals! > important,leaves,leaves,audio/lexicon/leaves.mp3
+W-U3L1-I09,Animals in Our World > Let's Meet the Animals! > important,striped,striped,audio/lexicon/striped.mp3
+W-U3L1-I10,Animals in Our World > Let's Meet the Animals! > important,jungle,jungle,audio/lexicon/jungle.mp3
+W-U3L2-E01,Animals in Our World > Taking Care of Animals > extra,safe,safe,audio/lexicon/safe.mp3
+W-U3L2-E02,Animals in Our World > Taking Care of Animals > extra,live,live,audio/lexicon/live.mp3
+W-U3L2-E03,Animals in Our World > Taking Care of Animals > extra,attention,attention,audio/lexicon/attention.mp3
+W-U3L2-E04,Animals in Our World > Taking Care of Animals > extra,spaces,spaces,audio/lexicon/spaces.mp3
+W-U3L2-E05,Animals in Our World > Taking Care of Animals > extra,owners,owners,audio/lexicon/owners.mp3
+W-U3L2-E06,Animals in Our World > Taking Care of Animals > extra,check,check,audio/lexicon/check.mp3
+W-U3L2-E07,Animals in Our World > Taking Care of Animals > extra,health,health,audio/lexicon/health.mp3
+W-U3L2-E08,Animals in Our World > Taking Care of Animals > extra,face,face,audio/lexicon/face.mp3
+W-U3L2-E09,Animals in Our World > Taking Care of Animals > extra,challenges,challenges,audio/lexicon/challenges.mp3
+W-U3L2-E10,Animals in Our World > Taking Care of Animals > extra,protect,protect,audio/lexicon/protect.mp3
+W-U3L2-E11,Animals in Our World > Taking Care of Animals > extra,pets,pets,audio/lexicon/pets.mp3
+W-U3L2-E12,Animals in Our World > Taking Care of Animals > extra,tank,tank,audio/lexicon/tank.mp3
+W-U3L2-E13,Animals in Our World > Taking Care of Animals > extra,kindness,kindness,audio/lexicon/kindness.mp3
+W-U3L2-E14,Animals in Our World > Taking Care of Animals > extra,create,create,audio/lexicon/create.mp3
+W-U3L2-I01,Animals in Our World > Taking Care of Animals > important,wild,wild,audio/lexicon/wild.mp3
+W-U3L2-I02,Animals in Our World > Taking Care of Animals > important,zoo,zoo,audio/lexicon/zoo.mp3
+W-U3L2-I03,Animals in Our World > Taking Care of Animals > important,vet,vet,audio/lexicon/vet.mp3
+W-U3L2-I04,Animals in Our World > Taking Care of Animals > important,officer,officer,audio/lexicon/officer.mp3
+W-U3L2-I05,Animals in Our World > Taking Care of Animals > important,cage,cage,audio/lexicon/cage.mp3
+W-U3L3-E01,Animals in Our World > The Old Lion and the Fox > extra,danger,danger,audio/lexicon/danger.mp3
+W-U3L3-E02,Animals in Our World > The Old Lion and the Fox > extra,once,once,audio/lexicon/once.mp3
+W-U3L3-E03,Animals in Our World > The Old Lion and the Fox > extra,anymore,anymore,audio/lexicon/anymore.mp3
+W-U3L3-E04,Animals in Our World > The Old Lion and the Fox > extra,trick,trick,audio/lexicon/trick.mp3
+W-U3L3-E05,Animals in Our World > The Old Lion and the Fox > extra,pretend,pretend,audio/lexicon/pretend.mp3
+W-U3L3-E06,Animals in Our World > The Old Lion and the Fox > extra,sick,sick,audio/lexicon/sick.mp3
+W-U3L3-E07,Animals in Our World > The Old Lion and the Fox > extra,wise,wise,audio/lexicon/wise.mp3
+W-U3L3-E08,Animals in Our World > The Old Lion and the Fox > extra,replied,replied,audio/lexicon/replied.mp3
+W-U3L3-E09,Animals in Our World > The Old Lion and the Fox > extra,mistakes,mistakes,audio/lexicon/mistakes.mp3
+W-U3L3-E10,Animals in Our World > The Old Lion and the Fox > extra,ran away,ran away,audio/lexicon/ran_away.mp3
+W-U3L3-E11,Animals in Our World > The Old Lion and the Fox > extra,visitor,visitor,audio/lexicon/visitor.mp3
+W-U3L3-E12,Animals in Our World > The Old Lion and the Fox > extra,before,before,audio/lexicon/before.mp3
+W-U3L3-E13,Animals in Our World > The Old Lion and the Fox > extra,laughing,laughing,audio/lexicon/laughing.mp3
+W-U3L3-E14,Animals in Our World > The Old Lion and the Fox > extra,dear,dear,audio/lexicon/dear.mp3
+W-U3L3-I01,Animals in Our World > The Old Lion and the Fox > important,cave,cave,audio/lexicon/cave.mp3
+W-U3L3-I02,Animals in Our World > The Old Lion and the Fox > important,fox,fox,audio/lexicon/fox.mp3
+W-U3L3-I03,Animals in Our World > The Old Lion and the Fox > important,footprints,footprints,audio/lexicon/footprints.mp3
+W-U3L3-I04,Animals in Our World > The Old Lion and the Fox > important,entrance,entrance,audio/lexicon/entrance.mp3
+W-U3L3-I05,Animals in Our World > The Old Lion and the Fox > important,weak,weak,audio/lexicon/weak.mp3
+W-U3L4-E01,Animals in Our World > Research Report > extra,disappearing,disappearing,audio/lexicon/disappearing.mp3
+W-U3L4-E02,Animals in Our World > Research Report > extra,forever,forever,audio/lexicon/forever.mp3
+W-U3L4-E03,Animals in Our World > Research Report > extra,endangered,endangered,audio/lexicon/endangered.mp3
+W-U3L4-E04,Animals in Our World > Research Report > extra,species,species,audio/lexicon/species.mp3
+W-U3L4-E05,Animals in Our World > Research Report > extra,facts,facts,audio/lexicon/facts.mp3
+W-U3L4-E06,Animals in Our World > Research Report > extra,Arabian,Arabian,audio/lexicon/arabian.mp3
+W-U3L4-E07,Animals in Our World > Research Report > extra,remain,remain,audio/lexicon/remain.mp3
+W-U3L4-E08,Animals in Our World > Research Report > extra,reason,reason,audio/lexicon/reason.mp3
+W-U3L4-E09,Animals in Our World > Research Report > extra,habitats,habitats,audio/lexicon/habitats.mp3
+W-U3L4-E10,Animals in Our World > Research Report > extra,gentle,gentle,audio/lexicon/gentle.mp3
+W-U3L4-E11,Animals in Our World > Research Report > extra,stop,stop,audio/lexicon/stop.mp3
+W-U3L4-E12,Animals in Our World > Research Report > extra,area,area,audio/lexicon/area.mp3
+W-U3L4-I01,Animals in Our World > Research Report > important,leopard,leopard,audio/lexicon/leopard.mp3
+W-U3L4-I02,Animals in Our World > Research Report > important,dugong,dugong,audio/lexicon/dugong.mp3
+W-U3L4-I03,Animals in Our World > Research Report > important,sea grass,sea grass,audio/lexicon/sea_grass.mp3
+W-U3L4-I04,Animals in Our World > Research Report > important,fishing nets,fishing nets,audio/lexicon/fishing_nets.mp3
+W-U3L4-I05,Animals in Our World > Research Report > important,pollution,pollution,audio/lexicon/pollution.mp3
+W-U4L1-E01,Egypt - My Homeland > Places in Egypt > extra,places,places,audio/lexicon/places.mp3
+W-U4L1-E02,Egypt - My Homeland > Places in Egypt > extra,tour guide,tour guide,audio/lexicon/tour_guide.mp3
+W-U4L1-E03,Egypt - My Homeland > Places in Egypt > extra,tourists,tourists,audio/lexicon/tourists.mp3
+W-U4L1-E04,Egypt - My Homeland > Places in Egypt > extra,pictures,pictures,audio/lexicon/pictures.mp3
+W-U4L1-E05,Egypt - My Homeland > Places in Egypt > extra,camel,camel,audio/lexicon/camel.mp3
+W-U4L1-E06,Egypt - My Homeland > Places in Egypt > extra,near,near,audio/lexicon/near.mp3
+W-U4L1-E07,Egypt - My Homeland > Places in Egypt > extra,grand,grand,audio/lexicon/grand.mp3
+W-U4L1-E08,Egypt - My Homeland > Places in Egypt > extra,treasures,treasures,audio/lexicon/treasures.mp3
+W-U4L1-E09,Egypt - My Homeland > Places in Egypt > extra,gifts,gifts,audio/lexicon/gifts.mp3
+W-U4L1-E10,Egypt - My Homeland > Places in Egypt > extra,bazaar,bazaar,audio/lexicon/bazaar.mp3
+W-U4L1-E11,Egypt - My Homeland > Places in Egypt > extra,nice,nice,audio/lexicon/nice.mp3
+W-U4L1-E12,Egypt - My Homeland > Places in Egypt > extra,some,some,audio/lexicon/some.mp3
+W-U4L1-I01,Egypt - My Homeland > Places in Egypt > important,Pyramids,Pyramids,audio/lexicon/pyramids.mp3
+W-U4L1-I02,Egypt - My Homeland > Places in Egypt > important,Nile River,Nile River,audio/lexicon/nile_river.mp3
+W-U4L1-I03,Egypt - My Homeland > Places in Egypt > important,Cairo Tower,Cairo Tower,audio/lexicon/cairo_tower.mp3
+W-U4L1-I04,Egypt - My Homeland > Places in Egypt > important,Siwa Oasis,Siwa Oasis,audio/lexicon/siwa_oasis.mp3
+W-U4L1-I05,Egypt - My Homeland > Places in Egypt > important,Egyptian Museum,Egyptian Museum,audio/lexicon/egyptian_museum.mp3
+W-U4L2-E01,Egypt - My Homeland > My City > extra,teachers,teachers,audio/lexicon/teachers.mp3
+W-U4L2-E02,Egypt - My Homeland > My City > extra,students,students,audio/lexicon/students.mp3
+W-U4L2-E03,Egypt - My Homeland > My City > extra,friends,friends,audio/lexicon/friends.mp3
+W-U4L2-E04,Egypt - My Homeland > My City > extra,restaurants,restaurants,audio/lexicon/restaurants.mp3
+W-U4L2-E05,Egypt - My Homeland > My City > extra,books,books,audio/lexicon/books.mp3
+W-U4L2-E06,Egypt - My Homeland > My City > extra,borrow,borrow,audio/lexicon/borrow.mp3
+W-U4L2-E07,Egypt - My Homeland > My City > extra,another,another,audio/lexicon/another.mp3
+W-U4L2-E08,Egypt - My Homeland > My City > extra,doctors,doctors,audio/lexicon/doctors.mp3
+W-U4L2-E09,Egypt - My Homeland > My City > extra,nurses,nurses,audio/lexicon/nurses.mp3
+W-U4L2-E10,Egypt - My Homeland > My City > extra,letters,letters,audio/lexicon/letters.mp3
+W-U4L2-E11,Egypt - My Homeland > My City > extra,packages,packages,audio/lexicon/packages.mp3
+W-U4L2-E12,Egypt - My Homeland > My City > extra,connected,connected,audio/lexicon/connected.mp3
+W-U4L2-E13,Egypt - My Homeland > My City > extra,stores,stores,audio/lexicon/stores.mp3
+W-U4L2-E14,Egypt - My Homeland > My City > extra,stay,stay,audio/lexicon/stay.mp3
+W-U4L2-I01,Egypt - My Homeland > My City > important,library,library,audio/lexicon/library.mp3
+W-U4L2-I02,Egypt - My Homeland > My City > important,school,school,audio/lexicon/school.mp3
+W-U4L2-I03,Egypt - My Homeland > My City > important,shopping mall,shopping mall,audio/lexicon/shopping_mall.mp3
+W-U4L2-I04,Egypt - My Homeland > My City > important,post office,post office,audio/lexicon/post_office.mp3
+W-U4L2-I05,Egypt - My Homeland > My City > important,hospital,hospital,audio/lexicon/hospital.mp3
+W-U4L3-E01,Egypt - My Homeland > Math: Big Numbers > extra,ten,ten,audio/lexicon/ten.mp3
+W-U4L3-E02,Egypt - My Homeland > Math: Big Numbers > extra,hundred,hundred,audio/lexicon/hundred.mp3
+W-U4L3-E03,Egypt - My Homeland > Math: Big Numbers > extra,thousand,thousand,audio/lexicon/thousand.mp3
+W-U4L3-E04,Egypt - My Homeland > Math: Big Numbers > extra,million,million,audio/lexicon/million.mp3
+W-U4L3-E05,Egypt - My Homeland > Math: Big Numbers > extra,billion,billion,audio/lexicon/billion.mp3
+W-U4L3-E06,Egypt - My Homeland > Math: Big Numbers > extra,China,China,audio/lexicon/china.mp3
+W-U4L3-E07,Egypt - My Homeland > Math: Big Numbers > extra,populations,populations,audio/lexicon/populations.mp3
+W-U4L3-E08,Egypt - My Homeland > Math: Big Numbers > extra,largest,largest,audio/lexicon/largest.mp3
+W-U4L3-E09,Egypt - My Homeland > Math: Big Numbers > extra,reached,reached,audio/lexicon/reached.mp3
+W-U4L4-E01,Egypt - My Homeland > Writing a Blog > extra,mountain,mountain,audio/lexicon/mountain.mp3
+W-U4L4-E02,Egypt - My Homeland > Writing a Blog > extra,early,early,audio/lexicon/early.mp3
+W-U4L4-E03,Egypt - My Homeland > Writing a Blog > extra,climb,climb,audio/lexicon/climb.mp3
+W-U4L4-E04,Egypt - My Homeland > Writing a Blog > extra,warm,warm,audio/lexicon/warm.mp3
+W-U4L4-E05,Egypt - My Homeland > Writing a Blog > extra,plants,plants,audio/lexicon/plants.mp3
+W-U4L4-E06,Egypt - My Homeland > Writing a Blog > extra,popular,popular,audio/lexicon/popular.mp3
+W-U4L4-E07,Egypt - My Homeland > Writing a Blog > extra,adventure,adventure,audio/lexicon/adventure.mp3
+W-U4L4-E08,Egypt - My Homeland > Writing a Blog > extra,enjoy,enjoy,audio/lexicon/enjoy.mp3
+W-U4L4-E09,Egypt - My Homeland > Writing a Blog > extra,natural,natural,audio/lexicon/natural.mp3
+W-U4L4-E10,Egypt - My Homeland > Writing a Blog > extra,daytime,daytime,audio/lexicon/daytime.mp3
+W-U4L4-E11,Egypt - My Homeland > Writing a Blog > extra,oasis,oasis,audio/lexicon/oasis.mp3
+W-U4L4-E12,Egypt - My Homeland > Writing a Blog > extra,sweet,sweet,audio/lexicon/sweet.mp3
+W-U4L4-E13,Egypt - My Homeland > Writing a Blog > extra,dates,dates,audio/lexicon/dates.mp3
+W-U4L4-I01,Egypt - My Homeland > Writing a Blog > important,St. Catherine,St. Catherine,audio/lexicon/st_catherine.mp3
+W-U4L4-I02,Egypt - My Homeland > Writing a Blog > important,monastery,monastery,audio/lexicon/monastery.mp3
+W-U4L4-I03,Egypt - My Homeland > Writing a Blog > important,rocks,rocks,audio/lexicon/rocks.mp3
+W-U4L4-I04,Egypt - My Homeland > Writing a Blog > important,nature,nature,audio/lexicon/nature.mp3
+W-U4L4-I05,Egypt - My Homeland > Writing a Blog > important,leaflet,leaflet,audio/lexicon/leaflet.mp3
+W-U5L1-E01,A Day at Work > Different Jobs > extra,jobs,jobs,audio/lexicon/jobs.mp3
+W-U5L1-E02,A Day at Work > Different Jobs > extra,costumes,costumes,audio/lexicon/costumes.mp3
+W-U5L1-E03,A Day at Work > Different Jobs > extra,coat,coat,audio/lexicon/coat.mp3
+W-U5L1-E04,A Day at Work > Different Jobs > extra,helmet,helmet,audio/lexicon/helmet.mp3
+W-U5L1-E05,A Day at Work > Different Jobs > extra,design,design,audio/lexicon/design.mp3
+W-U5L1-E06,A Day at Work > Different Jobs > extra,uniform,uniform,audio/lexicon/uniform.mp3
+W-U5L1-E07,A Day at Work > Different Jobs > extra,patients,patients,audio/lexicon/patients.mp3
+W-U5L1-E08,A Day at Work > Different Jobs > extra,save,save,audio/lexicon/save.mp3
+W-U5L1-E09,A Day at Work > Different Jobs > extra,really,really,audio/lexicon/really.mp3
+W-U5L1-E10,A Day at Work > Different Jobs > extra,fires,fires,audio/lexicon/fires.mp3
+W-U5L1-I01,A Day at Work > Different Jobs > important,doctor,doctor,audio/lexicon/doctor.mp3
+W-U5L1-I02,A Day at Work > Different Jobs > important,nurse,nurse,audio/lexicon/nurse.mp3
+W-U5L1-I03,A Day at Work > Different Jobs > important,teacher,teacher,audio/lexicon/teacher.mp3
+W-U5L1-I04,A Day at Work > Different Jobs > important,engineer,engineer,audio/lexicon/engineer.mp3
+W-U5L1-I05,A Day at Work > Different Jobs > important,firefighter,firefighter,audio/lexicon/firefighter.mp3
+W-U5L2-E01,A Day at Work > Jobs I Love! > extra,kind,kind,audio/lexicon/kind.mp3
+W-U5L2-E02,A Day at Work > Jobs I Love! > extra,brave,brave,audio/lexicon/brave.mp3
+W-U5L2-E03,A Day at Work > Jobs I Love! > extra,marks,marks,audio/lexicon/marks.mp3
+W-U5L2-E04,A Day at Work > Jobs I Love! > extra,wildlife,wildlife,audio/lexicon/wildlife.mp3
+W-U5L2-E05,A Day at Work > Jobs I Love! > extra,stories,stories,audio/lexicon/stories.mp3
+W-U5L2-E06,A Day at Work > Jobs I Love! > extra,shows,shows,audio/lexicon/shows.mp3
+W-U5L2-E07,A Day at Work > Jobs I Love! > extra,smiles,smiles,audio/lexicon/smiles.mp3
+W-U5L2-E08,A Day at Work > Jobs I Love! > extra,loud,loud,audio/lexicon/loud.mp3
+W-U5L2-E09,A Day at Work > Jobs I Love! > extra,exciting,exciting,audio/lexicon/exciting.mp3
+W-U5L2-E10,A Day at Work > Jobs I Love! > extra,voices,voices,audio/lexicon/voices.mp3
+W-U5L2-E11,A Day at Work > Jobs I Love! > extra,cartoons,cartoons,audio/lexicon/cartoons.mp3
+W-U5L2-E12,A Day at Work > Jobs I Love! > extra,characters,characters,audio/lexicon/characters.mp3
+W-U5L2-E13,A Day at Work > Jobs I Love! > extra,large,large,audio/lexicon/large.mp3
+W-U5L2-E14,A Day at Work > Jobs I Love! > extra,wait,wait,audio/lexicon/wait.mp3
+W-U5L2-I01,A Day at Work > Jobs I Love! > important,mentor,mentor,audio/lexicon/mentor.mp3
+W-U5L2-I02,A Day at Work > Jobs I Love! > important,photographer,photographer,audio/lexicon/photographer.mp3
+W-U5L2-I03,A Day at Work > Jobs I Love! > important,puppets,puppets,audio/lexicon/puppets.mp3
+W-U5L2-I04,A Day at Work > Jobs I Love! > important,shy,shy,audio/lexicon/shy.mp3
+W-U5L2-I05,A Day at Work > Jobs I Love! > important,children,children,audio/lexicon/children.mp3
+W-U5L3-E01,A Day at Work > The Last House > extra,skilled,skilled,audio/lexicon/skilled.mp3
+W-U5L3-E02,A Day at Work > The Last House > extra,village,village,audio/lexicon/village.mp3
+W-U5L3-E03,A Day at Work > The Last House > extra,admire,admire,audio/lexicon/admire.mp3
+W-U5L3-E04,A Day at Work > The Last House > extra,rest,rest,audio/lexicon/rest.mp3
+W-U5L3-E05,A Day at Work > The Last House > extra,retire,retire,audio/lexicon/retire.mp3
+W-U5L3-E06,A Day at Work > The Last House > extra,request,request,audio/lexicon/request.mp3
+W-U5L3-E07,A Day at Work > The Last House > extra,gift,gift,audio/lexicon/gift.mp3
+W-U5L3-E08,A Day at Work > The Last House > extra,heart,heart,audio/lexicon/heart.mp3
+W-U5L3-E09,A Day at Work > The Last House > extra,fit,fit,audio/lexicon/fit.mp3
+W-U5L3-E10,A Day at Work > The Last House > extra,nothing,nothing,audio/lexicon/nothing.mp3
+W-U5L3-E11,A Day at Work > The Last House > extra,kindly,kindly,audio/lexicon/kindly.mp3
+W-U5L3-E12,A Day at Work > The Last House > extra,shock,shock,audio/lexicon/shock.mp3
+W-U5L3-E13,A Day at Work > The Last House > extra,regret,regret,audio/lexicon/regret.mp3
+W-U5L3-E14,A Day at Work > The Last House > extra,carelessly,carelessly,audio/lexicon/carelessly.mp3
+W-U5L3-E15,A Day at Work > The Last House > extra,repair,repair,audio/lexicon/repair.mp3
+W-U5L3-E16,A Day at Work > The Last House > extra,hammered,hammered,audio/lexicon/hammered.mp3
+W-U5L3-I01,A Day at Work > The Last House > important,carpenter,carpenter,audio/lexicon/carpenter.mp3
+W-U5L3-I02,A Day at Work > The Last House > important,king,king,audio/lexicon/king.mp3
+W-U5L3-I03,A Day at Work > The Last House > important,nail,nail,audio/lexicon/nail.mp3
+W-U5L3-I04,A Day at Work > The Last House > important,furniture,furniture,audio/lexicon/furniture.mp3
+W-U5L3-I05,A Day at Work > The Last House > important,keys,keys,audio/lexicon/keys.mp3
+W-U5L4-E01,A Day at Work > Heroes Who Fight Fires > extra,heroes,heroes,audio/lexicon/heroes.mp3
+W-U5L4-E02,A Day at Work > Heroes Who Fight Fires > extra,neighbor,neighbor,audio/lexicon/neighbor.mp3
+W-U5L4-E03,A Day at Work > Heroes Who Fight Fires > extra,local,local,audio/lexicon/local.mp3
+W-U5L4-E04,A Day at Work > Heroes Who Fight Fires > extra,fire station,fire station,audio/lexicon/fire_station.mp3
+W-U5L4-E05,A Day at Work > Heroes Who Fight Fires > extra,thick,thick,audio/lexicon/thick.mp3
+W-U5L4-E06,A Day at Work > Heroes Who Fight Fires > extra,protective,protective,audio/lexicon/protective.mp3
+W-U5L4-E07,A Day at Work > Heroes Who Fight Fires > extra,equipment,equipment,audio/lexicon/equipment.mp3
+W-U5L4-E08,A Day at Work > Heroes Who Fight Fires > extra,ready,ready,audio/lexicon/ready.mp3
+W-U5L4-E09,A Day at Work > Heroes Who Fight Fires > extra,alarm,alarm,audio/lexicon/alarm.mp3
+W-U5L4-E10,A Day at Work > Heroes Who Fight Fires > extra,team,team,audio/lexicon/team.mp3
+W-U5L4-E11,A Day at Work > Heroes Who Fight Fires > extra,tools,tools,audio/lexicon/tools.mp3
+W-U5L4-E12,A Day at Work > Heroes Who Fight Fires > extra,dangerous,dangerous,audio/lexicon/dangerous.mp3
+W-U5L4-E13,A Day at Work > Heroes Who Fight Fires > extra,difference,difference,audio/lexicon/difference.mp3
+W-U5L4-I01,A Day at Work > Heroes Who Fight Fires > important,stripes,stripes,audio/lexicon/stripes.mp3
+W-U5L4-I02,A Day at Work > Heroes Who Fight Fires > important,helmet,helmet,audio/lexicon/helmet.mp3
+W-U5L4-I03,A Day at Work > Heroes Who Fight Fires > important,hose,hose,audio/lexicon/hose.mp3
+W-U5L4-I04,A Day at Work > Heroes Who Fight Fires > important,ladder,ladder,audio/lexicon/ladder.mp3
+W-U5L4-I05,A Day at Work > Heroes Who Fight Fires > important,fire truck,fire truck,audio/lexicon/fire_truck.mp3

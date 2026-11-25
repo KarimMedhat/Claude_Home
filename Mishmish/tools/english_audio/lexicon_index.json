@@ -1,0 +1,2816 @@
+{
+ "taste": {
+  "clip_id": "L-taste",
+  "number": "001",
+  "spoken_text": "taste",
+  "file": "audio/lexicon/taste.mp3"
+ },
+ "smell": {
+  "clip_id": "L-smell",
+  "number": "002",
+  "spoken_text": "smell",
+  "file": "audio/lexicon/smell.mp3"
+ },
+ "see": {
+  "clip_id": "L-see",
+  "number": "003",
+  "spoken_text": "see",
+  "file": "audio/lexicon/see.mp3"
+ },
+ "touch": {
+  "clip_id": "L-touch",
+  "number": "004",
+  "spoken_text": "touch",
+  "file": "audio/lexicon/touch.mp3"
+ },
+ "hear": {
+  "clip_id": "L-hear",
+  "number": "005",
+  "spoken_text": "hear",
+  "file": "audio/lexicon/hear.mp3"
+ },
+ "ears": {
+  "clip_id": "L-ears",
+  "number": "006",
+  "spoken_text": "ears",
+  "file": "audio/lexicon/ears.mp3"
+ },
+ "tongue": {
+  "clip_id": "L-tongue",
+  "number": "007",
+  "spoken_text": "tongue",
+  "file": "audio/lexicon/tongue.mp3"
+ },
+ "nose": {
+  "clip_id": "L-nose",
+  "number": "008",
+  "spoken_text": "nose",
+  "file": "audio/lexicon/nose.mp3"
+ },
+ "children": {
+  "clip_id": "L-children",
+  "number": "009",
+  "spoken_text": "children",
+  "file": "audio/lexicon/children.mp3"
+ },
+ "classroom": {
+  "clip_id": "L-classroom",
+  "number": "010",
+  "spoken_text": "classroom",
+  "file": "audio/lexicon/classroom.mp3"
+ },
+ "flowers": {
+  "clip_id": "L-flowers",
+  "number": "011",
+  "spoken_text": "flowers",
+  "file": "audio/lexicon/flowers.mp3"
+ },
+ "butterflies": {
+  "clip_id": "L-butterflies",
+  "number": "012",
+  "spoken_text": "butterflies",
+  "file": "audio/lexicon/butterflies.mp3"
+ },
+ "question": {
+  "clip_id": "L-question",
+  "number": "013",
+  "spoken_text": "question",
+  "file": "audio/lexicon/question.mp3"
+ },
+ "smoke": {
+  "clip_id": "L-smoke",
+  "number": "014",
+  "spoken_text": "smoke",
+  "file": "audio/lexicon/smoke.mp3"
+ },
+ "fire": {
+  "clip_id": "L-fire",
+  "number": "015",
+  "spoken_text": "fire",
+  "file": "audio/lexicon/fire.mp3"
+ },
+ "stay_safe": {
+  "clip_id": "L-stay_safe",
+  "number": "016",
+  "spoken_text": "stay safe",
+  "file": "audio/lexicon/stay_safe.mp3"
+ },
+ "beautiful": {
+  "clip_id": "L-beautiful",
+  "number": "017",
+  "spoken_text": "beautiful",
+  "file": "audio/lexicon/beautiful.mp3"
+ },
+ "senses": {
+  "clip_id": "L-senses",
+  "number": "018",
+  "spoken_text": "senses",
+  "file": "audio/lexicon/senses.mp3"
+ },
+ "understand": {
+  "clip_id": "L-understand",
+  "number": "019",
+  "spoken_text": "understand",
+  "file": "audio/lexicon/understand.mp3"
+ },
+ "world": {
+  "clip_id": "L-world",
+  "number": "020",
+  "spoken_text": "world",
+  "file": "audio/lexicon/world.mp3"
+ },
+ "learn": {
+  "clip_id": "L-learn",
+  "number": "021",
+  "spoken_text": "learn",
+  "file": "audio/lexicon/learn.mp3"
+ },
+ "learnt": {
+  "clip_id": "L-learnt",
+  "number": "022",
+  "spoken_text": "learnt",
+  "file": "audio/lexicon/learnt.mp3"
+ },
+ "saw": {
+  "clip_id": "L-saw",
+  "number": "023",
+  "spoken_text": "saw",
+  "file": "audio/lexicon/saw.mp3"
+ },
+ "heard": {
+  "clip_id": "L-heard",
+  "number": "024",
+  "spoken_text": "heard",
+  "file": "audio/lexicon/heard.mp3"
+ },
+ "smelt": {
+  "clip_id": "L-smelt",
+  "number": "025",
+  "spoken_text": "smelt",
+  "file": "audio/lexicon/smelt.mp3"
+ },
+ "know": {
+  "clip_id": "L-know",
+  "number": "026",
+  "spoken_text": "know",
+  "file": "audio/lexicon/know.mp3"
+ },
+ "knew": {
+  "clip_id": "L-knew",
+  "number": "027",
+  "spoken_text": "knew",
+  "file": "audio/lexicon/knew.mp3"
+ },
+ "healthy": {
+  "clip_id": "L-healthy",
+  "number": "028",
+  "spoken_text": "healthy",
+  "file": "audio/lexicon/healthy.mp3"
+ },
+ "strong": {
+  "clip_id": "L-strong",
+  "number": "029",
+  "spoken_text": "strong",
+  "file": "audio/lexicon/strong.mp3"
+ },
+ "bread": {
+  "clip_id": "L-bread",
+  "number": "030",
+  "spoken_text": "bread",
+  "file": "audio/lexicon/bread.mp3"
+ },
+ "sweets": {
+  "clip_id": "L-sweets",
+  "number": "031",
+  "spoken_text": "sweets",
+  "file": "audio/lexicon/sweets.mp3"
+ },
+ "fruits": {
+  "clip_id": "L-fruits",
+  "number": "032",
+  "spoken_text": "fruits",
+  "file": "audio/lexicon/fruits.mp3"
+ },
+ "follows": {
+  "clip_id": "L-follows",
+  "number": "033",
+  "spoken_text": "follows",
+  "file": "audio/lexicon/follows.mp3"
+ },
+ "habits": {
+  "clip_id": "L-habits",
+  "number": "034",
+  "spoken_text": "habits",
+  "file": "audio/lexicon/habits.mp3"
+ },
+ "brush": {
+  "clip_id": "L-brush",
+  "number": "035",
+  "spoken_text": "brush",
+  "file": "audio/lexicon/brush.mp3"
+ },
+ "wash": {
+  "clip_id": "L-wash",
+  "number": "036",
+  "spoken_text": "wash",
+  "file": "audio/lexicon/wash.mp3"
+ },
+ "exercise": {
+  "clip_id": "L-exercise",
+  "number": "037",
+  "spoken_text": "exercise",
+  "file": "audio/lexicon/exercise.mp3"
+ },
+ "breakfast": {
+  "clip_id": "L-breakfast",
+  "number": "038",
+  "spoken_text": "breakfast",
+  "file": "audio/lexicon/breakfast.mp3"
+ },
+ "energy": {
+  "clip_id": "L-energy",
+  "number": "039",
+  "spoken_text": "energy",
+  "file": "audio/lexicon/energy.mp3"
+ },
+ "during": {
+  "clip_id": "L-during",
+  "number": "040",
+  "spoken_text": "during",
+  "file": "audio/lexicon/during.mp3"
+ },
+ "vegetables": {
+  "clip_id": "L-vegetables",
+  "number": "041",
+  "spoken_text": "vegetables",
+  "file": "audio/lexicon/vegetables.mp3"
+ },
+ "vitamins": {
+  "clip_id": "L-vitamins",
+  "number": "042",
+  "spoken_text": "vitamins",
+  "file": "audio/lexicon/vitamins.mp3"
+ },
+ "together": {
+  "clip_id": "L-together",
+  "number": "043",
+  "spoken_text": "together",
+  "file": "audio/lexicon/together.mp3"
+ },
+ "shower": {
+  "clip_id": "L-shower",
+  "number": "044",
+  "spoken_text": "shower",
+  "file": "audio/lexicon/shower.mp3"
+ },
+ "mind": {
+  "clip_id": "L-mind",
+  "number": "045",
+  "spoken_text": "mind",
+  "file": "audio/lexicon/mind.mp3"
+ },
+ "sharp": {
+  "clip_id": "L-sharp",
+  "number": "046",
+  "spoken_text": "sharp",
+  "file": "audio/lexicon/sharp.mp3"
+ },
+ "enough": {
+  "clip_id": "L-enough",
+  "number": "047",
+  "spoken_text": "enough",
+  "file": "audio/lexicon/enough.mp3"
+ },
+ "wake_up": {
+  "clip_id": "L-wake_up",
+  "number": "048",
+  "spoken_text": "wake up",
+  "file": "audio/lexicon/wake_up.mp3"
+ },
+ "woke_up": {
+  "clip_id": "L-woke_up",
+  "number": "049",
+  "spoken_text": "woke up",
+  "file": "audio/lexicon/woke_up.mp3"
+ },
+ "do": {
+  "clip_id": "L-do",
+  "number": "050",
+  "spoken_text": "do",
+  "file": "audio/lexicon/do.mp3"
+ },
+ "did": {
+  "clip_id": "L-did",
+  "number": "051",
+  "spoken_text": "did",
+  "file": "audio/lexicon/did.mp3"
+ },
+ "eat": {
+  "clip_id": "L-eat",
+  "number": "052",
+  "spoken_text": "eat",
+  "file": "audio/lexicon/eat.mp3"
+ },
+ "ate": {
+  "clip_id": "L-ate",
+  "number": "053",
+  "spoken_text": "ate",
+  "file": "audio/lexicon/ate.mp3"
+ },
+ "drink": {
+  "clip_id": "L-drink",
+  "number": "054",
+  "spoken_text": "drink",
+  "file": "audio/lexicon/drink.mp3"
+ },
+ "drank": {
+  "clip_id": "L-drank",
+  "number": "055",
+  "spoken_text": "drank",
+  "file": "audio/lexicon/drank.mp3"
+ },
+ "grow": {
+  "clip_id": "L-grow",
+  "number": "056",
+  "spoken_text": "grow",
+  "file": "audio/lexicon/grow.mp3"
+ },
+ "grew": {
+  "clip_id": "L-grew",
+  "number": "057",
+  "spoken_text": "grew",
+  "file": "audio/lexicon/grew.mp3"
+ },
+ "give": {
+  "clip_id": "L-give",
+  "number": "058",
+  "spoken_text": "give",
+  "file": "audio/lexicon/give.mp3"
+ },
+ "gave": {
+  "clip_id": "L-gave",
+  "number": "059",
+  "spoken_text": "gave",
+  "file": "audio/lexicon/gave.mp3"
+ },
+ "take": {
+  "clip_id": "L-take",
+  "number": "060",
+  "spoken_text": "take",
+  "file": "audio/lexicon/take.mp3"
+ },
+ "took": {
+  "clip_id": "L-took",
+  "number": "061",
+  "spoken_text": "took",
+  "file": "audio/lexicon/took.mp3"
+ },
+ "market": {
+  "clip_id": "L-market",
+  "number": "062",
+  "spoken_text": "market",
+  "file": "audio/lexicon/market.mp3"
+ },
+ "money": {
+  "clip_id": "L-money",
+  "number": "063",
+  "spoken_text": "money",
+  "file": "audio/lexicon/money.mp3"
+ },
+ "restaurant": {
+  "clip_id": "L-restaurant",
+  "number": "064",
+  "spoken_text": "restaurant",
+  "file": "audio/lexicon/restaurant.mp3"
+ },
+ "soup": {
+  "clip_id": "L-soup",
+  "number": "065",
+  "spoken_text": "soup",
+  "file": "audio/lexicon/soup.mp3"
+ },
+ "coins": {
+  "clip_id": "L-coins",
+  "number": "066",
+  "spoken_text": "coins",
+  "file": "audio/lexicon/coins.mp3"
+ },
+ "through": {
+  "clip_id": "L-through",
+  "number": "067",
+  "spoken_text": "through",
+  "file": "audio/lexicon/through.mp3"
+ },
+ "suddenly": {
+  "clip_id": "L-suddenly",
+  "number": "068",
+  "spoken_text": "suddenly",
+  "file": "audio/lexicon/suddenly.mp3"
+ },
+ "wonderful": {
+  "clip_id": "L-wonderful",
+  "number": "069",
+  "spoken_text": "wonderful",
+  "file": "audio/lexicon/wonderful.mp3"
+ },
+ "outside": {
+  "clip_id": "L-outside",
+  "number": "070",
+  "spoken_text": "outside",
+  "file": "audio/lexicon/outside.mp3"
+ },
+ "owner": {
+  "clip_id": "L-owner",
+  "number": "071",
+  "spoken_text": "owner",
+  "file": "audio/lexicon/owner.mp3"
+ },
+ "delicious": {
+  "clip_id": "L-delicious",
+  "number": "072",
+  "spoken_text": "delicious",
+  "file": "audio/lexicon/delicious.mp3"
+ },
+ "moment": {
+  "clip_id": "L-moment",
+  "number": "073",
+  "spoken_text": "moment",
+  "file": "audio/lexicon/moment.mp3"
+ },
+ "pocket": {
+  "clip_id": "L-pocket",
+  "number": "074",
+  "spoken_text": "pocket",
+  "file": "audio/lexicon/pocket.mp3"
+ },
+ "inside": {
+  "clip_id": "L-inside",
+  "number": "075",
+  "spoken_text": "inside",
+  "file": "audio/lexicon/inside.mp3"
+ },
+ "clever": {
+  "clip_id": "L-clever",
+  "number": "076",
+  "spoken_text": "clever",
+  "file": "audio/lexicon/clever.mp3"
+ },
+ "answer": {
+  "clip_id": "L-answer",
+  "number": "077",
+  "spoken_text": "answer",
+  "file": "audio/lexicon/answer.mp3"
+ },
+ "better": {
+  "clip_id": "L-better",
+  "number": "078",
+  "spoken_text": "better",
+  "file": "audio/lexicon/better.mp3"
+ },
+ "others": {
+  "clip_id": "L-others",
+  "number": "079",
+  "spoken_text": "others",
+  "file": "audio/lexicon/others.mp3"
+ },
+ "sound": {
+  "clip_id": "L-sound",
+  "number": "080",
+  "spoken_text": "sound",
+  "file": "audio/lexicon/sound.mp3"
+ },
+ "feel": {
+  "clip_id": "L-feel",
+  "number": "081",
+  "spoken_text": "feel",
+  "file": "audio/lexicon/feel.mp3"
+ },
+ "felt": {
+  "clip_id": "L-felt",
+  "number": "082",
+  "spoken_text": "felt",
+  "file": "audio/lexicon/felt.mp3"
+ },
+ "sit": {
+  "clip_id": "L-sit",
+  "number": "083",
+  "spoken_text": "sit",
+  "file": "audio/lexicon/sit.mp3"
+ },
+ "sat": {
+  "clip_id": "L-sat",
+  "number": "084",
+  "spoken_text": "sat",
+  "file": "audio/lexicon/sat.mp3"
+ },
+ "shake": {
+  "clip_id": "L-shake",
+  "number": "085",
+  "spoken_text": "shake",
+  "file": "audio/lexicon/shake.mp3"
+ },
+ "shook": {
+  "clip_id": "L-shook",
+  "number": "086",
+  "spoken_text": "shook",
+  "file": "audio/lexicon/shook.mp3"
+ },
+ "pay": {
+  "clip_id": "L-pay",
+  "number": "087",
+  "spoken_text": "pay",
+  "file": "audio/lexicon/pay.mp3"
+ },
+ "paid": {
+  "clip_id": "L-paid",
+  "number": "088",
+  "spoken_text": "paid",
+  "file": "audio/lexicon/paid.mp3"
+ },
+ "think": {
+  "clip_id": "L-think",
+  "number": "089",
+  "spoken_text": "think",
+  "file": "audio/lexicon/think.mp3"
+ },
+ "thought": {
+  "clip_id": "L-thought",
+  "number": "090",
+  "spoken_text": "thought",
+  "file": "audio/lexicon/thought.mp3"
+ },
+ "say": {
+  "clip_id": "L-say",
+  "number": "091",
+  "spoken_text": "say",
+  "file": "audio/lexicon/say.mp3"
+ },
+ "said": {
+  "clip_id": "L-said",
+  "number": "092",
+  "spoken_text": "said",
+  "file": "audio/lexicon/said.mp3"
+ },
+ "come": {
+  "clip_id": "L-come",
+  "number": "093",
+  "spoken_text": "come",
+  "file": "audio/lexicon/come.mp3"
+ },
+ "came": {
+  "clip_id": "L-came",
+  "number": "094",
+  "spoken_text": "came",
+  "file": "audio/lexicon/came.mp3"
+ },
+ "teeth": {
+  "clip_id": "L-teeth",
+  "number": "095",
+  "spoken_text": "teeth",
+  "file": "audio/lexicon/teeth.mp3"
+ },
+ "snack": {
+  "clip_id": "L-snack",
+  "number": "096",
+  "spoken_text": "snack",
+  "file": "audio/lexicon/snack.mp3"
+ },
+ "sports": {
+  "clip_id": "L-sports",
+  "number": "097",
+  "spoken_text": "sports",
+  "file": "audio/lexicon/sports.mp3"
+ },
+ "milk": {
+  "clip_id": "L-milk",
+  "number": "098",
+  "spoken_text": "milk",
+  "file": "audio/lexicon/milk.mp3"
+ },
+ "water": {
+  "clip_id": "L-water",
+  "number": "099",
+  "spoken_text": "water",
+  "file": "audio/lexicon/water.mp3"
+ },
+ "daily": {
+  "clip_id": "L-daily",
+  "number": "100",
+  "spoken_text": "daily",
+  "file": "audio/lexicon/daily.mp3"
+ },
+ "routine": {
+  "clip_id": "L-routine",
+  "number": "101",
+  "spoken_text": "routine",
+  "file": "audio/lexicon/routine.mp3"
+ },
+ "important": {
+  "clip_id": "L-important",
+  "number": "102",
+  "spoken_text": "important",
+  "file": "audio/lexicon/important.mp3"
+ },
+ "including": {
+  "clip_id": "L-including",
+  "number": "103",
+  "spoken_text": "including",
+  "file": "audio/lexicon/including.mp3"
+ },
+ "study": {
+  "clip_id": "L-study",
+  "number": "104",
+  "spoken_text": "study",
+  "file": "audio/lexicon/study.mp3"
+ },
+ "homework": {
+  "clip_id": "L-homework",
+  "number": "105",
+  "spoken_text": "homework",
+  "file": "audio/lexicon/homework.mp3"
+ },
+ "because": {
+  "clip_id": "L-because",
+  "number": "106",
+  "spoken_text": "because",
+  "file": "audio/lexicon/because.mp3"
+ },
+ "hour": {
+  "clip_id": "L-hour",
+  "number": "107",
+  "spoken_text": "hour",
+  "file": "audio/lexicon/hour.mp3"
+ },
+ "first": {
+  "clip_id": "L-first",
+  "number": "108",
+  "spoken_text": "first",
+  "file": "audio/lexicon/first.mp3"
+ },
+ "next": {
+  "clip_id": "L-next",
+  "number": "109",
+  "spoken_text": "next",
+  "file": "audio/lexicon/next.mp3"
+ },
+ "then": {
+  "clip_id": "L-then",
+  "number": "110",
+  "spoken_text": "then",
+  "file": "audio/lexicon/then.mp3"
+ },
+ "after_that": {
+  "clip_id": "L-after_that",
+  "number": "111",
+  "spoken_text": "after that",
+  "file": "audio/lexicon/after_that.mp3"
+ },
+ "finally": {
+  "clip_id": "L-finally",
+  "number": "112",
+  "spoken_text": "finally",
+  "file": "audio/lexicon/finally.mp3"
+ },
+ "tell": {
+  "clip_id": "L-tell",
+  "number": "113",
+  "spoken_text": "tell",
+  "file": "audio/lexicon/tell.mp3"
+ },
+ "told": {
+  "clip_id": "L-told",
+  "number": "114",
+  "spoken_text": "told",
+  "file": "audio/lexicon/told.mp3"
+ },
+ "get": {
+  "clip_id": "L-get",
+  "number": "115",
+  "spoken_text": "get",
+  "file": "audio/lexicon/get.mp3"
+ },
+ "got": {
+  "clip_id": "L-got",
+  "number": "116",
+  "spoken_text": "got",
+  "file": "audio/lexicon/got.mp3"
+ },
+ "have": {
+  "clip_id": "L-have",
+  "number": "117",
+  "spoken_text": "have",
+  "file": "audio/lexicon/have.mp3"
+ },
+ "had": {
+  "clip_id": "L-had",
+  "number": "118",
+  "spoken_text": "had",
+  "file": "audio/lexicon/had.mp3"
+ },
+ "go": {
+  "clip_id": "L-go",
+  "number": "119",
+  "spoken_text": "go",
+  "file": "audio/lexicon/go.mp3"
+ },
+ "went": {
+  "clip_id": "L-went",
+  "number": "120",
+  "spoken_text": "went",
+  "file": "audio/lexicon/went.mp3"
+ },
+ "keep": {
+  "clip_id": "L-keep",
+  "number": "121",
+  "spoken_text": "keep",
+  "file": "audio/lexicon/keep.mp3"
+ },
+ "kept": {
+  "clip_id": "L-kept",
+  "number": "122",
+  "spoken_text": "kept",
+  "file": "audio/lexicon/kept.mp3"
+ },
+ "collect": {
+  "clip_id": "L-collect",
+  "number": "123",
+  "spoken_text": "collect",
+  "file": "audio/lexicon/collect.mp3"
+ },
+ "plant": {
+  "clip_id": "L-plant",
+  "number": "124",
+  "spoken_text": "plant",
+  "file": "audio/lexicon/plant.mp3"
+ },
+ "clean": {
+  "clip_id": "L-clean",
+  "number": "125",
+  "spoken_text": "clean",
+  "file": "audio/lexicon/clean.mp3"
+ },
+ "volunteer": {
+  "clip_id": "L-volunteer",
+  "number": "126",
+  "spoken_text": "volunteer",
+  "file": "audio/lexicon/volunteer.mp3"
+ },
+ "feed": {
+  "clip_id": "L-feed",
+  "number": "127",
+  "spoken_text": "feed",
+  "file": "audio/lexicon/feed.mp3"
+ },
+ "community": {
+  "clip_id": "L-community",
+  "number": "128",
+  "spoken_text": "community",
+  "file": "audio/lexicon/community.mp3"
+ },
+ "trash": {
+  "clip_id": "L-trash",
+  "number": "129",
+  "spoken_text": "trash",
+  "file": "audio/lexicon/trash.mp3"
+ },
+ "things": {
+  "clip_id": "L-things",
+  "number": "130",
+  "spoken_text": "things",
+  "file": "audio/lexicon/things.mp3"
+ },
+ "streets": {
+  "clip_id": "L-streets",
+  "number": "131",
+  "spoken_text": "streets",
+  "file": "audio/lexicon/streets.mp3"
+ },
+ "sometimes": {
+  "clip_id": "L-sometimes",
+  "number": "132",
+  "spoken_text": "sometimes",
+  "file": "audio/lexicon/sometimes.mp3"
+ },
+ "neighbors": {
+  "clip_id": "L-neighbors",
+  "number": "133",
+  "spoken_text": "neighbors",
+  "file": "audio/lexicon/neighbors.mp3"
+ },
+ "both": {
+  "clip_id": "L-both",
+  "number": "134",
+  "spoken_text": "both",
+  "file": "audio/lexicon/both.mp3"
+ },
+ "sister": {
+  "clip_id": "L-sister",
+  "number": "135",
+  "spoken_text": "sister",
+  "file": "audio/lexicon/sister.mp3"
+ },
+ "clothes": {
+  "clip_id": "L-clothes",
+  "number": "136",
+  "spoken_text": "clothes",
+  "file": "audio/lexicon/clothes.mp3"
+ },
+ "need": {
+  "clip_id": "L-need",
+  "number": "137",
+  "spoken_text": "need",
+  "file": "audio/lexicon/need.mp3"
+ },
+ "great": {
+  "clip_id": "L-great",
+  "number": "138",
+  "spoken_text": "great",
+  "file": "audio/lexicon/great.mp3"
+ },
+ "people": {
+  "clip_id": "L-people",
+  "number": "139",
+  "spoken_text": "people",
+  "file": "audio/lexicon/people.mp3"
+ },
+ "fed": {
+  "clip_id": "L-fed",
+  "number": "140",
+  "spoken_text": "fed",
+  "file": "audio/lexicon/fed.mp3"
+ },
+ "make": {
+  "clip_id": "L-make",
+  "number": "141",
+  "spoken_text": "make",
+  "file": "audio/lexicon/make.mp3"
+ },
+ "made": {
+  "clip_id": "L-made",
+  "number": "142",
+  "spoken_text": "made",
+  "file": "audio/lexicon/made.mp3"
+ },
+ "traffic": {
+  "clip_id": "L-traffic",
+  "number": "143",
+  "spoken_text": "traffic",
+  "file": "audio/lexicon/traffic.mp3"
+ },
+ "street": {
+  "clip_id": "L-street",
+  "number": "144",
+  "spoken_text": "street",
+  "file": "audio/lexicon/street.mp3"
+ },
+ "road": {
+  "clip_id": "L-road",
+  "number": "145",
+  "spoken_text": "road",
+  "file": "audio/lexicon/road.mp3"
+ },
+ "problems": {
+  "clip_id": "L-problems",
+  "number": "146",
+  "spoken_text": "problems",
+  "file": "audio/lexicon/problems.mp3"
+ },
+ "discuss": {
+  "clip_id": "L-discuss",
+  "number": "147",
+  "spoken_text": "discuss",
+  "file": "audio/lexicon/discuss.mp3"
+ },
+ "especially": {
+  "clip_id": "L-especially",
+  "number": "148",
+  "spoken_text": "especially",
+  "file": "audio/lexicon/especially.mp3"
+ },
+ "dirty": {
+  "clip_id": "L-dirty",
+  "number": "149",
+  "spoken_text": "dirty",
+  "file": "audio/lexicon/dirty.mp3"
+ },
+ "solutions": {
+  "clip_id": "L-solutions",
+  "number": "150",
+  "spoken_text": "solutions",
+  "file": "audio/lexicon/solutions.mp3"
+ },
+ "instead": {
+  "clip_id": "L-instead",
+  "number": "151",
+  "spoken_text": "instead",
+  "file": "audio/lexicon/instead.mp3"
+ },
+ "everyone": {
+  "clip_id": "L-everyone",
+  "number": "152",
+  "spoken_text": "everyone",
+  "file": "audio/lexicon/everyone.mp3"
+ },
+ "move": {
+  "clip_id": "L-move",
+  "number": "153",
+  "spoken_text": "move",
+  "file": "audio/lexicon/move.mp3"
+ },
+ "solve": {
+  "clip_id": "L-solve",
+  "number": "154",
+  "spoken_text": "solve",
+  "file": "audio/lexicon/solve.mp3"
+ },
+ "talk": {
+  "clip_id": "L-talk",
+  "number": "155",
+  "spoken_text": "talk",
+  "file": "audio/lexicon/talk.mp3"
+ },
+ "second": {
+  "clip_id": "L-second",
+  "number": "156",
+  "spoken_text": "second",
+  "file": "audio/lexicon/second.mp3"
+ },
+ "third": {
+  "clip_id": "L-third",
+  "number": "157",
+  "spoken_text": "third",
+  "file": "audio/lexicon/third.mp3"
+ },
+ "put": {
+  "clip_id": "L-put",
+  "number": "158",
+  "spoken_text": "put",
+  "file": "audio/lexicon/put.mp3"
+ },
+ "throw": {
+  "clip_id": "L-throw",
+  "number": "159",
+  "spoken_text": "throw",
+  "file": "audio/lexicon/throw.mp3"
+ },
+ "threw": {
+  "clip_id": "L-threw",
+  "number": "160",
+  "spoken_text": "threw",
+  "file": "audio/lexicon/threw.mp3"
+ },
+ "outfits": {
+  "clip_id": "L-outfits",
+  "number": "161",
+  "spoken_text": "outfits",
+  "file": "audio/lexicon/outfits.mp3"
+ },
+ "rice": {
+  "clip_id": "L-rice",
+  "number": "162",
+  "spoken_text": "rice",
+  "file": "audio/lexicon/rice.mp3"
+ },
+ "cotton": {
+  "clip_id": "L-cotton",
+  "number": "163",
+  "spoken_text": "cotton",
+  "file": "audio/lexicon/cotton.mp3"
+ },
+ "sugar_cane": {
+  "clip_id": "L-sugar_cane",
+  "number": "164",
+  "spoken_text": "sugar cane",
+  "file": "audio/lexicon/sugar_cane.mp3"
+ },
+ "factory": {
+  "clip_id": "L-factory",
+  "number": "165",
+  "spoken_text": "factory",
+  "file": "audio/lexicon/factory.mp3"
+ },
+ "traditions": {
+  "clip_id": "L-traditions",
+  "number": "166",
+  "spoken_text": "traditions",
+  "file": "audio/lexicon/traditions.mp3"
+ },
+ "celebrate": {
+  "clip_id": "L-celebrate",
+  "number": "167",
+  "spoken_text": "celebrate",
+  "file": "audio/lexicon/celebrate.mp3"
+ },
+ "decorations": {
+  "clip_id": "L-decorations",
+  "number": "168",
+  "spoken_text": "decorations",
+  "file": "audio/lexicon/decorations.mp3"
+ },
+ "special": {
+  "clip_id": "L-special",
+  "number": "169",
+  "spoken_text": "special",
+  "file": "audio/lexicon/special.mp3"
+ },
+ "bright": {
+  "clip_id": "L-bright",
+  "number": "170",
+  "spoken_text": "bright",
+  "file": "audio/lexicon/bright.mp3"
+ },
+ "events": {
+  "clip_id": "L-events",
+  "number": "171",
+  "spoken_text": "events",
+  "file": "audio/lexicon/events.mp3"
+ },
+ "share": {
+  "clip_id": "L-share",
+  "number": "172",
+  "spoken_text": "share",
+  "file": "audio/lexicon/share.mp3"
+ },
+ "colorful": {
+  "clip_id": "L-colorful",
+  "number": "173",
+  "spoken_text": "colorful",
+  "file": "audio/lexicon/colorful.mp3"
+ },
+ "harvest": {
+  "clip_id": "L-harvest",
+  "number": "174",
+  "spoken_text": "harvest",
+  "file": "audio/lexicon/harvest.mp3"
+ },
+ "crafts": {
+  "clip_id": "L-crafts",
+  "number": "175",
+  "spoken_text": "crafts",
+  "file": "audio/lexicon/crafts.mp3"
+ },
+ "different": {
+  "clip_id": "L-different",
+  "number": "176",
+  "spoken_text": "different",
+  "file": "audio/lexicon/different.mp3"
+ },
+ "designs": {
+  "clip_id": "L-designs",
+  "number": "177",
+  "spoken_text": "designs",
+  "file": "audio/lexicon/designs.mp3"
+ },
+ "festivals": {
+  "clip_id": "L-festivals",
+  "number": "178",
+  "spoken_text": "festivals",
+  "file": "audio/lexicon/festivals.mp3"
+ },
+ "pottery": {
+  "clip_id": "L-pottery",
+  "number": "179",
+  "spoken_text": "pottery",
+  "file": "audio/lexicon/pottery.mp3"
+ },
+ "weave": {
+  "clip_id": "L-weave",
+  "number": "180",
+  "spoken_text": "weave",
+  "file": "audio/lexicon/weave.mp3"
+ },
+ "carpets": {
+  "clip_id": "L-carpets",
+  "number": "181",
+  "spoken_text": "carpets",
+  "file": "audio/lexicon/carpets.mp3"
+ },
+ "modern": {
+  "clip_id": "L-modern",
+  "number": "182",
+  "spoken_text": "modern",
+  "file": "audio/lexicon/modern.mp3"
+ },
+ "region": {
+  "clip_id": "L-region",
+  "number": "183",
+  "spoken_text": "region",
+  "file": "audio/lexicon/region.mp3"
+ },
+ "wove": {
+  "clip_id": "L-wove",
+  "number": "184",
+  "spoken_text": "wove",
+  "file": "audio/lexicon/wove.mp3"
+ },
+ "wear": {
+  "clip_id": "L-wear",
+  "number": "185",
+  "spoken_text": "wear",
+  "file": "audio/lexicon/wear.mp3"
+ },
+ "wore": {
+  "clip_id": "L-wore",
+  "number": "186",
+  "spoken_text": "wore",
+  "file": "audio/lexicon/wore.mp3"
+ },
+ "sing": {
+  "clip_id": "L-sing",
+  "number": "187",
+  "spoken_text": "sing",
+  "file": "audio/lexicon/sing.mp3"
+ },
+ "sang": {
+  "clip_id": "L-sang",
+  "number": "188",
+  "spoken_text": "sang",
+  "file": "audio/lexicon/sang.mp3"
+ },
+ "neighborhood": {
+  "clip_id": "L-neighborhood",
+  "number": "189",
+  "spoken_text": "neighborhood",
+  "file": "audio/lexicon/neighborhood.mp3"
+ },
+ "stalls": {
+  "clip_id": "L-stalls",
+  "number": "190",
+  "spoken_text": "stalls",
+  "file": "audio/lexicon/stalls.mp3"
+ },
+ "station": {
+  "clip_id": "L-station",
+  "number": "191",
+  "spoken_text": "station",
+  "file": "audio/lexicon/station.mp3"
+ },
+ "amazing": {
+  "clip_id": "L-amazing",
+  "number": "192",
+  "spoken_text": "amazing",
+  "file": "audio/lexicon/amazing.mp3"
+ },
+ "history": {
+  "clip_id": "L-history",
+  "number": "193",
+  "spoken_text": "history",
+  "file": "audio/lexicon/history.mp3"
+ },
+ "wooden": {
+  "clip_id": "L-wooden",
+  "number": "194",
+  "spoken_text": "wooden",
+  "file": "audio/lexicon/wooden.mp3"
+ },
+ "fresh": {
+  "clip_id": "L-fresh",
+  "number": "195",
+  "spoken_text": "fresh",
+  "file": "audio/lexicon/fresh.mp3"
+ },
+ "gardens": {
+  "clip_id": "L-gardens",
+  "number": "196",
+  "spoken_text": "gardens",
+  "file": "audio/lexicon/gardens.mp3"
+ },
+ "buildings": {
+  "clip_id": "L-buildings",
+  "number": "197",
+  "spoken_text": "buildings",
+  "file": "audio/lexicon/buildings.mp3"
+ },
+ "safely": {
+  "clip_id": "L-safely",
+  "number": "198",
+  "spoken_text": "safely",
+  "file": "audio/lexicon/safely.mp3"
+ },
+ "train": {
+  "clip_id": "L-train",
+  "number": "199",
+  "spoken_text": "train",
+  "file": "audio/lexicon/train.mp3"
+ },
+ "photos": {
+  "clip_id": "L-photos",
+  "number": "200",
+  "spoken_text": "photos",
+  "file": "audio/lexicon/photos.mp3"
+ },
+ "still": {
+  "clip_id": "L-still",
+  "number": "201",
+  "spoken_text": "still",
+  "file": "audio/lexicon/still.mp3"
+ },
+ "rich": {
+  "clip_id": "L-rich",
+  "number": "202",
+  "spoken_text": "rich",
+  "file": "audio/lexicon/rich.mp3"
+ },
+ "sell": {
+  "clip_id": "L-sell",
+  "number": "203",
+  "spoken_text": "sell",
+  "file": "audio/lexicon/sell.mp3"
+ },
+ "sold": {
+  "clip_id": "L-sold",
+  "number": "204",
+  "spoken_text": "sold",
+  "file": "audio/lexicon/sold.mp3"
+ },
+ "stand": {
+  "clip_id": "L-stand",
+  "number": "205",
+  "spoken_text": "stand",
+  "file": "audio/lexicon/stand.mp3"
+ },
+ "stood": {
+  "clip_id": "L-stood",
+  "number": "206",
+  "spoken_text": "stood",
+  "file": "audio/lexicon/stood.mp3"
+ },
+ "walk": {
+  "clip_id": "L-walk",
+  "number": "207",
+  "spoken_text": "walk",
+  "file": "audio/lexicon/walk.mp3"
+ },
+ "cycle": {
+  "clip_id": "L-cycle",
+  "number": "208",
+  "spoken_text": "cycle",
+  "file": "audio/lexicon/cycle.mp3"
+ },
+ "plastic": {
+  "clip_id": "L-plastic",
+  "number": "209",
+  "spoken_text": "plastic",
+  "file": "audio/lexicon/plastic.mp3"
+ },
+ "trees": {
+  "clip_id": "L-trees",
+  "number": "210",
+  "spoken_text": "trees",
+  "file": "audio/lexicon/trees.mp3"
+ },
+ "poster": {
+  "clip_id": "L-poster",
+  "number": "211",
+  "spoken_text": "poster",
+  "file": "audio/lexicon/poster.mp3"
+ },
+ "air": {
+  "clip_id": "L-air",
+  "number": "212",
+  "spoken_text": "air",
+  "file": "audio/lexicon/air.mp3"
+ },
+ "pollution": {
+  "clip_id": "L-pollution",
+  "number": "213",
+  "spoken_text": "pollution",
+  "file": "audio/lexicon/pollution.mp3"
+ },
+ "less": {
+  "clip_id": "L-less",
+  "number": "214",
+  "spoken_text": "less",
+  "file": "audio/lexicon/less.mp3"
+ },
+ "title": {
+  "clip_id": "L-title",
+  "number": "215",
+  "spoken_text": "title",
+  "file": "audio/lexicon/title.mp3"
+ },
+ "drawings": {
+  "clip_id": "L-drawings",
+  "number": "216",
+  "spoken_text": "drawings",
+  "file": "audio/lexicon/drawings.mp3"
+ },
+ "lion": {
+  "clip_id": "L-lion",
+  "number": "217",
+  "spoken_text": "lion",
+  "file": "audio/lexicon/lion.mp3"
+ },
+ "monkey": {
+  "clip_id": "L-monkey",
+  "number": "218",
+  "spoken_text": "monkey",
+  "file": "audio/lexicon/monkey.mp3"
+ },
+ "elephant": {
+  "clip_id": "L-elephant",
+  "number": "219",
+  "spoken_text": "elephant",
+  "file": "audio/lexicon/elephant.mp3"
+ },
+ "giraffe": {
+  "clip_id": "L-giraffe",
+  "number": "220",
+  "spoken_text": "giraffe",
+  "file": "audio/lexicon/giraffe.mp3"
+ },
+ "zebra": {
+  "clip_id": "L-zebra",
+  "number": "221",
+  "spoken_text": "zebra",
+  "file": "audio/lexicon/zebra.mp3"
+ },
+ "bear": {
+  "clip_id": "L-bear",
+  "number": "222",
+  "spoken_text": "bear",
+  "file": "audio/lexicon/bear.mp3"
+ },
+ "visitors": {
+  "clip_id": "L-visitors",
+  "number": "223",
+  "spoken_text": "visitors",
+  "file": "audio/lexicon/visitors.mp3"
+ },
+ "leaves": {
+  "clip_id": "L-leaves",
+  "number": "224",
+  "spoken_text": "leaves",
+  "file": "audio/lexicon/leaves.mp3"
+ },
+ "striped": {
+  "clip_id": "L-striped",
+  "number": "225",
+  "spoken_text": "striped",
+  "file": "audio/lexicon/striped.mp3"
+ },
+ "jungle": {
+  "clip_id": "L-jungle",
+  "number": "226",
+  "spoken_text": "jungle",
+  "file": "audio/lexicon/jungle.mp3"
+ },
+ "usually": {
+  "clip_id": "L-usually",
+  "number": "227",
+  "spoken_text": "usually",
+  "file": "audio/lexicon/usually.mp3"
+ },
+ "forest": {
+  "clip_id": "L-forest",
+  "number": "228",
+  "spoken_text": "forest",
+  "file": "audio/lexicon/forest.mp3"
+ },
+ "guide": {
+  "clip_id": "L-guide",
+  "number": "229",
+  "spoken_text": "guide",
+  "file": "audio/lexicon/guide.mp3"
+ },
+ "animals": {
+  "clip_id": "L-animals",
+  "number": "230",
+  "spoken_text": "animals",
+  "file": "audio/lexicon/animals.mp3"
+ },
+ "hunt": {
+  "clip_id": "L-hunt",
+  "number": "231",
+  "spoken_text": "hunt",
+  "file": "audio/lexicon/hunt.mp3"
+ },
+ "program": {
+  "clip_id": "L-program",
+  "number": "232",
+  "spoken_text": "program",
+  "file": "audio/lexicon/program.mp3"
+ },
+ "climbing": {
+  "clip_id": "L-climbing",
+  "number": "233",
+  "spoken_text": "climbing",
+  "file": "audio/lexicon/climbing.mp3"
+ },
+ "sure": {
+  "clip_id": "L-sure",
+  "number": "234",
+  "spoken_text": "sure",
+  "file": "audio/lexicon/sure.mp3"
+ },
+ "show": {
+  "clip_id": "L-show",
+  "number": "235",
+  "spoken_text": "show",
+  "file": "audio/lexicon/show.mp3"
+ },
+ "showed": {
+  "clip_id": "L-showed",
+  "number": "236",
+  "spoken_text": "showed",
+  "file": "audio/lexicon/showed.mp3"
+ },
+ "wild": {
+  "clip_id": "L-wild",
+  "number": "237",
+  "spoken_text": "wild",
+  "file": "audio/lexicon/wild.mp3"
+ },
+ "zoo": {
+  "clip_id": "L-zoo",
+  "number": "238",
+  "spoken_text": "zoo",
+  "file": "audio/lexicon/zoo.mp3"
+ },
+ "vet": {
+  "clip_id": "L-vet",
+  "number": "239",
+  "spoken_text": "vet",
+  "file": "audio/lexicon/vet.mp3"
+ },
+ "officer": {
+  "clip_id": "L-officer",
+  "number": "240",
+  "spoken_text": "officer",
+  "file": "audio/lexicon/officer.mp3"
+ },
+ "cage": {
+  "clip_id": "L-cage",
+  "number": "241",
+  "spoken_text": "cage",
+  "file": "audio/lexicon/cage.mp3"
+ },
+ "safe": {
+  "clip_id": "L-safe",
+  "number": "242",
+  "spoken_text": "safe",
+  "file": "audio/lexicon/safe.mp3"
+ },
+ "live": {
+  "clip_id": "L-live",
+  "number": "243",
+  "spoken_text": "live",
+  "file": "audio/lexicon/live.mp3"
+ },
+ "attention": {
+  "clip_id": "L-attention",
+  "number": "244",
+  "spoken_text": "attention",
+  "file": "audio/lexicon/attention.mp3"
+ },
+ "spaces": {
+  "clip_id": "L-spaces",
+  "number": "245",
+  "spoken_text": "spaces",
+  "file": "audio/lexicon/spaces.mp3"
+ },
+ "owners": {
+  "clip_id": "L-owners",
+  "number": "246",
+  "spoken_text": "owners",
+  "file": "audio/lexicon/owners.mp3"
+ },
+ "check": {
+  "clip_id": "L-check",
+  "number": "247",
+  "spoken_text": "check",
+  "file": "audio/lexicon/check.mp3"
+ },
+ "health": {
+  "clip_id": "L-health",
+  "number": "248",
+  "spoken_text": "health",
+  "file": "audio/lexicon/health.mp3"
+ },
+ "face": {
+  "clip_id": "L-face",
+  "number": "249",
+  "spoken_text": "face",
+  "file": "audio/lexicon/face.mp3"
+ },
+ "challenges": {
+  "clip_id": "L-challenges",
+  "number": "250",
+  "spoken_text": "challenges",
+  "file": "audio/lexicon/challenges.mp3"
+ },
+ "protect": {
+  "clip_id": "L-protect",
+  "number": "251",
+  "spoken_text": "protect",
+  "file": "audio/lexicon/protect.mp3"
+ },
+ "pets": {
+  "clip_id": "L-pets",
+  "number": "252",
+  "spoken_text": "pets",
+  "file": "audio/lexicon/pets.mp3"
+ },
+ "tank": {
+  "clip_id": "L-tank",
+  "number": "253",
+  "spoken_text": "tank",
+  "file": "audio/lexicon/tank.mp3"
+ },
+ "kindness": {
+  "clip_id": "L-kindness",
+  "number": "254",
+  "spoken_text": "kindness",
+  "file": "audio/lexicon/kindness.mp3"
+ },
+ "create": {
+  "clip_id": "L-create",
+  "number": "255",
+  "spoken_text": "create",
+  "file": "audio/lexicon/create.mp3"
+ },
+ "stay": {
+  "clip_id": "L-stay",
+  "number": "256",
+  "spoken_text": "stay",
+  "file": "audio/lexicon/stay.mp3"
+ },
+ "stayed": {
+  "clip_id": "L-stayed",
+  "number": "257",
+  "spoken_text": "stayed",
+  "file": "audio/lexicon/stayed.mp3"
+ },
+ "needed": {
+  "clip_id": "L-needed",
+  "number": "258",
+  "spoken_text": "needed",
+  "file": "audio/lexicon/needed.mp3"
+ },
+ "teach": {
+  "clip_id": "L-teach",
+  "number": "259",
+  "spoken_text": "teach",
+  "file": "audio/lexicon/teach.mp3"
+ },
+ "taught": {
+  "clip_id": "L-taught",
+  "number": "260",
+  "spoken_text": "taught",
+  "file": "audio/lexicon/taught.mp3"
+ },
+ "cave": {
+  "clip_id": "L-cave",
+  "number": "261",
+  "spoken_text": "cave",
+  "file": "audio/lexicon/cave.mp3"
+ },
+ "fox": {
+  "clip_id": "L-fox",
+  "number": "262",
+  "spoken_text": "fox",
+  "file": "audio/lexicon/fox.mp3"
+ },
+ "footprints": {
+  "clip_id": "L-footprints",
+  "number": "263",
+  "spoken_text": "footprints",
+  "file": "audio/lexicon/footprints.mp3"
+ },
+ "entrance": {
+  "clip_id": "L-entrance",
+  "number": "264",
+  "spoken_text": "entrance",
+  "file": "audio/lexicon/entrance.mp3"
+ },
+ "weak": {
+  "clip_id": "L-weak",
+  "number": "265",
+  "spoken_text": "weak",
+  "file": "audio/lexicon/weak.mp3"
+ },
+ "danger": {
+  "clip_id": "L-danger",
+  "number": "266",
+  "spoken_text": "danger",
+  "file": "audio/lexicon/danger.mp3"
+ },
+ "once": {
+  "clip_id": "L-once",
+  "number": "267",
+  "spoken_text": "once",
+  "file": "audio/lexicon/once.mp3"
+ },
+ "anymore": {
+  "clip_id": "L-anymore",
+  "number": "268",
+  "spoken_text": "anymore",
+  "file": "audio/lexicon/anymore.mp3"
+ },
+ "trick": {
+  "clip_id": "L-trick",
+  "number": "269",
+  "spoken_text": "trick",
+  "file": "audio/lexicon/trick.mp3"
+ },
+ "pretend": {
+  "clip_id": "L-pretend",
+  "number": "270",
+  "spoken_text": "pretend",
+  "file": "audio/lexicon/pretend.mp3"
+ },
+ "sick": {
+  "clip_id": "L-sick",
+  "number": "271",
+  "spoken_text": "sick",
+  "file": "audio/lexicon/sick.mp3"
+ },
+ "wise": {
+  "clip_id": "L-wise",
+  "number": "272",
+  "spoken_text": "wise",
+  "file": "audio/lexicon/wise.mp3"
+ },
+ "replied": {
+  "clip_id": "L-replied",
+  "number": "273",
+  "spoken_text": "replied",
+  "file": "audio/lexicon/replied.mp3"
+ },
+ "mistakes": {
+  "clip_id": "L-mistakes",
+  "number": "274",
+  "spoken_text": "mistakes",
+  "file": "audio/lexicon/mistakes.mp3"
+ },
+ "ran_away": {
+  "clip_id": "L-ran_away",
+  "number": "275",
+  "spoken_text": "ran away",
+  "file": "audio/lexicon/ran_away.mp3"
+ },
+ "visitor": {
+  "clip_id": "L-visitor",
+  "number": "276",
+  "spoken_text": "visitor",
+  "file": "audio/lexicon/visitor.mp3"
+ },
+ "before": {
+  "clip_id": "L-before",
+  "number": "277",
+  "spoken_text": "before",
+  "file": "audio/lexicon/before.mp3"
+ },
+ "laughing": {
+  "clip_id": "L-laughing",
+  "number": "278",
+  "spoken_text": "laughing",
+  "file": "audio/lexicon/laughing.mp3"
+ },
+ "dear": {
+  "clip_id": "L-dear",
+  "number": "279",
+  "spoken_text": "dear",
+  "file": "audio/lexicon/dear.mp3"
+ },
+ "lay_down": {
+  "clip_id": "L-lay_down",
+  "number": "280",
+  "spoken_text": "lay down",
+  "file": "audio/lexicon/lay_down.mp3"
+ },
+ "laid_down": {
+  "clip_id": "L-laid_down",
+  "number": "281",
+  "spoken_text": "laid down",
+  "file": "audio/lexicon/laid_down.mp3"
+ },
+ "die": {
+  "clip_id": "L-die",
+  "number": "282",
+  "spoken_text": "die",
+  "file": "audio/lexicon/die.mp3"
+ },
+ "died": {
+  "clip_id": "L-died",
+  "number": "283",
+  "spoken_text": "died",
+  "file": "audio/lexicon/died.mp3"
+ },
+ "catch": {
+  "clip_id": "L-catch",
+  "number": "284",
+  "spoken_text": "catch",
+  "file": "audio/lexicon/catch.mp3"
+ },
+ "caught": {
+  "clip_id": "L-caught",
+  "number": "285",
+  "spoken_text": "caught",
+  "file": "audio/lexicon/caught.mp3"
+ },
+ "leopard": {
+  "clip_id": "L-leopard",
+  "number": "286",
+  "spoken_text": "leopard",
+  "file": "audio/lexicon/leopard.mp3"
+ },
+ "dugong": {
+  "clip_id": "L-dugong",
+  "number": "287",
+  "spoken_text": "dugong",
+  "file": "audio/lexicon/dugong.mp3"
+ },
+ "sea_grass": {
+  "clip_id": "L-sea_grass",
+  "number": "288",
+  "spoken_text": "sea grass",
+  "file": "audio/lexicon/sea_grass.mp3"
+ },
+ "fishing_nets": {
+  "clip_id": "L-fishing_nets",
+  "number": "289",
+  "spoken_text": "fishing nets",
+  "file": "audio/lexicon/fishing_nets.mp3"
+ },
+ "disappearing": {
+  "clip_id": "L-disappearing",
+  "number": "290",
+  "spoken_text": "disappearing",
+  "file": "audio/lexicon/disappearing.mp3"
+ },
+ "forever": {
+  "clip_id": "L-forever",
+  "number": "291",
+  "spoken_text": "forever",
+  "file": "audio/lexicon/forever.mp3"
+ },
+ "endangered": {
+  "clip_id": "L-endangered",
+  "number": "292",
+  "spoken_text": "endangered",
+  "file": "audio/lexicon/endangered.mp3"
+ },
+ "species": {
+  "clip_id": "L-species",
+  "number": "293",
+  "spoken_text": "species",
+  "file": "audio/lexicon/species.mp3"
+ },
+ "facts": {
+  "clip_id": "L-facts",
+  "number": "294",
+  "spoken_text": "facts",
+  "file": "audio/lexicon/facts.mp3"
+ },
+ "arabian": {
+  "clip_id": "L-arabian",
+  "number": "295",
+  "spoken_text": "Arabian",
+  "file": "audio/lexicon/arabian.mp3"
+ },
+ "remain": {
+  "clip_id": "L-remain",
+  "number": "296",
+  "spoken_text": "remain",
+  "file": "audio/lexicon/remain.mp3"
+ },
+ "reason": {
+  "clip_id": "L-reason",
+  "number": "297",
+  "spoken_text": "reason",
+  "file": "audio/lexicon/reason.mp3"
+ },
+ "habitats": {
+  "clip_id": "L-habitats",
+  "number": "298",
+  "spoken_text": "habitats",
+  "file": "audio/lexicon/habitats.mp3"
+ },
+ "gentle": {
+  "clip_id": "L-gentle",
+  "number": "299",
+  "spoken_text": "gentle",
+  "file": "audio/lexicon/gentle.mp3"
+ },
+ "stop": {
+  "clip_id": "L-stop",
+  "number": "300",
+  "spoken_text": "stop",
+  "file": "audio/lexicon/stop.mp3"
+ },
+ "area": {
+  "clip_id": "L-area",
+  "number": "301",
+  "spoken_text": "area",
+  "file": "audio/lexicon/area.mp3"
+ },
+ "build": {
+  "clip_id": "L-build",
+  "number": "302",
+  "spoken_text": "build",
+  "file": "audio/lexicon/build.mp3"
+ },
+ "built": {
+  "clip_id": "L-built",
+  "number": "303",
+  "spoken_text": "built",
+  "file": "audio/lexicon/built.mp3"
+ },
+ "is": {
+  "clip_id": "L-is",
+  "number": "304",
+  "spoken_text": "is",
+  "file": "audio/lexicon/is.mp3"
+ },
+ "was": {
+  "clip_id": "L-was",
+  "number": "305",
+  "spoken_text": "was",
+  "file": "audio/lexicon/was.mp3"
+ },
+ "are": {
+  "clip_id": "L-are",
+  "number": "306",
+  "spoken_text": "are",
+  "file": "audio/lexicon/are.mp3"
+ },
+ "were": {
+  "clip_id": "L-were",
+  "number": "307",
+  "spoken_text": "were",
+  "file": "audio/lexicon/were.mp3"
+ },
+ "pyramids": {
+  "clip_id": "L-pyramids",
+  "number": "308",
+  "spoken_text": "Pyramids",
+  "file": "audio/lexicon/pyramids.mp3"
+ },
+ "nile_river": {
+  "clip_id": "L-nile_river",
+  "number": "309",
+  "spoken_text": "Nile River",
+  "file": "audio/lexicon/nile_river.mp3"
+ },
+ "cairo_tower": {
+  "clip_id": "L-cairo_tower",
+  "number": "310",
+  "spoken_text": "Cairo Tower",
+  "file": "audio/lexicon/cairo_tower.mp3"
+ },
+ "siwa_oasis": {
+  "clip_id": "L-siwa_oasis",
+  "number": "311",
+  "spoken_text": "Siwa Oasis",
+  "file": "audio/lexicon/siwa_oasis.mp3"
+ },
+ "egyptian_museum": {
+  "clip_id": "L-egyptian_museum",
+  "number": "312",
+  "spoken_text": "Egyptian Museum",
+  "file": "audio/lexicon/egyptian_museum.mp3"
+ },
+ "places": {
+  "clip_id": "L-places",
+  "number": "313",
+  "spoken_text": "places",
+  "file": "audio/lexicon/places.mp3"
+ },
+ "tour_guide": {
+  "clip_id": "L-tour_guide",
+  "number": "314",
+  "spoken_text": "tour guide",
+  "file": "audio/lexicon/tour_guide.mp3"
+ },
+ "tourists": {
+  "clip_id": "L-tourists",
+  "number": "315",
+  "spoken_text": "tourists",
+  "file": "audio/lexicon/tourists.mp3"
+ },
+ "pictures": {
+  "clip_id": "L-pictures",
+  "number": "316",
+  "spoken_text": "pictures",
+  "file": "audio/lexicon/pictures.mp3"
+ },
+ "camel": {
+  "clip_id": "L-camel",
+  "number": "317",
+  "spoken_text": "camel",
+  "file": "audio/lexicon/camel.mp3"
+ },
+ "near": {
+  "clip_id": "L-near",
+  "number": "318",
+  "spoken_text": "near",
+  "file": "audio/lexicon/near.mp3"
+ },
+ "grand": {
+  "clip_id": "L-grand",
+  "number": "319",
+  "spoken_text": "grand",
+  "file": "audio/lexicon/grand.mp3"
+ },
+ "treasures": {
+  "clip_id": "L-treasures",
+  "number": "320",
+  "spoken_text": "treasures",
+  "file": "audio/lexicon/treasures.mp3"
+ },
+ "gifts": {
+  "clip_id": "L-gifts",
+  "number": "321",
+  "spoken_text": "gifts",
+  "file": "audio/lexicon/gifts.mp3"
+ },
+ "bazaar": {
+  "clip_id": "L-bazaar",
+  "number": "322",
+  "spoken_text": "bazaar",
+  "file": "audio/lexicon/bazaar.mp3"
+ },
+ "nice": {
+  "clip_id": "L-nice",
+  "number": "323",
+  "spoken_text": "nice",
+  "file": "audio/lexicon/nice.mp3"
+ },
+ "some": {
+  "clip_id": "L-some",
+  "number": "324",
+  "spoken_text": "some",
+  "file": "audio/lexicon/some.mp3"
+ },
+ "meet": {
+  "clip_id": "L-meet",
+  "number": "325",
+  "spoken_text": "meet",
+  "file": "audio/lexicon/meet.mp3"
+ },
+ "met": {
+  "clip_id": "L-met",
+  "number": "326",
+  "spoken_text": "met",
+  "file": "audio/lexicon/met.mp3"
+ },
+ "ride": {
+  "clip_id": "L-ride",
+  "number": "327",
+  "spoken_text": "ride",
+  "file": "audio/lexicon/ride.mp3"
+ },
+ "rode": {
+  "clip_id": "L-rode",
+  "number": "328",
+  "spoken_text": "rode",
+  "file": "audio/lexicon/rode.mp3"
+ },
+ "buy": {
+  "clip_id": "L-buy",
+  "number": "329",
+  "spoken_text": "buy",
+  "file": "audio/lexicon/buy.mp3"
+ },
+ "bought": {
+  "clip_id": "L-bought",
+  "number": "330",
+  "spoken_text": "bought",
+  "file": "audio/lexicon/bought.mp3"
+ },
+ "library": {
+  "clip_id": "L-library",
+  "number": "331",
+  "spoken_text": "library",
+  "file": "audio/lexicon/library.mp3"
+ },
+ "school": {
+  "clip_id": "L-school",
+  "number": "332",
+  "spoken_text": "school",
+  "file": "audio/lexicon/school.mp3"
+ },
+ "shopping_mall": {
+  "clip_id": "L-shopping_mall",
+  "number": "333",
+  "spoken_text": "shopping mall",
+  "file": "audio/lexicon/shopping_mall.mp3"
+ },
+ "post_office": {
+  "clip_id": "L-post_office",
+  "number": "334",
+  "spoken_text": "post office",
+  "file": "audio/lexicon/post_office.mp3"
+ },
+ "hospital": {
+  "clip_id": "L-hospital",
+  "number": "335",
+  "spoken_text": "hospital",
+  "file": "audio/lexicon/hospital.mp3"
+ },
+ "teachers": {
+  "clip_id": "L-teachers",
+  "number": "336",
+  "spoken_text": "teachers",
+  "file": "audio/lexicon/teachers.mp3"
+ },
+ "students": {
+  "clip_id": "L-students",
+  "number": "337",
+  "spoken_text": "students",
+  "file": "audio/lexicon/students.mp3"
+ },
+ "friends": {
+  "clip_id": "L-friends",
+  "number": "338",
+  "spoken_text": "friends",
+  "file": "audio/lexicon/friends.mp3"
+ },
+ "restaurants": {
+  "clip_id": "L-restaurants",
+  "number": "339",
+  "spoken_text": "restaurants",
+  "file": "audio/lexicon/restaurants.mp3"
+ },
+ "books": {
+  "clip_id": "L-books",
+  "number": "340",
+  "spoken_text": "books",
+  "file": "audio/lexicon/books.mp3"
+ },
+ "borrow": {
+  "clip_id": "L-borrow",
+  "number": "341",
+  "spoken_text": "borrow",
+  "file": "audio/lexicon/borrow.mp3"
+ },
+ "another": {
+  "clip_id": "L-another",
+  "number": "342",
+  "spoken_text": "another",
+  "file": "audio/lexicon/another.mp3"
+ },
+ "doctors": {
+  "clip_id": "L-doctors",
+  "number": "343",
+  "spoken_text": "doctors",
+  "file": "audio/lexicon/doctors.mp3"
+ },
+ "nurses": {
+  "clip_id": "L-nurses",
+  "number": "344",
+  "spoken_text": "nurses",
+  "file": "audio/lexicon/nurses.mp3"
+ },
+ "letters": {
+  "clip_id": "L-letters",
+  "number": "345",
+  "spoken_text": "letters",
+  "file": "audio/lexicon/letters.mp3"
+ },
+ "packages": {
+  "clip_id": "L-packages",
+  "number": "346",
+  "spoken_text": "packages",
+  "file": "audio/lexicon/packages.mp3"
+ },
+ "connected": {
+  "clip_id": "L-connected",
+  "number": "347",
+  "spoken_text": "connected",
+  "file": "audio/lexicon/connected.mp3"
+ },
+ "stores": {
+  "clip_id": "L-stores",
+  "number": "348",
+  "spoken_text": "stores",
+  "file": "audio/lexicon/stores.mp3"
+ },
+ "read_present": {
+  "clip_id": "L-read_present",
+  "number": "349",
+  "spoken_text": "reed",
+  "file": "audio/lexicon/read_present.mp3"
+ },
+ "read_past": {
+  "clip_id": "L-read_past",
+  "number": "350",
+  "spoken_text": "red",
+  "file": "audio/lexicon/read_past.mp3"
+ },
+ "ten": {
+  "clip_id": "L-ten",
+  "number": "351",
+  "spoken_text": "ten",
+  "file": "audio/lexicon/ten.mp3"
+ },
+ "hundred": {
+  "clip_id": "L-hundred",
+  "number": "352",
+  "spoken_text": "hundred",
+  "file": "audio/lexicon/hundred.mp3"
+ },
+ "thousand": {
+  "clip_id": "L-thousand",
+  "number": "353",
+  "spoken_text": "thousand",
+  "file": "audio/lexicon/thousand.mp3"
+ },
+ "million": {
+  "clip_id": "L-million",
+  "number": "354",
+  "spoken_text": "million",
+  "file": "audio/lexicon/million.mp3"
+ },
+ "billion": {
+  "clip_id": "L-billion",
+  "number": "355",
+  "spoken_text": "billion",
+  "file": "audio/lexicon/billion.mp3"
+ },
+ "china": {
+  "clip_id": "L-china",
+  "number": "356",
+  "spoken_text": "China",
+  "file": "audio/lexicon/china.mp3"
+ },
+ "populations": {
+  "clip_id": "L-populations",
+  "number": "357",
+  "spoken_text": "populations",
+  "file": "audio/lexicon/populations.mp3"
+ },
+ "largest": {
+  "clip_id": "L-largest",
+  "number": "358",
+  "spoken_text": "largest",
+  "file": "audio/lexicon/largest.mp3"
+ },
+ "reached": {
+  "clip_id": "L-reached",
+  "number": "359",
+  "spoken_text": "reached",
+  "file": "audio/lexicon/reached.mp3"
+ },
+ "mean": {
+  "clip_id": "L-mean",
+  "number": "360",
+  "spoken_text": "mean",
+  "file": "audio/lexicon/mean.mp3"
+ },
+ "meant": {
+  "clip_id": "L-meant",
+  "number": "361",
+  "spoken_text": "meant",
+  "file": "audio/lexicon/meant.mp3"
+ },
+ "st_catherine": {
+  "clip_id": "L-st_catherine",
+  "number": "362",
+  "spoken_text": "St. Catherine",
+  "file": "audio/lexicon/st_catherine.mp3"
+ },
+ "monastery": {
+  "clip_id": "L-monastery",
+  "number": "363",
+  "spoken_text": "monastery",
+  "file": "audio/lexicon/monastery.mp3"
+ },
+ "rocks": {
+  "clip_id": "L-rocks",
+  "number": "364",
+  "spoken_text": "rocks",
+  "file": "audio/lexicon/rocks.mp3"
+ },
+ "nature": {
+  "clip_id": "L-nature",
+  "number": "365",
+  "spoken_text": "nature",
+  "file": "audio/lexicon/nature.mp3"
+ },
+ "leaflet": {
+  "clip_id": "L-leaflet",
+  "number": "366",
+  "spoken_text": "leaflet",
+  "file": "audio/lexicon/leaflet.mp3"
+ },
+ "mountain": {
+  "clip_id": "L-mountain",
+  "number": "367",
+  "spoken_text": "mountain",
+  "file": "audio/lexicon/mountain.mp3"
+ },
+ "early": {
+  "clip_id": "L-early",
+  "number": "368",
+  "spoken_text": "early",
+  "file": "audio/lexicon/early.mp3"
+ },
+ "climb": {
+  "clip_id": "L-climb",
+  "number": "369",
+  "spoken_text": "climb",
+  "file": "audio/lexicon/climb.mp3"
+ },
+ "warm": {
+  "clip_id": "L-warm",
+  "number": "370",
+  "spoken_text": "warm",
+  "file": "audio/lexicon/warm.mp3"
+ },
+ "plants": {
+  "clip_id": "L-plants",
+  "number": "371",
+  "spoken_text": "plants",
+  "file": "audio/lexicon/plants.mp3"
+ },
+ "popular": {
+  "clip_id": "L-popular",
+  "number": "372",
+  "spoken_text": "popular",
+  "file": "audio/lexicon/popular.mp3"
+ },
+ "adventure": {
+  "clip_id": "L-adventure",
+  "number": "373",
+  "spoken_text": "adventure",
+  "file": "audio/lexicon/adventure.mp3"
+ },
+ "enjoy": {
+  "clip_id": "L-enjoy",
+  "number": "374",
+  "spoken_text": "enjoy",
+  "file": "audio/lexicon/enjoy.mp3"
+ },
+ "natural": {
+  "clip_id": "L-natural",
+  "number": "375",
+  "spoken_text": "natural",
+  "file": "audio/lexicon/natural.mp3"
+ },
+ "daytime": {
+  "clip_id": "L-daytime",
+  "number": "376",
+  "spoken_text": "daytime",
+  "file": "audio/lexicon/daytime.mp3"
+ },
+ "oasis": {
+  "clip_id": "L-oasis",
+  "number": "377",
+  "spoken_text": "oasis",
+  "file": "audio/lexicon/oasis.mp3"
+ },
+ "sweet": {
+  "clip_id": "L-sweet",
+  "number": "378",
+  "spoken_text": "sweet",
+  "file": "audio/lexicon/sweet.mp3"
+ },
+ "dates": {
+  "clip_id": "L-dates",
+  "number": "379",
+  "spoken_text": "dates",
+  "file": "audio/lexicon/dates.mp3"
+ },
+ "doctor": {
+  "clip_id": "L-doctor",
+  "number": "380",
+  "spoken_text": "doctor",
+  "file": "audio/lexicon/doctor.mp3"
+ },
+ "nurse": {
+  "clip_id": "L-nurse",
+  "number": "381",
+  "spoken_text": "nurse",
+  "file": "audio/lexicon/nurse.mp3"
+ },
+ "teacher": {
+  "clip_id": "L-teacher",
+  "number": "382",
+  "spoken_text": "teacher",
+  "file": "audio/lexicon/teacher.mp3"
+ },
+ "engineer": {
+  "clip_id": "L-engineer",
+  "number": "383",
+  "spoken_text": "engineer",
+  "file": "audio/lexicon/engineer.mp3"
+ },
+ "firefighter": {
+  "clip_id": "L-firefighter",
+  "number": "384",
+  "spoken_text": "firefighter",
+  "file": "audio/lexicon/firefighter.mp3"
+ },
+ "jobs": {
+  "clip_id": "L-jobs",
+  "number": "385",
+  "spoken_text": "jobs",
+  "file": "audio/lexicon/jobs.mp3"
+ },
+ "costumes": {
+  "clip_id": "L-costumes",
+  "number": "386",
+  "spoken_text": "costumes",
+  "file": "audio/lexicon/costumes.mp3"
+ },
+ "coat": {
+  "clip_id": "L-coat",
+  "number": "387",
+  "spoken_text": "coat",
+  "file": "audio/lexicon/coat.mp3"
+ },
+ "helmet": {
+  "clip_id": "L-helmet",
+  "number": "388",
+  "spoken_text": "helmet",
+  "file": "audio/lexicon/helmet.mp3"
+ },
+ "design": {
+  "clip_id": "L-design",
+  "number": "389",
+  "spoken_text": "design",
+  "file": "audio/lexicon/design.mp3"
+ },
+ "uniform": {
+  "clip_id": "L-uniform",
+  "number": "390",
+  "spoken_text": "uniform",
+  "file": "audio/lexicon/uniform.mp3"
+ },
+ "patients": {
+  "clip_id": "L-patients",
+  "number": "391",
+  "spoken_text": "patients",
+  "file": "audio/lexicon/patients.mp3"
+ },
+ "save": {
+  "clip_id": "L-save",
+  "number": "392",
+  "spoken_text": "save",
+  "file": "audio/lexicon/save.mp3"
+ },
+ "really": {
+  "clip_id": "L-really",
+  "number": "393",
+  "spoken_text": "really",
+  "file": "audio/lexicon/really.mp3"
+ },
+ "fires": {
+  "clip_id": "L-fires",
+  "number": "394",
+  "spoken_text": "fires",
+  "file": "audio/lexicon/fires.mp3"
+ },
+ "talked": {
+  "clip_id": "L-talked",
+  "number": "395",
+  "spoken_text": "talked",
+  "file": "audio/lexicon/talked.mp3"
+ },
+ "stopped": {
+  "clip_id": "L-stopped",
+  "number": "396",
+  "spoken_text": "stopped",
+  "file": "audio/lexicon/stopped.mp3"
+ },
+ "grow_up": {
+  "clip_id": "L-grow_up",
+  "number": "397",
+  "spoken_text": "grow up",
+  "file": "audio/lexicon/grow_up.mp3"
+ },
+ "grew_up": {
+  "clip_id": "L-grew_up",
+  "number": "398",
+  "spoken_text": "grew up",
+  "file": "audio/lexicon/grew_up.mp3"
+ },
+ "mentor": {
+  "clip_id": "L-mentor",
+  "number": "399",
+  "spoken_text": "mentor",
+  "file": "audio/lexicon/mentor.mp3"
+ },
+ "photographer": {
+  "clip_id": "L-photographer",
+  "number": "400",
+  "spoken_text": "photographer",
+  "file": "audio/lexicon/photographer.mp3"
+ },
+ "puppets": {
+  "clip_id": "L-puppets",
+  "number": "401",
+  "spoken_text": "puppets",
+  "file": "audio/lexicon/puppets.mp3"
+ },
+ "shy": {
+  "clip_id": "L-shy",
+  "number": "402",
+  "spoken_text": "shy",
+  "file": "audio/lexicon/shy.mp3"
+ },
+ "kind": {
+  "clip_id": "L-kind",
+  "number": "403",
+  "spoken_text": "kind",
+  "file": "audio/lexicon/kind.mp3"
+ },
+ "brave": {
+  "clip_id": "L-brave",
+  "number": "404",
+  "spoken_text": "brave",
+  "file": "audio/lexicon/brave.mp3"
+ },
+ "marks": {
+  "clip_id": "L-marks",
+  "number": "405",
+  "spoken_text": "marks",
+  "file": "audio/lexicon/marks.mp3"
+ },
+ "wildlife": {
+  "clip_id": "L-wildlife",
+  "number": "406",
+  "spoken_text": "wildlife",
+  "file": "audio/lexicon/wildlife.mp3"
+ },
+ "stories": {
+  "clip_id": "L-stories",
+  "number": "407",
+  "spoken_text": "stories",
+  "file": "audio/lexicon/stories.mp3"
+ },
+ "shows": {
+  "clip_id": "L-shows",
+  "number": "408",
+  "spoken_text": "shows",
+  "file": "audio/lexicon/shows.mp3"
+ },
+ "smiles": {
+  "clip_id": "L-smiles",
+  "number": "409",
+  "spoken_text": "smiles",
+  "file": "audio/lexicon/smiles.mp3"
+ },
+ "loud": {
+  "clip_id": "L-loud",
+  "number": "410",
+  "spoken_text": "loud",
+  "file": "audio/lexicon/loud.mp3"
+ },
+ "exciting": {
+  "clip_id": "L-exciting",
+  "number": "411",
+  "spoken_text": "exciting",
+  "file": "audio/lexicon/exciting.mp3"
+ },
+ "voices": {
+  "clip_id": "L-voices",
+  "number": "412",
+  "spoken_text": "voices",
+  "file": "audio/lexicon/voices.mp3"
+ },
+ "cartoons": {
+  "clip_id": "L-cartoons",
+  "number": "413",
+  "spoken_text": "cartoons",
+  "file": "audio/lexicon/cartoons.mp3"
+ },
+ "characters": {
+  "clip_id": "L-characters",
+  "number": "414",
+  "spoken_text": "characters",
+  "file": "audio/lexicon/characters.mp3"
+ },
+ "large": {
+  "clip_id": "L-large",
+  "number": "415",
+  "spoken_text": "large",
+  "file": "audio/lexicon/large.mp3"
+ },
+ "wait": {
+  "clip_id": "L-wait",
+  "number": "416",
+  "spoken_text": "wait",
+  "file": "audio/lexicon/wait.mp3"
+ },
+ "become": {
+  "clip_id": "L-become",
+  "number": "417",
+  "spoken_text": "become",
+  "file": "audio/lexicon/become.mp3"
+ },
+ "became": {
+  "clip_id": "L-became",
+  "number": "418",
+  "spoken_text": "became",
+  "file": "audio/lexicon/became.mp3"
+ },
+ "carpenter": {
+  "clip_id": "L-carpenter",
+  "number": "419",
+  "spoken_text": "carpenter",
+  "file": "audio/lexicon/carpenter.mp3"
+ },
+ "king": {
+  "clip_id": "L-king",
+  "number": "420",
+  "spoken_text": "king",
+  "file": "audio/lexicon/king.mp3"
+ },
+ "nail": {
+  "clip_id": "L-nail",
+  "number": "421",
+  "spoken_text": "nail",
+  "file": "audio/lexicon/nail.mp3"
+ },
+ "furniture": {
+  "clip_id": "L-furniture",
+  "number": "422",
+  "spoken_text": "furniture",
+  "file": "audio/lexicon/furniture.mp3"
+ },
+ "keys": {
+  "clip_id": "L-keys",
+  "number": "423",
+  "spoken_text": "keys",
+  "file": "audio/lexicon/keys.mp3"
+ },
+ "skilled": {
+  "clip_id": "L-skilled",
+  "number": "424",
+  "spoken_text": "skilled",
+  "file": "audio/lexicon/skilled.mp3"
+ },
+ "village": {
+  "clip_id": "L-village",
+  "number": "425",
+  "spoken_text": "village",
+  "file": "audio/lexicon/village.mp3"
+ },
+ "admire": {
+  "clip_id": "L-admire",
+  "number": "426",
+  "spoken_text": "admire",
+  "file": "audio/lexicon/admire.mp3"
+ },
+ "rest": {
+  "clip_id": "L-rest",
+  "number": "427",
+  "spoken_text": "rest",
+  "file": "audio/lexicon/rest.mp3"
+ },
+ "retire": {
+  "clip_id": "L-retire",
+  "number": "428",
+  "spoken_text": "retire",
+  "file": "audio/lexicon/retire.mp3"
+ },
+ "request": {
+  "clip_id": "L-request",
+  "number": "429",
+  "spoken_text": "request",
+  "file": "audio/lexicon/request.mp3"
+ },
+ "gift": {
+  "clip_id": "L-gift",
+  "number": "430",
+  "spoken_text": "gift",
+  "file": "audio/lexicon/gift.mp3"
+ },
+ "heart": {
+  "clip_id": "L-heart",
+  "number": "431",
+  "spoken_text": "heart",
+  "file": "audio/lexicon/heart.mp3"
+ },
+ "fit": {
+  "clip_id": "L-fit",
+  "number": "432",
+  "spoken_text": "fit",
+  "file": "audio/lexicon/fit.mp3"
+ },
+ "nothing": {
+  "clip_id": "L-nothing",
+  "number": "433",
+  "spoken_text": "nothing",
+  "file": "audio/lexicon/nothing.mp3"
+ },
+ "kindly": {
+  "clip_id": "L-kindly",
+  "number": "434",
+  "spoken_text": "kindly",
+  "file": "audio/lexicon/kindly.mp3"
+ },
+ "shock": {
+  "clip_id": "L-shock",
+  "number": "435",
+  "spoken_text": "shock",
+  "file": "audio/lexicon/shock.mp3"
+ },
+ "regret": {
+  "clip_id": "L-regret",
+  "number": "436",
+  "spoken_text": "regret",
+  "file": "audio/lexicon/regret.mp3"
+ },
+ "carelessly": {
+  "clip_id": "L-carelessly",
+  "number": "437",
+  "spoken_text": "carelessly",
+  "file": "audio/lexicon/carelessly.mp3"
+ },
+ "repair": {
+  "clip_id": "L-repair",
+  "number": "438",
+  "spoken_text": "repair",
+  "file": "audio/lexicon/repair.mp3"
+ },
+ "hammered": {
+  "clip_id": "L-hammered",
+  "number": "439",
+  "spoken_text": "hammered",
+  "file": "audio/lexicon/hammered.mp3"
+ },
+ "stripes": {
+  "clip_id": "L-stripes",
+  "number": "440",
+  "spoken_text": "stripes",
+  "file": "audio/lexicon/stripes.mp3"
+ },
+ "hose": {
+  "clip_id": "L-hose",
+  "number": "441",
+  "spoken_text": "hose",
+  "file": "audio/lexicon/hose.mp3"
+ },
+ "ladder": {
+  "clip_id": "L-ladder",
+  "number": "442",
+  "spoken_text": "ladder",
+  "file": "audio/lexicon/ladder.mp3"
+ },
+ "fire_truck": {
+  "clip_id": "L-fire_truck",
+  "number": "443",
+  "spoken_text": "fire truck",
+  "file": "audio/lexicon/fire_truck.mp3"
+ },
+ "heroes": {
+  "clip_id": "L-heroes",
+  "number": "444",
+  "spoken_text": "heroes",
+  "file": "audio/lexicon/heroes.mp3"
+ },
+ "neighbor": {
+  "clip_id": "L-neighbor",
+  "number": "445",
+  "spoken_text": "neighbor",
+  "file": "audio/lexicon/neighbor.mp3"
+ },
+ "local": {
+  "clip_id": "L-local",
+  "number": "446",
+  "spoken_text": "local",
+  "file": "audio/lexicon/local.mp3"
+ },
+ "fire_station": {
+  "clip_id": "L-fire_station",
+  "number": "447",
+  "spoken_text": "fire station",
+  "file": "audio/lexicon/fire_station.mp3"
+ },
+ "thick": {
+  "clip_id": "L-thick",
+  "number": "448",
+  "spoken_text": "thick",
+  "file": "audio/lexicon/thick.mp3"
+ },
+ "protective": {
+  "clip_id": "L-protective",
+  "number": "449",
+  "spoken_text": "protective",
+  "file": "audio/lexicon/protective.mp3"
+ },
+ "equipment": {
+  "clip_id": "L-equipment",
+  "number": "450",
+  "spoken_text": "equipment",
+  "file": "audio/lexicon/equipment.mp3"
+ },
+ "ready": {
+  "clip_id": "L-ready",
+  "number": "451",
+  "spoken_text": "ready",
+  "file": "audio/lexicon/ready.mp3"
+ },
+ "alarm": {
+  "clip_id": "L-alarm",
+  "number": "452",
+  "spoken_text": "alarm",
+  "file": "audio/lexicon/alarm.mp3"
+ },
+ "team": {
+  "clip_id": "L-team",
+  "number": "453",
+  "spoken_text": "team",
+  "file": "audio/lexicon/team.mp3"
+ },
+ "tools": {
+  "clip_id": "L-tools",
+  "number": "454",
+  "spoken_text": "tools",
+  "file": "audio/lexicon/tools.mp3"
+ },
+ "dangerous": {
+  "clip_id": "L-dangerous",
+  "number": "455",
+  "spoken_text": "dangerous",
+  "file": "audio/lexicon/dangerous.mp3"
+ },
+ "difference": {
+  "clip_id": "L-difference",
+  "number": "456",
+  "spoken_text": "difference",
+  "file": "audio/lexicon/difference.mp3"
+ },
+ "dress": {
+  "clip_id": "L-dress",
+  "number": "457",
+  "spoken_text": "dress",
+  "file": "audio/lexicon/dress.mp3"
+ },
+ "closet": {
+  "clip_id": "L-closet",
+  "number": "458",
+  "spoken_text": "closet",
+  "file": "audio/lexicon/closet.mp3"
+ },
+ "playground": {
+  "clip_id": "L-playground",
+  "number": "459",
+  "spoken_text": "playground",
+  "file": "audio/lexicon/playground.mp3"
+ },
+ "competition": {
+  "clip_id": "L-competition",
+  "number": "460",
+  "spoken_text": "competition",
+  "file": "audio/lexicon/competition.mp3"
+ },
+ "medal": {
+  "clip_id": "L-medal",
+  "number": "461",
+  "spoken_text": "medal",
+  "file": "audio/lexicon/medal.mp3"
+ },
+ "sign": {
+  "clip_id": "L-sign",
+  "number": "462",
+  "spoken_text": "sign",
+  "file": "audio/lexicon/sign.mp3"
+ },
+ "letter": {
+  "clip_id": "L-letter",
+  "number": "463",
+  "spoken_text": "letter",
+  "file": "audio/lexicon/letter.mp3"
+ },
+ "announce": {
+  "clip_id": "L-announce",
+  "number": "464",
+  "spoken_text": "announce",
+  "file": "audio/lexicon/announce.mp3"
+ },
+ "winner": {
+  "clip_id": "L-winner",
+  "number": "465",
+  "spoken_text": "winner",
+  "file": "audio/lexicon/winner.mp3"
+ },
+ "fight": {
+  "clip_id": "L-fight",
+  "number": "466",
+  "spoken_text": "fight",
+  "file": "audio/lexicon/fight.mp3"
+ },
+ "fought": {
+  "clip_id": "L-fought",
+  "number": "467",
+  "spoken_text": "fought",
+  "file": "audio/lexicon/fought.mp3"
+ },
+ "ring": {
+  "clip_id": "L-ring",
+  "number": "468",
+  "spoken_text": "ring",
+  "file": "audio/lexicon/ring.mp3"
+ },
+ "rang": {
+  "clip_id": "L-rang",
+  "number": "469",
+  "spoken_text": "rang",
+  "file": "audio/lexicon/rang.mp3"
+ }
+}

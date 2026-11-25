@@ -1517,6 +1517,10 @@ button.earn-card:hover{transform:translate(-2px,-2px)}
 .m-vrow{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between}
 .m-vrow > p{flex:1 1 220px;margin:0}
 .m-voice{flex:none}
+.say-ar.loading{opacity:.85}
+.sx-today-done{margin:14px 0 4px;padding:12px 16px;border:3px dashed #23A452;border-radius:var(--r);background:#E8F8EE;color:#14532D;font-weight:700;font-size:17px;line-height:1.6}
+.say-ar.loading::after{content:"⏳";margin-inline-start:6px;display:inline-block;animation:arWait 1s linear infinite}
+@keyframes arWait{50%{opacity:.3}}
 .mh-txt .m-voice{margin-top:6px}
 .mw .sec-title{margin:10px 0 0}
 .m-head{background:#EEE3FF}
@@ -5404,7 +5408,7 @@ const AR_VER = 10;   /* bump when the recordings change so phones don't keep an 
 const __b64 = buf => { const u = new Uint8Array(buf); let s = ''; for (let i = 0; i < u.length; i += 32768) s += String.fromCharCode.apply(null, u.subarray(i, i + 32768)); return btoa(s); };
 const arFetch = url => new Promise((res, rej) => {
   const x = new XMLHttpRequest();
-  x.open('GET', url, true); x.responseType = 'arraybuffer'; x.timeout = 12000;
+  x.open('GET', url, true); x.responseType = 'arraybuffer'; x.timeout = 45000;   /* a 2 MB chunk on a slow phone line needs time */
   x.onload = () => (x.status >= 200 && x.status < 300) ? res(x.response) : rej(new Error('http ' + x.status));
   x.onerror = () => rej(new Error('net')); x.ontimeout = () => rej(new Error('timeout'));
   x.send();
@@ -5417,36 +5421,47 @@ const arChunk = c => AR_LOADING[c] || (AR_LOADING[c] = arIndex().then(() => arFe
 const arHashLoad = () => AR_LOADING.h || (AR_LOADING.h = (window.__VA_H ? Promise.resolve(window.__VA_H) : fetch('va/va-h.json?v=' + AR_VER).then(r => r.ok ? r.json() : {})).then(d => { Object.assign(AR_HASH, d); AR_HLOADED = true; }).catch(() => { delete AR_LOADING.h; }));
 let arRun = 0, arSrc = null, arWarned = false;
 function stopAr(){ arRun++; if(arSrc){ try{ arSrc.stop(); }catch(e){} arSrc = null; } if(hasTTS) try{ speechSynthesis.cancel(); }catch(e){} document.querySelectorAll('.say-ar.on').forEach(b => b.classList.remove('on')); }
+/* which chunk file holds a clip */
+const arChunkOf = id => { const m = id && id.match(/^(c\d+l\d+|c\d+x|c\d+o|sxr_(?:f\d+|w\d+|u\d[ab])|m(?=_)|g)/); return m ? m[1] : null; };
+/* the same sentence can be recorded under another lesson's id (a definition shared by two lessons): find it by its exact text */
+let AR_BYHASH = null;
+function arResolve(part){
+  if(!part || !part.id || !AR_HLOADED || part.text == null || AR_HASH[part.id] === ohash(part.text)) return part;
+  if(!AR_BYHASH){ AR_BYHASH = {}; for(const k in AR_HASH) (AR_BYHASH[AR_HASH[k]] = AR_BYHASH[AR_HASH[k]] || []).push(k); }
+  const alt = (AR_BYHASH[ohash(part.text)] || [])[0];
+  if(alt) part.id = alt;
+  return part;
+}
+/* load every chunk a line needs before it starts (all at once), waiting long enough for a slow phone line and retrying once */
+async function arReady(parts, run){
+  for(let attempt = 0; attempt < 2; attempt++){
+    await Promise.race([arHashLoad(), new Promise(r => setTimeout(r, 20000))]);
+    parts.forEach(arResolve);
+    const chs = [...new Set(parts.map(p => arChunkOf(p.id)).filter(Boolean))];
+    await Promise.race([Promise.all(chs.map(c => arChunk(c))), new Promise(r => setTimeout(r, 40000))]);
+    if(run !== arRun) return false;
+    if(AR_HLOADED && chs.every(c => Object.keys((window.__VA_IDX || {})[c] || {}).some(id => AR_CLIPS[id]))) return true;
+  }
+  return AR_HLOADED;
+}
+/* start loading a screen's recordings in the background, before she taps (never blocks anything) */
+function arPrefetch(ids){ if(!S.sound) return; try{ arHashLoad(); [...new Set(ids.map(arChunkOf).filter(Boolean))].forEach(c => { arChunk(c); }); }catch(e){} }
+async function arPlayClip(id, run){
+  const c = actx(); if(!c) return false;
+  try{
+    if(!AR_BUF[id]){ const bin = atob(AR_CLIPS[id]), arr = new Uint8Array(bin.length); for(let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i); AR_BUF[id] = await c.decodeAudioData(arr.buffer); }
+    if(run !== arRun) return false;
+    if(c.state === 'suspended'){ try{ await c.resume(); }catch(e){} }
+    /* finish on "ended", or a little after the clip's length if the phone never fires it (so a question can't hang half-way) */
+    await new Promise(res => { const src = c.createBufferSource(); src.buffer = AR_BUF[id]; src.connect(c.destination); let done = false; const fin = () => { if(!done){ done = true; res(); } };
+      src.onended = fin; setTimeout(fin, (AR_BUF[id].duration + 1.5) * 1000); src.start(c.currentTime + .05); arSrc = src; });
+    return true;
+  }catch(e){ return false; }
+}
 async function sayAr(text, id, btn){
   if(!S.sound) return;
-  stopAr(); stopSpeech();
-  const run = arRun;
-  if(btn) btn.classList.add('on');
-  const off = () => { if(btn && run === arRun) btn.classList.remove('on'); };
-  const ch = id && id.match(/^(c\d+l\d+|c\d+x|c\d+o|sxr_(?:f\d+|w\d+|u\d[ab])|m(?=_)|g)/);
-  if(ch){ await Promise.race([Promise.all([arChunk(ch[1]), arHashLoad()]), new Promise(r => setTimeout(r, 9000))]); if(run !== arRun) return; }
-  if(id && AR_CLIPS[id] && (text === null || (AR_HLOADED && AR_HASH[id] === ohash(text)))){
-    const c = actx();
-    if(c){
-      try{
-        if(!AR_BUF[id]){ const bin = atob(AR_CLIPS[id]), arr = new Uint8Array(bin.length); for(let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i); AR_BUF[id] = await c.decodeAudioData(arr.buffer); }
-        if(run !== arRun) return;
-        const src = c.createBufferSource(); src.buffer = AR_BUF[id]; src.connect(c.destination); src.onended = off; src.start(c.currentTime + .05); arSrc = src;
-        return;
-      }catch(e){}
-    }
-  }
-  if(id){
-    /* covered route with no playable recording: never the device voice - suppress and say why */
-    off();
-    if(text === null) return;   /* lab feedback: exact display-text binding is the freshness check; unmapped or missing stays silent */
-    if(!AR_HLOADED && AR_CLIPS[id]) arUnverified(id);   /* recording exists but its freshness could not be verified - fail closed */
-    else if(AR_CLIPS[id]) arEdited(id);
-    else noArVoice(id);
-    return;
-  }
-  /* no clip id on a covered science route: suppress - never the device voice */
-  off(); noArVoice(id);
+  if(id) return sayArSeq([{text, id}], btn);
+  stopAr(); stopSpeech(); noArVoice(id);   /* no clip id on a covered science route: suppress - never the device voice */
 }
 /* the hash file itself could not be loaded: a covered clip stays silent rather than playing unverified (once per chunk) */
 const arUnverifiedFor = {};
@@ -5474,36 +5489,37 @@ function noArVoice(id){
 /* option-text hash - MUST match the generation-side djb2/base36 exactly */
 const ohash = t => { let h = 5381; for(let i = 0; i < t.length; i++) h = ((h << 5) + h + t.charCodeAt(i)) >>> 0; return h.toString(36); };
 /* play a stem then its options back-to-back in the displayed order; a missing, edited or unverifiable clip is suppressed per-part with a notice - never device TTS */
+/* play a stem then its options back-to-back in the displayed order. Everything the question needs is loaded first, so it never
+   stops half-way; a part with no matching recording is skipped quietly and explained once at the end - never device TTS */
 async function sayArSeq(parts, btn){
   if(!S.sound) return;
   stopAr(); stopSpeech();
   const run = arRun;
-  if(btn) btn.classList.add('on');
-  const off = () => { if(btn && run === arRun) btn.classList.remove('on'); };
+  parts = parts.map(p => ({...p}));
+  if(btn) btn.classList.add('on', 'loading');
+  const off = () => { if(btn && run === arRun) btn.classList.remove('on', 'loading'); };
+  const ok = await arReady(parts, run);
+  if(run !== arRun) return;
+  if(btn) btn.classList.remove('loading');
+  const skipped = [];
   for(const part of parts){
     if(run !== arRun){ off(); return; }
-    const ch = part.id && part.id.match(/^(c\d+l\d+|c\d+x|c\d+o|sxr_(?:f\d+|w\d+|u\d[ab])|m(?=_)|g)/);
-    if(ch){ await Promise.race([Promise.all([arChunk(ch[1]), arHashLoad()]), new Promise(r => setTimeout(r, 9000))]); if(run !== arRun){ off(); return; } }
-    let played = false;
-    if(part.id && AR_CLIPS[part.id] && AR_HLOADED && AR_HASH[part.id] === ohash(part.text)){
-      const c = actx();
-      if(c){
-        try{
-          if(!AR_BUF[part.id]){ const bin = atob(AR_CLIPS[part.id]), arr = new Uint8Array(bin.length); for(let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i); AR_BUF[part.id] = await c.decodeAudioData(arr.buffer); }
-          if(run !== arRun){ off(); return; }
-          await new Promise(res => { const src = c.createBufferSource(); src.buffer = AR_BUF[part.id]; src.connect(c.destination); src.onended = res; src.start(c.currentTime + .05); arSrc = src; });
-          played = true;
-        }catch(e){}
-      }
-    }
-    if(!played && part.id){
-      if(!AR_HLOADED && AR_CLIPS[part.id]) arUnverified(part.id); else if(AR_CLIPS[part.id]) arEdited(part.id); else noArVoice(part.id);
-    }
-    if(!played && !part.id) noArVoice('q');   /* uncovered line: suppress + notice, never device voice */
+    const good = part.id && AR_CLIPS[part.id] && (part.text === null || (AR_HLOADED && AR_HASH[part.id] === ohash(part.text)));
+    if(good && await arPlayClip(part.id, run)) continue;
     if(run !== arRun){ off(); return; }
+    if(part.text !== null) skipped.push(part);
   }
   off();
+  if(!skipped.length || run !== arRun) return;
+  const p = skipped[0];
+  if(!ok) toast('📶 النت بطيء شوية فجزء من الصوت ما اتحمّلش. دوسي تاني بعد لحظة');
+  else if(!p.id) noArVoice('q');
+  else if(!AR_HLOADED && AR_CLIPS[p.id]) arUnverified(p.id);
+  else if(AR_CLIPS[p.id]) arEdited(p.id);
+  else noArVoice(p.id);
 }
+/* any screen that shows recorded buttons starts loading their recordings right away */
+new MutationObserver(() => { if(!S.sound) return; const ids = []; screenEl.querySelectorAll('[data-arid]:not([data-pf]),[data-mv]:not([data-pf])').forEach(b => { b.dataset.pf = '1'; if(b.dataset.arid) ids.push(b.dataset.arid); if(b.dataset.mv) ids.push(...b.dataset.mv.split(',')); }); if(ids.length) arPrefetch(ids); }).observe(screenEl, {childList: true, subtree: true});
 /* stem part + one part per displayed option, ids from the stable qid and the option hash */
 function qParts(q, islandId, displayedOpts){
   const parts = [{ text: q.q, id: q.qid || '' }];
@@ -5546,7 +5562,7 @@ function sciQParts(q, shownOpts){
   return parts;
 }
 const sayQBtn = (label = 'اسمعي السؤال') => `<button class="say say-ar" data-sayq="1">${SPK}<span>${label}</span></button>`;
-function bindSayQ(getParts){ const b = screenEl.querySelector('[data-sayq]'); if(b) b.onclick = () => { if(b.classList.contains('on')){ stopAr(); return; } sayArSeq(getParts(), b); }; }
+function bindSayQ(getParts){ const b = screenEl.querySelector('[data-sayq]'); if(b){ try{ arPrefetch(getParts().map(p => p.id)); }catch(e){} } if(b) b.onclick = () => { if(b.classList.contains('on')){ stopAr(); return; } sayArSeq(getParts(), b); }; }
 
 /* ---------- screens ---------- */
 function sciCrumbs(items){
@@ -5881,7 +5897,8 @@ const SXK = [
   {k:'U', ico:'📘', t:'اختبار الفصل',        d:'من كتاب الأضواء: على الوحدة كلها'},
   {k:'F', ico:'🏆', t:'نموذج آخر الترم',     d:'من الكتاب: على المنهج كله'}
 ];
-const SX_PASS = 80;
+/* one pass mark everywhere: the same % the parents set for the piggy-bank prize (80 unless they changed it) */
+const sxPass = () => { try{ const v = +examPass(); return v > 0 && v <= 100 ? v : 80; }catch(e){ return 80; } };
 const sxBest = (kind, id) => sciGet(kind === 'L' ? 'xl_' + id : 'xr_' + id);
 const sxAllReal = () => [...SXR_WEEK, ...SXR_UNIT, ...SXR_MODELS];
 /* the unit's exams, in order */
@@ -5893,49 +5910,61 @@ function sxSteps(C){
   ];
 }
 function sxNext(){
-  for(const C of SCI) for(const s of sxSteps(C)) if(sxBest(s.kind, s.id) < SX_PASS) return {...s, C};
-  const f = SXR_MODELS.find(m => sxBest('F', m.id) < SX_PASS) || SXR_MODELS[0];
+  for(const C of SCI) for(const s of sxSteps(C)) if(sxBest(s.kind, s.id) < sxPass()) return {...s, C};
+  const f = SXR_MODELS.find(m => sxBest('F', m.id) < sxPass()) || SXR_MODELS[0];
   return {kind:'F', id:f.id, name:f.title, C:SCI[0]};
 }
 /* an exam she already passed is locked: only a parent's PIN opens it again */
+/* «امتحان النهارده» is chosen once a day (on this device) and stays the same all day; once she passes it, it leaves the page until tomorrow */
+function sxFind(kind, id){
+  for(const C of SCI) for(const s of sxSteps(C)) if(s.kind === kind && s.id === id) return {...s, C};
+  const f = SXR_MODELS.find(m => m.id === id); return f ? {kind: 'F', id: f.id, name: f.title, C: SCI[0]} : null;
+}
+function sxToday(nx){
+  const d = dayNo(); let t = store.get('sxToday', null);
+  let it = t && t.d === d ? sxFind(t.kind, t.id) : null;
+  if(!it){ it = nx; store.set('sxToday', {d, kind: nx.kind, id: nx.id}); }
+  return {...it, done: sxBest(it.kind, it.id) >= sxPass()};
+}
 function sxOpen(kind, id){
   const go = () => kind === 'L' ? sxStart('L', id) : sxReal(id), b = sxBest(kind, id);
-  if(b >= SX_PASS) askPin(go, `${KID_AR} جابت ${b}٪ في الامتحان ده فاتقفل 🔒. علشان تحلّه تاني، بابا أو ماما يكتبوا الرقم السري.`);
+  if(b >= sxPass()) askPin(go, `${KID_AR} جابت ${b}٪ في الامتحان ده فاتقفل 🔒. علشان تحلّه تاني، بابا أو ماما يكتبوا الرقم السري.`);
   else go();
 }
-const sxLocked = (kind, id) => sxBest(kind, id) >= SX_PASS;
-const sxState = (kind, id) => { const b = sxBest(kind, id); return b >= SX_PASS ? `<span class="sx-st ok">🔒 ✔ ${b}%</span>` : b ? `<span class="sx-st try">${b}%</span>` : '<span class="sx-st new">لسه</span>'; };
+const sxLocked = (kind, id) => sxBest(kind, id) >= sxPass();
+const sxState = (kind, id) => { const b = sxBest(kind, id); return b >= sxPass() ? `<span class="sx-st ok">🔒 ✔ ${b}%</span>` : b ? `<span class="sx-st try">${b}%</span>` : '<span class="sx-st new">لسه</span>'; };
 
 let sxLastUnit = null;   /* the unit she was looking at, kept when she comes back from an exam */
 function sxHall(openCh){
   setTop(true); stopAr(); curWorld = 'sci';
-  const nx = sxNext();
+  const nx = sxNext(), td = sxToday(nx);
   let uid = openCh || sxLastUnit || (nx.kind === 'F' ? SCI[0].id : nx.C.id), help = false, finals = nx.kind === 'F';
   const draw = () => {
     sxLastUnit = uid;
     const C = SCI.find(x => x.id === uid), steps = sxSteps(C);
     const groups = SXK.slice(0, 3).map(K => ({K, list: steps.filter(s => s.kind === K.k)}));
-    const doneN = steps.filter(s => sxBest(s.kind, s.id) >= SX_PASS).length;
+    const doneN = steps.filter(s => sxBest(s.kind, s.id) >= sxPass()).length;
     screenEl.innerHTML = `<section class="hub sci sx" style="--uc:${C.c};--ucl:${C.cl}">
     ${sciCrumbs([['خريطة الرحلة', 'world'], ['قاعة الامتحانات']])}
-    <button class="sx-today sticker" id="sxToday"><span class="sx-ico" aria-hidden="true">⭐</span><span><b>امتحان النهارده</b><small>${SXK.find(k => k.k === nx.kind).ico} ${nx.name}${nx.kind !== 'F' ? ` · الوحدة ${nx.C.n}` : ''}</small></span><span class="sx-go">ابدئي ←</span></button>
+    ${td.done ? `<p class="sx-today-done">✅ خلّصتي امتحان النهارده، برافو! بكرة هيستناكي امتحان جديد. ولو حابة تكمّلي، اختاري أي امتحان من تحت.</p>`
+      : `<button class="sx-today sticker" id="sxToday"><span class="sx-ico" aria-hidden="true">⭐</span><span><b>امتحان النهارده</b><small>${SXK.find(k => k.k === td.kind).ico} ${td.name}${td.kind !== 'F' ? ` · الوحدة ${td.C.n}` : ''}</small></span><span class="sx-go">ابدئي ←</span></button>`}
     <div class="sx-road" aria-label="أنواع الامتحانات بالترتيب">${SXK.map((k, i) => `<span class="sx-rk"><b aria-hidden="true">${k.ico}</b><span>${k.t}</span></span>${i < 3 ? '<i aria-hidden="true">←</i>' : ''}`).join('')}</div>
     <button class="sx-help-btn" id="sxHelp" aria-expanded="${help}">❓ أنواع الأسئلة وإزاي بنحلها</button>
     ${help ? `<div class="sx-help sticker">${Object.keys(SXQ).map(t => `<p>${sxqChip(t)} ${SXQ[t].tip}</p>`).join('')}<p class="muted">كل سؤال مكتوب فوقه نوعه بنفس العلامة، عشان تعرفي على طول تعملي إيه.</p></div>` : ''}
     <h3 class="sec-title">اختاري الوحدة</h3>
-    <div class="sx-units-row">${SCI.map(U => { const st = sxSteps(U), d = st.filter(s => sxBest(s.kind, s.id) >= SX_PASS).length;
+    <div class="sx-units-row">${SCI.map(U => { const st = sxSteps(U), d = st.filter(s => sxBest(s.kind, s.id) >= sxPass()).length;
       return `<button class="sx-uchip ${U.id === uid ? 'on' : ''}" data-sxu="${U.id}" aria-pressed="${U.id === uid}" style="--uc:${U.c};--ucl:${U.cl}"><span aria-hidden="true">${U.ico}</span> ${U.n}<small>${d}/${st.length}</small></button>`; }).join('')}</div>
     <div class="sx-unit-card sticker">
       <h3>${C.ico} الوحدة ${C.n}: ${C.title} <small>✔ ${doneN} من ${steps.length}</small></h3>
       ${groups.map(({K, list}, gi) => `<div class="sx-step"><p class="sx-step-h"><span class="sx-num">${gi + 1}</span> ${K.ico} ${K.t} <small>${K.d}</small></p>
         <div class="sx-list">${list.map(s => `<button class="sx-item ${nx.id === s.id ? 'next' : ''}" data-sxk="${s.kind}" data-sxi="${s.id}"><span class="sx-t">${s.name}</span>${prizeTag({id: s.kind === 'L' ? 'SL:' + s.id : s.kind === 'W' ? 'SW:' + s.id : 'SU:' + s.id}, true)}${sxState(s.kind, s.id)}</button>`).join('')}</div></div>`).join('')}
     </div>
-    <div class="sx-step sx-finals sticker"><button class="sx-step-h sx-fbtn" id="sxFinals" aria-expanded="${finals}"><span class="sx-num">4</span> 🏆 نماذج آخر الترم <small>✔ ${SXR_MODELS.filter(m => sxBest('F', m.id) >= SX_PASS).length} من ${SXR_MODELS.length} · بعد ما تخلّصي الوحدات</small><i aria-hidden="true">${finals ? '▾' : '◂'}</i></button>
+    <div class="sx-step sx-finals sticker"><button class="sx-step-h sx-fbtn" id="sxFinals" aria-expanded="${finals}"><span class="sx-num">4</span> 🏆 نماذج آخر الترم <small>✔ ${SXR_MODELS.filter(m => sxBest('F', m.id) >= sxPass()).length} من ${SXR_MODELS.length} · بعد ما تخلّصي الوحدات</small><i aria-hidden="true">${finals ? '▾' : '◂'}</i></button>
       ${finals ? `<div class="sx-list sx-flist">${SXR_MODELS.map(m => `<button class="sx-item ${nx.id === m.id ? 'next' : ''}" data-sxk="F" data-sxi="${m.id}"><span class="sx-t">${m.title}</span>${sxState('F', m.id)}</button>`).join('')}</div>` : ''}
     </div>
   </section>`;
     bindSciCrumbs();
-    $('#sxToday').onclick = () => sxOpen(nx.kind, nx.id);
+    if($('#sxToday')) $('#sxToday').onclick = () => sxOpen(td.kind, td.id);
     $('#sxHelp').onclick = () => { help = !help; draw(); };
     $('#sxFinals').onclick = () => { finals = !finals; draw(); };
     screenEl.querySelectorAll('[data-sxu]').forEach(b => b.onclick = () => { sfxTick(); uid = b.dataset.sxu; draw(); });
@@ -12607,6 +12636,26 @@ sciSlides = navWrap(sciSlides, 'sciSlides');
 sciTerms = navWrap(sciTerms, 'sciTerms');
 sciRunQs = navWrap(sciRunQs, 'sciRunQs');
 sciLab = navWrap(sciLab, 'sciLab');
+/* QA only (never on for Farha): with localStorage mishmish_qa_audio=true, window.__arAudit() lists every spoken part with no matching recording */
+if(store.get('qa_audio', false)) window.__arAudit = async () => {
+  await Promise.all([arIndex(), arHashLoad()]);
+  const have = {}; Object.values(window.__VA_IDX || {}).forEach(c => Object.assign(have, c));
+  const bad = new Map();
+  const chk = (where, p) => { arResolve(p); const k = (p.id || 'NOID') + '|' + p.text; if(bad.has(k)) return;
+    if(!p.id) bad.set(k, [where, 'no-id', '', p.text.slice(0, 60)]);
+    else if(!have[p.id]) bad.set(k, [where, 'missing', p.id, p.text.slice(0, 60)]);
+    else if(AR_HASH[p.id] !== ohash(p.text)) bad.set(k, [where, 'edited', p.id, p.text.slice(0, 60)]); };
+  for(const C of SCI) for(const L of C.lessons){
+    L.qs.forEach(q => sciQParts(q, q.tf !== undefined ? [] : q.o).forEach(p => chk('lessonQ ' + L.id, p)));
+    for(let r = 0; r < 15; r++) sxMake('L', L.id).secs.forEach(sec => sec.items.forEach(q => { if(q.k === 'mc') q.order = q.o.map((_, i) => i); (q.tmid ? sciQParts(q) : sxParts(q)).forEach(p => chk('lessonTest ' + L.id, p)); }));
+  }
+  for(const C of SCI) (C.exam || []).forEach(q => sciQParts(q, q.o || []).forEach(p => chk('boss ' + C.id, p)));
+  for(const M of sxAllReal()){ const items = []; M.qs.forEach(q => q.parts.forEach(pp => pp.items.forEach(it => items.push(it))));
+    items.forEach((it, i) => { const nn = String(i).padStart(2, '0'), mc = it.t === 'mc';
+      if(it.t !== 'sort') chk('real ' + M.id, {text: it.q + (mc ? '. ' + it.o.join('، ') : ''), id: `sxr_${M.id}_i${nn}q`});
+      if(it.t === 'open') chk('real ' + M.id, {text: it.ans.replace(/\n/g, '. '), id: `sxr_${M.id}_i${nn}a`}); }); }
+  return [...bad.values()];
+};
 mathWorld = navWrap(mathWorld, 'mathWorld'); mulHub = navWrap(mulHub, 'mulHub'); mentalHub = navWrap(mentalHub, 'mentalHub');
 mulLesson = navWrap(mulLesson, 'mulLesson'); mStrat = navWrap(mStrat, 'mStrat'); mDaily = navWrap(mDaily, 'mDaily');
 mBalloons = navWrap(mBalloons, 'mBalloons'); mRocket = navWrap(mRocket, 'mRocket'); mMemory = navWrap(mMemory, 'mMemory');

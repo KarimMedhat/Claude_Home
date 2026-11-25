@@ -3032,7 +3032,7 @@ function stopSpeech(){ veStop(); clipRun++; clipSrcs.forEach(x => { try{ x.stop(
    passages, and a few end-of-set lines. ve/ve-index.json = {chunks: {file: {clipId: [offset, length]}}, lex: {word: clipId},
    pas: {gamePassageId: clipId}, sup: {high|mid|low|done|enc: [clipIds], 'S-01'..'S-03': clipId}}.
    A word or passage that is not in the pack keeps the old voice. Only one sound plays at a time. */
-const VE = {idx: null, of: {}, clips: {}, loading: {}, buf: {}}, VE_VER = 1;
+const VE = {idx: null, of: {}, clips: {}, loading: {}, buf: {}}, VE_VER = 2;
 const veNorm = t => String(t).toLowerCase().replace(/[’‘]/g, "'").replace(/[^a-z' ]+/g, ' ').replace(/\s+/g, ' ').trim();
 let VE_PAS = null;
 const veIndex = () => VE.loading.idx || (VE.loading.idx = fetch('ve/ve-index.json?v=' + VE_VER).then(r => r.ok ? r.json() : null).then(d => {
@@ -3045,7 +3045,7 @@ const veChunk = ch => VE.loading[ch] || (VE.loading[ch] = arFetch('ve/' + ch + '
 function veFind(text){
   if(!VE.idx || text == null) return null;
   const n = veNorm(text); if(!n) return null;
-  return VE.idx.lex[n] || VE.idx.lex[n.replace(/'s$/, '')] || (VE_PAS && VE_PAS[n]) || (VE.idx.lines && VE.idx.lines[n]) || null;   /* lines: whole fixed sentences, e.g. the home greeting */
+  return (VE.idx.sen && VE.idx.sen[n]) || VE.idx.lex[n] || VE.idx.lex[n.replace(/'s$/, '')] || (VE_PAS && VE_PAS[n]) || (VE.idx.lines && VE.idx.lines[n]) || null;   /* recorded sentences first; lines = fixed sentences such as the home greeting */
 }
 let veRun = 0, veSrc = null;
 function veStop(){ veRun++; if(veSrc){ try{ veSrc.stop(); }catch(e){} veSrc = null; } }
@@ -3082,17 +3082,56 @@ function veSession(key){
 }
 /* load the words in the background the first time she opens the English world, so taps answer at once */
 let VE_PREFETCHED = false;
-async function vePrefetchWords(){ if(VE_PREFETCHED || !S.sound) return; VE_PREFETCHED = true; const d = await veIndex(); if(!d) { VE_PREFETCHED = false; return; } for(const ch of Object.keys(d.chunks).filter(c => /^lex_/.test(c))) await veChunk(ch); }
+async function vePrefetchWords(){ if(VE_PREFETCHED || !S.sound) return; VE_PREFETCHED = true; const d = await veIndex(); if(!d) { VE_PREFETCHED = false; return; } for(const ch of Object.keys(d.chunks).filter(c => /^(lex_|sen_)/.test(c))) await veChunk(ch); }
 setTimeout(() => { veIndex(); }, 1200);
-function say(text, rate=0.82){
+/* A sentence (two words or more) is always read as ONE piece: the recorded Leda clip when there is one, otherwise the
+   phone's own American English voice in one go. It is never glued together word by word; with no English voice on the
+   phone a short notice says so instead. Only deliberate word drills ({drill:true}) may play words one after another. */
+const SPEAK_COMPLETED = false;          /* no spoken sentence after each answer: feedback is spoken once, at the end of a set */
+const MISSING_SENTENCES = new Set();    /* sentences heard this session with no recording (QA) */
+const isSentence = (t, opts) => !(opts && opts.drill) && veNorm(t).split(' ').filter(Boolean).length >= 2;
+function englishDeviceVoice(){
+  try{ const vs = speechSynthesis.getVoices(); return vs.find(v => /^en[-_]US/i.test(v.lang)) || vs.find(v => /^en/i.test(v.lang)) || null; }catch(e){ return null; }
+}
+let noVoiceAt = 0;
+function noEnglishVoiceNotice(){
+  if(Date.now() - noVoiceAt < 8000) return; noVoiceAt = Date.now();
+  toast('الجهاز ده مفيهوش صوت إنجليزي للجُمل. ممكن تحمّلي صوت إنجليزي أمريكي من إعدادات الجهاز، أو اقري الجملة المكتوبة 📖');
+}
+function saySentenceFallback(text){
+  MISSING_SENTENCES.add(veNorm(text));
+  const v = hasTTS ? englishDeviceVoice() : null;
+  if(v){
+    try{ speechSynthesis.cancel(); }catch(e){}
+    setTimeout(() => { try{ const u = new SpeechSynthesisUtterance(text); u.lang = v.lang || 'en-US'; u.voice = v; u.rate = 1.0; u.pitch = 1.0; speechSynthesis.resume(); speechSynthesis.speak(u); }catch(e){} }, 90);
+    return;
+  }
+  noEnglishVoiceNotice();
+}
+/* a word drill: each word in its own clip, one after another (e.g. a verb and its past: "learn, learnt") */
+async function sayDrillList(ws, rate){
+  stopSpeech();
+  for(const w of ws){
+    const id = veFind(w); let d = 0;
+    if(id){ d = await vePlay(id); if(d === null) return; }
+    if(!d){ sayOld(w, rate); d = .9; }
+    const run = veRun; await new Promise(r => setTimeout(r, (d + .35) * 1000)); if(run !== veRun) return;
+  }
+}
+function say(text, rate=0.82, opts){
+  if(text == null) return;
+  text = String(text).replace(/_{2,}/g, ' blank ');   /* a blank is read as "blank", never as its answer */
+  if(window.__sayLog) window.__sayLog.push(text);
   if(!S.sound) return;
+  if(opts && opts.drill && /,/.test(text)) return void sayDrillList(String(text).split(',').map(x => x.trim()).filter(Boolean), rate);
   const vid = veFind(text);
-  if(vid){ stopSpeech(); vePlay(vid).then(d => { if(d === 0) sayOld(text, rate); }); return; }
+  if(vid){ stopSpeech(); vePlay(vid).then(d => { if(d === 0){ if(isSentence(text, opts)) saySentenceFallback(text); else sayOld(text, rate); } }); return; }
+  if(isSentence(text, opts)) return saySentenceFallback(text);
   sayOld(text, rate);
 }
 function sayOld(text, rate=0.82){
   if(!S.sound) return;
-  if(useClips) return void sayClips(text);
+  if(useClips){ if(isSentence(text)) return noEnglishVoiceNotice(); return void sayClips(text); }
   if(!hasTTS) return;
   try{
     const go = () => {
@@ -4682,7 +4721,7 @@ function setTop(inGame, keep){ $('#homeBtn').hidden = !inGame; document.querySel
 
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-say]');
-  if(b) say(b.dataset.say);
+  if(b) say(b.dataset.say, undefined, b.hasAttribute('data-drill') ? {drill: true} : undefined);
 });
 
 /* ============ HOME ============ */
@@ -9415,7 +9454,7 @@ function lessonScreen(lid){
     ${extKeys.length ? `<h3 class="sec-title">كلمات زيادة <span class="en">Extra</span></h3><div class="wgrid small">${extKeys.map(tile).join('')}</div>` : ''}
     ${l.verbs.length ? `<h3 class="sec-title">الأفعال <span class="en">Verbs</span></h3>
       <div class="vtable sticker" dir="ltr"><div class="vrow vh"><span>Verb</span><span>Past</span><span dir="rtl">المعنى</span></div>
-      ${l.verbs.map(v => `<button class="vrow" data-say="${esc(v.b)}, ${esc(v.p)}"><span>${v.b}</span><span><b>${v.p}</b></span><span dir="rtl">${v.ar}</span></button>`).join('')}</div>` : ''}
+      ${l.verbs.map(v => `<button class="vrow" data-drill data-say="${esc(v.b)}, ${esc(v.p)}"><span>${v.b}</span><span><b>${v.p}</b></span><span dir="rtl">${v.ar}</span></button>`).join('')}</div>` : ''}
     <p class="muted">دوسي على أي كلمة تسمعيها. الزرعة اللي في الركن بتوريكي الكلمة كبرت لحد فين: ${STAGE_AR.slice(1).join(' ← ')}</p>
   </section>`;
   bindCrumbs();
@@ -9687,7 +9726,7 @@ function verbQuiz(l, back){
       if(b.dataset.o === v.p){
         done = true; b.classList.add('right'); sfxGood(); burst(b);
         results[i] = tries === 0; if(!tries) addStars(1);
-        say(`${v.b}, ${v.p}`);
+        say(`${v.b}, ${v.p}`, .82, {drill: true});
         $('#fb').className = 'feedback good'; $('#fb').innerHTML = `<span class="en">${v.b} → ${v.p}</span>`;
         setTimeout(() => { i++; q(); }, 2300);
       } else {
@@ -9765,7 +9804,7 @@ function choose(q, head, done){
     if(+b.dataset.k === q.a){
       over = true; b.classList.add('right'); sfxGood(); burst(b);
       const blank = $('.blank'); if(blank && !q.pics){ blank.textContent = q.o[q.a]; blank.classList.add('filled'); }
-      if(full) say(full);
+      if(SPEAK_COMPLETED && full) say(full);
       $('#fb').className = 'feedback good'; $('#fb').textContent = rand(['برافو!','شاطرة!','صح كده!','جامدة!']);
       done(tries === 0);
     } else {
@@ -9846,7 +9885,7 @@ function listenQ(q, head, done){
   screenEl.querySelectorAll('.lopt').forEach(b => b.onclick = () => {
     if(over) return;
     if(b.dataset.w === q.w){ over = true; b.classList.add('right'); sfxGood(); burst(b); say(q.w); $('#fb').className = 'feedback good'; $('#fb').textContent = rand(['ودنك حلوة!','برافو!','صح كده!']); done(tries === 0); }
-    else { tries++; b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); sfxBad(); say(b.dataset.w + '. Listen again. ' + q.w, .75); $('#fb').className = 'feedback bad'; $('#fb').innerHTML = `دي <span class="en">${esc(b.dataset.w)}</span>. اسمعي تاني`; if(tries >= 2) screenEl.querySelector(`.lopt[data-w="${CSS.escape(q.w)}"]`).classList.add('hint'); }
+    else { tries++; b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); sfxBad(); sayDrillList([b.dataset.w, q.w], .75); $('#fb').className = 'feedback bad'; $('#fb').innerHTML = `دي <span class="en">${esc(b.dataset.w)}</span>. اسمعي تاني`; if(tries >= 2) screenEl.querySelector(`.lopt[data-w="${CSS.escape(q.w)}"]`).classList.add('hint'); }
   });
 }
 function magicQ(q, head, done){
@@ -12700,7 +12739,7 @@ sciTerms = navWrap(sciTerms, 'sciTerms');
 sciRunQs = navWrap(sciRunQs, 'sciRunQs');
 sciLab = navWrap(sciLab, 'sciLab');
 /* QA only (never on for Farha): with localStorage mishmish_qa_audio=true, window.__arAudit() lists every spoken part with no matching recording */
-if(store.get('qa_audio', false)){ window.__PASSAGES = PASSAGES; window.__WORDS = WORDS; }
+if(store.get('qa_audio', false)){ window.__PASSAGES = PASSAGES; window.__WORDS = WORDS; window.__sayLog = []; window.__veFind = veFind; window.__isSentence = isSentence; }
 if(store.get('qa_audio', false)) window.__arAudit = async () => {
   await Promise.all([arIndex(), arHashLoad()]);
   const have = {}; Object.values(window.__VA_IDX || {}).forEach(c => Object.assign(have, c));

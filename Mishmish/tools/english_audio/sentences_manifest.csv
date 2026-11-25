@@ -1,0 +1,60 @@
+id,spoken_text,kind,source,veNorm_key,file
+SEN-001,Mishmish drinks milk every morning.,static_choose,unit-games,mishmish drinks milk every morning,audio/sentences/SEN-001.mp3
+SEN-002,I brush my teeth every day.,static_choose,unit-games,i brush my teeth every day,audio/sentences/SEN-002.mp3
+SEN-003,Sarah wakes up early.,static_choose,unit-games,sarah wakes up early,audio/sentences/SEN-003.mp3
+SEN-004,They watch TV every night.,static_choose,unit-games,they watch tv every night,audio/sentences/SEN-004.mp3
+SEN-005,He goes to school by bus.,static_choose,unit-games,he goes to school by bus,audio/sentences/SEN-005.mp3
+SEN-006,My dad washes the car on Friday.,static_choose,unit-games,my dad washes the car on friday,audio/sentences/SEN-006.mp3
+SEN-007,We eat vegetables and fruits.,static_choose,unit-games,we eat vegetables and fruits,audio/sentences/SEN-007.mp3
+SEN-008,Mishmish drinks water every day.,static_build,unit-games,mishmish drinks water every day,audio/sentences/SEN-008.mp3
+SEN-009,She doesn't eat too many sweets.,static_choose,unit-games,she doesn't eat too many sweets,audio/sentences/SEN-009.mp3
+SEN-010,I don't stay up late.,static_choose,unit-games,i don't stay up late,audio/sentences/SEN-010.mp3
+SEN-011,They don't throw trash on the ground.,static_choose,unit-games,they don't throw trash on the ground,audio/sentences/SEN-011.mp3
+SEN-012,She doesn't eat sweets.,static_choose,unit-games,she doesn't eat sweets,audio/sentences/SEN-012.mp3
+SEN-013,Do you wake up early?,static_choose,unit-games,do you wake up early,audio/sentences/SEN-013.mp3
+SEN-014,Does Mishmish like fish?,static_choose,unit-games,does mishmish like fish,audio/sentences/SEN-014.mp3
+SEN-015,Where do you live? In Cairo.,static_choose,unit-games,where do you live in cairo,audio/sentences/SEN-015.mp3
+SEN-016,When does she go to bed? At 9 p.m.,static_choose,unit-games,when does she go to bed at p m,audio/sentences/SEN-016.mp3
+SEN-017,What do you eat for breakfast? Eggs.,static_choose,unit-games,what do you eat for breakfast eggs,audio/sentences/SEN-017.mp3
+SEN-018,Does Sarah help her mother?,static_build,unit-games,does sarah help her mother,audio/sentences/SEN-018.mp3
+SEN-019,We don't throw trash.,static_build,unit-games,we don't throw trash,audio/sentences/SEN-019.mp3
+SEN-020,The magic cat can disappear in a second!,static_choose,unit-games,the magic cat can disappear in a second,audio/sentences/SEN-020.mp3
+SEN-021,Zoos are safer than the wild.,static_choose,unit-games,zoos are safer than the wild,audio/sentences/SEN-021.mp3
+SEN-022,A rabbit is faster than a turtle.,static_choose,unit-games,a rabbit is faster than a turtle,audio/sentences/SEN-022.mp3
+SEN-023,The lion is stronger than the fox.,static_build,unit-games,the lion is stronger than the fox,audio/sentences/SEN-023.mp3
+SEN-024,Mona is the nicest friend I have.,static_choose,unit-games,mona is the nicest friend i have,audio/sentences/SEN-024.mp3
+SEN-025,Nora is the happiest girl in the class.,static_choose,unit-games,nora is the happiest girl in the class,audio/sentences/SEN-025.mp3
+SEN-026,The lion is bigger than the cat.,static_choose,unit-games,the lion is bigger than the cat,audio/sentences/SEN-026.mp3
+SEN-027,Mishmish is the happiest cat.,static_build,unit-games,mishmish is the happiest cat,audio/sentences/SEN-027.mp3
+SEN-028,I wake up.,static_order,unit-games,i wake up,audio/sentences/SEN-028.mp3
+SEN-029,I brush my teeth.,static_order,unit-games,i brush my teeth,audio/sentences/SEN-029.mp3
+SEN-030,I eat breakfast.,static_order,unit-games,i eat breakfast,audio/sentences/SEN-030.mp3
+SEN-031,I get dressed.,static_order,unit-games,i get dressed,audio/sentences/SEN-031.mp3
+SEN-032,I go to school.,static_order,unit-games,i go to school,audio/sentences/SEN-032.mp3
+SEN-033,"First, I wake up.",static_choose,unit-games,first i wake up,audio/sentences/SEN-033.mp3
+SEN-034,"Finally, I go to bed.",static_choose,unit-games,finally i go to bed,audio/sentences/SEN-034.mp3
+SEN-035,"First, I wash my face. Next, I eat breakfast.",static_choose,unit-games,first i wash my face next i eat breakfast,audio/sentences/SEN-035.mp3
+SEN-036,"After that, I do my homework.",static_build,unit-games,after that i do my homework,audio/sentences/SEN-036.mp3
+SEN-037,Hany went home and changed into his best clothes.,static_choose,unit-games,hany went home and changed into his best clothes,audio/sentences/SEN-037.mp3
+SEN-038,The children feed their cat in the morning.,static_choose,unit-games,the children feed their cat in the morning,audio/sentences/SEN-038.mp3
+SEN-039,I washed the plate after dinner.,static_choose,unit-games,i washed the plate after dinner,audio/sentences/SEN-039.mp3
+SEN-040,The ducks swim in the pond.,static_choose,unit-games,the ducks swim in the pond,audio/sentences/SEN-040.mp3
+SEN-041,We throw our trash in the bin.,static_choose,unit-games,we throw our trash in the bin,audio/sentences/SEN-041.mp3
+SEN-042,I play on the slide in the park.,static_choose,unit-games,i play on the slide in the park,audio/sentences/SEN-042.mp3
+SEN-043,My house has a very big gate.,static_choose,unit-games,my house has a very big gate,audio/sentences/SEN-043.mp3
+SEN-044,My sister can play the flute.,static_choose,unit-games,my sister can play the flute,audio/sentences/SEN-044.mp3
+SEN-045,"First, I wake up early.",static_choose,unit-games,first i wake up early,audio/sentences/SEN-045.mp3
+SEN-046,"Finally, I go to bed at 9:00 p.m.",static_choose,unit-games,finally i go to bed at p m,audio/sentences/SEN-046.mp3
+SEN-047,Sequence words show the order of actions.,static_choose,unit-games,sequence words show the order of actions,audio/sentences/SEN-047.mp3
+SEN-048,"""March 15, 2025"" is the date.",static_choose,unit-games,march is the date,audio/sentences/SEN-048.mp3
+SEN-049,"""Dear diary,"" is the greeting.",static_choose,unit-games,dear diary is the greeting,audio/sentences/SEN-049.mp3
+SEN-050,"""Yours truly, Hana"" is the closing.",static_choose,unit-games,yours truly hana is the closing,audio/sentences/SEN-050.mp3
+SEN-051,"""Endangered Animals"" is the title.",static_choose,unit-games,endangered animals is the title,audio/sentences/SEN-051.mp3
+SEN-052,"""To help these animals, stop pollution."" is a solution.",static_choose,unit-games,to help these animals stop pollution is a solution,audio/sentences/SEN-052.mp3
+SEN-053,"""The Red Sea Dugong is an endangered animal."" is an example.",static_choose,unit-games,the red sea dugong is an endangered animal is an example,audio/sentences/SEN-053.mp3
+SEN-054,The title tells readers what the blog post is about.,static_choose,unit-games,the title tells readers what the blog post is about,audio/sentences/SEN-054.mp3
+SEN-055,The writer's name shows who wrote the blog post.,static_choose,unit-games,the writer's name shows who wrote the blog post,audio/sentences/SEN-055.mp3
+SEN-056,"""colorful"" and ""popular"" are descriptive words.",static_choose,unit-games,colorful and popular are descriptive words,audio/sentences/SEN-056.mp3
+SEN-057,Non-fiction writing is true.,static_choose,unit-games,non fiction writing is true,audio/sentences/SEN-057.mp3
+SEN-058,"""thick"" and ""big red"" are adjectives.",static_choose,unit-games,thick and big red are adjectives,audio/sentences/SEN-058.mp3
+SEN-059,"""My neighbor, Omar, is a firefighter."" is the introductory sentence.",static_choose,unit-games,my neighbor omar is a firefighter is the introductory sentence,audio/sentences/SEN-059.mp3

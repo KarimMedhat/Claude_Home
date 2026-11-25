@@ -7,3 +7,6 @@ No one listened to these files. Checks were by automatic speech-to-text, which c
 - P-19: "read" (past) is spoken as "red"; cannot be confirmed phonetically.
 - Support clips (feedback, session, encouragement) are new text, not from the game.
 - Processing: silence trimmed, level near -19 dB mean, peak limiter, MP3 80 kbps mono.
+- Sentences (59): each file was transcribed. Wording matches the text with no dropped words. Only speech-to-text style differences (Hanny/Hannah for Hany/Hana, "15th" for 15, "Mish Mish", quote marks not audible). A silence check found one pause of 0.25 s or more in 13 clips (004, 008, 013, 015, 016 has two, 017, 026, 028, 035, 053, 055, 057, 059), probably comma pauses. No one listened. Natural rhythm is not confirmed.
+- Greetings S-00_hello and S-00_hello_farha are included in audio/session.
+- Coverage: only 59 extra sentences are recorded. Other game sentences, exams, stories and run-time sentences are not recorded; the patch plan uses the device voice for them when available.

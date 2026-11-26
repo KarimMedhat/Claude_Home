@@ -1,0 +1,18 @@
+﻿id,group,key,current_english,egyptian_text,audio_file,duration_s
+EG-201,feed,feed_t_food,"Yum! I love cat food! Thank you, {name}!",ممم، أكل القطط حلو أوي! شكراً!,audio/eg/EG-201.mp3,4.2
+EG-202,feed,feed_t_milk,"Yum! I love milk! Thank you, {name}!",يمّي! اللبن حلو أوي! شكراً!,audio/eg/EG-202.mp3,4.7
+EG-203,feed,feed_t_fish,"Yum! I love fish! Thank you, {name}!",يمّي! أنا بحب السمك أوي!,audio/eg/EG-203.mp3,4.2
+EG-204,feed,feed_t_chicken,"Yum! I love chicken! Thank you, {name}!",يمّي! الفراخ طعمها جميل أوي! شكراً!,audio/eg/EG-204.mp3,4.8
+EG-205,feed,feed_t_cheese,"Yum! I love cheese! Thank you, {name}!",ممم، الجبنة طعمها حلو أوي! شكراً!,audio/eg/EG-205.mp3,4.3
+EG-206,feed,feed_t_icecream,"Yum! I love ice cream! Thank you, {name}!",يمّي! الآيس كريم حلو وساقع! شكراً!,audio/eg/EG-206.mp3,4.9
+EG-207,feed,feed_t_cake,"Yum! I love cake! Thank you, {name}!",يمّي! الكيكة حلوة أوي! شكراً!,audio/eg/EG-207.mp3,4.2
+EG-208,feed,feed_t_shrimp,"Yum! I love shrimp! Thank you, {name}!",يمّي! الجمبري تحفة! شكراً!,audio/eg/EG-208.mp3,3.8
+EG-209,feed_fav,feedfav_t_food,"Yum! cat food is my favorite food! Thank you, {name}!",ده أحلى أكل عندي! بحب أكل القطط أوي أوي! شكراً!,audio/eg/EG-209.mp3,6.1
+EG-210,feed_fav,feedfav_t_milk,"Yum! milk is my favorite food! Thank you, {name}!",ده أحلى أكل عندي! بحب اللبن أوي أوي! شكراً!,audio/eg/EG-210.mp3,5.6
+EG-211,feed_fav,feedfav_t_fish,"Yum! fish is my favorite food! Thank you, {name}!",ده أحلى أكل عندي! بحب السمك أوي أوي! شكراً!,audio/eg/EG-211.mp3,6.2
+EG-212,feed_fav,feedfav_t_chicken,"Yum! chicken is my favorite food! Thank you, {name}!",ده أحلى أكل عندي! بحب الفراخ أوي أوي! شكراً!,audio/eg/EG-212.mp3,5.4
+EG-213,feed_fav,feedfav_t_cheese,"Yum! cheese is my favorite food! Thank you, {name}!",ده أحلى أكل عندي! بحب الجبنة أوي أوي! شكراً!,audio/eg/EG-213.mp3,6.6
+EG-214,feed_fav,feedfav_t_icecream,"Yum! ice cream is my favorite food! Thank you, {name}!",ده أحلى أكل عندي! بحب الآيس كريم أوي أوي! شكراً!,audio/eg/EG-214.mp3,5.4
+EG-215,feed_fav,feedfav_t_cake,"Yum! cake is my favorite food! Thank you, {name}!",ده أحلى أكل عندي! بحب الكيكة أوي أوي! شكراً!,audio/eg/EG-215.mp3,5.7
+EG-216,feed_fav,feedfav_t_shrimp,"Yum! shrimp is my favorite food! Thank you, {name}!",ده أحلى أكل عندي! بحب الجمبري أوي أوي! شكراً!,audio/eg/EG-216.mp3,5.6
+EG-217,feed_generic,feed_any,(any new food without its own line),ممم، حلو أوي! شكراً!,audio/eg/EG-217.mp3,3.2

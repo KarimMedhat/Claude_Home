@@ -5505,7 +5505,7 @@ const AR_ORD = ['', 'الأول', 'التاني', 'التالت', 'الرابع'
    text; otherwise playback is suppressed with an Arabic notice. Device TTS is never used for
    covered content - it can only be an explicit, separate user choice. */
 const AR_CLIPS = {}, AR_LOADING = {}, AR_BUF = {}, AR_HASH = {}; let AR_HLOADED = false;
-const AR_VER = 10;   /* bump when the recordings change so phones don't keep an old copy */
+const AR_VER = 11;   /* bump when the recordings change so phones don't keep an old copy */
 const __b64 = buf => { const u = new Uint8Array(buf); let s = ''; for (let i = 0; i < u.length; i += 32768) s += String.fromCharCode.apply(null, u.subarray(i, i + 32768)); return btoa(s); };
 const arFetch = url => new Promise((res, rej) => {
   const x = new XMLHttpRequest();
@@ -5523,7 +5523,7 @@ const arHashLoad = () => AR_LOADING.h || (AR_LOADING.h = (window.__VA_H ? Promis
 let arRun = 0, arSrc = null, arWarned = false;
 function stopAr(){ arRun++; if(arSrc){ try{ arSrc.stop(); }catch(e){} arSrc = null; } if(hasTTS) try{ speechSynthesis.cancel(); }catch(e){} document.querySelectorAll('.say-ar.on').forEach(b => b.classList.remove('on')); }
 /* which chunk file holds a clip */
-const arChunkOf = id => { const m = id && id.match(/^(c\d+l\d+|c\d+x|c\d+o|sxr_(?:f\d+|w\d+|u\d[ab])|m(?=_)|g)/); return m ? m[1] : null; };
+const arChunkOf = id => { const m = id && id.match(/^(c\d+l\d+|c\d+x|c\d+o|sxr_(?:f\d+|w\d+|u\d[ab])|m(?=_)|eg\d(?=_)|g)/); return m ? m[1] : null; };
 /* the same sentence can be recorded under another lesson's id (a definition shared by two lessons): find it by its exact text */
 let AR_BYHASH = null;
 function arResolve(part){
@@ -10333,6 +10333,17 @@ let roomTimer = null, editMode = false, findSt = null, drag = null, dragMoved = 
 let mishSt = {x:45, y:94, mode:'idle', busy:0};
 const IDLE_LINES = ["Meow!","I love my room!","Let's study English!","I'm happy!","Play with me!","Can we buy a new toy?","I want a cake, please!","Purr..."];
 
+/* ---- Farha's room speaks Egyptian, in the same voice as Mishmish in science and math (va/eg1.mp3 lines, va/eg2.mp3 objects).
+   EG_TEXT is exactly what each clip says (tools/room_voice/manifest.csv); the bubble shows the same Arabic text.
+   Farha's commands stay English (chips, typed or spoken); the find game and lesson words stay English too.
+   A line with no clip shows its Arabic bubble only - never English or device speech. idle8 is the purr: bubble only. ---- */
+const EG_TEXT = {"hungry": "أنا جعانة! أكّليني بقى.", "welcome": "أهلاً بيكي في أوضتك!", "wake": "صباح الخير! أنا صحيت.", "play": "يلا نلعب!", "hungry2": "أكّليني لو سمحتي!", "tap_love": "بحبك أوي!", "tap_friend": "مشمش أحسن صاحبة ليّا!", "tap_play": "يلا نلعب سوا!", "idle1": "ميااو!", "idle2": "أنا بحب أوضتي أوي!", "idle3": "يلا نذاكر إنجليزي!", "idle4": "أنا مبسوطة!", "idle5": "العبي معايا!", "idle6": "ممكن نشتري لعبة جديدة؟", "idle7": "عايزة كيكة لو سمحتي!", "idle8": "غرررر...", "nobed": "معنديش سرير! اشتريلي واحد من المول.", "tobed": "حاضر! رايحة أنام. تصبحي على خير!", "awake": "صباح الخير! أنا صحيت!", "here": "أنا هنا!", "nofood": "مفيش أكل! اشتريلي أكل لو سمحتي.", "dance": "بصي! أنا بارقص!", "jump": "نطّ نطّ!", "chase": "بجري ورا ديلي! ممكن تشتريلي لعبة؟", "left": "رحت الشمال!", "right": "رحت اليمين!", "love2": "وأنا كمان بحبك!", "hello": "أهلاً! عاملة إيه؟", "stay": "حاضر، هفضل هنا.", "dontget": "ميااو؟ مش فاهمة.", "lampon": "النور اتفتح!", "lampoff": "النور اتقفل!", "mirror": "بصي! دي أنا!", "disco": "حفلة ديسكو!", "dance2": "يلا نرقص!", "globe1": "مصر بلدي!", "globe2": "دي مصر!", "globe3": "بصي! الصين!", "globe4": "الدنيا كبيرة أوي!", "stars": "أنا شايفة النجوم!", "plant_big": "الزرعة كبرت!", "plant_water": "بسقي الزرعة.", "fish": "سمك! ياميّ!", "paint_has": "لوحتي!", "paint_none": "ارسمي لوحة واحفظيها!", "tv": "يلا نتفرج على كرتون!", "race": "تلاتة، اتنين، واحد، يلا!", "findend": "برافو عليكي!", "intro_bobo": "أنا بوبو، قطة صغيرة وبحب اللعب!", "intro_luna": "أنا لونا، وبحب أنام في الشمس.", "intro_coco": "أنا كوكو، وبحب كيكة الشوكولاتة!", "intro_snowy": "أنا سنوي، بيضا زي التلج.", "intro_sunny": "أنا صني، شجاعة وسريعة!", "intro_shadow": "أنا شادو، وبشوف في الضلمة!", "intro_lulu": "أنا الأميرة لولو، وعايشة في قصر!", "love_r_bed": "أنا بحب سرير أوي!", "bought_r_bed": "اشتريتي سرير! شكراً!", "label_r_bed": "سرير", "love_r_sofa": "أنا بحب كنبة أوي!", "bought_r_sofa": "اشتريتي كنبة! شكراً!", "label_r_sofa": "كنبة", "love_r_chair": "أنا بحب كرسي أوي!", "bought_r_chair": "اشتريتي كرسي! شكراً!", "label_r_chair": "كرسي", "love_r_desk": "أنا بحب مكتب أوي!", "bought_r_desk": "اشتريتي مكتب! شكراً!", "label_r_desk": "مكتب", "love_r_shelf": "أنا بحب مكتبة كتب أوي!", "bought_r_shelf": "اشتريتي مكتبة كتب! شكراً!", "label_r_shelf": "مكتبة كتب", "love_r_wardrobe": "أنا بحب دولاب أوي!", "bought_r_wardrobe": "اشتريتي دولاب! شكراً!", "label_r_wardrobe": "دولاب", "love_r_toybox": "أنا بحب صندوق لعب أوي!", "bought_r_toybox": "اشتريتي صندوق لعب! شكراً!", "label_r_toybox": "صندوق لعب", "love_r_beanbag": "أنا بحب بين باج أوي!", "bought_r_beanbag": "اشتريتي بين باج! شكراً!", "label_r_beanbag": "بين باج", "love_r_tent": "أنا بحب خيمة لعب أوي!", "bought_r_tent": "اشتريتي خيمة لعب! شكراً!", "label_r_tent": "خيمة لعب", "love_r_piano": "أنا بحب بيانو أوي!", "bought_r_piano": "اشتريتي بيانو! شكراً!", "label_r_piano": "بيانو", "love_r_tv": "أنا بحب تلفزيون أوي!", "bought_r_tv": "اشتريتي تلفزيون! شكراً!", "label_r_tv": "تلفزيون", "love_r_computer": "أنا بحب كمبيوتر أوي!", "bought_r_computer": "اشتريتي كمبيوتر! شكراً!", "label_r_computer": "كمبيوتر", "love_r_lamp": "أنا بحب أباجورة أوي!", "bought_r_lamp": "اشتريتي أباجورة! شكراً!", "label_r_lamp": "أباجورة", "love_r_rugpink": "أنا بحب سجادة بمبي أوي!", "bought_r_rugpink": "اشتريتي سجادة بمبي! شكراً!", "label_r_rugpink": "سجادة بمبي", "love_r_rugblue": "أنا بحب سجادة زرقا أوي!", "bought_r_rugblue": "اشتريتي سجادة زرقا! شكراً!", "label_r_rugblue": "دي سجادة زرقا حلوة أوي", "love_r_plant": "أنا بحب زرعة أوي!", "bought_r_plant": "اشتريتي زرعة! شكراً!", "label_r_plant": "زرعة", "love_r_cactus": "أنا بحب صبار أوي!", "bought_r_cactus": "اشتريتي صبار! شكراً!", "label_r_cactus": "صبار", "love_r_sunflower": "أنا بحب عباد الشمس أوي!", "bought_r_sunflower": "اشتريتي عباد الشمس! شكراً!", "label_r_sunflower": "عباد الشمس", "love_r_aquarium": "أنا بحب حوض سمك أوي!", "bought_r_aquarium": "اشتريتي حوض سمك! شكراً!", "label_r_aquarium": "حوض سمك", "love_r_globe": "أنا بحب مجسم الكرة الأرضية أوي!", "bought_r_globe": "اشتريتي مجسم الكرة الأرضية! شكراً!", "label_r_globe": "مجسم الكرة الأرضية", "love_r_telescope": "أنا بحب تلسكوب أوي!", "bought_r_telescope": "اشتريتي تلسكوب! شكراً!", "label_r_telescope": "تلسكوب", "love_r_trophy": "أنا بحب كاس أوي!", "bought_r_trophy": "اشتريتي كاس! شكراً!", "label_r_trophy": "كاس", "love_r_easel": "أنا بحب لوحتي أوي!", "bought_r_easel": "اشتريتي لوحتي! شكراً!", "label_r_easel": "لوحتي", "love_r_frame": "أنا بحب برواز أوي!", "bought_r_frame": "اشتريتي برواز! شكراً!", "label_r_frame": "برواز", "love_r_clock": "أنا بحب ساعة حيطة أوي!", "bought_r_clock": "اشتريتي ساعة حيطة! شكراً!", "label_r_clock": "ساعة حيطة", "love_r_mirror": "أنا بحب مراية أوي!", "bought_r_mirror": "اشتريتي مراية! شكراً!", "label_r_mirror": "مراية", "love_r_calendar": "أنا بحب نتيجة أوي!", "bought_r_calendar": "اشتريتي نتيجة! شكراً!", "label_r_calendar": "نتيجة", "love_r_lights": "أنا بحب إضاءة ملونة أوي!", "bought_r_lights": "اشتريتي إضاءة ملونة! شكراً!", "label_r_lights": "إضاءة ملونة", "love_r_bunting": "أنا بحب زينة أعلام أوي!", "bought_r_bunting": "اشتريتي زينة أعلام! شكراً!", "label_r_bunting": "زينة أعلام", "love_r_moonlamp": "أنا بحب نور قمر أوي!", "bought_r_moonlamp": "اشتريتي نور قمر! شكراً!", "label_r_moonlamp": "نور قمر", "love_r_wallstar": "أنا بحب نجمة أوي!", "bought_r_wallstar": "اشتريتي نجمة! شكراً!", "label_r_wallstar": "نجمة", "love_r_balloons": "أنا بحب بالونات أوي!", "bought_r_balloons": "اشتريتي بالونات! شكراً!", "label_r_balloons": "بالونات", "love_r_disco": "أنا بحب كورة ديسكو أوي!", "bought_r_disco": "اشتريتي كورة ديسكو! شكراً!", "label_r_disco": "كورة ديسكو", "love_r_lantern": "أنا بحب فانوس أوي!", "bought_r_lantern": "اشتريتي فانوس! شكراً!", "label_r_lantern": "فانوس", "love_r_chime": "أنا بحب جرس رياح أوي!", "bought_r_chime": "اشتريتي جرس رياح! شكراً!", "label_r_chime": "جرس رياح", "love_r_poster": "أنا بحب بوستر مشمش أوي!", "bought_r_poster": "اشتريتي بوستر مشمش! شكراً!", "label_r_poster": "بوستر مشمش", "love_r_radio": "أنا بحب راديو أوي!", "bought_r_radio": "اشتريتي راديو! شكراً!", "label_r_radio": "راديو", "love_r_drum": "أنا بحب طبلة أوي!", "bought_r_drum": "اشتريتي طبلة! شكراً!", "label_r_drum": "طبلة", "love_r_guitar": "أنا بحب جيتار أوي!", "bought_r_guitar": "اشتريتي جيتار! شكراً!", "label_r_guitar": "جيتار", "love_r_teddy": "أنا بحب دبدوب أوي!", "bought_r_teddy": "اشتريتي دبدوب! شكراً!", "label_r_teddy": "دبدوب", "love_r_robot": "أنا بحب روبوت أوي!", "bought_r_robot": "اشتريتي روبوت! شكراً!", "label_r_robot": "روبوت", "love_r_dollhouse": "أنا بحب بيت عرايس أوي!", "bought_r_dollhouse": "اشتريتي بيت عرايس! شكراً!", "label_r_dollhouse": "بيت عرايس", "love_r_carousel": "أنا بحب مراجيح أوي!", "bought_r_carousel": "اشتريتي مراجيح! شكراً!", "label_r_carousel": "مراجيح", "love_r_ball": "أنا بحب كورة أوي!", "bought_r_ball": "اشتريتي كورة! شكراً!", "label_r_ball": "كورة", "love_r_books": "أنا بحب كتب أوي!", "bought_r_books": "اشتريتي كتب! شكراً!", "label_r_books": "كتب", "love_r_rocket": "أنا بحب صاروخ لعبة أوي!", "bought_r_rocket": "اشتريتي صاروخ لعبة! شكراً!", "label_r_rocket": "صاروخ لعبة", "love_r_puzzle": "أنا بحب بازل أوي!", "bought_r_puzzle": "اشتريتي بازل! شكراً!", "label_r_puzzle": "بازل", "win_night": "تصبحي على خير يا شباك!", "win_moon": "الدنيا ليل. أنا شايفة القمر.", "win_sunset": "بصي على الغروب!", "win_sunny": "النهارده الجو مشمس!"};
+const egId = k => (/^(label|love|bought)_/.test(k) ? 'eg2_' : 'eg1_') + k;
+function egSay(key){ if(!S.sound || !EG_TEXT[key] || key === 'idle8') return; try{ sayAr(EG_TEXT[key], egId(key)); }catch(e){} }
+function catLine(id, key, ms){ const t = EG_TEXT[key]; if(!t) return; catBubble(id, t, ms); setTimeout(() => egSay(key), 250); }
+const egItem = (it, kind) => it && /^r_/.test(it.id) && EG_TEXT[kind + '_' + it.id] ? kind + '_' + it.id : null;
+function egLabel(it){ const k = egItem(it, 'label'); if(k) egSay(k); }
+const friendKey = id => 'intro_' + String(id).replace(/^fr_/, '');
 function roomScreen(){
   setTop(true); dayState(); editMode = false; findSt = null;
   if(!catIds().includes(selCat)) selCat = CAT_M;
@@ -10366,7 +10377,7 @@ function roomScreen(){
   $('#findBtn').onclick = startFind;
   $('#micBtn').onclick = () => { if($('#talk').hidden) talkPanel(); else { stopListening(); $('#talk').hidden = true; } };
   clearInterval(roomTimer); roomTimer = setInterval(idleTick, 6000);
-  setTimeout(() => { if(S.pet.hearts <= 1){ bubble("I'm hungry!"); say("I'm hungry! Please feed me."); } else { const t = `Hi, ${kidName()}! Welcome to your room!`; bubble(t); say(t); } }, 700);
+  setTimeout(() => catLine(CAT_M, S.pet.hearts <= 1 ? 'hungry' : 'welcome', 3200), 700);
 }
 function renderRoomArea(){
   $('#roomWrap').innerHTML = roomScene();
@@ -10401,7 +10412,7 @@ function pickCat(id, hello){
   if(hello && !findSt && !editMode){
     if(catSt(id) && catSt(id).mode === 'sleep') catWake(id);
     catAnim(id, 'jump', 600); meow();
-    const l = `Hi! I'm ${catSpeak(id)}!`; catBubble(id, `${l.replace(catSpeak(id), catName(id))}`); setTimeout(() => say(l), 300);
+    catLine(id, 'hello');
   }
 }
 const CAT_BOWS = [['#F2558F','بمبي'],['#E8433A','أحمر'],['#FF8A3D','برتقاني'],['#FFD23F','أصفر'],['#3DBB5C','أخضر'],['#4FA8F0','لبني'],['#3A7BE8','أزرق'],['#9B5DE5','بنفسجي'],['#2B2233','أسود'],['#FFFFFF','أبيض']];
@@ -10462,7 +10473,7 @@ function renderMission(){
 /* Mishmish */
 function bubble(text, ms = 2800){
   const m = $('#rmish'); if(!m) return;
-  const b = m.querySelector('.bubble-r'); b.textContent = text; b.hidden = false;
+  const b = m.querySelector('.bubble-r'); b.textContent = text; b.dir = 'auto'; b.hidden = false;
   clearTimeout(mishSt.bt); mishSt.bt = setTimeout(() => { b.hidden = true; }, ms);
 }
 function walkTo(x, y, cb, z){
@@ -10480,7 +10491,7 @@ function walkTo(x, y, cb, z){
 }
 const clampX = x => Math.max(6, Math.min(94, x));
 function mishAnim(cls, ms){ const m = $('#rmish'); if(!m) return; m.classList.remove(cls); void m.offsetWidth; m.classList.add(cls); setTimeout(() => m.classList.remove(cls), ms); }
-function wake(){ const m = $('#rmish'); m.classList.remove('sleeping'); mishSt.mode = 'idle'; bubble('Good morning!'); }
+function wake(){ const m = $('#rmish'); m.classList.remove('sleeping'); mishSt.mode = 'idle'; catLine(CAT_M, 'wake'); }
 function goSleep(pl){
   const it = ITEM_BY_ID[pl.id], q = perchOf(it, pl);
   walkTo(q.x, q.y, () => { $('#rmish').classList.add('sleeping'); mishSt.mode = 'sleep'; bubble('Zzz...'); }, q.z);
@@ -10490,14 +10501,14 @@ function playWith(pl, quiet){
   walkTo(clampX(pl.x - it.size / 2 - 5), pl.y, () => {
     mishAnim('jump', 1100);
     const n = $(`#room [data-uid="${pl.uid}"]`); if(n){ n.classList.remove('hop'); void n.offsetWidth; n.classList.add('hop'); }
-    bubble("Let's play!");
-    if(!quiet){ say("Let's play!"); meow(); if(Date.now() - S.pet.playedAt > 15 * 60e3){ S.pet.playedAt = Date.now(); addJoy(1); } }
+    if(quiet) bubble(EG_TEXT.play); else catLine(CAT_M, 'play');
+    if(!quiet){ meow(); if(Date.now() - S.pet.playedAt > 15 * 60e3){ S.pet.playedAt = Date.now(); addJoy(1); } }
   });
 }
 const friendSt = {};
 function friendBubble(id, text, ms = 3000){
   const n = $(`#room [data-friend="${id}"]`); if(!n) return;
-  const b = n.querySelector('.bubble-r'); b.textContent = text; b.hidden = false;
+  const b = n.querySelector('.bubble-r'); b.textContent = text; b.dir = 'auto'; b.hidden = false;
   clearTimeout(friendSt[id].bt); friendSt[id].bt = setTimeout(() => { b.hidden = true; }, ms);
 }
 function friendWalk(id, x, y, cb, z){
@@ -10513,12 +10524,12 @@ function friendWalk(id, x, y, cb, z){
 function friendTap(id){
   const f = ITEM_BY_ID[id], n = $(`#room [data-friend="${id}"]`); if(!f || !n) return;
   if(selCat !== id){ selCat = id; renderHearts(); renderTreats(); }
-  if(friendSt[id] && friendSt[id].mode === 'sleep'){ catWake(id); say('Good morning!'); return; }
+  if(friendSt[id] && friendSt[id].mode === 'sleep'){ catWake(id); return; }
   tone(1100, 0, .12, 'sine', .08); meow();
   n.classList.remove('jump'); void n.offsetWidth; n.classList.add('jump'); setTimeout(() => n.classList.remove('jump'), 600);
-  const me = catSpeak(id), intro = me === f.en ? f.intro : `Hi! I'm ${me}!`;
-  const line = rand([intro, `I love you, ${kidName()}!`, `Mishmish is my best friend!`, `Let's play, ${kidName()}!`]);
-  friendBubble(id, line.replace(me, catName(id))); setTimeout(() => say(line), 300);
+  /* her own intro only while she still has her shop name (a renamed cat would say the wrong name) */
+  const own = catSpeak(id) === f.en && EG_TEXT[friendKey(id)];
+  catLine(id, rand([...(own ? [friendKey(id)] : []), 'tap_love', 'tap_friend', 'tap_play']));
   petted(id);
 }
 /* ---- one set of controls for every cat in the room (Mishmish or a friend) ---- */
@@ -10534,7 +10545,7 @@ const catSt = id => id === CAT_M ? mishSt : friendSt[id];
 function catWalk(id, x, y, cb, z){ if(id === CAT_M) return walkTo(x, y, cb, z); friendWalk(id, x, y, cb, z); }
 function catBubble(id, text, ms){ if(id === CAT_M) return bubble(text, ms); friendBubble(id, text, ms || 3000); }
 function catAnim(id, cls, ms){ if(id === CAT_M) return mishAnim(cls, ms); const n = catEl(id); if(n) nodeAnim(n, cls, ms); }
-function catWake(id){ if(id === CAT_M) return wake(); const n = catEl(id), st = friendSt[id]; if(n) n.classList.remove('sleeping'); if(st) st.mode = 'idle'; friendBubble(id, 'Good morning!'); }
+function catWake(id){ if(id === CAT_M) return wake(); const n = catEl(id), st = friendSt[id]; if(n) n.classList.remove('sleeping'); if(st) st.mode = 'idle'; catLine(id, 'wake'); }
 function catSleep(id, pl, k = 0){
   if(id === CAT_M && !k) return goSleep(pl);
   const it = ITEM_BY_ID[pl.id], q = perchOf(it, pl), dx = k ? (k % 2 ? 4 : -4) * Math.ceil(k / 2) : 0;
@@ -10546,16 +10557,15 @@ function catPlay(id, pl, quiet){
   friendWalk(id, clampX(pl.x + it.size / 2 + 5), pl.y, () => {
     catAnim(id, 'jump', 1100);
     const n = $(`#room [data-uid="${pl.uid}"]`); if(n) nodeAnim(n, 'hop', 900);
-    friendBubble(id, "Let's play!");
-    if(!quiet){ say("Let's play!"); meow(); const p = petOf(id); if(Date.now() - p.playedAt > 15 * 60e3){ p.playedAt = Date.now(); addJoy(1, id); } }
+    if(quiet) friendBubble(id, EG_TEXT.play); else catLine(id, 'play');
+    if(!quiet){ meow(); const p = petOf(id); if(Date.now() - p.playedAt > 15 * 60e3){ p.playedAt = Date.now(); addJoy(1, id); } }
   });
 }
 function mishTap(){
   if(selCat !== CAT_M){ selCat = CAT_M; renderHearts(); renderTreats(); }
-  if(mishSt.mode === 'sleep'){ wake(); say('Good morning!'); return; }
+  if(mishSt.mode === 'sleep'){ wake(); return; }
   meow(); mishAnim('jump', 600);
-  const line = rand([`I love you, ${kidName()}!`, 'Purr... purr...', "You're my best friend!", 'Thank you!', "Let's study together!"]);
-  bubble(line); setTimeout(() => say(line), 450);
+  catLine(CAT_M, rand(['tap_love', 'idle8', 'tap_play', 'idle4', 'idle3']));
   if(Date.now() - S.pet.pettedAt > 20 * 60e3){ S.pet.pettedAt = Date.now(); addJoy(1); }
 }
 /* feed one cat (the chosen one unless another is named); her favourite food makes her extra happy */
@@ -10571,8 +10581,7 @@ function feed(tid, id = selCat){
     petOf(id).fedAt = Date.now(); addJoy(it.joy + (fav ? 1 : 0), id);
     if(bowl) refreshNode(bowl);
     m.classList.add('eating'); floatAt(gx + 4, gy - 16, fav ? it.e + '💖' : it.e, 'fnote big');
-    const t = fav ? `Yum! ${it.en} is my favorite food! Thank you, ${kidName()}!` : `Yum! I love ${it.en}! Thank you, ${kidName()}!`;
-    catBubble(id, t, 3200); say(t);
+    catBubble(id, fav ? `يمّي! ${it.ar} أكلتي المفضلة! شكراً!` : `يمّي! بحب ${it.ar}! شكراً!`, 3200);
     setTimeout(() => { m.classList.remove('eating'); meow(); }, 2600);
   });
 }
@@ -10583,17 +10592,17 @@ function idleTick(){
     const st = friendSt[f.id], n = catEl(f.id);
     if(!st || !n || st.mode === 'sleep' || n.classList.contains('eating') || Date.now() < (st.busy || 0) + 2500) return;
     const r2 = Math.random();
-    if(petOf(f.id).hearts <= 1 && r2 < .25) friendBubble(f.id, rand(["I'm hungry!", 'Feed me, please!']));
+    if(petOf(f.id).hearts <= 1 && r2 < .25) catLine(f.id, rand(['hungry', 'hungry2']));
     else if(r2 < .5) friendWalk(f.id, clampX(6 + Math.random() * 88), 76 + Math.random() * 21);
   });
   if(Date.now() < mishSt.busy + 2500) return;
   const r = Math.random(), beds = placed('catbed'), toys = placed('cattoy');
   if(mishSt.mode === 'sleep'){ if(r < .25) wake(); return; }
-  if(S.pet.hearts <= 1 && r < .4) return bubble(rand(["I'm hungry!","Feed me, please!"]));
+  if(S.pet.hearts <= 1 && r < .4) return catLine(CAT_M, rand(['hungry', 'hungry2']));
   if(r < .45) walkTo(clampX(6 + Math.random() * 88), 74 + Math.random() * 23);
   else if(r < .6 && beds.length) goSleep(rand(beds));
   else if(r < .75 && toys.length) playWith(rand(toys), true);
-  else bubble(rand(IDLE_LINES));
+  else catLine(CAT_M, rand(['idle1', 'idle2', 'idle3', 'idle4', 'idle5', 'idle6', 'idle7', 'idle8']));
 }
 
 /* ---------- talk to Mishmish: voice (where the browser allows the mic) or typed commands ---------- */
@@ -10678,51 +10687,51 @@ function talkCommand(raw, dry){
   const has = (...ws) => ws.some(w => t.includes(w));
   const beds = placed('catbed'), toys = placed('cattoy');
   const ok = (id, ar) => { const h = $('#talkHeard'); if(h && ar) h.insertAdjacentHTML('beforeend', `<br><small>✔ ${esc(catName(id))} فهمتك: ${ar}</small>`); };
-  const reply = (id, line, ar) => { catBubble(id, line, 3200); setTimeout(() => say(line), 300); ok(id, ar); };
+  const reply = (id, key, ar) => { catLine(id, key, 3200); ok(id, ar); };
   const at = id => catSt(id) || mishSt;
   let act = null;
   /* an item in the room by its English (or Arabic) name */
   const target = S.room.items.map(p => [p, ITEM_BY_ID[p.id]]).filter(([p, it]) => it && it.kind !== 'wallpaper' && it.kind !== 'flooring')
     .find(([p, it]) => t.includes(' ' + it.en.toLowerCase() + ' ') || (it.ar && t.includes(it.ar.split(' ')[0])));
   if(has(' bed', ' room', ' box', ' basket', ' house', ' sleep', ' nap', 'اوضت', 'أوضت', 'سرير', 'نامي', 'نام ', 'كرتون')) act = (w, k) => {
-    if(!beds.length) return reply(w, "I don't have a bed! Buy me one from the mall.", 'معندهاش سرير، اشتريلها واحد من المول');
-    catSleep(w, beds[k % beds.length], Math.floor(k / beds.length)); reply(w, "OK! I'm going to my bed. Good night!", 'راحت سريرها تنام');
+    if(!beds.length) return reply(w, 'nobed', 'معندهاش سرير، اشتريلها واحد من المول');
+    catSleep(w, beds[k % beds.length], Math.floor(k / beds.length)); reply(w, 'tobed', 'راحت سريرها تنام');
   };
-  else if(has('wake', 'good morning', 'اصحي', 'صباح')) act = w => { catWake(w); reply(w, 'Good morning! I am awake!', 'صحيت'); };
-  else if(has('come', 'here', 'تعالي', 'تعال', 'هنا')) act = (w, k) => catWalk(w, clampX(50 + (k - (who.length - 1) / 2) * 11), 93, () => { catAnim(w, 'jump', 600); reply(w, "I'm here!", 'جت لحد عندك'); });
+  else if(has('wake', 'good morning', 'اصحي', 'صباح')) act = w => { catWake(w); reply(w, 'awake', 'صحيت'); };
+  else if(has('come', 'here', 'تعالي', 'تعال', 'هنا')) act = (w, k) => catWalk(w, clampX(50 + (k - (who.length - 1) / 2) * 11), 93, () => { catAnim(w, 'jump', 600); reply(w, 'here', 'جت لحد عندك'); });
   else if(has(' eat', 'food', 'hungry', 'dinner', 'lunch', 'breakfast', 'كلي', 'كل ', 'أكل', 'اكل', 'جعان')) act = w => {
     const f = catProf(w).fav, tid = f && S.treats[f] > 0 ? f : Object.keys(S.treats).find(x => S.treats[x] > 0);
-    if(!tid) return reply(w, 'I have no food! Please buy me some.', 'الأكل خلص، اشتريلها من المول');
+    if(!tid) return reply(w, 'nofood', 'الأكل خلص، اشتريلها من المول');
     feed(tid, w); ok(w, 'راحت تاكل');
   };
-  else if(has('dance', 'ارقص')) act = (w, k) => { if(!k) playTune(rand(TUNES), .2); catAnim(w, 'dancing', 3200); reply(w, "Look! I'm dancing!", 'بترقص'); };
-  else if(has('jump', 'hop', 'نط')) act = w => { catAnim(w, 'jump', 1100); setTimeout(() => catAnim(w, 'jump', 1100), 600); reply(w, 'Jump, jump!', 'بتنط'); };
+  else if(has('dance', 'ارقص')) act = (w, k) => { if(!k) playTune(rand(TUNES), .2); catAnim(w, 'dancing', 3200); reply(w, 'dance', 'بترقص'); };
+  else if(has('jump', 'hop', 'نط')) act = w => { catAnim(w, 'jump', 1100); setTimeout(() => catAnim(w, 'jump', 1100), 600); reply(w, 'jump', 'بتنط'); };
   else if(has('play', 'ball', 'toy', 'العب', 'لعب')) act = w => {
     /* any toy in the room: the cat toys first, then the room's toys and fun things */
     const roomToys = S.room.items.filter(p => { const it = ITEM_BY_ID[p.id]; return it && it.dept === 'fun' && !['r_books','r_dollhouse'].includes(it.id); });
     const pool = toys.length ? toys : roomToys;
-    if(pool.length){ const pl = rand(pool), it = ITEM_BY_ID[pl.id]; catPlay(w, pl); ok(w, 'بتلعب'); if(it.kind !== 'cattoy') setTimeout(() => say(`I love my ${it.en}!`), 1600); return; }
+    if(pool.length){ const pl = rand(pool), it = ITEM_BY_ID[pl.id]; catPlay(w, pl); ok(w, 'بتلعب'); const lv = egItem(it, 'love'); if(lv) setTimeout(() => catLine(w, lv), 1600); return; }
     const worn = w === CAT_M && S.equip.toy && ITEM_BY_ID[S.equip.toy];
-    if(worn){ catAnim(w, 'jump', 1100); setTimeout(() => catAnim(w, 'jump', 1100), 600); reply(w, `I love playing with my ${worn.en}!`, `بتلعب بـ${worn.ar}`); return; }
+    if(worn){ catAnim(w, 'jump', 1100); setTimeout(() => catAnim(w, 'jump', 1100), 600); reply(w, 'play', `بتلعب بـ${worn.ar}`); return; }
     catAnim(w, 'dancing', 2400); catWalk(w, clampX(at(w).x + (Math.random() < .5 ? -15 : 15)), at(w).y, () => catAnim(w, 'jump', 600));
-    reply(w, "I'm chasing my tail! Can you buy me a toy?", 'بتلعب لوحدها وبتجري ورا ديلها. اشتريلها لعبة من المول');
+    reply(w, 'chase', 'بتلعب لوحدها وبتجري ورا ديلها. اشتريلها لعبة من المول');
   };
   else if(target) act = (w, k) => {
     const [p, it] = target;
-    catWalk(w, clampX(p.x - it.size / 2 - 4 - k * 6), Math.max(74, Math.min(97, p.y)), () => { if(!k) floatLabel(p, it); reply(w, `This is the ${it.en}!`, `راحت عند ${it.ar}`); });
+    catWalk(w, clampX(p.x - it.size / 2 - 4 - k * 6), Math.max(74, Math.min(97, p.y)), () => { if(!k) floatLabel(p, it); const lb = egItem(it, 'label'); if(lb) reply(w, lb, `راحت عند ${it.ar}`); else { catBubble(w, it.ar, 3200); ok(w, `راحت عند ${it.ar}`); } });
   };
-  else if(has('left', 'شمال')) act = w => catWalk(w, clampX(at(w).x - 25), at(w).y, () => reply(w, 'I went left!', 'راحت شمال'));
-  else if(has('right', 'يمين')) act = w => catWalk(w, clampX(at(w).x + 25), at(w).y, () => reply(w, 'I went right!', 'راحت يمين'));
-  else if(has('love', 'بحبك')) act = w => { catAnim(w, 'jump', 600); meow(); floatAt(at(w).x, at(w).y - 22, '💖', 'fnote big'); reply(w, `I love you too, ${kidName()}!`, 'بتحبك هي كمان'); petted(w); };
-  else if(has('hello', ' hi ', 'hey', 'اهلا', 'أهلا', 'ازيك', 'هاي')) act = w => { meow(); reply(w, `Hello, ${kidName()}! How are you?`, 'بتسلم عليكي'); };
-  else if(has('sit', 'stop', 'stay', 'اقعدي', 'استني')) act = w => { reply(w, 'OK, I will stay here.', 'هتفضل مكانها'); };
+  else if(has('left', 'شمال')) act = w => catWalk(w, clampX(at(w).x - 25), at(w).y, () => reply(w, 'left', 'راحت شمال'));
+  else if(has('right', 'يمين')) act = w => catWalk(w, clampX(at(w).x + 25), at(w).y, () => reply(w, 'right', 'راحت يمين'));
+  else if(has('love', 'بحبك')) act = w => { catAnim(w, 'jump', 600); meow(); floatAt(at(w).x, at(w).y - 22, '💖', 'fnote big'); reply(w, 'love2', 'بتحبك هي كمان'); petted(w); };
+  else if(has('hello', ' hi ', 'hey', 'اهلا', 'أهلا', 'ازيك', 'هاي')) act = w => { meow(); reply(w, 'hello', 'بتسلم عليكي'); };
+  else if(has('sit', 'stop', 'stay', 'اقعدي', 'استني')) act = w => { reply(w, 'stay', 'هتفضل مكانها'); };
   /* just her name: that cat comes over and says hello */
   else if(named.length || all) act = (w, k) => catWalk(w, clampX(50 + (k - (who.length - 1) / 2) * 11), 92, () => {
-    catAnim(w, 'jump', 600); const l = `Hi! I'm ${catSpeak(w)}!`; catBubble(w, l.replace(catSpeak(w), catName(w))); setTimeout(() => say(l), 200 + k * 900);
+    catAnim(w, 'jump', 600); setTimeout(() => catLine(w, 'here'), k * 900);
     const h = $('#talkHeard'); if(h) h.insertAdjacentHTML('beforeend', `<br><small>✔ ${esc(catName(w))} سمعتك وجت!</small>`);
   });
   if(dry) return !!act;
-  if(!act){ const w = who[0]; catBubble(w, "Meow? I don't understand.", 2600); say("Meow? I don't understand."); const h = $('#talkHeard'); if(h) h.insertAdjacentHTML('beforeend', `<br><small>${esc(catName(w))} مفهمتش. جربي جملة من اللي تحت 👇</small>`); return false; }
+  if(!act){ const w = who[0]; catLine(w, 'dontget', 2600); const h = $('#talkHeard'); if(h) h.insertAdjacentHTML('beforeend', `<br><small>${esc(catName(w))} مفهمتش. جربي جملة من اللي تحت 👇</small>`); return false; }
   if(named.length === 1 && selCat !== named[0]){ selCat = named[0]; renderHearts(); renderTreats(); }
   who.forEach((w, k) => setTimeout(() => { try{ if(catEl(w)) act(w, k); }catch(e){} }, k * 350));
   return true;
@@ -10757,29 +10766,29 @@ const ACTIONS = {
   read: () => { const ks = Object.keys(S.wl).filter(k => WORDS[k]); wordCard('اقري الكلمة دي · Can you read it?', ks.length ? rand(ks) : rand(Object.keys(WORDS))); },
   wotd: () => { const ks = Object.keys(WORDS); wordCard('كلمة النهارده · Word of the day', ks[Math.floor(Date.now() / 864e5) % ks.length]); },
   piano: (pl, it) => { playTune(rand(TUNES)); notes(pl, it); },
-  music: (pl, it) => { playTune(rand(TUNES) + rand(TUNES), .2); notes(pl, it, 8); mishAnim('dancing', 3200); bubble("Let's dance!"); },
+  music: (pl, it) => { playTune(rand(TUNES) + rand(TUNES), .2); notes(pl, it, 8); mishAnim('dancing', 3200); catLine(CAT_M, 'dance2'); },
   drum: (pl, it) => { [0, .18, .36, .5].forEach(t => tone(120, t, .15, 'sine', .3)); notes(pl, it, 3, ['🥁','💥']); },
   guitar: (pl, it) => { [330, 415, 494, 659].forEach((f, i) => tone(f, i * .04, .7, 'triangle', .08)); notes(pl, it, 3); },
-  light: (pl, it, n) => { pl.on = !pl.on; n.classList.toggle('on', pl.on); save('room'); say(pl.on ? 'Lamp on!' : 'Lamp off!'); },
+  light: (pl, it, n) => { pl.on = !pl.on; n.classList.toggle('on', pl.on); save('room'); egSay(pl.on ? 'lampon' : 'lampoff'); },
   clock: (pl, it) => { const d = new Date(), h = d.getHours() % 12, m = d.getMinutes(); const t = m < 15 ? `It's ${NUMS[h]} o'clock.` : m < 45 ? `It's half past ${NUMS[h]}.` : `It's ${NUMS[(h + 1) % 12]} o'clock.`; floatLabel(pl, it, t, 'الساعة كام؟'); say(t); },
   date: (pl, it) => { const t = `Today is ${new Date().toLocaleDateString('en-US', {weekday:'long'})}.`; floatLabel(pl, it, t, 'النهارده إيه؟'); say(t); },
-  mirror: (pl, it) => { say('mirror'); walkTo(clampX(pl.x), 92, () => { bubble("Look! It's me!"); say("Look! It's me!"); }); },
-  disco: (pl, it) => { const r = $('#room'); r.classList.add('disco'); playTune('CEGcGECEGc', .18); mishAnim('dancing', 4000); bubble('Disco party!'); say('Disco party!'); setTimeout(() => r.classList.remove('disco'), 5000); },
-  chime: (pl, it) => { [1568, 2093, 1760, 2349].forEach((f, i) => tone(f, i * .12, .5, 'sine', .05)); notes(pl, it, 3, ['✨']); say('wind chime'); },
-  globe: (pl, it, n) => { nodeAnim(n, 'spin', 1300); say(rand(['Egypt is my homeland!','This is Egypt!','Look! China!','The world is big!'])); },
-  stars: (pl, it, n) => { burst(n); say('I can see the stars!'); },
-  plant: (pl, it, n) => { pl.grow = Math.min(3, (pl.grow || 0) + 1); save('room'); refreshNode(pl); for(let k = 0; k < 3; k++) setTimeout(() => floatAt(pl.x, pl.y - itemHPct(it) - 2, '💧'), k * 200); say(pl.grow >= 3 ? 'My plant is big now!' : 'I water the plant.'); },
-  fish: (pl, it, n) => { notes(pl, it, 4, ['🫧']); say('fish'); walkTo(clampX(pl.x - it.size / 2 - 4), Math.min(98, pl.y + 1), () => bubble('Fish! Yum!')); },
-  art: (pl, it) => { say(S.gallery.length ? 'My painting!' : 'Paint a picture and save it!'); },
-  tv: (pl, it) => { notes(pl, it, 4, ['⭐','🐭','🐱']); say("Let's watch cartoons!"); },
-  hop: (pl, it, n) => { nodeAnim(n, 'hop', 900); say(it.en); },
-  dance: (pl, it, n) => { nodeAnim(n, 'dancing', 3000); playTune(rand(TUNES)); mishAnim('dancing', 3000); say("Let's dance!"); },
-  spin: (pl, it, n) => { nodeAnim(n, 'spin', 1300); say('carousel'); },
-  launch: (pl, it, n) => { nodeAnim(n, 'launch', 1700); say('Three, two, one, go!'); },
-  fountain: (pl, it) => { notes(pl, it, 4, ['💧']); say('water'); },
-  bowl: () => { const f = catProf(selCat).fav, t = f && S.treats[f] > 0 ? f : Object.keys(S.treats).find(k => S.treats[k] > 0); if(t) feed(t, selCat); else { say('food bowl'); toast('الأكل خلص! اشتري أكل للقطط من المول'); } },
-  catbed: (pl, it) => { say(it.en); catSleep(selCat, pl); },
-  cattoy: (pl, it) => { say(it.en); catPlay(selCat, pl); }
+  mirror: (pl, it) => { egLabel(it); walkTo(clampX(pl.x), 92, () => catLine(CAT_M, 'mirror')); },
+  disco: (pl, it) => { const r = $('#room'); r.classList.add('disco'); playTune('CEGcGECEGc', .18); mishAnim('dancing', 4000); catLine(CAT_M, 'disco'); setTimeout(() => r.classList.remove('disco'), 5000); },
+  chime: (pl, it) => { [1568, 2093, 1760, 2349].forEach((f, i) => tone(f, i * .12, .5, 'sine', .05)); notes(pl, it, 3, ['✨']); egLabel(it); },
+  globe: (pl, it, n) => { nodeAnim(n, 'spin', 1300); egSay(rand(['globe1', 'globe2', 'globe3', 'globe4'])); },
+  stars: (pl, it, n) => { burst(n); egSay('stars'); },
+  plant: (pl, it, n) => { pl.grow = Math.min(3, (pl.grow || 0) + 1); save('room'); refreshNode(pl); for(let k = 0; k < 3; k++) setTimeout(() => floatAt(pl.x, pl.y - itemHPct(it) - 2, '💧'), k * 200); egSay(pl.grow >= 3 ? 'plant_big' : 'plant_water'); },
+  fish: (pl, it, n) => { notes(pl, it, 4, ['🫧']); egLabel(it); walkTo(clampX(pl.x - it.size / 2 - 4), Math.min(98, pl.y + 1), () => catLine(CAT_M, 'fish')); },
+  art: (pl, it) => { catLine(CAT_M, S.gallery.length ? 'paint_has' : 'paint_none'); },
+  tv: (pl, it) => { notes(pl, it, 4, ['⭐','🐭','🐱']); catLine(CAT_M, 'tv'); },
+  hop: (pl, it, n) => { nodeAnim(n, 'hop', 900); egLabel(it); },
+  dance: (pl, it, n) => { nodeAnim(n, 'dancing', 3000); playTune(rand(TUNES)); mishAnim('dancing', 3000); catLine(CAT_M, 'dance2'); },
+  spin: (pl, it, n) => { nodeAnim(n, 'spin', 1300); egLabel(it); },
+  launch: (pl, it, n) => { nodeAnim(n, 'launch', 1700); egSay('race'); },
+  fountain: (pl, it) => { notes(pl, it, 4, ['💧']); },
+  bowl: () => { const f = catProf(selCat).fav, t = f && S.treats[f] > 0 ? f : Object.keys(S.treats).find(k => S.treats[k] > 0); if(t) feed(t, selCat); else { catLine(selCat, 'nofood'); toast('الأكل خلص! اشتري أكل للقطط من المول'); } },
+  catbed: (pl, it) => { catSleep(selCat, pl); },
+  cattoy: (pl, it) => { catPlay(selCat, pl); }
 };
 function itemTap(n){
   const pl = S.room.items.find(p => String(p.uid) === n.dataset.uid); if(!pl) return;
@@ -10788,13 +10797,13 @@ function itemTap(n){
   nodeAnim(n, 'bop', 500);
   floatLabel(pl, it);
   const A = ACTIONS[it.act] || ACTIONS[it.kind];
-  if(A) A(pl, it, n); else say(it.en);
+  if(A) A(pl, it, n); else egLabel(it);
 }
 function windowTap(){
   S.room.curtain = !S.room.curtain; save('room');
   $('#rwin').classList.toggle('closed', S.room.curtain);
-  const s = skyNow(), t = S.room.curtain ? 'Good night, window!' : s === 'night' ? 'It is night. I can see the moon.' : s === 'sunset' ? 'Look at the sunset!' : 'It is sunny today!';
-  say(t); bubble(t);
+  const s = skyNow();
+  catLine(CAT_M, S.room.curtain ? 'win_night' : s === 'night' ? 'win_moon' : s === 'sunset' ? 'win_sunset' : 'win_sunny');
 }
 function onRoomClick(e){
   if(editMode){ const rm = e.target.closest('[data-rm]'); if(rm) removePlaced(rm.dataset.rm); return; }
@@ -10864,7 +10873,7 @@ function startFind(){
 }
 function nextFind(){
   if(!findSt) return;
-  if(findSt.round >= 4){ const t = `Great job, ${kidName()}!`; bubble(t); say(t); endFind(); return; }
+  if(findSt.round >= 4){ catLine(CAT_M, 'findend'); endFind(); return; }
   let id; do { id = rand(findSt.ids); } while(id === findSt.target && findSt.ids.length > 1);
   findSt.target = id; findSt.round++;
   const q = `Where is the ${ITEM_BY_ID[id].en}?`;
@@ -11028,7 +11037,7 @@ function renderFit(anim){
     const buying = !s.own;
     if(buying){ starsChange(-p); renderStars(true); $('#wallet').textContent = S.stars; sfxCash(); burst($('#fitCat')); }
     if(isFriend(it)){
-      if(buying){ S.owned.push(it.id); save('owned'); meow(); setTimeout(meow, 500); say(`${it.intro} Thank you for adopting me!`); toast(`🐾 ${it.ar} جت تعيش مع مشمش في أوضتك!`); }
+      if(buying){ S.owned.push(it.id); save('owned'); meow(); setTimeout(meow, 500); egSay(friendKey(it.id)); toast(`🐾 ${it.ar} جت تعيش مع مشمش في أوضتك!`); }
     } else if(it.kind === 'treat'){
       S.treats[it.id] = (S.treats[it.id] || 0) + 1; save('treats');
       say(`You bought ${it.en}! Mishmish says thank you!`); toast(`🛍️ اشتريتي ${it.ar}! روحي الأوضة وأكّلي مشمش`);
@@ -11038,7 +11047,7 @@ function renderFit(anim){
       else if(it.kind === 'flooring') S.room.floor = it.id;
       else if(!S.room.items.some(q => q.id === it.id)) placeItem(it);
       save('room');
-      if(buying){ say(`You bought ${/^[aeiou]/i.test(it.en) ? 'an' : 'a'} ${it.en}! Thank you!`); toast(`🛍️ اشتريتي ${it.ar}! اتحطت في أوضتك`); }
+      if(buying){ const bk = egItem(it, 'bought'); if(bk) egSay(bk); else say(`You bought ${/^[aeiou]/i.test(it.en) ? 'an' : 'a'} ${it.en}! Thank you!`); toast(`🛍️ اشتريتي ${it.ar}! اتحطت في أوضتك`); }
       setTimeout(meow, 350);
     } else {
       if(buying){ S.owned.push(it.id); S.equip[it.slot] = it.id; save('owned'); save('equip'); setTimeout(meow, 350); say(`You bought ${PLURAL.has(it.id) || NO_ART.has(it.id) ? '' : /^[aeiou]/.test(it.en) ? 'an ' : 'a '}${it.en}! Thank you!`); toast(`🛍️ اشتريتي ${it.ar}! مشمش لابساه دلوقتي`); }

@@ -1,0 +1,201 @@
+﻿id,group,key,current_english,egyptian_text,audio_file,status
+EG-001,core,hungry,I'm hungry! Please feed me.,أنا جعانة! أكّليني بقى.,audio/eg/EG-001.mp3,audio
+EG-002,core,welcome,"Hi, {name}! Welcome to your room!",أهلاً بيكي في أوضتك!,audio/eg/EG-002.mp3,audio
+EG-003,core,wake,Good morning!,صباح الخير! أنا صحيت.,audio/eg/EG-003.mp3,audio
+EG-004,core,play,Let's play!,يلا نلعب!,audio/eg/EG-004.mp3,audio
+EG-005,core,hungry2,"Feed me, please!",أكّليني لو سمحتي!,audio/eg/EG-005.mp3,audio
+EG-006,core,tap_love,"I love you, {name}!",بحبك أوي!,audio/eg/EG-006.mp3,audio
+EG-007,core,tap_friend,Mishmish is my best friend!,مشمش أحسن صاحبة ليّا!,audio/eg/EG-007.mp3,audio
+EG-008,core,tap_play,"Let's play, {name}!",يلا نلعب سوا!,audio/eg/EG-008.mp3,audio
+EG-009,core,idle1,Meow!,ميااو!,audio/eg/EG-009.mp3,audio
+EG-010,core,idle2,I love my room!,أنا بحب أوضتي أوي!,audio/eg/EG-010.mp3,audio
+EG-011,core,idle3,Let's study English!,يلا نذاكر إنجليزي!,audio/eg/EG-011.mp3,audio
+EG-012,core,idle4,I'm happy!,أنا مبسوطة!,audio/eg/EG-012.mp3,audio
+EG-013,core,idle5,Play with me!,العبي معايا!,audio/eg/EG-013.mp3,audio
+EG-014,core,idle6,Can we buy a new toy?,ممكن نشتري لعبة جديدة؟,audio/eg/EG-014.mp3,audio
+EG-015,core,idle7,"I want a cake, please!",عايزة كيكة لو سمحتي!,audio/eg/EG-015.mp3,audio
+EG-016,core,idle8,Purr...,غرررر...,,reserved_no_clip_keep_purr_effect
+EG-017,core,nobed,I don't have a bed! Buy me one from the mall.,معنديش سرير! اشتريلي واحد من المول.,audio/eg/EG-017.mp3,audio
+EG-018,core,tobed,OK! I'm going to my bed. Good night!,حاضر! رايحة أنام. تصبحي على خير!,audio/eg/EG-018.mp3,audio
+EG-019,core,awake,Good morning! I am awake!,صباح الخير! أنا صحيت!,audio/eg/EG-019.mp3,audio
+EG-020,core,here,I'm here!,أنا هنا!,audio/eg/EG-020.mp3,audio
+EG-021,core,nofood,I have no food! Please buy me some.,مفيش أكل! اشتريلي أكل لو سمحتي.,audio/eg/EG-021.mp3,audio
+EG-022,core,dance,Look! I'm dancing!,بصي! أنا بارقص!,audio/eg/EG-022.mp3,audio
+EG-023,core,jump,"Jump, jump!",نطّ نطّ!,audio/eg/EG-023.mp3,audio
+EG-024,core,chase,I'm chasing my tail! Can you buy me a toy?,بجري ورا ديلي! ممكن تشتريلي لعبة؟,audio/eg/EG-024.mp3,audio
+EG-025,core,left,I went left!,رحت الشمال!,audio/eg/EG-025.mp3,audio
+EG-026,core,right,I went right!,رحت اليمين!,audio/eg/EG-026.mp3,audio
+EG-027,core,love2,"I love you too, {name}!",وأنا كمان بحبك!,audio/eg/EG-027.mp3,audio
+EG-028,core,hello,"Hello, {name}! How are you?",أهلاً! عاملة إيه؟,audio/eg/EG-028.mp3,audio
+EG-029,core,stay,"OK, I will stay here.",حاضر، هفضل هنا.,audio/eg/EG-029.mp3,audio
+EG-030,core,dontget,Meow? I don't understand.,ميااو؟ مش فاهمة.,audio/eg/EG-030.mp3,audio
+EG-031,core,lampon,Lamp on!,النور اتفتح!,audio/eg/EG-031.mp3,audio
+EG-032,core,lampoff,Lamp off!,النور اتقفل!,audio/eg/EG-032.mp3,audio
+EG-033,core,mirror,Look! It's me!,بصي! دي أنا!,audio/eg/EG-033.mp3,audio
+EG-034,core,disco,Disco party!,حفلة ديسكو!,audio/eg/EG-034.mp3,audio
+EG-035,core,dance2,Let's dance!,يلا نرقص!,audio/eg/EG-035.mp3,audio
+EG-036,core,globe1,Egypt is my homeland!,مصر بلدي!,audio/eg/EG-036.mp3,audio
+EG-037,core,globe2,This is Egypt!,دي مصر!,audio/eg/EG-037.mp3,audio
+EG-038,core,globe3,Look! China!,بصي! الصين!,audio/eg/EG-038.mp3,audio
+EG-039,core,globe4,The world is big!,الدنيا كبيرة أوي!,audio/eg/EG-039.mp3,audio
+EG-040,core,stars,I can see the stars!,أنا شايفة النجوم!,audio/eg/EG-040.mp3,audio
+EG-041,core,plant_big,My plant is big now!,الزرعة كبرت!,audio/eg/EG-041.mp3,audio
+EG-042,core,plant_water,I water the plant.,بسقي الزرعة.,audio/eg/EG-042.mp3,audio
+EG-043,core,fish,Fish! Yum!,سمك! ياميّ!,audio/eg/EG-043.mp3,audio
+EG-044,core,paint_has,My painting!,لوحتي!,audio/eg/EG-044.mp3,audio
+EG-045,core,paint_none,Paint a picture and save it!,ارسمي لوحة واحفظيها!,audio/eg/EG-045.mp3,audio
+EG-046,core,tv,Let's watch cartoons!,يلا نتفرج على كرتون!,audio/eg/EG-046.mp3,audio
+EG-047,core,race,"Three, two, one, go!",تلاتة، اتنين، واحد، يلا!,audio/eg/EG-047.mp3,audio
+EG-048,core,findend,"Great job, {name}!",برافو عليكي!,audio/eg/EG-048.mp3,audio
+EG-049,intro,intro_bobo,Hi! I'm Bobo. I'm a little kitten. I love to play!,أنا بوبو، قطة صغيرة وبحب اللعب!,audio/eg/EG-049.mp3,audio
+EG-050,intro,intro_luna,Hi! I'm Luna. I like to sleep in the sun.,أنا لونا، وبحب أنام في الشمس.,audio/eg/EG-050.mp3,audio
+EG-051,intro,intro_coco,Hi! I'm Coco. I love chocolate cake!,أنا كوكو، وبحب كيكة الشوكولاتة!,audio/eg/EG-051.mp3,audio
+EG-052,intro,intro_snowy,Hi! I'm Snowy. I am white like snow.,أنا سنوي، بيضا زي التلج.,audio/eg/EG-052.mp3,audio
+EG-053,intro,intro_sunny,Hi! I'm Sunny. I am brave and fast!,أنا صني، شجاعة وسريعة!,audio/eg/EG-053.mp3,audio
+EG-054,intro,intro_shadow,Hi! I'm Shadow. I can see in the dark!,أنا شادو، وبشوف في الضلمة!,audio/eg/EG-054.mp3,audio
+EG-055,intro,intro_lulu,Hello! I'm Princess Lulu. I live in a castle!,أنا الأميرة لولو، وعايشة في قصر!,audio/eg/EG-055.mp3,audio
+EG-056,item_love,love_r_bed,I love my bed!,أنا بحب سرير أوي!,audio/eg/EG-056.mp3,audio
+EG-057,item_bought,bought_r_bed,You bought bed! Thank you!,اشتريتي سرير! شكراً!,audio/eg/EG-057.mp3,audio
+EG-058,item_label,label_r_bed,bed,سرير,audio/eg/EG-058.mp3,audio
+EG-059,item_love,love_r_sofa,I love my sofa!,أنا بحب كنبة أوي!,audio/eg/EG-059.mp3,audio
+EG-060,item_bought,bought_r_sofa,You bought sofa! Thank you!,اشتريتي كنبة! شكراً!,audio/eg/EG-060.mp3,audio
+EG-061,item_label,label_r_sofa,sofa,كنبة,audio/eg/EG-061.mp3,audio
+EG-062,item_love,love_r_chair,I love my chair!,أنا بحب كرسي أوي!,audio/eg/EG-062.mp3,audio
+EG-063,item_bought,bought_r_chair,You bought chair! Thank you!,اشتريتي كرسي! شكراً!,audio/eg/EG-063.mp3,audio
+EG-064,item_label,label_r_chair,chair,كرسي,audio/eg/EG-064.mp3,audio
+EG-065,item_love,love_r_desk,I love my desk!,أنا بحب مكتب أوي!,audio/eg/EG-065.mp3,audio
+EG-066,item_bought,bought_r_desk,You bought desk! Thank you!,اشتريتي مكتب! شكراً!,audio/eg/EG-066.mp3,audio
+EG-067,item_label,label_r_desk,desk,مكتب,audio/eg/EG-067.mp3,audio
+EG-068,item_love,love_r_shelf,I love my bookshelf!,أنا بحب مكتبة كتب أوي!,audio/eg/EG-068.mp3,audio
+EG-069,item_bought,bought_r_shelf,You bought bookshelf! Thank you!,اشتريتي مكتبة كتب! شكراً!,audio/eg/EG-069.mp3,audio
+EG-070,item_label,label_r_shelf,bookshelf,مكتبة كتب,audio/eg/EG-070.mp3,audio
+EG-071,item_love,love_r_wardrobe,I love my wardrobe!,أنا بحب دولاب أوي!,audio/eg/EG-071.mp3,audio
+EG-072,item_bought,bought_r_wardrobe,You bought wardrobe! Thank you!,اشتريتي دولاب! شكراً!,audio/eg/EG-072.mp3,audio
+EG-073,item_label,label_r_wardrobe,wardrobe,دولاب,audio/eg/EG-073.mp3,audio
+EG-074,item_love,love_r_toybox,I love my toy box!,أنا بحب صندوق لعب أوي!,audio/eg/EG-074.mp3,audio
+EG-075,item_bought,bought_r_toybox,You bought toy box! Thank you!,اشتريتي صندوق لعب! شكراً!,audio/eg/EG-075.mp3,audio
+EG-076,item_label,label_r_toybox,toy box,صندوق لعب,audio/eg/EG-076.mp3,audio
+EG-077,item_love,love_r_beanbag,I love my bean bag!,أنا بحب بين باج أوي!,audio/eg/EG-077.mp3,audio
+EG-078,item_bought,bought_r_beanbag,You bought bean bag! Thank you!,اشتريتي بين باج! شكراً!,audio/eg/EG-078.mp3,audio
+EG-079,item_label,label_r_beanbag,bean bag,بين باج,audio/eg/EG-079.mp3,audio
+EG-080,item_love,love_r_tent,I love my play tent!,أنا بحب خيمة لعب أوي!,audio/eg/EG-080.mp3,audio
+EG-081,item_bought,bought_r_tent,You bought play tent! Thank you!,اشتريتي خيمة لعب! شكراً!,audio/eg/EG-081.mp3,audio
+EG-082,item_label,label_r_tent,play tent,خيمة لعب,audio/eg/EG-082.mp3,audio
+EG-083,item_love,love_r_piano,I love my piano!,أنا بحب بيانو أوي!,audio/eg/EG-083.mp3,audio
+EG-084,item_bought,bought_r_piano,You bought piano! Thank you!,اشتريتي بيانو! شكراً!,audio/eg/EG-084.mp3,audio
+EG-085,item_label,label_r_piano,piano,بيانو,audio/eg/EG-085.mp3,audio
+EG-086,item_love,love_r_tv,I love my TV!,أنا بحب تلفزيون أوي!,audio/eg/EG-086.mp3,audio
+EG-087,item_bought,bought_r_tv,You bought TV! Thank you!,اشتريتي تلفزيون! شكراً!,audio/eg/EG-087.mp3,audio
+EG-088,item_label,label_r_tv,TV,تلفزيون,audio/eg/EG-088.mp3,audio
+EG-089,item_love,love_r_computer,I love my computer!,أنا بحب كمبيوتر أوي!,audio/eg/EG-089.mp3,audio
+EG-090,item_bought,bought_r_computer,You bought computer! Thank you!,اشتريتي كمبيوتر! شكراً!,audio/eg/EG-090.mp3,audio
+EG-091,item_label,label_r_computer,computer,كمبيوتر,audio/eg/EG-091.mp3,audio
+EG-092,item_love,love_r_lamp,I love my lamp!,أنا بحب أباجورة أوي!,audio/eg/EG-092.mp3,audio
+EG-093,item_bought,bought_r_lamp,You bought lamp! Thank you!,اشتريتي أباجورة! شكراً!,audio/eg/EG-093.mp3,audio
+EG-094,item_label,label_r_lamp,lamp,أباجورة,audio/eg/EG-094.mp3,audio
+EG-095,item_love,love_r_rugpink,I love my pink rug!,أنا بحب سجادة بمبي أوي!,audio/eg/EG-095.mp3,audio
+EG-096,item_bought,bought_r_rugpink,You bought pink rug! Thank you!,اشتريتي سجادة بمبي! شكراً!,audio/eg/EG-096.mp3,audio
+EG-097,item_label,label_r_rugpink,pink rug,سجادة بمبي,audio/eg/EG-097.mp3,audio
+EG-098,item_love,love_r_rugblue,I love my blue rug!,أنا بحب سجادة زرقا أوي!,audio/eg/EG-098.mp3,audio
+EG-099,item_bought,bought_r_rugblue,You bought blue rug! Thank you!,اشتريتي سجادة زرقا! شكراً!,audio/eg/EG-099.mp3,audio
+EG-100,item_label,label_r_rugblue,blue rug,دي سجادة زرقا حلوة أوي,audio/eg/EG-100.mp3,audio
+EG-101,item_love,love_r_plant,I love my plant!,أنا بحب زرعة أوي!,audio/eg/EG-101.mp3,audio
+EG-102,item_bought,bought_r_plant,You bought plant! Thank you!,اشتريتي زرعة! شكراً!,audio/eg/EG-102.mp3,audio
+EG-103,item_label,label_r_plant,plant,زرعة,audio/eg/EG-103.mp3,audio
+EG-104,item_love,love_r_cactus,I love my cactus!,أنا بحب صبار أوي!,audio/eg/EG-104.mp3,audio
+EG-105,item_bought,bought_r_cactus,You bought cactus! Thank you!,اشتريتي صبار! شكراً!,audio/eg/EG-105.mp3,audio
+EG-106,item_label,label_r_cactus,cactus,صبار,audio/eg/EG-106.mp3,audio
+EG-107,item_love,love_r_sunflower,I love my sunflower!,أنا بحب عباد الشمس أوي!,audio/eg/EG-107.mp3,audio
+EG-108,item_bought,bought_r_sunflower,You bought sunflower! Thank you!,اشتريتي عباد الشمس! شكراً!,audio/eg/EG-108.mp3,audio
+EG-109,item_label,label_r_sunflower,sunflower,عباد الشمس,audio/eg/EG-109.mp3,audio
+EG-110,item_love,love_r_aquarium,I love my fish tank!,أنا بحب حوض سمك أوي!,audio/eg/EG-110.mp3,audio
+EG-111,item_bought,bought_r_aquarium,You bought fish tank! Thank you!,اشتريتي حوض سمك! شكراً!,audio/eg/EG-111.mp3,audio
+EG-112,item_label,label_r_aquarium,fish tank,حوض سمك,audio/eg/EG-112.mp3,audio
+EG-113,item_love,love_r_globe,I love my globe!,أنا بحب مجسم الكرة الأرضية أوي!,audio/eg/EG-113.mp3,audio
+EG-114,item_bought,bought_r_globe,You bought globe! Thank you!,اشتريتي مجسم الكرة الأرضية! شكراً!,audio/eg/EG-114.mp3,audio
+EG-115,item_label,label_r_globe,globe,مجسم الكرة الأرضية,audio/eg/EG-115.mp3,audio
+EG-116,item_love,love_r_telescope,I love my telescope!,أنا بحب تلسكوب أوي!,audio/eg/EG-116.mp3,audio
+EG-117,item_bought,bought_r_telescope,You bought telescope! Thank you!,اشتريتي تلسكوب! شكراً!,audio/eg/EG-117.mp3,audio
+EG-118,item_label,label_r_telescope,telescope,تلسكوب,audio/eg/EG-118.mp3,audio
+EG-119,item_love,love_r_trophy,I love my trophy!,أنا بحب كاس أوي!,audio/eg/EG-119.mp3,audio
+EG-120,item_bought,bought_r_trophy,You bought trophy! Thank you!,اشتريتي كاس! شكراً!,audio/eg/EG-120.mp3,audio
+EG-121,item_label,label_r_trophy,trophy,كاس,audio/eg/EG-121.mp3,audio
+EG-122,item_love,love_r_easel,I love my my painting!,أنا بحب لوحتي أوي!,audio/eg/EG-122.mp3,audio
+EG-123,item_bought,bought_r_easel,You bought my painting! Thank you!,اشتريتي لوحتي! شكراً!,audio/eg/EG-123.mp3,audio
+EG-124,item_label,label_r_easel,my painting,لوحتي,audio/eg/EG-124.mp3,audio
+EG-125,item_love,love_r_frame,I love my picture frame!,أنا بحب برواز أوي!,audio/eg/EG-125.mp3,audio
+EG-126,item_bought,bought_r_frame,You bought picture frame! Thank you!,اشتريتي برواز! شكراً!,audio/eg/EG-126.mp3,audio
+EG-127,item_label,label_r_frame,picture frame,برواز,audio/eg/EG-127.mp3,audio
+EG-128,item_love,love_r_clock,I love my clock!,أنا بحب ساعة حيطة أوي!,audio/eg/EG-128.mp3,audio
+EG-129,item_bought,bought_r_clock,You bought clock! Thank you!,اشتريتي ساعة حيطة! شكراً!,audio/eg/EG-129.mp3,audio
+EG-130,item_label,label_r_clock,clock,ساعة حيطة,audio/eg/EG-130.mp3,audio
+EG-131,item_love,love_r_mirror,I love my mirror!,أنا بحب مراية أوي!,audio/eg/EG-131.mp3,audio
+EG-132,item_bought,bought_r_mirror,You bought mirror! Thank you!,اشتريتي مراية! شكراً!,audio/eg/EG-132.mp3,audio
+EG-133,item_label,label_r_mirror,mirror,مراية,audio/eg/EG-133.mp3,audio
+EG-134,item_love,love_r_calendar,I love my calendar!,أنا بحب نتيجة أوي!,audio/eg/EG-134.mp3,audio
+EG-135,item_bought,bought_r_calendar,You bought calendar! Thank you!,اشتريتي نتيجة! شكراً!,audio/eg/EG-135.mp3,audio
+EG-136,item_label,label_r_calendar,calendar,نتيجة,audio/eg/EG-136.mp3,audio
+EG-137,item_love,love_r_lights,I love my fairy lights!,أنا بحب إضاءة ملونة أوي!,audio/eg/EG-137.mp3,audio
+EG-138,item_bought,bought_r_lights,You bought fairy lights! Thank you!,اشتريتي إضاءة ملونة! شكراً!,audio/eg/EG-138.mp3,audio
+EG-139,item_label,label_r_lights,fairy lights,إضاءة ملونة,audio/eg/EG-139.mp3,audio
+EG-140,item_love,love_r_bunting,I love my flags!,أنا بحب زينة أعلام أوي!,audio/eg/EG-140.mp3,audio
+EG-141,item_bought,bought_r_bunting,You bought flags! Thank you!,اشتريتي زينة أعلام! شكراً!,audio/eg/EG-141.mp3,audio
+EG-142,item_label,label_r_bunting,flags,زينة أعلام,audio/eg/EG-142.mp3,audio
+EG-143,item_love,love_r_moonlamp,I love my moon light!,أنا بحب نور قمر أوي!,audio/eg/EG-143.mp3,audio
+EG-144,item_bought,bought_r_moonlamp,You bought moon light! Thank you!,اشتريتي نور قمر! شكراً!,audio/eg/EG-144.mp3,audio
+EG-145,item_label,label_r_moonlamp,moon light,نور قمر,audio/eg/EG-145.mp3,audio
+EG-146,item_love,love_r_wallstar,I love my star!,أنا بحب نجمة أوي!,audio/eg/EG-146.mp3,audio
+EG-147,item_bought,bought_r_wallstar,You bought star! Thank you!,اشتريتي نجمة! شكراً!,audio/eg/EG-147.mp3,audio
+EG-148,item_label,label_r_wallstar,star,نجمة,audio/eg/EG-148.mp3,audio
+EG-149,item_love,love_r_balloons,I love my balloons!,أنا بحب بالونات أوي!,audio/eg/EG-149.mp3,audio
+EG-150,item_bought,bought_r_balloons,You bought balloons! Thank you!,اشتريتي بالونات! شكراً!,audio/eg/EG-150.mp3,audio
+EG-151,item_label,label_r_balloons,balloons,بالونات,audio/eg/EG-151.mp3,audio
+EG-152,item_love,love_r_disco,I love my disco ball!,أنا بحب كورة ديسكو أوي!,audio/eg/EG-152.mp3,audio
+EG-153,item_bought,bought_r_disco,You bought disco ball! Thank you!,اشتريتي كورة ديسكو! شكراً!,audio/eg/EG-153.mp3,audio
+EG-154,item_label,label_r_disco,disco ball,كورة ديسكو,audio/eg/EG-154.mp3,audio
+EG-155,item_love,love_r_lantern,I love my lantern!,أنا بحب فانوس أوي!,audio/eg/EG-155.mp3,audio
+EG-156,item_bought,bought_r_lantern,You bought lantern! Thank you!,اشتريتي فانوس! شكراً!,audio/eg/EG-156.mp3,audio
+EG-157,item_label,label_r_lantern,lantern,فانوس,audio/eg/EG-157.mp3,audio
+EG-158,item_love,love_r_chime,I love my wind chime!,أنا بحب جرس رياح أوي!,audio/eg/EG-158.mp3,audio
+EG-159,item_bought,bought_r_chime,You bought wind chime! Thank you!,اشتريتي جرس رياح! شكراً!,audio/eg/EG-159.mp3,audio
+EG-160,item_label,label_r_chime,wind chime,جرس رياح,audio/eg/EG-160.mp3,audio
+EG-161,item_love,love_r_poster,I love my Mishmish poster!,أنا بحب بوستر مشمش أوي!,audio/eg/EG-161.mp3,audio
+EG-162,item_bought,bought_r_poster,You bought Mishmish poster! Thank you!,اشتريتي بوستر مشمش! شكراً!,audio/eg/EG-162.mp3,audio
+EG-163,item_label,label_r_poster,Mishmish poster,بوستر مشمش,audio/eg/EG-163.mp3,audio
+EG-164,item_love,love_r_radio,I love my radio!,أنا بحب راديو أوي!,audio/eg/EG-164.mp3,audio
+EG-165,item_bought,bought_r_radio,You bought radio! Thank you!,اشتريتي راديو! شكراً!,audio/eg/EG-165.mp3,audio
+EG-166,item_label,label_r_radio,radio,راديو,audio/eg/EG-166.mp3,audio
+EG-167,item_love,love_r_drum,I love my drum!,أنا بحب طبلة أوي!,audio/eg/EG-167.mp3,audio
+EG-168,item_bought,bought_r_drum,You bought drum! Thank you!,اشتريتي طبلة! شكراً!,audio/eg/EG-168.mp3,audio
+EG-169,item_label,label_r_drum,drum,طبلة,audio/eg/EG-169.mp3,audio
+EG-170,item_love,love_r_guitar,I love my guitar!,أنا بحب جيتار أوي!,audio/eg/EG-170.mp3,audio
+EG-171,item_bought,bought_r_guitar,You bought guitar! Thank you!,اشتريتي جيتار! شكراً!,audio/eg/EG-171.mp3,audio
+EG-172,item_label,label_r_guitar,guitar,جيتار,audio/eg/EG-172.mp3,audio
+EG-173,item_love,love_r_teddy,I love my teddy bear!,أنا بحب دبدوب أوي!,audio/eg/EG-173.mp3,audio
+EG-174,item_bought,bought_r_teddy,You bought teddy bear! Thank you!,اشتريتي دبدوب! شكراً!,audio/eg/EG-174.mp3,audio
+EG-175,item_label,label_r_teddy,teddy bear,دبدوب,audio/eg/EG-175.mp3,audio
+EG-176,item_love,love_r_robot,I love my robot!,أنا بحب روبوت أوي!,audio/eg/EG-176.mp3,audio
+EG-177,item_bought,bought_r_robot,You bought robot! Thank you!,اشتريتي روبوت! شكراً!,audio/eg/EG-177.mp3,audio
+EG-178,item_label,label_r_robot,robot,روبوت,audio/eg/EG-178.mp3,audio
+EG-179,item_love,love_r_dollhouse,I love my doll house!,أنا بحب بيت عرايس أوي!,audio/eg/EG-179.mp3,audio
+EG-180,item_bought,bought_r_dollhouse,You bought doll house! Thank you!,اشتريتي بيت عرايس! شكراً!,audio/eg/EG-180.mp3,audio
+EG-181,item_label,label_r_dollhouse,doll house,بيت عرايس,audio/eg/EG-181.mp3,audio
+EG-182,item_love,love_r_carousel,I love my carousel!,أنا بحب مراجيح أوي!,audio/eg/EG-182.mp3,audio
+EG-183,item_bought,bought_r_carousel,You bought carousel! Thank you!,اشتريتي مراجيح! شكراً!,audio/eg/EG-183.mp3,audio
+EG-184,item_label,label_r_carousel,carousel,مراجيح,audio/eg/EG-184.mp3,audio
+EG-185,item_love,love_r_ball,I love my ball!,أنا بحب كورة أوي!,audio/eg/EG-185.mp3,audio
+EG-186,item_bought,bought_r_ball,You bought ball! Thank you!,اشتريتي كورة! شكراً!,audio/eg/EG-186.mp3,audio
+EG-187,item_label,label_r_ball,ball,كورة,audio/eg/EG-187.mp3,audio
+EG-188,item_love,love_r_books,I love my books!,أنا بحب كتب أوي!,audio/eg/EG-188.mp3,audio
+EG-189,item_bought,bought_r_books,You bought books! Thank you!,اشتريتي كتب! شكراً!,audio/eg/EG-189.mp3,audio
+EG-190,item_label,label_r_books,books,كتب,audio/eg/EG-190.mp3,audio
+EG-191,item_love,love_r_rocket,I love my toy rocket!,أنا بحب صاروخ لعبة أوي!,audio/eg/EG-191.mp3,audio
+EG-192,item_bought,bought_r_rocket,You bought toy rocket! Thank you!,اشتريتي صاروخ لعبة! شكراً!,audio/eg/EG-192.mp3,audio
+EG-193,item_label,label_r_rocket,toy rocket,صاروخ لعبة,audio/eg/EG-193.mp3,audio
+EG-194,item_love,love_r_puzzle,I love my puzzle!,أنا بحب بازل أوي!,audio/eg/EG-194.mp3,audio
+EG-195,item_bought,bought_r_puzzle,You bought puzzle! Thank you!,اشتريتي بازل! شكراً!,audio/eg/EG-195.mp3,audio
+EG-196,item_label,label_r_puzzle,puzzle,بازل,audio/eg/EG-196.mp3,audio
+EG-197,window,win_night,"Good night, window!",تصبحي على خير يا شباك!,audio/eg/EG-197.mp3,audio
+EG-198,window,win_moon,It is night. I can see the moon.,الدنيا ليل. أنا شايفة القمر.,audio/eg/EG-198.mp3,audio
+EG-199,window,win_sunset,Look at the sunset!,بصي على الغروب!,audio/eg/EG-199.mp3,audio
+EG-200,window,win_sunny,It is sunny today!,النهارده الجو مشمس!,audio/eg/EG-200.mp3,audio

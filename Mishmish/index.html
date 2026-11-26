@@ -2725,6 +2725,10 @@ function fixLedger(){ const L = S.starLedger; if(!L || typeof L !== 'object') S.
 /* safety net: if anything unexpected breaks while she is answering, never leave her stuck behind a locked "next" */
 window.addEventListener('error', () => { setTimeout(() => { try{ ['#next', '#qNext', '#sxNext', '#exNext', '#pkGo'].forEach(sel => { const b = document.querySelector(sel); if(b && b.disabled && !document.querySelector('[data-ask]:not([disabled])') && !document.querySelector('.sci-item')) b.disabled = false; }); }catch(e){} }, 0); });
 const myLedger = () => { const L = fixLedger(); return (L.dev[DEV] = L.dev[DEV] || {e: 0, s: 0}); };
+/* Old phones can carry 'spent' counts for stars they had before this ledger existed, so the sum can dip below zero and
+   every new star would just fill that hole. Lift the base so the balance is never negative; base only ever grows
+   (copies merge by the larger base), so this spreads to every phone. Returns true when it changed something. */
+function ledgerFloor(){ try{ const L = fixLedger(); const raw = (L.base || 0) + Object.values(L.dev).reduce((t, x) => t + ((x && x.e) || 0) - ((x && x.s) || 0), 0); if(raw < 0){ L.base = (L.base || 0) - raw; return true; } }catch(e){} return false; }
 /* every saved/synced value is forced into the shape the game expects, so an odd copy from another device or an old version can never break a screen */
 const ST_OBJ = ['math','catProf','pets','equip','tricky','famDone','storyDone','wl','gDone','vDone','exams','pDone','wDone','sci','spellOk','fnd','fndHard','gymExt'], ST_ARR = ['gallery','readWords','writings'], ST_NUL = ['room','treats','pet','day','sxToday'];
 const isObj = v => !!v && typeof v === 'object' && !Array.isArray(v);
@@ -2753,7 +2757,7 @@ function normState(boot){
     Object.keys(S.starLedger.dev).forEach(id => { const x = S.starLedger.dev[id]; if(!isObj(x)) S.starLedger.dev[id] = {e: 0, s: 0}; else { x.e = +x.e || 0; x.s = +x.s || 0; } });
   }catch(e){}
 }
-normState(true); fixLedger(); S.stars = ledgerStars(S.starLedger);
+normState(true); fixLedger(); if(ledgerFloor()) store.set('starLedger', S.starLedger); S.stars = ledgerStars(S.starLedger);
 function ledgerMerge(a, b){
   const o = {base: Math.max(a.base || 0, b.base || 0), dev: {}};
   new Set([...Object.keys(a.dev || {}), ...Object.keys(b.dev || {})]).forEach(id => {
@@ -2853,7 +2857,8 @@ function progApply(remote){
       if(canon(m) !== canon(S[k])){ S[k] = m; store.set(k, m); changed = true; }
       PROG_META.ts[k] = keep && lt > rReset && canon(m) !== canon(remote.data[k]) ? Date.now() : Math.max(lt, rts[k] || 0); });
     PROG_META.resetTs = rReset; PROG_META.joined = true; store.set('sync_meta', PROG_META);
-    normState(); fixLedger(); S.stars = ledgerStars(S.starLedger); store.set('stars', S.stars);
+    normState(); fixLedger(); if(ledgerFloor()){ store.set('starLedger', S.starLedger); changed = true; }
+    S.stars = ledgerStars(S.starLedger); store.set('stars', S.stars);
     return {changed, push: PROG_KEYS.some(k => canon(S[k]) !== canon(remote.data[k]))};
   }
   if(PROG_META.resetTs > rReset){ PROG_META.joined = true; store.set('sync_meta', PROG_META); return {changed, push:true}; }
@@ -2867,7 +2872,8 @@ function progApply(remote){
   });
   PROG_META.joined = true;
   store.set('sync_meta', PROG_META);
-  normState(); fixLedger(); S.stars = ledgerStars(S.starLedger); store.set('stars', S.stars);
+  normState(); fixLedger(); if(ledgerFloor()){ store.set('starLedger', S.starLedger); PROG_META.ts.starLedger = Date.now(); store.set('sync_meta', PROG_META); changed = true; }
+  S.stars = ledgerStars(S.starLedger); store.set('stars', S.stars);
   const push = PROG_KEYS.some(k => canon(S[k]) !== canon(remote.data[k]));
   return {changed, push};
 }
@@ -8750,7 +8756,7 @@ function home(keep){
       <div>
         <p id="progSync" class="bank-sync"></p>
         <p class="muted" style="margin:4px 0">📱 الموبايل ده كسّب فرحة ⭐ ${((S.starLedger.dev || {})[DEV] || {}).e || 0} نجمة من أول ما اتفتح عليه</p>
-        <div class="row" style="flex-wrap:wrap;gap:8px;margin-bottom:8px"><button class="btn sm" id="syncMain">📲 خلّي تقدّم الموبايل ده هو الأساسي</button><button class="btn sm" id="syncBack">↩️ نسخ احتياطية</button></div>
+        <div class="row" style="flex-wrap:wrap;gap:8px;margin-bottom:8px"><button class="btn sm" id="syncMain">📲 خلّي تقدّم الموبايل ده هو الأساسي</button><button class="btn sm" id="syncBack">↩️ نسخ احتياطية</button><button class="btn sm" id="setStars">⭐ ظبطوا عدد النجوم</button></div>
         <h4>نصايح صغيرة</h4>
         <ul>
           <li>ربع ساعة كل يوم أحسن من ساعتين مرة في الأسبوع.</li>
@@ -8772,6 +8778,15 @@ function home(keep){
   $('#kidName').onchange = e => { S.name = e.target.value.trim().replace(/[^A-Za-z \-]/g,'').slice(0,20); save('name'); };
   if($('#syncMain')) $('#syncMain').onclick = progMakeMain;
   if($('#syncBack')) $('#syncBack').onclick = progBackups;
+  if($('#setStars')) $('#setStars').onclick = () => {
+    const m = modal(`<h3>⭐ عدد نجوم ${KID_AR}</h3><p class="muted">دلوقتي معاها ${S.stars} نجمة. اكتبوا العدد الصح، وهيتظبط على كل الأجهزة.</p>
+      <input id="starsIn" type="number" inputmode="numeric" min="0" max="99999" value="${S.stars}" style="font-size:24px;width:9ch;text-align:center;border:3px solid var(--ink);border-radius:12px;padding:6px">
+      <div class="row" style="justify-content:center"><button class="btn primary" id="starsOk">✔ تمام</button><button class="btn" id="starsX">إلغاء</button></div>`);
+    m.querySelector('#starsX').onclick = () => m.remove();
+    m.querySelector('#starsOk').onclick = () => { const n = Math.max(0, Math.min(99999, Math.round(+m.querySelector('#starsIn').value || 0))); m.remove();
+      askPin(() => { ledgerFloor(); const L = fixLedger(); L.base = (L.base || 0) + (n - ledgerStars(L)); S.stars = ledgerStars(L); store.set('stars', S.stars); save('starLedger'); renderStars(true); toast(`✔ بقى معاها ${n} نجمة`); home(true); },
+        'علشان تغيّروا عدد النجوم، اكتبوا الرقم السري.'); };
+  };
   $('#resetBtn').onclick = () => {
     $('#resetRow').innerHTML = '<span>متأكدين؟ النجوم والرسومات هتتمسح.</span><button class="btn" id="yesReset" style="background:var(--bad-l)">أيوه امسح</button><button class="btn" id="noReset">لأ</button>';
     $('#noReset').onclick = () => home(true);

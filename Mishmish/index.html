@@ -2711,7 +2711,8 @@ const S = {
   gymExt: store.get('gymExt', {}),
   catProf: store.get('catProf', {}),
   pets: store.get('pets', {}),
-  math: store.get('math', {})
+  math: store.get('math', {}),
+  sxToday: store.get('sxToday', null)
 };
 /* Stars are a per-device ledger so stars earned on two devices add up instead of overwriting each other:
    balance = base (stars from before the ledger) + everything earned on every device - everything spent.
@@ -2725,7 +2726,7 @@ function fixLedger(){ const L = S.starLedger; if(!L || typeof L !== 'object') S.
 window.addEventListener('error', () => { setTimeout(() => { try{ ['#next', '#qNext', '#sxNext', '#exNext', '#pkGo'].forEach(sel => { const b = document.querySelector(sel); if(b && b.disabled && !document.querySelector('[data-ask]:not([disabled])') && !document.querySelector('.sci-item')) b.disabled = false; }); }catch(e){} }, 0); });
 const myLedger = () => { const L = fixLedger(); return (L.dev[DEV] = L.dev[DEV] || {e: 0, s: 0}); };
 /* every saved/synced value is forced into the shape the game expects, so an odd copy from another device or an old version can never break a screen */
-const ST_OBJ = ['math','catProf','pets','equip','tricky','famDone','storyDone','wl','gDone','vDone','exams','pDone','wDone','sci','spellOk','fnd','fndHard','gymExt'], ST_ARR = ['gallery','readWords','writings'], ST_NUL = ['room','treats','pet','day'];
+const ST_OBJ = ['math','catProf','pets','equip','tricky','famDone','storyDone','wl','gDone','vDone','exams','pDone','wDone','sci','spellOk','fnd','fndHard','gymExt'], ST_ARR = ['gallery','readWords','writings'], ST_NUL = ['room','treats','pet','day','sxToday'];
 const isObj = v => !!v && typeof v === 'object' && !Array.isArray(v);
 function normState(boot){
   try{
@@ -2771,20 +2772,35 @@ const save = k => { store.set(k, S[k]); progStamp(k); };
 /* ---------- whole-game progress synced across devices (artifact db doc progress/farha) ----------
    Every save(k) stamps the key's time. Copies merge per key: lists of things done or owned are united,
    scores keep the best, everything else keeps the newest copy. A reset wins over older data everywhere. */
-const PROG_KEYS = ['starLedger','owned','equip','gallery','tricky','mish','room','treats','pet','day','name','readWords','famDone','storyDone','wl','gDone','vDone','writings','exams','pDone','wDone','sci','spellOk','gymExt','fnd','fndHard','catProf','pets','math'];
+const PROG_KEYS = ['starLedger','owned','equip','gallery','tricky','mish','room','treats','pet','day','name','readWords','famDone','storyDone','wl','gDone','vDone','writings','exams','pDone','wDone','sci','spellOk','gymExt','fnd','fndHard','catProf','pets','math','sxToday'];
 const PROG_META = Object.assign({ts:{}, resetTs:0, joined:false}, store.get('sync_meta', {}));
 let progDoc = null, progTimer = null, progWriting = false, progDirty = false, progState = 'wait';
 function progStamp(k){ if(PROG_KEYS.includes(k)){ PROG_META.ts[k] = Date.now(); store.set('sync_meta', PROG_META); progSchedule(); } }
 function progSchedule(){ clearTimeout(progTimer); progTimer = setTimeout(progPush, 1500); }
 const progBody = () => { const data = {}; PROG_KEYS.forEach(k => { if(S[k] !== undefined) data[k] = S[k]; }); return JSON.parse(JSON.stringify({data, ts:PROG_META.ts, resetTs:PROG_META.resetTs})); };
-function progPush(){
+/* Two phones (dad's and mum's accounts) play the same game. Before every write the newest cloud copy is read and merged
+   in, so a change made on the other phone a moment ago is never overwritten; then the merged copy is written. */
+async function progPush(){
   clearTimeout(progTimer);
   if(!progDoc) return;
   if(progWriting){ progDirty = true; return; }
   progWriting = true;
-  progDoc.set(progBody()).then(() => { progState = 'ok'; progPaint(); })
-    .catch(e => { if(e && (e.code === 'invalid_argument' || e.code === 'revoked' || e.code === 'not_granted')){ progDoc = null; progState = 'local'; progPaint(); } })
-    .finally(() => { progWriting = false; if(progDirty){ progDirty = false; progPush(); } });
+  try{
+    try{ const snap = await progDoc.get(); if(snap && snap.exists){ const r = progApply(snap.data()); if(r.changed) liveRefresh(); } }catch(e){}
+    await progDoc.set(progBody()); progState = 'ok'; progPaint();
+  }catch(e){ if(e && (e.code === 'invalid_argument' || e.code === 'revoked' || e.code === 'not_granted')){ progDoc = null; progState = 'local'; progPaint(); } }
+  finally{ progWriting = false; if(progDirty){ progDirty = false; progPush(); } }
+}
+/* something changed on the other phone: redraw the page she is on if it is a menu or a map (never in the middle of a lesson, game or exam) */
+const LIVE_SAFE = new Set(['home', 'englishWorld', 'scienceWorld', 'sciChapter', 'sxHall', 'mathWorld', 'mulHub', 'mentalHub', 'bookHome']);
+let liveT = null;
+function liveRefresh(){
+  clearTimeout(liveT);
+  liveT = setTimeout(() => { try{
+    renderStars();
+    const cur = typeof NAV !== 'undefined' && NAV.cur;
+    if(cur && LIVE_SAFE.has(cur.fn.navName) && !document.querySelector('.bk-modal')){ const y = window.scrollY; NAV.going = true; cur.fn(...cur.args); window.scrollTo(0, y); }
+  }catch(e){} }, 400);
 }
 function progPaint(){
   const el = $('#progSync'); if(!el) return;
@@ -2851,10 +2867,7 @@ function progApply(remote){
     const {changed, push} = progApply(snap.exists ? snap.data() : null);
     progState = 'ok'; progPaint();
     if(push) progPush();
-    if(changed){
-      renderStars();
-      if(screenEl.querySelector('.hero')) home(true);           /* only repaint the home screen; never interrupt a game */
-    }
+    if(changed) liveRefresh();           /* menus and maps redraw at once; a lesson, game or exam is never interrupted */
   }, () => { clearTimeout(timer); progDoc = null; progState = 'local'; progPaint(); });
   addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden' && progTimer) progPush(); });
 })();
@@ -6022,9 +6035,9 @@ function sxFind(kind, id){
   const f = SXR_MODELS.find(m => m.id === id); return f ? {kind: 'F', id: f.id, name: f.title, C: SCI[0]} : null;
 }
 function sxToday(nx){
-  const d = dayNo(); let t = store.get('sxToday', null);
+  const d = dayNo(); const t = S.sxToday && typeof S.sxToday === 'object' ? S.sxToday : null;
   let it = t && t.d === d ? sxFind(t.kind, t.id) : null;
-  if(!it){ it = nx; store.set('sxToday', {d, kind: nx.kind, id: nx.id}); }
+  if(!it){ it = nx; S.sxToday = {d, kind: nx.kind, id: nx.id}; save('sxToday'); }
   return {...it, done: sxBest(it.kind, it.id) >= sxPass()};
 }
 function sxOpen(kind, id){
@@ -11114,14 +11127,17 @@ const bankCanon = o => canon(bankPlain(bankDerive(bankNorm(o))));
 S.bank = bankDerive(bankNorm(store.get('bank', null)));
 /* cloud sync state: 'local' (no db on this view), 'wait', 'ok', 'off' */
 let bankDoc = null, bankSync = 'wait', bankWriting = false, bankDirty = false;
-function bankSave(){
+async function bankSave(){
   store.set('bank', bankPlain(S.bank));
   if(!bankDoc) return;
   if(bankWriting){ bankDirty = true; return; }
   bankWriting = true;
-  bankDoc.set(JSON.parse(JSON.stringify(bankPlain(S.bank)))).then(() => { if(bankSync !== 'ok'){ bankSync = 'ok'; bankStatusPaint(); } })
-    .catch(e => { if(e && (e.code === 'invalid_argument' || e.code === 'revoked' || e.code === 'not_granted')){ bankDoc = null; bankSync = 'local'; bankStatusPaint(); } })
-    .finally(() => { bankWriting = false; if(bankDirty){ bankDirty = false; bankSave(); } });
+  try{
+    try{ const snap = await bankDoc.get(); if(snap && snap.exists){ const before = bankCanon(S.bank); S.bank = bankDerive(bankMerge(S.bank, snap.data())); store.set('bank', bankPlain(S.bank)); if(bankCanon(S.bank) !== before){ try{ bankRefresh(); }catch(e){} } } }catch(e){}
+    await bankDoc.set(JSON.parse(JSON.stringify(bankPlain(S.bank))));
+    if(bankSync !== 'ok'){ bankSync = 'ok'; bankStatusPaint(); }
+  }catch(e){ if(e && (e.code === 'invalid_argument' || e.code === 'revoked' || e.code === 'not_granted')){ bankDoc = null; bankSync = 'local'; bankStatusPaint(); } }
+  finally{ bankWriting = false; if(bankDirty){ bankDirty = false; bankSave(); } }
 }
 function bankStatusPaint(){
   const el = $('#bankSync'); if(!el) return;
@@ -11511,7 +11527,11 @@ function nbSave(){
   if(!nbDoc) return;
   if(nbWriting){ nbDirty = true; return; }
   nbWriting = true;
-  nbDoc.set(JSON.parse(JSON.stringify(NB))).catch(e => { if(e && (e.code === 'invalid_argument' || e.code === 'revoked' || e.code === 'not_granted')) nbDoc = null; })
+  (async () => {
+    try{ const snap = await nbDoc.get(); const rd = snap && snap.exists ? snap.data() : null;
+      if(rd){ NB.notes = nbMerge(NB.notes, rd.notes || []); if((rd.pinTs || 0) > (NB.pinTs || 0)){ NB.pin = rd.pin || ''; NB.pinTs = rd.pinTs; } store.set('notes', NB); } }catch(e){}
+    await nbDoc.set(JSON.parse(JSON.stringify(NB)));
+  })().catch(e => { if(e && (e.code === 'invalid_argument' || e.code === 'revoked' || e.code === 'not_granted')) nbDoc = null; })
     .finally(() => { nbWriting = false; if(nbDirty){ nbDirty = false; nbSave(); } });
 }
 (async () => {

@@ -1,0 +1,87 @@
+﻿file (اسم الملف .mp3),بتتقال إمتى,الجملة الحالية بالإنجليزي,الجملة المقترحة بالمصري (عدّلها براحتك)
+r_welcome,أول ما تدخل الأوضة,"Hi, Farha! Welcome to your room!",أهلاً يا فرحة! نوّرتي أوضتك!
+r_hungry_enter,أول ما تدخل والقطة جعانة,I'm hungry! Please feed me.,أنا جعانة! أكّليني بقى.
+r_idle_1,كلام عشوائي وهي قاعدة,Meow!,مياو!
+r_idle_2,كلام عشوائي,I love my room!,بحب أوضتي أوي!
+r_idle_3,كلام عشوائي,Let's study English!,يلا نذاكر إنجليزي!
+r_idle_4,كلام عشوائي,I'm happy!,أنا مبسوطة!
+r_idle_5,كلام عشوائي,Play with me!,تعالي العبي معايا!
+r_idle_6,كلام عشوائي,Can we buy a new toy?,ممكن نشتري لعبة جديدة؟
+r_idle_7,كلام عشوائي,"I want a cake, please!",نفسي في حتة كيكة!
+r_idle_8,كلام عشوائي,Purr...,خرررر...
+r_hungry_1,القطة جعانة,I'm hungry!,أنا جعانة!
+r_hungry_2,القطة جعانة,"Feed me, please!",أكّليني لو سمحتي!
+r_tap_1,لما فرحة تدوس على القطة,"I love you, Farha!",بحبك يا فرحة!
+r_tap_2,لما تدوس على القطة,Purr... purr...,خرر... خرر...
+r_tap_3,لما تدوس على القطة,You're my best friend!,انتي أحسن صاحبة ليا!
+r_tap_4,لما تدوس على القطة,Thank you!,شكراً!
+r_tap_5,لما تدوس على القطة,Let's study together!,يلا نذاكر سوا!
+r_tap_6,لما تدوس على قطة صاحبة,Mishmish is my best friend!,مشمش أحسن صاحبة ليا!
+r_tap_7,لما تدوس على قطة صاحبة,"Let's play, Farha!",يلا نلعب يا فرحة!
+r_wake,لما تصحى,Good morning!,صباح الخير!
+r_play,لما تلعب بلعبة,Let's play!,يلا نلعب!
+r_dance,لما ترقص على المزيكا,Let's dance!,يلا نرقص!
+r_disco,كورة الديسكو,Disco party!,حفلة ديسكو!
+r_mirror,المراية,Look! It's me!,بصي! دي أنا!
+r_fish,حوض السمك,Fish! Yum!,سمك! يمّي!
+r_eat_t_food,بعد ما تاكل,"Yum! I love cat food! Thank you, Farha!",يمّي! بحب أكل القطط! شكراً يا فرحة!
+r_eat_t_milk,بعد ما تاكل,"Yum! I love milk! Thank you, Farha!",يمّي! بحب اللبن! شكراً يا فرحة!
+r_eat_t_fish,بعد ما تاكل,"Yum! I love fish! Thank you, Farha!",يمّي! بحب السمك! شكراً يا فرحة!
+r_eat_t_chicken,بعد ما تاكل,"Yum! I love chicken! Thank you, Farha!",يمّي! بحب الفراخ! شكراً يا فرحة!
+r_eat_t_cheese,بعد ما تاكل,"Yum! I love cheese! Thank you, Farha!",يمّي! بحب الجبنة! شكراً يا فرحة!
+r_eat_t_icecream,بعد ما تاكل,"Yum! I love ice cream! Thank you, Farha!",يمّي! بحب الآيس كريم! شكراً يا فرحة!
+r_eat_t_cake,بعد ما تاكل,"Yum! I love cake! Thank you, Farha!",يمّي! بحب الكيكة! شكراً يا فرحة!
+r_eat_t_shrimp,بعد ما تاكل,"Yum! I love shrimp! Thank you, Farha!",يمّي! بحب الجمبري! شكراً يا فرحة!
+r_fav_t_food,بعد ما تاكل أكلتها المفضلة,Yum! cat food is my favorite food!,يمّي! أكل القطط أكلتي المفضلة! شكراً يا فرحة!
+r_fav_t_milk,أكلتها المفضلة,Yum! milk is my favorite food!,يمّي! اللبن أكلتي المفضلة! شكراً يا فرحة!
+r_fav_t_fish,أكلتها المفضلة,Yum! fish is my favorite food!,يمّي! السمك أكلتي المفضلة! شكراً يا فرحة!
+r_fav_t_chicken,أكلتها المفضلة,Yum! chicken is my favorite food!,يمّي! الفراخ أكلتي المفضلة! شكراً يا فرحة!
+r_fav_t_cheese,أكلتها المفضلة,Yum! cheese is my favorite food!,يمّي! الجبنة أكلتي المفضلة! شكراً يا فرحة!
+r_fav_t_icecream,أكلتها المفضلة,Yum! ice cream is my favorite food!,يمّي! الآيس كريم أكلتي المفضلة! شكراً يا فرحة!
+r_fav_t_cake,أكلتها المفضلة,Yum! cake is my favorite food!,يمّي! الكيكة أكلتي المفضلة! شكراً يا فرحة!
+r_fav_t_shrimp,أكلتها المفضلة,Yum! shrimp is my favorite food!,يمّي! الجمبري أكلتي المفضلة! شكراً يا فرحة!
+r_cmd_bed,أمر: روحي سريرك,OK! I'm going to my bed. Good night!,حاضر! رايحة سريري. تصبحي على خير!
+r_cmd_nobed,أمر: روحي سريرك (مفيش سرير),I don't have a bed! Buy me one from the mall.,معنديش سرير! اشتريلي واحد من المول.
+r_cmd_wake,أمر: اصحي,Good morning! I am awake!,صباح الخير! صحيت أهو!
+r_cmd_come,أمر: تعالي هنا,I'm here!,أنا هنا أهو!
+r_cmd_nofood,أمر: كلي (الأكل خلص),I have no food! Please buy me some.,الأكل خلص! اشتريلي أكل لو سمحتي.
+r_cmd_dance,أمر: ارقصي,Look! I'm dancing!,بصي! أنا برقص!
+r_cmd_jump,أمر: نطي,"Jump, jump!",نط، نط!
+r_cmd_tail,أمر: العبي (مفيش لعب),I'm chasing my tail! Can you buy me a toy?,بجري ورا ديلي! ممكن تجيبيلي لعبة؟
+r_cmd_mytoy,أمر: العبي (معاها لعبة لابساها),I love playing with my toy!,بحب ألعب بلعبتي!
+r_cmd_there,أمر: روحي عند حاجة في الأوضة (بعدها بتتقال الحاجة بالإنجليزي),This is the ...!,بصي، أهو!
+r_cmd_left,أمر: شمال,I went left!,رحت شمال!
+r_cmd_right,أمر: يمين,I went right!,رحت يمين!
+r_cmd_love,أمر: بحبك,"I love you too, Farha!",وأنا كمان بحبك يا فرحة!
+r_cmd_hello,أمر: هاي / أهلاً,"Hello, Farha! How are you?",أهلاً يا فرحة! عاملة إيه؟
+r_cmd_stay,أمر: اقعدي / استني,"OK, I will stay here.",حاضر، هستنى هنا.
+r_cmd_what,أمر مش مفهوم,Meow? I don't understand.,مياو؟ مش فاهمة.
+r_hi_mish,لما تنادي على القطة باسمها,Hi! I'm Mishmish!,أهلاً! أنا مشمش!
+r_hi_fr_bobo,نداء بالاسم,Hi! I'm Bobo!,أهلاً! أنا بوبو!
+r_hi_fr_luna,نداء بالاسم,Hi! I'm Luna!,أهلاً! أنا لونا!
+r_hi_fr_coco,نداء بالاسم,Hi! I'm Coco!,أهلاً! أنا كوكو!
+r_hi_fr_snowy,نداء بالاسم,Hi! I'm Snowy!,أهلاً! أنا سنوي!
+r_hi_fr_sunny,نداء بالاسم,Hi! I'm Sunny!,أهلاً! أنا صني!
+r_hi_fr_shadow,نداء بالاسم,Hi! I'm Shadow!,أهلاً! أنا شادو!
+r_hi_fr_lulu,نداء بالاسم,Hi! I'm Princess Lulu!,أهلاً! أنا الأميرة لولو!
+r_hi_custom,نداء قطة فرحة سمّتها اسم جديد (مينفعش نسجّل كل الأسامي),Hi! I'm <name>!,أهلاً يا فرحة! أنا جيت أهو!
+r_intro_fr_bobo,أول مرة تدوس على القطة الصاحبة,Hi! I'm Bobo. I'm a little kitten. I love to play!,أنا بوبو، قطة صغيرة وبحب اللعب!
+r_intro_fr_luna,تعريف القطة,Hi! I'm Luna. I like to sleep in the sun.,أنا لونا، وبحب أنام في الشمس.
+r_intro_fr_coco,تعريف القطة,Hi! I'm Coco. I love chocolate cake!,أنا كوكو، وبحب كيكة الشوكولاتة!
+r_intro_fr_snowy,تعريف القطة,Hi! I'm Snowy. I am white like snow.,أنا سنوي، وبيضا زي التلج.
+r_intro_fr_sunny,تعريف القطة,Hi! I'm Sunny. I am brave and fast!,أنا صني، شجاعة وسريعة!
+r_intro_fr_shadow,تعريف القطة,Hi! I'm Shadow. I can see in the dark!,أنا شادو، وبشوف في الضلمة!
+r_intro_fr_lulu,تعريف القطة,Hello! I'm Princess Lulu. I live in a castle!,أنا الأميرة لولو، وعايشة في قصر!
+r_lamp_on,النور (اختياري: ممكن يفضل إنجليزي),Lamp on!,النور ولّع!
+r_lamp_off,النور,Lamp off!,النور طفى!
+r_plant,الزرعة,I water the plant.,بسقي الزرعة.
+r_plant_big,الزرعة كبرت,My plant is big now!,الزرعة بتاعتي كبرت!
+r_tv,التلفزيون,Let's watch cartoons!,يلا نتفرج على كرتون!
+r_stars,النجوم,I can see the stars!,أنا شايفة النجوم!
+r_rocket,الصاروخ,"Three, two, one, go!",تلاتة، اتنين، واحد، انطلق!
+r_paint,اللوحة (مفيش رسمة),Paint a picture and save it!,ارسمي رسمة واحفظيها!
+r_painting,اللوحة,My painting!,دي رسمتي!
+r_window_night,الشباك بالليل,It is night. I can see the moon.,الدنيا ليل، وأنا شايفة القمر.
+r_window_sun,الشباك بالنهار,It is sunny today!,الدنيا شمس النهارده!
+r_window_sunset,الشباك وقت المغرب,Look at the sunset!,بصي الغروب حلو إزاي!
+r_window_close,قفل الستارة,"Good night, window!",تصبح على خير يا شباك!

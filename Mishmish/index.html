@@ -3052,7 +3052,7 @@ const voiceChunk = l => VOICE_LOADING[l] || (VOICE_LOADING[l] = fetch('voice/v_'
 /* load every recording in the background, most used letters first, so answers are spoken without waiting */
 async function prefetchVoice(){ for(const l of 'tsbcpmafwdhlrgeinoyukvjqzx') await voiceChunk(l); }
 let useClips = false;
-function startClips(){ if(useClips) return; useClips = true; prefetchVoice(); }
+function startClips(){ if(useClips) return; useClips = true; }   /* old word clips load only when a word is missing from the new voice pack (saves memory on phones) */
 if(!hasTTS) setTimeout(startClips, 0);
 else setTimeout(() => { try{ if(!speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang)).length) startClips(); }catch(e){ startClips(); } }, 1500);
 const NUM_W = 'zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen'.split(' ');
@@ -5582,7 +5582,7 @@ const arFetch = url => new Promise((res, rej) => {
 /* chunk + clip index: va/va-index.json maps chunk -> { clipId: [byteOffset, byteLength] } into va/<chunk>.mp3.
    Host the 80 chunk mp3s where the page can GET them (e.g. artifact uploaded files) and point these URLs there. */
 const arIndex = () => AR_LOADING.idx || (AR_LOADING.idx = (window.__VA_IDX ? Promise.resolve(window.__VA_IDX) : fetch('va/va-index.json?v=' + AR_VER).then(r => r.ok ? r.json() : {})).then(d => { window.__VA_IDX = d; }).catch(() => { delete AR_LOADING.idx; }));
-const arChunk = c => AR_LOADING[c] || (AR_LOADING[c] = arIndex().then(() => arFetch('va/' + c + '.mp3?v=' + AR_VER)).then(buf => { const ix = (window.__VA_IDX || {})[c] || {}; for (const id in ix) { const o = ix[id][0], l = ix[id][1]; AR_CLIPS[id] = __b64(buf.slice(o, o + l)); } }).catch(() => { delete AR_LOADING[c]; }));
+const arChunk = c => AR_LOADING[c] || (AR_LOADING[c] = arIndex().then(() => arFetch('va/' + c + '.mp3?v=' + AR_VER)).then(buf => { const ix = (window.__VA_IDX || {})[c] || {}; for (const id in ix) { const o = ix[id][0], l = ix[id][1]; AR_CLIPS[id] = buf.slice(o, o + l); }   /* raw bytes, not text: half the memory on a phone */ }).catch(() => { delete AR_LOADING[c]; }));
 /* text->audio binding: va/va-h.json maps clip id -> ohash of the exact text it was recorded for. A clip whose text was edited (or whose hash cannot be loaded) is suppressed with a notice instead of playing stale or unverified audio. Device TTS is never a fallback for covered content. */
 const arHashLoad = () => AR_LOADING.h || (AR_LOADING.h = (window.__VA_H ? Promise.resolve(window.__VA_H) : fetch('va/va-h.json?v=' + AR_VER).then(r => r.ok ? r.json() : {})).then(d => { Object.assign(AR_HASH, d); AR_HLOADED = true; }).catch(() => { delete AR_LOADING.h; }));
 let arRun = 0, arSrc = null, arWarned = false;
@@ -5615,7 +5615,7 @@ function arPrefetch(ids){ if(!S.sound) return; try{ arHashLoad(); [...new Set(id
 async function arPlayClip(id, run){
   const c = actx(); if(!c) return false;
   try{
-    if(!AR_BUF[id]){ const bin = atob(AR_CLIPS[id]), arr = new Uint8Array(bin.length); for(let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i); AR_BUF[id] = await c.decodeAudioData(arr.buffer); }
+    if(!AR_BUF[id]){ AR_BUF[id] = await c.decodeAudioData(AR_CLIPS[id].slice(0)); }
     if(run !== arRun) return false;
     if(c.state === 'suspended'){ try{ await c.resume(); }catch(e){} }
     /* finish on "ended", or a little after the clip's length if the phone never fires it (so a question can't hang half-way) */
@@ -10427,7 +10427,38 @@ function catLine(id, key, ms){ const t = EG_TEXT[key]; if(!t) return; catBubble(
 const egItem = (it, kind) => it && /^r_/.test(it.id) && EG_TEXT[kind + '_' + it.id] ? kind + '_' + it.id : null;
 function egLabel(it){ const k = egItem(it, 'label'); if(k) egSay(k); }
 const friendKey = id => 'intro_' + String(id).replace(/^fr_/, '');
+/* the room never fails silently: if something in this phone's saved room breaks the page, repair it and try again;
+   if it still fails, say so on screen with the exact problem (so the parents can send a screenshot) */
 function roomScreen(){
+  try{ return roomScreenRaw(); }
+  catch(e){
+    try{ console.warn('room', e); }catch(_){}
+    roomRepair();
+    try{ return roomScreenRaw(); }
+    catch(e2){ toast('⚠️ الأوضة مش راضية تفتح (' + String((e2 && e2.message) || e2).slice(0, 90) + '). ابعتوا صورة الشاشة دي لكلود'); }
+  }
+}
+function roomRepair(){
+  try{
+    normState();
+    const okNum = v => typeof v === 'number' && isFinite(v);
+    if(!S.room || typeof S.room !== 'object') S.room = null;
+    if(S.room){ S.room.items = (Array.isArray(S.room.items) ? S.room.items : []).filter(p => p && typeof p.id === 'string' && ITEM_BY_ID[p.id] && okNum(p.x) && okNum(p.y));
+      S.room.items.forEach((p, i) => { if(p.uid == null) p.uid = 1000 + i; });
+      if(!ITEM_BY_ID[S.room.wall]) S.room.wall = 'w_default'; if(!ITEM_BY_ID[S.room.floor]) S.room.floor = 'f_default';
+      if(!okNum(S.room.next)) S.room.next = S.room.items.length + 1000; }
+    if(!S.equip || typeof S.equip !== 'object') S.equip = {};
+    Object.keys(S.equip).forEach(k => { if(!ITEM_BY_ID[S.equip[k]]) delete S.equip[k]; });
+    if(!S.mish || typeof S.mish !== 'object') S.mish = {...DEFAULT_MISH};
+    Object.keys(DEFAULT_MISH).forEach(k => { if(typeof S.mish[k] !== 'string') S.mish[k] = DEFAULT_MISH[k]; });
+    S.gallery = (S.gallery || []).filter(g => g && typeof g === 'object' && typeof g.tail === 'string');
+    if(!S.treats || typeof S.treats !== 'object') S.treats = {t_food: 3, t_milk: 2};
+    initRoom();
+    selCat = CAT_M; for(const k in friendSt) delete friendSt[k]; mishSt = {x:45, y:94, mode:'idle', busy:0};
+    ['room', 'equip', 'mish', 'gallery', 'treats'].forEach(quiet);
+  }catch(e){}
+}
+function roomScreenRaw(){
   setTop(true); dayState(); editMode = false; findSt = null;
   if(!catIds().includes(selCat)) selCat = CAT_M;
   catIds().forEach(id => petTick(id));

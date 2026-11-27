@@ -2790,7 +2790,7 @@ async function progPush(){
   if(progWriting){ progDirty = true; return; }
   progWriting = true;
   try{
-    try{ const snap = await progDoc.get(); if(snap && snap.exists){ const r = progApply(snap.data()); if(r.changed) liveRefresh(); } }catch(e){}
+    try{ const snap = await progDoc.get(); if(snap && snap.exists){ const r = progApply(thaw(snap.data())); if(r.changed) liveRefresh(); } }catch(e){}
     await progDoc.set(progBody()); progState = 'ok'; progPaint();
   }catch(e){ if(e && (e.code === 'invalid_argument' || e.code === 'revoked' || e.code === 'not_granted')){ progDoc = null; progState = 'local'; progPaint(); } }
   finally{ progWriting = false; if(progDirty){ progDirty = false; progPush(); } }
@@ -2811,6 +2811,9 @@ function progPaint(){
   el.textContent = progState === 'ok' ? '☁️ اللعبة كلها محفوظة على كل الأجهزة' : progState === 'wait' ? '☁️ بنوصل اللعبة بكل الأجهزة...' : '📱 اللعبة محفوظة على الجهاز ده بس دلوقتي';
   el.className = 'bank-sync ' + progState;
 }
+/* Data from the shared store arrives frozen (read-only). Everything the game keeps must be its own editable copy,
+   or the first change (a cat's hearts, the room, a note) throws "Cannot assign to read only property". */
+const thaw = d => d == null ? d : JSON.parse(JSON.stringify(d));
 const pIsObj = v => v && typeof v === 'object' && !Array.isArray(v);
 function progMergeKey(k, a, b, ta, tb, joining){
   if(a == null) return b; if(b == null) return a;
@@ -2916,7 +2919,7 @@ function progBackups(){
   progDoc.onSnapshot(snap => {
     if(snap.metadata && (snap.metadata.fromCache || snap.metadata.hasPendingWrites)) return;
     clearTimeout(timer);
-    const {changed, push} = progApply(snap.exists ? snap.data() : null);
+    const {changed, push} = progApply(snap.exists ? thaw(snap.data()) : null);
     progState = 'ok'; progPaint();
     if(push) progPush();
     if(changed) liveRefresh();           /* menus and maps redraw at once; a lesson, game or exam is never interrupted */
@@ -11231,7 +11234,7 @@ async function bankSave(){
   if(bankWriting){ bankDirty = true; return; }
   bankWriting = true;
   try{
-    try{ const snap = await bankDoc.get(); if(snap && snap.exists){ const before = bankCanon(S.bank); S.bank = bankDerive(bankMerge(S.bank, snap.data())); store.set('bank', bankPlain(S.bank)); if(bankCanon(S.bank) !== before){ try{ bankRefresh(); }catch(e){} } } }catch(e){}
+    try{ const snap = await bankDoc.get(); if(snap && snap.exists){ const before = bankCanon(S.bank); S.bank = bankDerive(bankMerge(S.bank, thaw(snap.data()))); store.set('bank', bankPlain(S.bank)); if(bankCanon(S.bank) !== before){ try{ bankRefresh(); }catch(e){} } } }catch(e){}
     await bankDoc.set(JSON.parse(JSON.stringify(bankPlain(S.bank))));
     if(bankSync !== 'ok'){ bankSync = 'ok'; bankStatusPaint(); }
   }catch(e){ if(e && (e.code === 'invalid_argument' || e.code === 'revoked' || e.code === 'not_granted')){ bankDoc = null; bankSync = 'local'; bankStatusPaint(); } }
@@ -11251,7 +11254,7 @@ function bankStatusPaint(){
   bankDoc.onSnapshot(snap => {
     if(snap.metadata && snap.metadata.fromCache) return;
     clearTimeout(timer);
-    const remote = snap.exists ? snap.data() : null;
+    const remote = snap.exists ? thaw(snap.data()) : null;
     const before = bankCanon(S.bank);
     if(remote) S.bank = bankDerive(bankMerge(S.bank, remote));
     const after = bankCanon(S.bank);
@@ -11626,7 +11629,7 @@ function nbSave(){
   if(nbWriting){ nbDirty = true; return; }
   nbWriting = true;
   (async () => {
-    try{ const snap = await nbDoc.get(); const rd = snap && snap.exists ? snap.data() : null;
+    try{ const snap = await nbDoc.get(); const rd = snap && snap.exists ? thaw(snap.data()) : null;
       if(rd){ NB.notes = nbMerge(NB.notes, rd.notes || []); if((rd.pinTs || 0) > (NB.pinTs || 0)){ NB.pin = rd.pin || ''; NB.pinTs = rd.pinTs; } store.set('notes', NB); } }catch(e){}
     await nbDoc.set(JSON.parse(JSON.stringify(NB)));
   })().catch(e => { if(e && (e.code === 'invalid_argument' || e.code === 'revoked' || e.code === 'not_granted')) nbDoc = null; })
@@ -11639,7 +11642,7 @@ function nbSave(){
   nbDoc = db.doc('notebook/farha');
   nbDoc.onSnapshot(snap => {
     if(snap.metadata && snap.metadata.fromCache) return;
-    const rd = snap.exists ? snap.data() : null, remote = rd ? (rd.notes || []) : null;
+    const rd = snap.exists ? thaw(snap.data()) : null, remote = rd ? (rd.notes || []) : null;
     const before = canon(NB);
     if(remote){ NB.notes = nbMerge(NB.notes, remote); if((rd.pinTs || 0) > (NB.pinTs || 0)){ NB.pin = rd.pin || ''; NB.pinTs = rd.pinTs; } }
     const after = canon(NB);

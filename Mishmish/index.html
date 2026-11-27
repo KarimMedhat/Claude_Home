@@ -3051,7 +3051,7 @@ if(hasTTS){ pickVoice(); try{ speechSynthesis.onvoiceschanged = pickVoice; }catc
 /* Recorded voice for devices with no built-in English speech (the Claude app on Android has none):
    every English word of the game is a small MP3 clip in voice/v_<letter>.json, played through Web Audio. */
 const VOICE = {}, VOICE_LOADING = {}, VOICE_BUF = {};
-const voiceChunk = l => VOICE_LOADING[l] || (VOICE_LOADING[l] = fetch('voice/v_' + l + '.json?v=2').then(r => r.ok ? r.json() : {}).then(d => { Object.assign(VOICE, d); }).catch(() => { delete VOICE_LOADING[l]; }));
+const voiceChunk = l => VOICE_LOADING[l] || (VOICE_LOADING[l] = fetch('voice/v_' + l + '.json?v=3').then(r => r.ok ? r.json() : {}).then(d => { Object.assign(VOICE, d); }).catch(() => { delete VOICE_LOADING[l]; }));
 /* load every recording in the background, most used letters first, so answers are spoken without waiting */
 async function prefetchVoice(){ for(const l of 'tsbcpmafwdhlrgeinoyukvjqzx') await voiceChunk(l); }
 let useClips = false;
@@ -3749,7 +3749,12 @@ const BOOK = [
   {id:"u5l4", en:"Heroes Who Fight Fires", ar:"أبطال يطفئون الحرائق",
    imp:"stripes|خطوط|🦺;helmet|خوذة|⛑️;hose|خرطوم|;ladder|سلم|🪜;fire truck|عربة إطفاء|🚒",
    ext:"heroes|أبطال;neighbor|جار;local|محلي;fire station|محطة إطفاء;thick|سميك;protective|للحماية;equipment|معدات;ready|جاهز;alarm|إنذار;team|فريق;tools|أدوات;dangerous|خطير;difference|اختلاف",
-   v:"fight|fought|يحارب;keep|kept|يحافظ;ring|rang|يرن;put|put|يضع;ride|rode|يركب"}
+   v:"fight|fought|يحارب;keep|kept|يحافظ;ring|rang|يرن;put|put|يضع;ride|rode|يركب"},
+  /* School book p.92: Lesson 5 "Think and Create - Origami Art" */
+  {id:"u5l5", en:"Origami Art", ar:"فن الأوريجامي",
+   imp:"origami|أوريجامي|🦢;scissors|مقص|✂️;glue|صمغ|🧴;markers|أقلام ماركر|🖍️;ruler|مسطرة|📏",
+   ext:"art|فن|🎨;paper|ورق|📄;fold|يطوي|🗞️;shapes|أشكال|🔷;objects|أشياء|🧸;Japanese|ياباني|🇯🇵;colored|ملوّن|🌈;squares|مربعات|🟥;uniform|زي موحد|🦺;instructions|تعليمات|📋;details|تفاصيل|🔍;glasses|نظارة|👓;watch|ساعة يد|⌚;partner|زميل|🧑‍🤝‍🧑;feedback|رأي|💬;decoration|زينة|🎀",
+   v:"make|made|يصنع;choose|chose|يختار;pick|picked|يختار;follow|followed|يتبع;fold|folded|يطوي"}
  ]},
  {id:"st", n:"★", en:"The Hundred Dresses", ar:"قصة المائة فستان", c:"#F5B700", cl:"#FFF0BF", lessons:[
   {id:"stl1", en:"The Hundred Dresses", ar:"المائة فستان",

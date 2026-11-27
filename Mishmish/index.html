@@ -3100,7 +3100,7 @@ function stopSpeech(){ veStop(); clipRun++; clipSrcs.forEach(x => { try{ x.stop(
    passages, and a few end-of-set lines. ve/ve-index.json = {chunks: {file: {clipId: [offset, length]}}, lex: {word: clipId},
    pas: {gamePassageId: clipId}, sup: {high|mid|low|done|enc: [clipIds], 'S-01'..'S-03': clipId}}.
    A word or passage that is not in the pack keeps the old voice. Only one sound plays at a time. */
-const VE = {idx: null, of: {}, clips: {}, loading: {}, buf: {}}, VE_VER = 2;
+const VE = {idx: null, of: {}, clips: {}, loading: {}, buf: {}}, VE_VER = 3;
 const veNorm = t => String(t).toLowerCase().replace(/[’‘]/g, "'").replace(/[^a-z' ]+/g, ' ').replace(/\s+/g, ' ').trim();
 let VE_PAS = null;
 const veIndex = () => VE.loading.idx || (VE.loading.idx = fetch('ve/ve-index.json?v=' + VE_VER).then(r => r.ok ? r.json() : null).then(d => {
